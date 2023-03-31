@@ -1,20 +1,26 @@
 <script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
+function home(){
+    router.push({name: 'Home'});
+};
 </script>
 
 <template>
-  <v-app>
-    <v-app-bar app color="primary">
-      <v-toolbar-title>My Blog</v-toolbar-title>
-    </v-app-bar>
-    <v-main>
-      <v-container fluid>
-        <router-view />
-      </v-container>
-    </v-main>
-    <v-footer app>
-      <v-container>
-        <span>&copy; 2023 My Blog</span>
-      </v-container>
-    </v-footer>
-  </v-app>
+    <v-app>
+        <v-app-bar dense app color="primary" dark>
+            <v-app-bar-title>
+                <v-toolbar-title @click="home">Jihoo Park</v-toolbar-title>
+            </v-app-bar-title>
+        </v-app-bar>
+
+        <v-main>
+            <router-view></router-view>
+        </v-main>
+
+        <v-footer app color="primary" dark absolute>
+            <v-spacer></v-spacer>
+            <span>&copy; {{ new Date().getFullYear() }}</span>
+        </v-footer>
+    </v-app>
 </template>
