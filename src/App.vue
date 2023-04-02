@@ -1,5 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import MindMap from "./components/MindMap.vue";
 const router = useRouter();
 function home(){
     router.push({name: 'Home'});
@@ -15,7 +16,8 @@ function home(){
         </v-app-bar>
 
         <v-main>
-            <router-view></router-view>
+            <MindMap/>
+<!--            <router-view></router-view>-->
         </v-main>
 
         <v-footer app color="primary" dark absolute>
