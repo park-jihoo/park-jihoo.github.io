@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 import HomeComponent from "../components/HomeComponent.vue";
-import ItemList from "../components/ItemList.vue";
 import PostComponent from "../components/PostComponent.vue";
+import MindMap from "../components/MindMap.vue";
 
 const routes = [
     {
@@ -13,6 +13,11 @@ const routes = [
         path: "/post/:id",
         name: "Post",
         component: PostComponent
+    },
+    {
+        path: "/mindmap",
+        name: "Mindmap",
+        component: MindMap
     }
 ]
 

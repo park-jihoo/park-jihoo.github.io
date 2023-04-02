@@ -12,8 +12,10 @@
     "@popperjs/core": "^2.11.6",
     "@quasar/extras": "^1.15.11",
     "bootstrap": "^5.2.3",
+    "d3-force": "^3.0.0",
     "npm": "^9.5.1",
     "quasar": "^2.11.6",
+    "v-network-graph": "^0.9.1",
     "vite-plugin-vuetify": "^1.0.2",
     "vue": "^3.2.45",
     "vue-router": "^4.0.13"
