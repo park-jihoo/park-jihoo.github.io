@@ -8,4 +8,7 @@ import router from "./router/index.js";
 
 const vuetify = createVuetify()
 
-createApp(App).use(router).use(vuetify).mount('#app')
+// VNetworkGraph
+import VNetworkGraph from 'v-network-graph'
+
+createApp(App).use(router).use(vuetify).use(VNetworkGraph).mount('#app')
