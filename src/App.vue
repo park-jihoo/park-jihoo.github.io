@@ -10,14 +10,13 @@ function home(){
 <template>
     <v-app>
         <v-app-bar dense app color="primary" dark>
-            <v-app-bar-title>
-                <v-toolbar-title @click="home">Jihoo Park</v-toolbar-title>
+            <v-app-bar-title @click="home">
+                <v-toolbar-title>Jihoo Park</v-toolbar-title>
             </v-app-bar-title>
         </v-app-bar>
 
         <v-main>
-            <MindMap/>
-            <!--            <router-view></router-view>-->
+            <router-view></router-view>
         </v-main>
 
         <v-footer app color="primary" dark absolute>
