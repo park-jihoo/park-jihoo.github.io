@@ -17,7 +17,7 @@ function home(){
 
         <v-main>
             <MindMap/>
-<!--            <router-view></router-view>-->
+            <!--            <router-view></router-view>-->
         </v-main>
 
         <v-footer app color="primary" dark absolute>

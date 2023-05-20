@@ -4,9 +4,9 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "",
+  base: "/",
   plugins: [ vue({
-    template:{transformAssetUrls}
+    template:{transformAssetUrls},
   }
   ),
   vuetify({autoImport: true})
