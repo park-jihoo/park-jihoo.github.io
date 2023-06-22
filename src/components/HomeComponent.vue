@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import {onMounted, ref, computed} from 'vue'
 
 const posts = ref([])
 onMounted(() => {
@@ -11,12 +11,22 @@ onMounted(() => {
 });
 
 const page = ref(1);
+const postsPerPage = 10;
+
+const paginatedPosts = computed(() => {
+    const start = (page.value - 1) * postsPerPage;
+    return posts.value.slice(start, start + postsPerPage);
+});
+
+const totalPages = computed(() => {
+    return Math.ceil(posts.value.length / postsPerPage);
+});
 </script>
 <template>
     <v-container>
         <v-card>
             <v-list lines="one">
-                <v-list-item v-for="post in posts"
+                <v-list-item v-for="post in paginatedPosts"
                              :key="post.id"
                              link
                              :to="{path:'/post/'+post.id}">
@@ -30,11 +40,11 @@ const page = ref(1);
             </v-list>
             <v-pagination
                 v-model="page"
-                :length="Math.ceil(posts.length/10)"
+                :length="totalPages"
                 circle
                 color="primary"
                 background-color="white"
-                />
+            />
         </v-card>
     </v-container>
 </template>

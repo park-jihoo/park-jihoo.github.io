@@ -1,6 +1,5 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import MindMap from "./components/MindMap.vue";
 const router = useRouter();
 function home(){
     router.push({name: 'Home'});
