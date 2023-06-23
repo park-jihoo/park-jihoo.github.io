@@ -1,50 +1,41 @@
 <script setup>
-import {onMounted, ref, computed} from 'vue'
+import {ref} from 'vue'
 
-const posts = ref([])
-onMounted(() => {
-    fetch('https://dummyjson.com/posts')
-        .then(response => response.json())
-        .then(data => {
-            posts.value = data.posts;
-        });
-});
+const name = ref('Jihoo Park');
+const title = ref('Web Developer');
+const email = ref('wlgn8648@gmail.com');
+const educationList = ref([
+    {degree: 'B.S. in Mathematics', university: 'POSTECH', start: '2016', end: '2020'},
+    {degree: 'M.S. in Data Science', university: 'Seoul National University', start: '2022', end: '2024'},
+]);
 
-const page = ref(1);
-const postsPerPage = 10;
-
-const paginatedPosts = computed(() => {
-    const start = (page.value - 1) * postsPerPage;
-    return posts.value.slice(start, start + postsPerPage);
-});
-
-const totalPages = computed(() => {
-    return Math.ceil(posts.value.length / postsPerPage);
-});
+const jobList = ref([
+    {position:'Web Developer', company: 'LG CNS', start: '2020', end:'2022'}
+])
 </script>
 <template>
-    <v-container>
-        <v-card>
-            <v-list lines="one">
-                <v-list-item v-for="post in paginatedPosts"
-                             :key="post.id"
-                             link
-                             :to="{path:'/post/'+post.id}">
-                    <v-list-item-title v-text="post.title"/>
-                    <v-list-item-action>
-                        <v-chip-group>
-                            <v-chip v-for="tag in post.tags" :key="tag">{{ tag }}</v-chip>
-                        </v-chip-group>
-                    </v-list-item-action>
-                </v-list-item>
-            </v-list>
-            <v-pagination
-                v-model="page"
-                :length="totalPages"
-                circle
-                color="primary"
-                background-color="white"
-            />
-        </v-card>
-    </v-container>
+  <v-list>
+      <v-list-item>
+              <v-list-item-title>{{ name }}</v-list-item-title>
+              <v-list-item-subtitle>{{ title }}</v-list-item-subtitle>
+      </v-list-item>
+
+      <v-list-item>
+          <v-list-item-title>{{ email }}</v-list-item-title>
+      </v-list-item>
+
+      <v-list-item>
+          <v-list-item-title>Education</v-list-item-title>
+          <v-list-item-subtitle v-for="education in educationList" :key="education.degree">
+              {{ education.degree }} at {{ education.university }} {{ education.start }} - {{ education.end }}
+          </v-list-item-subtitle>
+      </v-list-item>
+
+      <v-list-item>
+          <v-list-item-title>Job Experience</v-list-item-title>
+          <v-list-item-subtitle v-for="job in jobList" :key="job.position">
+              {{ job.position }} at {{ job.company }} {{ job.start }} - {{ job.end }}
+          </v-list-item-subtitle>
+      </v-list-item>
+  </v-list>
 </template>

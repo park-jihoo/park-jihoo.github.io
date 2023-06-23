@@ -19,12 +19,10 @@ onMounted(() => {
 </script>
 <template>
     <v-container>
-        <v-card>
             <v-card-title class="headline">{{ post.title }}</v-card-title>
             <v-card-text>{{ post.body }}</v-card-text>
             <v-card-actions>
                 <v-chip v-for="tag in post.tags" :key="tag" class="mr-2 mb-2">{{ tag }}</v-chip>
             </v-card-actions>
-        </v-card>
     </v-container>
 </template>

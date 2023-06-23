@@ -1,26 +1,49 @@
 <script setup>
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
+
 const router = useRouter();
-function home(){
-    router.push({name: 'Home'});
-};
+
+function navigateTo(link) {
+    router.push(`/${link.toLowerCase()}`);
+}
+
+const links = [
+    'Projects',
+    'Leetcode',
+];
 </script>
 
 <template>
-    <v-app>
-        <v-app-bar dense app color="primary" dark>
-            <v-app-bar-title @click="home">
-                <v-toolbar-title>Jihoo Park</v-toolbar-title>
-            </v-app-bar-title>
+    <v-app id="inspire">
+        <v-app-bar flat>
+            <v-container class="fill-height d-flex align-center">
+                <v-avatar class="me-10 ms-4" color="grey lighten-4" size="40">
+                    <v-img src="https://avatars.githubusercontent.com/u/67787453" @click="navigateTo('Home')"></v-img>
+                </v-avatar>
+                <v-btn v-for="link in links" :key="link" variant="text" @click="navigateTo(link)">
+                    {{ link }}
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-responsive max-width="260">
+                    <v-text-field
+                            density="compact"
+                            hide-details
+                            variant="solo"
+                    ></v-text-field>
+                </v-responsive>
+            </v-container>
         </v-app-bar>
 
-        <v-main>
-            <router-view></router-view>
+        <v-main class="bg-grey-lighten-3">
+            <v-container>
+                <v-row>
+                    <v-col>
+                        <v-sheet min-height="70vh" rounded="lg">
+                            <router-view></router-view>
+                        </v-sheet>
+                    </v-col>
+                </v-row>
+            </v-container>
         </v-main>
-
-        <v-footer app color="primary" dark absolute>
-            <v-spacer></v-spacer>
-            <span>&copy; {{ new Date().getFullYear() }}</span>
-        </v-footer>
     </v-app>
 </template>

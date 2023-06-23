@@ -5,10 +5,10 @@ import App from './App.vue'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import router from "./router/index.js";
+import { md3 } from 'vuetify/blueprints';
 
-const vuetify = createVuetify()
+const vuetify = createVuetify({
+    blueprint: md3,
+})
 
-// VNetworkGraph
-import VNetworkGraph from 'v-network-graph'
-
-createApp(App).use(router).use(vuetify).use(VNetworkGraph).mount('#app')
+createApp(App).use(router).use(vuetify).mount('#app')
