@@ -1,6 +1,8 @@
 <script setup>
 import {onMounted, ref, computed} from 'vue';
 import { useRoute } from 'vue-router';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-c.js';
 import 'prismjs/components/prism-cpp.js';
 import 'prismjs/components/prism-python.js';
 import 'prismjs/components/prism-java.js';

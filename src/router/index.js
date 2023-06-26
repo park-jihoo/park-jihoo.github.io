@@ -36,11 +36,11 @@ const routes = [
         name: "Home",
         component: HomeComponent
     },
-    // {
-    //     path: '/:pathMatch(.*)*',
-    //     name: 'not-found',
-    //     component: HomeComponent
-    // }
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: HomeComponent
+    }
 ]
 
 const router = createRouter({

@@ -10,16 +10,5 @@ export default defineConfig({
   }
   ),
   vuetify({autoImport: true})
-],
-  server: {
-    proxy: {
-        '/api': {
-            target: 'https://park-jihoo.github.io/Algorithm',
-            changeOrigin: true,
-            rewrite: (path) => path.replace(/^\/api/, ''),
-            secure: false,
-          ws: true,
-        }
-    }
-  }
+]
 })
