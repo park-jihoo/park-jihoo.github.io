@@ -8,14 +8,14 @@ function navigateTo(link) {
 }
 
 const links = [
-    'Projects',
+    'TIL',
     'Leetcode',
 ];
 </script>
 
 <template>
     <v-app id="inspire">
-        <v-app-bar flat>
+        <v-app-bar flat app>
             <v-container class="fill-height d-flex align-center">
                 <v-avatar class="me-10 ms-4" color="grey lighten-4" size="40">
                     <v-img src="https://avatars.githubusercontent.com/u/67787453" @click="navigateTo('Home')"></v-img>

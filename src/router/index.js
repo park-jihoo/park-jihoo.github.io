@@ -2,7 +2,8 @@ import {createRouter, createWebHistory} from "vue-router";
 import HomeComponent from "../components/HomeComponent.vue";
 import PostComponent from "../components/PostComponent.vue";
 import ProjectComponent from "../components/ProjectComponent.vue";
-import LeetCode from "../components/LeetCode.vue";
+import LeetCode from "../components/LeetcodeComponent.vue";
+import CodeComponent from "../components/CodeComponent.vue";
 
 const routes = [
     {
@@ -11,12 +12,12 @@ const routes = [
         component: HomeComponent
     },
     {
-        path: "/projects",
+        path: "/til",
         name: "Project",
         component: ProjectComponent
     },
     {
-        path: "/projects/:id",
+        path: "/til/:id",
         name: "Post",
         component: PostComponent
     },
@@ -26,15 +27,20 @@ const routes = [
         component: LeetCode
     },
     {
+        path: "/leetcode/:slug/:file",
+        name: "codes",
+        component: CodeComponent
+    },
+    {
         path: "/home",
         name: "Home",
         component: HomeComponent
     },
-    {
-        path: '/:pathMatch(.*)*',
-        name: 'not-found',
-        component: HomeComponent
-    }
+    // {
+    //     path: '/:pathMatch(.*)*',
+    //     name: 'not-found',
+    //     component: HomeComponent
+    // }
 ]
 
 const router = createRouter({

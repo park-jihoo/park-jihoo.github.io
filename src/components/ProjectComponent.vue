@@ -2,6 +2,12 @@
 import {onMounted, ref, computed} from 'vue'
 
 const posts = ref([])
+const categories = [
+    'RL',
+    'CS',
+    'DB',
+    'ML',
+]
 onMounted(() => {
     fetch('https://dummyjson.com/posts')
         .then(response => response.json())
@@ -25,26 +31,13 @@ const totalPages = computed(() => {
 <template>
     <v-container>
         <v-row>
-            <v-col cols="2">
-                <v-sheet rounded="lg">
-                    <v-list rounded="lg">
-                        <v-list-item v-for="n in 5" :key="n" link>
-                            <v-list-item-title>Item {{ n }}</v-list-item-title>
-                        </v-list-item>
-                        <v-divider class="my-2"></v-divider>
-                        <v-list-item link color="grey-lighten-4">
-                            <v-list-item-title>Refresh</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-sheet>
-            </v-col>
             <v-col>
                 <v-sheet min-height="70vh" rounded="lg">
                     <v-list lines="one">
                         <v-list-item v-for="post in paginatedPosts"
                                      :key="post.id"
                                      link
-                                     :to="{path:'/projects/'+post.id}">
+                                     :to="{path:'/til/'+post.id}">
                             <v-list-item-title v-text="post.title"/>
                             <v-list-item-action>
                                 <v-chip-group>

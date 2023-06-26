@@ -1,14 +1,32 @@
 <script setup>
 import {onMounted, ref, computed} from 'vue';
+const posts = ref([]);
 
-const posts = ref([])
+onMounted( () => {
+    const owner = 'park-jihoo';
+    const repo = 'Algorithm';
 
-onMounted(() => {
-    fetch('https://dummyjson.com/posts')
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`;
+
+    fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            posts.value = data.posts;
+            const filePaths = data.tree
+                .filter(item => item.type === 'blob')
+                .map(item => item.path)
+                .filter(path => path.endsWith('.js') || path.endsWith('.py') || path.endsWith('.cpp') || path.endsWith('.java'))
+                .filter(path => path.includes('-'))
+
+            posts.value = filePaths.map(path => {
+                const name = path.split('/')[1].replace(/-/g, ' ').replace(/[0-9]/g, '').trim();
+                const url = path.split('.')[0] + '&' + path.split('.')[1];
+                return {name, url};
+            });
+        })
+        .catch(error => {
+            console.error(error);
         });
+
 });
 
 const page = ref(1);
@@ -33,9 +51,9 @@ const totalPages = computed(() => {
                   <v-list lines="one">
                       <v-list-item v-for="post in paginatedPosts"
                                    :key="post.id"
-                                   link
-                                   :to="{path:'/projects/'+post.id}">
-                          <v-list-item-title v-text="post.title"/>
+                      link :to="{path:'/leetcode/'+post.url}"
+                      >
+                          <v-list-item-title v-text="post.name"/>
                       </v-list-item>
                   </v-list>
                   <v-pagination
