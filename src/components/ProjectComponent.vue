@@ -1,57 +1,45 @@
 <script setup>
 import {onMounted, ref, computed} from 'vue'
+import {getPageTable} from 'vue-notion'
 
-const posts = ref([])
-const categories = [
-    'RL',
-    'CS',
-    'DB',
-    'ML',
-]
-onMounted(() => {
-    fetch('https://dummyjson.com/posts')
-        .then(response => response.json())
-        .then(data => {
-            posts.value = data.posts;
-        });
+const pageTable = ref('');
+
+onMounted(async () => {
+    pageTable.value = await getPageTable("619787c75b60479886c147cf746bfbb8");
 });
 
 const page = ref(1);
 const postsPerPage = 10;
-
-const paginatedPosts = computed(() => {
+const paginatedTable = computed(() => {
     const start = (page.value - 1) * postsPerPage;
-    return posts.value.slice(start, start + postsPerPage);
+    const end = page.value * postsPerPage;
+    return pageTable.value.slice(start, end);
 });
 
-const totalPages = computed(() => {
-    return Math.ceil(posts.value.length / postsPerPage);
+const totalPage = computed(() => {
+    return Math.ceil(pageTable.value.length / postsPerPage);
 });
+
 </script>
+
 <template>
     <v-container>
         <v-row>
             <v-col>
                 <v-sheet min-height="70vh" rounded="lg">
-                    <v-list lines="one">
-                        <v-list-item v-for="post in paginatedPosts"
-                                     :key="post.id"
-                                     link
-                                     :to="{path:'/til/'+post.id}">
-                            <v-list-item-title v-text="post.title"/>
-                            <v-list-item-action>
-                                <v-chip-group>
-                                    <v-chip v-for="tag in post.tags" :key="tag">{{ tag }}</v-chip>
-                                </v-chip-group>
-                            </v-list-item-action>
+                    <v-list>
+                        <v-list-item v-for="post in paginatedTable"
+                                     :key="post.id" link
+                                     :to="{path:'/til/' + post.id}">
+                            <v-list-item-title v-text="post.title"></v-list-item-title>
                         </v-list-item>
                     </v-list>
                     <v-pagination
-                            v-model="page"
-                            :length="totalPages"
-                            circle
-                            background-color="white"
-                    />
+                        v-model="page"
+                        :length="totalPage"
+                        circle
+                        background-color="white"
+                        />
                 </v-sheet>
             </v-col>
         </v-row>

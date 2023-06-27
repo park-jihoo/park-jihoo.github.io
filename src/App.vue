@@ -8,7 +8,7 @@ function navigateTo(link) {
 }
 
 const links = [
-    'TIL',
+    'Notion',
     'Leetcode',
 ];
 </script>
@@ -38,9 +38,7 @@ const links = [
             <v-container>
                 <v-row>
                     <v-col>
-                        <v-sheet min-height="70vh" rounded="lg">
-                            <router-view></router-view>
-                        </v-sheet>
+                        <router-view></router-view>
                     </v-col>
                 </v-row>
             </v-container>

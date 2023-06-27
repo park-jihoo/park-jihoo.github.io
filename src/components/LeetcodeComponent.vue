@@ -16,6 +16,18 @@ onMounted( () => {
                 .map(item => item.path)
                 .filter(path => path.endsWith('.js') || path.endsWith('.py') || path.endsWith('.cpp') || path.endsWith('.java'))
                 .filter(path => path.includes('-'))
+                .sort((a, b) => {
+                    const aName = a.split('/')[1].replace(/-/g, ' ').replace(/[0-9]/g, '').trim();
+                    const bName = b.split('/')[1].replace(/-/g, ' ').replace(/[0-9]/g, '').trim();
+                    if (aName < bName) {
+                        return -1;
+                    }
+                    if (aName > bName) {
+                        return 1;
+                    }
+                    return 0;
+                });
+
 
             posts.value = filePaths.map(path => {
                 const name = path.split('/')[1].replace(/-/g, ' ').replace(/[0-9]/g, '').trim();

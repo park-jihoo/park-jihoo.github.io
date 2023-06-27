@@ -33,16 +33,29 @@ onMounted(() => {
 </script>
 
 <template>
-    <v-sheet>
-        <CodeBlock
-                :code="code"
-                prismjs
-                :lang="lang"
-                theme="default"
-                height="70vh"
-                persistent-copy-button
-        />
-    </v-sheet>
+    <v-row>
+        <v-col>
+            <v-card>
+                <v-card-title v-text="route.params.file.split('&').join('.')"/>
+                <v-card-text>
+                    <CodeBlock
+                        :code="code"
+                        prismjs
+                        :lang="lang"
+                        theme="default"
+                        persistent-copy-button
+                    />
+                </v-card-text>
+            </v-card>
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col>
+            <v-btn-group>
+                <v-btn link :to="`/leetcode`">List</v-btn>
+            </v-btn-group>
+        </v-col>
+    </v-row>
 
 </template>
 

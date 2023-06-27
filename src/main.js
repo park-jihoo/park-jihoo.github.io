@@ -10,8 +10,16 @@ import { md3 } from 'vuetify/blueprints';
 // Code Block
 import {CodeBlock} from "vue3-code-block";
 
+// Vue3 Katex
+import Vue3Katex from "@hsorby/vue3-katex";
+
 const vuetify = createVuetify({
     blueprint: md3,
 })
 
-createApp(App).use(router).use(vuetify).component('CodeBlock', CodeBlock).mount('#app')
+createApp(App)
+    .use(router)
+    .use(vuetify)
+    .use(Vue3Katex)
+    .component('CodeBlock', CodeBlock)
+    .mount('#app')
