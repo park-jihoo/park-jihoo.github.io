@@ -1,6 +1,6 @@
 <script setup>
-import {onMounted, ref, computed} from 'vue';
-import { useRoute } from 'vue-router';
+import {onMounted, ref} from 'vue';
+import {useRoute} from 'vue-router';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-c.js';
 import 'prismjs/components/prism-cpp.js';
@@ -15,28 +15,21 @@ onMounted(() => {
     const slug = route.params.slug;
     const file = route.params.file.split('&').join('.');
     const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${slug}/${file}`;
+
     fetch(githubUrl)
         .then(response => response.text())
         .then(data => {
             code.value = data;
-            if (file.endsWith('.js')) {
-                lang.value = 'javascript';
-            } else if (file.endsWith('.py')) {
-                lang.value = 'py';
-            } else if (file.endsWith('.cpp')) {
-                lang.value = 'cpp';
-            } else if (file.endsWith('.java')) {
-                lang.value = 'java';
-            }
-        })
+            lang.value = file.split('.').pop();
+        });
 });
 </script>
 
 <template>
-    <v-row>
-        <v-col>
-            <v-card>
-                <v-card-title v-text="route.params.file.split('&').join('.')"/>
+    <v-row justify="center">
+        <v-col cols="12" md="8" lg="6">
+            <v-card class="mb-4">
+                <v-card-title class="font-weight-bold blue-grey darken-2 white--text" v-text="route.params.file.split('&').join('.')"/>
                 <v-card-text>
                     <CodeBlock
                         :code="code"
@@ -47,18 +40,13 @@ onMounted(() => {
                     />
                 </v-card-text>
             </v-card>
+            <v-btn color="primary" link :to="`/leetcode`">Back to List</v-btn>
         </v-col>
     </v-row>
-    <v-row>
-        <v-col>
-            <v-btn-group>
-                <v-btn link :to="`/leetcode`">List</v-btn>
-            </v-btn-group>
-        </v-col>
-    </v-row>
-
 </template>
 
 <style scoped>
-
+.v-card-title {
+    font-size: 1.5rem;
+}
 </style>

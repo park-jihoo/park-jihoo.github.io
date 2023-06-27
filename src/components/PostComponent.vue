@@ -11,6 +11,7 @@ onMounted(async () => {
     if (id) {
         post.value = await getPageBlocks(id);
     }
+    console.log(post.value);
 });
 </script>
 <template>
