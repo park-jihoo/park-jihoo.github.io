@@ -12,12 +12,12 @@ const routes = [
         component: HomeComponent
     },
     {
-        path: "/til",
+        path: "/notion",
         name: "Project",
         component: ProjectComponent
     },
     {
-        path: "/til/:id",
+        path: "/notion/:id",
         name: "Post",
         component: PostComponent
     },

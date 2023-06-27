@@ -30,7 +30,7 @@ const totalPage = computed(() => {
                     <v-list>
                         <v-list-item v-for="post in paginatedTable"
                                      :key="post.id" link
-                                     :to="{path:'/til/' + post.id}">
+                                     :to="{path:'/notion/' + post.id}">
                             <v-list-item-title v-text="post.title"></v-list-item-title>
                         </v-list-item>
                     </v-list>
