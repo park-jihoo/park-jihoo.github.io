@@ -35,6 +35,11 @@ const routes = [
         path: "/home",
         name: "Home",
         component: HomeComponent
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: HomeComponent
     }
 ]
 
