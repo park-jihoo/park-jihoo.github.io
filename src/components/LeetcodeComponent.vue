@@ -36,7 +36,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row justify="center">
       <v-col cols="12" md="8" lg="6">
         <v-card class="pa-5" elevation="2" outlined>
