@@ -1,75 +1,73 @@
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import {onMounted, ref, computed} from 'vue';
+
 const posts = ref([]);
 
-onMounted( () => {
+const fetchGithubFiles = async () => {
+  try {
     const owner = 'park-jihoo';
     const repo = 'Algorithm';
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`;
 
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            const filePaths = data.tree
-                .filter(item => item.type === 'blob')
-                .map(item => item.path)
-                .filter(path => path.endsWith('.js') || path.endsWith('.py') || path.endsWith('.cpp') || path.endsWith('.java'))
-                .filter(path => path.includes('-'))
-                .sort((a, b) => {
-                    const aName = a.split('/')[1].replace(/-/g, ' ').replace(/[0-9]/g, '').trim();
-                    const bName = b.split('/')[1].replace(/-/g, ' ').replace(/[0-9]/g, '').trim();
-                    return aName.localeCompare(bName);
-                });
+    const response = await fetch(apiUrl);
+    const data = await response.json();
 
-            posts.value = filePaths.map(path => {
-                const name = path.split('/')[1].replace(/-/g, ' ').replace(/[0-9]/g, '').trim();
-                const url = path.split('.')[0] + '&' + path.split('.')[1];
-                return {name, url};
-            });
-        })
-        .catch(console.error);
-});
+    return data.tree;
+  } catch(error) {
+    console.error(error);
+  }
+}
 
-const page = ref(1);
-const postsPerPage = 15;
-const paginatedPosts = computed(() => {
-    const start = (page.value - 1) * postsPerPage;
-    return posts.value.slice(start, start + postsPerPage);
-});
+const filterAndFormatPosts = (data) => {
+  return data
+      .filter(({ type, path }) => type === 'blob' && (path.endsWith('.js') || path.endsWith('.py') || path.endsWith('.cpp') || path.endsWith('.java')) && path.includes('-'))
+      .map(({ path }) => {
+        const name = path.split('/')[1].replace(/-/g, ' ').replace(/^\d\d\d\d/g, '').trim();
+        const url = path.split('.')[0] + '&' + path.split('.')[1];
+        return {name, url};
+      })
+      .sort((a, b) => a.name.localeCompare(b.name));
+}
 
-const totalPages = computed(() => {
-    return Math.ceil(posts.value.length / postsPerPage);
+onMounted(async () => {
+  const githubFiles = await fetchGithubFiles();
+  posts.value = filterAndFormatPosts(githubFiles);
 });
 </script>
 
 <template>
-    <v-container>
-        <v-row justify="center">
-            <v-col cols="12" md="8" lg="6">
-                <v-card class="pa-5" elevation="2" outlined>
-                    <v-list two-line>
-                        <v-list-item v-for="post in paginatedPosts" :key="post.url" link :to="{path:'/leetcode/'+post.url}">
-                            <v-list-item-content>
-                                <v-list-item-title class="font-weight-bold" v-text="post.name"></v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list>
-                    <div class="d-flex justify-center mt-5">
-                        <v-pagination v-model="page" :length="totalPages" color="primary" :total-visible="10" />
-                    </div>
-                </v-card>
-            </v-col>
-        </v-row>
-    </v-container>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="12" md="8" lg="6">
+        <v-card class="pa-5" elevation="2" outlined>
+          <v-list two-line>
+            <v-list-item
+                v-for="post in posts"
+                :key="post.url"
+                link
+                :to="{path:'/leetcode/'+post.url}"
+                class="d-flex">
+              <v-list-item-title
+                  class="font-weight-bold"
+                  v-text="post.name">
+              </v-list-item-title>
+              <v-spacer />
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
+
 
 <style scoped>
 .v-list-item {
-    cursor: pointer;
-    transition: all 0.3s ease;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .v-list-item:hover {
-    background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 </style>
