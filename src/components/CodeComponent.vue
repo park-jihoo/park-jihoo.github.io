@@ -6,10 +6,13 @@ import 'prismjs/components/prism-c.js';
 import 'prismjs/components/prism-cpp.js';
 import 'prismjs/components/prism-python.js';
 import 'prismjs/components/prism-java.js';
+import {CodeBlock} from "vue3-code-block";
+import {useTheme} from "vuetify";
 
 const code = ref('');
 const lang = ref('');
 const route = useRoute();
+const theme = useTheme();
 
 onMounted(() => {
     const slug = route.params.slug;
@@ -26,16 +29,17 @@ onMounted(() => {
 </script>
 
 <template>
+    <v-container>
     <v-row justify="center">
-        <v-col cols="12" md="8" lg="6">
+        <v-col align-self="auto">
             <v-card class="mb-4">
-                <v-card-title class="font-weight-bold blue-grey darken-2 white--text" v-text="route.params.file.split('&').join('.')"/>
+                <v-card-title v-text="route.params.file.replace(/\d\d\d\d-/g,'').split('&').join('.')"/>
                 <v-card-text>
                     <CodeBlock
                         :code="code"
                         prismjs
                         :lang="lang"
-                        theme="default"
+                        :theme="`${theme.global.current.value.dark ? 'neon-bunny-carrot':'default'}`"
                         persistent-copy-button
                     />
                 </v-card-text>
@@ -43,6 +47,7 @@ onMounted(() => {
             <v-btn color="primary" link :to="`/leetcode`">Back to List</v-btn>
         </v-col>
     </v-row>
+    </v-container>
 </template>
 
 <style scoped>

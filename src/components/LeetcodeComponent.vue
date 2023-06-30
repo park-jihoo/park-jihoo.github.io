@@ -13,21 +13,35 @@ const fetchGithubFiles = async () => {
     const data = await response.json();
 
     return data.tree;
-  } catch(error) {
+  } catch (error) {
     console.error(error);
   }
 }
 
 const filterAndFormatPosts = (data) => {
   return data
-      .filter(({ type, path }) => type === 'blob' && (path.endsWith('.js') || path.endsWith('.py') || path.endsWith('.cpp') || path.endsWith('.java')) && path.includes('-'))
-      .map(({ path }) => {
+      .filter(({
+                 type,
+                 path
+               }) => type === 'blob' && (path.endsWith('.js') || path.endsWith('.py') || path.endsWith('.cpp') || path.endsWith('.java')) && path.includes('-'))
+      .map(({path}) => {
         const name = path.split('/')[1].replace(/-/g, ' ').replace(/^\d\d\d\d/g, '').trim();
         const url = path.split('.')[0] + '&' + path.split('.')[1];
         return {name, url};
       })
       .sort((a, b) => a.name.localeCompare(b.name));
 }
+
+const itemsPerPage = ref(10);
+const currentPage = ref(1);
+
+const paginatedPosts = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return posts.value.slice(start, end);
+});
+
+const numberOfPages = computed(() => Math.ceil(posts.value.length / itemsPerPage.value));
 
 onMounted(async () => {
   const githubFiles = await fetchGithubFiles();
@@ -36,38 +50,30 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-container fluid>
+  <v-container>
     <v-row justify="center">
-      <v-col cols="12" md="8" lg="6">
-        <v-card class="pa-5" elevation="2" outlined>
-          <v-list two-line>
-            <v-list-item
-                v-for="post in posts"
-                :key="post.url"
-                link
-                :to="{path:'/leetcode/'+post.url}"
-                class="d-flex">
-              <v-list-item-title
-                  class="font-weight-bold"
-                  v-text="post.name">
-              </v-list-item-title>
-              <v-spacer />
-            </v-list-item>
+      <v-col align-self="auto">
+        <v-card class="pa-3" outlined elevation="2">
+          <v-card-title class="headline mb-2">LeetCode Solutions</v-card-title>
+          <v-divider></v-divider>
+          <v-list two-line flat>
+              <v-list-item
+                  v-for="post in paginatedPosts"
+                  :key="post.url"
+                  link
+                  :to="{path:'/leetcode/'+post.url}"
+              >
+                  <v-list-item-title>{{ post.name }}</v-list-item-title>
+              </v-list-item>
           </v-list>
+          <v-pagination
+              v-model="currentPage"
+              :length="numberOfPages"
+              color="primary"
+              class="my-4"
+          ></v-pagination>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
-
-
-<style scoped>
-.v-list-item {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.v-list-item:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-</style>
