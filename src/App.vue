@@ -55,7 +55,7 @@ const links = [
       </v-list>
     </v-navigation-drawer>
 
-    <v-main>
+    <v-main app>
       <v-container fluid>
         <router-view></router-view>
       </v-container>

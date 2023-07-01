@@ -41,7 +41,7 @@ const goTo = (url) => {
       <v-col md="8" sm="12">
         <v-card class="mb-6">
           <v-card-title>{{ name }}</v-card-title>
-          <v-card-subtitle class="mb-2">{{ title }}</v-card-subtitle>
+          <v-card-subtitle class="mb-2 text-button">{{ title }}</v-card-subtitle>
           <v-card-actions class="ml-2">
             <v-icon medium class="mr-2"
                     v-for="link in links"
@@ -54,7 +54,7 @@ const goTo = (url) => {
           <v-divider class="my-2"/>
 
           <v-card-title>SKILLS</v-card-title>
-          <v-card-text>
+          <v-card-text class="text-button">
             <div v-for="(skillset, category) in skills" :key="category">
               <div class="mb-2">{{ category }}</div>
               <v-img

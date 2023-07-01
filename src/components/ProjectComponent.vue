@@ -1,6 +1,6 @@
 <script setup>
 import {ref, computed, onMounted} from 'vue';
-import {getPageTable} from 'vue-notion';
+import {getPageTable} from 'vue3-notion';
 import {useRoute} from 'vue-router';
 import {useDisplay} from "vuetify";
 

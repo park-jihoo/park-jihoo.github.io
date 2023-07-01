@@ -16,6 +16,11 @@ import Vue3Katex from "@hsorby/vue3-katex";
 
 const vuetify = createVuetify({
     blueprint: md3,
+    defaults: {
+        global: {
+            ripple: true,
+        }
+    }
 })
 
 createApp(App)
