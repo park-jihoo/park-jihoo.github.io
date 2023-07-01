@@ -30,8 +30,14 @@ const filteredPageTable = computed(() => {
 <template>
   <v-container fluid class="my-5">
     <v-row no-gutters class="justify-center">
-      <v-tabs v-model="selectedClass" background-color="transparent" direction="vertical"
-              class="ma-2" align-self="start">
+      <v-tabs v-model="selectedClass" background-color="transparent" class="ma-2 d-sm-none" align-self="start" grow>
+        <v-tab v-for="className in classes" :key="className" :value="className" class="body-2">
+          {{ className }}
+        </v-tab>
+      </v-tabs>
+    </v-row>
+    <v-row no-gutters class="justify-center">
+      <v-tabs v-model="selectedClass" background-color="transparent" vertical class="ma-2 d-none d-sm-flex" align-self="start" direction="vertical">
         <v-tab v-for="className in classes" :key="className" :value="className" class="body-2">
           {{ className }}
         </v-tab>
