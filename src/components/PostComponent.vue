@@ -31,13 +31,6 @@ const navigateTo = (link) => {
 </script>
 <template>
   <v-container fluid>
-    <v-navigation-drawer permanent class="grey lighten-4 elevation-1">
-      <v-list dense>
-        <v-list-item v-for="className in classes" :key="className" @click="navigateTo(className)">
-          <v-list-item-title class="grey--text text--darken-1">{{ className }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-row no-gutters>
       <v-col align-self="auto">
         <NotionRenderer :blockMap="post" prism katex fullPage/>
