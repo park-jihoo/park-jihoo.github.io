@@ -21,7 +21,7 @@ onMounted(() => {
   fetch(langsUrl)
       .then((response) => response.json())
       .then((data) => {
-        langs.value = data.filter((item) => item.name !== 'README.md').map((item) => item.name.split('.')[1]);
+        langs.value = data.filter((item) => !item.name.includes('.md')).map((item) => item.name.split('.')[1]);
         lang.value = langs.value[0];
       });
 });
@@ -45,33 +45,39 @@ watch(lang, (newLang) => {
   <v-container>
     <v-row justify="center">
       <v-col align-self="auto">
-        <v-card class="mb-4">
-          <v-card-title
-              v-text="route.params.slug.replace(/\d\d\d\d-/g, '').replace(/-/g, ' ')"
-          />
+        <v-card outlined class="mb-5">
+          <v-card-title class="headline">
+            {{ route.params.slug.replace(/\d\d\d\d-/g, '').replace(/-/g, ' ') }}
+          </v-card-title>
           <v-card-text>
             <v-select
                 v-model="lang"
                 :items="langs"
                 label="Select Language"
+                outlined
+                dense
+                color="primary"
+                :disabled="langs.length === 1"
             ></v-select>
             <CodeBlock
                 :code="code"
-                prismjs
+                :prismjs="true"
                 :lang="lang"
-                :theme="`${theme.global.current.value.dark ? 'neon-bunny-carrot' : 'default'}`"
+                :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`"
                 persistent-copy-button
             />
           </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" link :to="`/leetcode`">Back to List</v-btn>
+          </v-card-actions>
         </v-card>
-        <v-btn color="primary" link :to="`/leetcode`">Back to List</v-btn>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
-<style scoped>
-.v-card-title {
-    font-size: 1.5rem;
-}
+<style>
+@use 'prismjs/themes/prism-dark.css';
+@use 'prismjs/themes/prism.css';
 </style>
