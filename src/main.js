@@ -20,6 +20,9 @@ const vuetify = createVuetify({
         global: {
             ripple: true,
         }
+    },
+    theme: {
+        defaultTheme: 'light',
     }
 })
 

@@ -27,7 +27,7 @@ const routes = [
         component: LeetCode
     },
     {
-        path: "/leetcode/:slug/:file",
+        path: "/leetcode/:slug",
         name: "codes",
         component: CodeComponent
     },

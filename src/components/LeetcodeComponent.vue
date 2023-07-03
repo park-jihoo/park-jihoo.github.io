@@ -7,8 +7,7 @@ const fetchGithubFiles = async () => {
   try {
     const owner = 'park-jihoo';
     const repo = 'Algorithm';
-    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`;
-
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/main`;
     const response = await fetch(apiUrl);
     const data = await response.json();
 
@@ -19,17 +18,14 @@ const fetchGithubFiles = async () => {
 }
 
 const filterAndFormatPosts = (data) => {
-  return data
-      .filter(({
-                 type,
-                 path
-               }) => type === 'blob' && (path.endsWith('.js') || path.endsWith('.py') || path.endsWith('.cpp') || path.endsWith('.java')) && path.includes('-'))
-      .map(({path}) => {
-        const name = path.split('/')[1].replace(/-/g, ' ').replace(/^\d\d\d\d/g, '').trim();
-        const url = path.split('.')[0] + '&' + path.split('.')[1];
+  return data.filter((item) => item.path.includes('-'))
+      .map((item) => {
+        const name = item.path.replace(/\d\d\d\d-/g, '');
+        const url = item.path.replace(/\//g, '&');
         return {name, url};
-      })
-      .sort((a, b) => a.name.localeCompare(b.name));
+      }).sort((a, b) => {
+        return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+      });
 }
 
 const itemsPerPage = ref(10);
