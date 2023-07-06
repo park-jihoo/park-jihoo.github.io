@@ -1,10 +1,12 @@
 <script setup>
-import {computed, onMounted, ref} from 'vue'
+import {computed, onMounted, onUpdated, ref} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {NotionRenderer, getPageBlocks, useGetPageTable} from 'vue3-notion'
+import mermaid from "mermaid";
 import "prismjs";
 import "prismjs/components/prism-python";
-import "prismjs/themes/prism.css";
+import "prismjs/components/prism-c";
+import "prismjs/components/prism-cpp";
 
 const {pageTable} = useGetPageTable('619787c75b60479886c147cf746bfbb8');
 const route = useRoute();
@@ -17,6 +19,7 @@ onMounted(async () => {
   if (id) {
     post.value = await getPageBlocks(id);
   }
+  mermaid.initialize({startOnLoad: true});
 });
 
 const classes = computed(() => {
@@ -30,11 +33,12 @@ const navigateTo = (link) => {
 
 </script>
 <template>
-  <v-container fluid>
+  <v-container>
     <v-row no-gutters>
       <v-col align-self="auto">
         <NotionRenderer v-if="post" :blockMap="post" prism katex fullPage
-                        :class="$vuetify.theme.global.current.dark ? 'dark-mode' : ''"/>
+                        :class="$vuetify.theme.global.current.dark ? 'dark-mode' : ''"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -42,4 +46,5 @@ const navigateTo = (link) => {
 <style>
 @import "katex/dist/katex.min.css";
 @import "vue3-notion/dist/style.css";
+@import "prismjs/themes/prism.css";
 </style>

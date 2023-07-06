@@ -12,6 +12,7 @@
     "@hsorby/vue3-katex": "^0.6.0-rc.5",
     "@popperjs/core": "^2.11.8",
     "npm": "^9.7.2",
+    "mermaid": "^10.2.4",
     "prismjs": "^1.29.0",
     "vite-plugin-vuetify": "^1.0.2",
     "vue": "^3.3.4",
