@@ -48,6 +48,15 @@ watch(lang, (newLang) => {
         <v-card outlined class="mb-5">
           <v-card-title class="headline">
             {{ route.params.slug.replace(/\d\d\d\d-/g, '').replace(/-/g, ' ') }}
+            <v-btn icon
+                   class="elevation-0"
+                   rounded="0"
+                   :variant="'text'"
+                   :ripple="false"
+                   :href="`https://leetcode.com/problems/${route.params.slug.replace(/\d\d\d\d-/g, '')}`" target="_blank"
+            >
+              <v-icon>mdi-open-in-new</v-icon>
+            </v-btn>
           </v-card-title>
           <v-card-text>
             <v-select
