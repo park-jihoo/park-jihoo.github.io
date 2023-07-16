@@ -36,9 +36,9 @@ const goTo = (url) => {
 </script>
 
 <template>
-  <v-container fluid>
-    <v-row justify="center">
-      <v-col md="8" sm="12">
+  <v-container>
+    <v-row no-gutters>
+      <v-col align-self="auto">
         <v-card class="mb-6">
           <v-card-title>{{ name }}</v-card-title>
           <v-card-subtitle class="mb-2 text-button">{{ title }}</v-card-subtitle>
