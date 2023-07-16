@@ -48,7 +48,14 @@ onMounted(async () => {
   <v-container class="my-5">
     <v-row no-gutters class="justify-center">
       <v-col class="ma-2" align-self="start">
-        <v-btn-toggle v-model="selectedClass" :multiple="true">
+        <v-btn-toggle v-model="selectedClass"
+                      :mandatory="'force'"
+                      rounded="0"
+                      color="primary"
+                      density="comfortable"
+                      divided
+                      multiple
+        >
           <v-btn
               v-for="classItem in classes"
               :key="classItem"
