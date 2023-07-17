@@ -6,6 +6,7 @@ import 'prismjs/components/prism-c.js';
 import 'prismjs/components/prism-cpp.js';
 import 'prismjs/components/prism-python.js';
 import 'prismjs/components/prism-java.js';
+import 'prismjs/components/prism-sql.js';
 import { CodeBlock } from 'vue3-code-block';
 import { useTheme } from 'vuetify';
 
@@ -45,7 +46,7 @@ watch(lang, (newLang) => {
   <v-container>
     <v-row justify="center">
       <v-col align-self="auto">
-        <v-card outlined class="mb-5">
+        <v-card outlined class="mb-5 elevation-2">
           <v-card-title class="headline">
             {{ route.params.slug.replace(/\d\d\d\d-/g, '').replace(/-/g, ' ') }}
             <v-btn icon
