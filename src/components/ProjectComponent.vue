@@ -68,23 +68,25 @@ onMounted(async () => {
     </v-row>
     <v-row>
       <v-col class="ma-2" align-self="start">
-        <v-data-table
-            v-model:items-per-page="itemsPerPage"
-            :headers="headers"
-            :items="filteredTable"
-            :items-length="filteredTable.length"
-            hide-default-footer
-            dense
-            hover
-            @click:row="navigateTo"
-        >
-          <template v-slot:item.title="{ item }">
-            <v-chip color="primary" dark class="ma-1">
-              {{ item.selectable.class }}
-            </v-chip>
-            {{ item.selectable.title }}
-          </template>
-        </v-data-table>
+        <v-card class="pa-3 elevation-2">
+          <v-data-table
+              v-model:items-per-page="itemsPerPage"
+              :headers="headers"
+              :items="filteredTable"
+              :items-length="filteredTable.length"
+              hide-default-footer
+              dense
+              hover
+              @click:row="navigateTo"
+          >
+            <template v-slot:item.title="{ item }">
+              <v-chip color="primary" dark class="ma-1">
+                {{ item.selectable.class }}
+              </v-chip>
+              {{ item.selectable.title }}
+            </template>
+          </v-data-table>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
