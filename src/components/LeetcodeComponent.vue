@@ -2,6 +2,7 @@
 import {onMounted, ref, computed} from 'vue';
 import {useRouter} from "vue-router";
 import {VDataTable} from "vuetify/labs/components";
+import {VDataTableServer} from "vuetify/labs/components";
 
 const router = useRouter();
 const posts = ref([]);
@@ -66,18 +67,31 @@ onMounted(async () => {
   const githubFiles = await fetchGithubFiles();
   posts.value = await filterAndFormatPosts(githubFiles);
 });
+
+const filteredPosts = computed(() => {
+  return posts.value.filter((post) => {
+    return post.name.toLowerCase().includes(search.value.toLowerCase());
+  });
+});
+
+const getLanguageIcon = (language) => {
+  const languageInfo = languageIcons.find((icon) => icon.language === language);
+  return languageInfo ? languageInfo.icon : '';
+}
+
+const getLanguageColor = (language) => {
+  const languageInfo = languageIcons.find((icon) => icon.language === language);
+  return languageInfo ? 'primary' : '';
+}
 </script>
 
 <template>
   <v-container>
-    <v-row>
-      <v-col align-self="auto">
-        <v-card class="pa-3 elevation-2">
-          <v-card-title
-              class="headline text-center text-uppercase grey lighten-2"
-          >
+    <v-row justify="center">
+      <v-col cols="12" md="8">
+        <v-card class="elevation-2">
+          <v-card-title class="text-center text-uppercase grey lighten-2">
             LeetCode Solutions
-            <v-spacer></v-spacer>
           </v-card-title>
           <v-card-text>
             <v-text-field
@@ -91,8 +105,8 @@ onMounted(async () => {
             <v-data-table
                 v-model:items-per-page="itemsPerPage"
                 :headers="headers"
-                :items-length="posts.length"
-                :items="posts"
+                :items-length="filteredPosts.length"
+                :items="filteredPosts"
                 :search="search"
                 hover
                 dense
@@ -101,10 +115,13 @@ onMounted(async () => {
                 @click:row="navigateTo"
             >
               <template v-slot:item.languages="{ item }">
-                <v-icon v-for="language in item.selectable.languages" :key="language"
-                color="primary"
+                <v-icon
+                    v-for="language in item.selectable.languages"
+                    :key="language"
+                    :color="getLanguageColor(language)"
+                    class="mr-2"
                 >
-                  {{ languageIcons.find((icon) => icon.language === language).icon }}
+                  {{ getLanguageIcon(language) }}
                 </v-icon>
               </template>
             </v-data-table>
