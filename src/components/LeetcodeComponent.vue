@@ -80,6 +80,7 @@ const getDifficulties = async (slug) => {
       .catch((error) => {
         console.error(slug, error);
       });
+  return difficulty;
 }
 </script>
 
@@ -121,6 +122,16 @@ const getDifficulties = async (slug) => {
                 >
                   {{ languageIcons.find((icon) => icon.language === language).icon }}
                 </v-icon>
+              </template>
+              <template v-slot:item.name="{ item }">
+                <v-chip
+                    :color="item.selectable.difficulty === 'Easy' ? 'success' : item.selectable.difficulty === 'Medium' ? 'warning' : 'error'"
+                    text-color="white"
+                    small
+                >
+                  {{ item.selectable.difficulty }}
+                </v-chip>
+                {{item.selectable.name }}
               </template>
             </v-data-table>
           </v-card-text>
