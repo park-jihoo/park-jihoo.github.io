@@ -12,6 +12,7 @@ import { useTheme } from 'vuetify';
 
 const code = ref('');
 const lang = ref('');
+const difficulty = ref('');
 const langs = ref([]);
 const route = useRoute();
 const theme = useTheme();
@@ -24,6 +25,15 @@ onMounted(() => {
       .then((data) => {
         langs.value = data.filter((item) => !item.name.includes('.md')).map((item) => item.name.split('.')[1]);
         lang.value = langs.value[0];
+      });
+
+  const readmeUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${slug}/README.md`;
+  fetch(readmeUrl)
+      .then((response) => response.text())
+      .then((data) => {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(data, 'text/html');
+        difficulty.value = doc.querySelector('h3').innerText
       });
 });
 
@@ -48,6 +58,13 @@ watch(lang, (newLang) => {
       <v-col align-self="auto">
         <v-card outlined class="mb-5 elevation-2">
           <v-card-title class="headline">
+            <v-chip
+                class="ml-2"
+                :color="difficulty === 'Easy' ? 'green' : difficulty === 'Medium' ? 'orange' : 'red'"
+                dark
+            >
+              {{ difficulty }}
+            </v-chip>
             {{ route.params.slug.replace(/\d\d\d\d-/g, '').replace(/-/g, ' ') }}
             <v-btn icon
                    class="elevation-0"

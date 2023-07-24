@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, onUpdated, ref} from 'vue'
+import {computed, onMounted, onUpdated, ref, watch, watchEffect, watchSyncEffect} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {NotionRenderer, getPageBlocks, useGetPageTable} from 'vue3-notion'
 import mermaid from "mermaid";
@@ -8,9 +8,7 @@ import "prismjs/components/prism-python";
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
 
-const {pageTable} = useGetPageTable('619787c75b60479886c147cf746bfbb8');
 const route = useRoute();
-const router = useRouter();
 
 const post = ref({});
 
@@ -22,15 +20,9 @@ onMounted(async () => {
   mermaid.initialize({startOnLoad: true});
 });
 
-const classes = computed(() => {
-  const allClasses = pageTable.value.map(post => post.class);
-  return [...new Set(allClasses)];
-});
-
-const navigateTo = (link) => {
-  router.push({path: '/notes', query: {class: link}})
+const renderMermaid = () => {
+  mermaid.init(undefined, document.getElementsByClassName("language-mermaid"));
 };
-
 </script>
 <template>
   <v-container>
@@ -38,6 +30,7 @@ const navigateTo = (link) => {
       <v-col align-self="auto">
         <NotionRenderer v-if="post" :blockMap="post" prism katex fullPage
                         :class="$vuetify.theme.global.current.dark ? 'dark-mode' : ''"
+                        @click="renderMermaid"
         />
       </v-col>
     </v-row>

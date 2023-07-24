@@ -9,7 +9,7 @@ const itemsPerPage = ref(10);
 const headers = [
   {title: 'id', key: 'id', sortable: true},
   {title: 'Name', key: 'name', sortable: true},
-  {title: 'Languages', key: 'languages', sortable: true},
+  {title: 'Languages', key: 'languages', sortable:false},
 ];
 
 const languageIcons = [
@@ -38,9 +38,9 @@ const fetchGithubFiles = async () => {
   }
 }
 
-const filterAndFormatPosts = (data) => {
+const filterAndFormatPosts = async (data) => {
   let questions = [];
-  data.forEach((item) => {
+  for (const item of data) {
     const path = item.path.split('/');
     if (questions.map((item) => item.url).includes(path[0])) {
       const index = questions.findIndex((question) => question.url === path[0]);
@@ -51,10 +51,10 @@ const filterAndFormatPosts = (data) => {
         url: path[0],
         name: path[0].replace(/-/g, ' ').replace(/\d\d\d\d/g, '').trim(),
         languages: [path[1].split('.').pop()],
+        difficulty: await getDifficulties(path[0]),
       });
     }
-  });
-
+  }
   return questions;
 }
 
@@ -65,8 +65,22 @@ const navigateTo = (event, data) => {
 
 onMounted(async () => {
   const githubFiles = await fetchGithubFiles();
-  posts.value = filterAndFormatPosts(githubFiles);
+  posts.value = await filterAndFormatPosts(githubFiles);
 });
+
+const getDifficulties = async (slug) => {
+  const readmeUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${slug}/README.md`;
+  const difficulty = await fetch(readmeUrl)
+      .then((response) => response.text())
+      .then((text) => {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(text, 'text/html');
+        return doc.querySelector('h3').innerText;
+      })
+      .catch((error) => {
+        console.error(slug, error);
+      });
+}
 </script>
 
 <template>
@@ -98,10 +112,13 @@ onMounted(async () => {
                 hover
                 dense
                 hide-default-footer
+                item-class="px-4 py-2"
                 @click:row="navigateTo"
             >
               <template v-slot:item.languages="{ item }">
-                <v-icon v-for="language in item.selectable.languages" :key="language">
+                <v-icon v-for="language in item.selectable.languages" :key="language"
+                color="primary"
+                >
                   {{ languageIcons.find((icon) => icon.language === language).icon }}
                 </v-icon>
               </template>
