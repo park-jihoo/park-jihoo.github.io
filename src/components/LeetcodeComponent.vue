@@ -51,7 +51,6 @@ const filterAndFormatPosts = async (data) => {
         url: path[0],
         name: path[0].replace(/-/g, ' ').replace(/\d\d\d\d/g, '').trim(),
         languages: [path[1].split('.').pop()],
-        difficulty: await getDifficulties(path[0]),
       });
     }
   }
@@ -67,21 +66,6 @@ onMounted(async () => {
   const githubFiles = await fetchGithubFiles();
   posts.value = await filterAndFormatPosts(githubFiles);
 });
-
-const getDifficulties = async (slug) => {
-  const readmeUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${slug}/README.md`;
-  const difficulty = await fetch(readmeUrl)
-      .then((response) => response.text())
-      .then((text) => {
-        let parser = new DOMParser();
-        let doc = parser.parseFromString(text, 'text/html');
-        return doc.querySelector('h3').innerText;
-      })
-      .catch((error) => {
-        console.error(slug, error);
-      });
-  return difficulty;
-}
 </script>
 
 <template>
@@ -122,16 +106,6 @@ const getDifficulties = async (slug) => {
                 >
                   {{ languageIcons.find((icon) => icon.language === language).icon }}
                 </v-icon>
-              </template>
-              <template v-slot:item.name="{ item }">
-                <v-chip
-                    :color="item.selectable.difficulty === 'Easy' ? 'success' : item.selectable.difficulty === 'Medium' ? 'warning' : 'error'"
-                    text-color="white"
-                    small
-                >
-                  {{ item.selectable.difficulty }}
-                </v-chip>
-                {{item.selectable.name }}
               </template>
             </v-data-table>
           </v-card-text>
