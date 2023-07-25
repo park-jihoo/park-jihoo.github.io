@@ -23,6 +23,16 @@ const links = [
 
 <template>
   <v-app id="inspire">
+    <v-navigation-drawer v-model="drawer" app temporary>
+      <v-list dense>
+        <v-list-item class="py-0" v-for="link in links" :key="link.title" @click="() => navigateTo(link.title)" ripple>
+          <v-list-item-title :class="$vuetify.theme.global.current.dark ? 'text-button text-deep-purple-lighten-2' : 'text-button text-deep-purple-darken-2'">
+            <v-icon left small class="mr-2" color="primary">{{ link.icon }}</v-icon>
+            {{ link.title }}
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <v-app-bar app>
       <v-toolbar-title>
         <v-avatar class="ml-4" size="40">
@@ -43,18 +53,6 @@ const links = [
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="d-sm-none"></v-app-bar-nav-icon>
     </v-app-bar>
-
-    <v-navigation-drawer v-model="drawer" app temporary>
-      <v-list>
-        <v-list-item class="py-0" v-for="link in links" :key="link.title" @click="() => navigateTo(link.title)" ripple>
-          <v-list-item-title :class="$vuetify.theme.global.current.dark ? 'text-button text-deep-purple-lighten-2' : 'text-button text-deep-purple-darken-2'">
-            <v-icon left small class="mr-2" color="primary">{{ link.icon }}</v-icon>
-            {{ link.title }}
-          </v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
     <v-main app>
       <v-container fluid>
         <router-view></router-view>
