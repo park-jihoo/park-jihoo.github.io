@@ -1,11 +1,11 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { getPageTable } from 'vue3-notion';
-import { useRoute, useRouter } from 'vue-router';
-import { VDataTable } from 'vuetify/labs/components';
+import { ref, computed, onMounted } from "vue";
+import { getPageTable } from "vue3-notion";
+import { useRoute, useRouter } from "vue-router";
+import { VDataTable } from "vuetify/labs/components";
 
 const pageTable = ref([]);
-const selectedClass = ref(['Paper']);
+const selectedClass = ref(["Paper"]);
 const route = useRoute();
 const router = useRouter();
 const itemsPerPage = ref(10);
@@ -16,18 +16,20 @@ const classes = computed(() => {
 });
 
 const filteredTable = computed(() => {
-  return pageTable.value.filter((post) => selectedClass.value.includes(post.class));
+  return pageTable.value.filter((post) =>
+    selectedClass.value.includes(post.class),
+  );
 });
 
-const headers = [{ title: 'Title', key: 'title', sortable: true }];
+const headers = [{ title: "Title", key: "title", sortable: true }];
 
 const navigateTo = (event, data) => {
   const link = data.item.value;
-  router.push({ path: '/notes/' + link });
+  router.push({ path: "/notes/" + link });
 };
 
 onMounted(async () => {
-  pageTable.value = await getPageTable('619787c75b60479886c147cf746bfbb8');
+  pageTable.value = await getPageTable("619787c75b60479886c147cf746bfbb8");
   if (route.query.class) {
     selectedClass.value = route.query.class;
   }
@@ -48,18 +50,19 @@ onMounted(async () => {
   <v-container class="my-5">
     <v-row no-gutters class="justify-center">
       <v-col class="ma-2" align-self="start">
-        <v-btn-toggle v-model="selectedClass"
-                      :mandatory="'force'"
-                      rounded="0"
-                      color="primary"
-                      density="comfortable"
-                      divided
-                      multiple
+        <v-btn-toggle
+          v-model="selectedClass"
+          :mandatory="'force'"
+          rounded="0"
+          color="primary"
+          density="comfortable"
+          divided
+          multiple
         >
           <v-btn
-              v-for="classItem in classes"
-              :key="classItem"
-              :value="classItem"
+            v-for="classItem in classes"
+            :key="classItem"
+            :value="classItem"
           >
             {{ classItem }}
           </v-btn>
@@ -70,14 +73,14 @@ onMounted(async () => {
       <v-col class="ma-2" align-self="start">
         <v-card class="pa-3 elevation-2">
           <v-data-table
-              v-model:items-per-page="itemsPerPage"
-              :headers="headers"
-              :items="filteredTable"
-              :items-length="filteredTable.length"
-              hide-default-footer
-              dense
-              hover
-              @click:row="navigateTo"
+            v-model:items-per-page="itemsPerPage"
+            :headers="headers"
+            :items="filteredTable"
+            :items-length="filteredTable.length"
+            hide-default-footer
+            dense
+            hover
+            @click:row="navigateTo"
           >
             <template v-slot:item.title="{ item }">
               <v-chip color="primary" dark class="ma-1">
