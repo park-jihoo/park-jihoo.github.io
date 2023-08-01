@@ -99,13 +99,12 @@ const getLanguageColor = (language) => {
     <v-row justify="center">
       <v-col cols="12" md="8">
         <v-card class="elevation-2">
-          <v-card-title class="text-center text-uppercase grey lighten-2">
+          <v-card-title class="text-center text-uppercase text-grey">
             LeetCode Solutions
           </v-card-title>
           <v-card-text>
             <v-text-field
               v-model="search"
-              append-icon="mdi-magnify"
               label="Search"
               filled
               hide-details
@@ -124,14 +123,15 @@ const getLanguageColor = (language) => {
               @click:row="navigateTo"
             >
               <template v-slot:item.languages="{ item }">
-                <v-icon
+                <v-chip
                   v-for="language in item.selectable.languages"
                   :key="language"
                   :color="getLanguageColor(language)"
-                  class="mr-2"
+                  class="ma-1"
                 >
-                  {{ getLanguageIcon(language) }}
-                </v-icon>
+                  <v-icon class="mr-2">{{ getLanguageIcon(language)}}</v-icon>
+                  {{ language }}
+                </v-chip>
               </template>
             </v-data-table>
           </v-card-text>

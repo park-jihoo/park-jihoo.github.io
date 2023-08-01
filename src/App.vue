@@ -47,15 +47,15 @@ const links = [
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app>
-      <v-toolbar-title>
+    <v-app-bar flat>
+      <v-app-bar-title>
         <v-avatar class="ml-4" size="40">
           <v-img
             src="https://avatars.githubusercontent.com/u/67787453"
             @click="() => navigateTo('Home')"
           ></v-img>
         </v-avatar>
-      </v-toolbar-title>
+      </v-app-bar-title>
 
       <v-spacer></v-spacer>
 
@@ -80,7 +80,7 @@ const links = [
       ></v-app-bar-nav-icon>
     </v-app-bar>
     <v-main app>
-      <v-container fluid>
+      <v-container>
         <router-view></router-view>
       </v-container>
     </v-main>
