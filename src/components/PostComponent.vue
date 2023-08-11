@@ -9,7 +9,7 @@ import {
   watchSyncEffect,
 } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { NotionRenderer, getPageBlocks, useGetPageTable } from "vue3-notion";
+import { NotionRenderer, getPageBlocks, useGetPageBlocks } from "vue3-notion";
 import mermaid from "mermaid";
 import "prismjs";
 import "prismjs/components/prism-python";
@@ -18,7 +18,7 @@ import "prismjs/components/prism-cpp";
 
 const route = useRoute();
 
-const post = ref({});
+const post = ref(null);
 
 onMounted(async () => {
   const id = route.params.id;

@@ -98,7 +98,7 @@ const getLanguageColor = (language) => {
   <v-container>
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <v-card class="elevation-2">
+        <v-card class="elevation-4">
           <v-card-title class="text-center text-uppercase text-grey">
             LeetCode Solutions
           </v-card-title>
@@ -109,7 +109,15 @@ const getLanguageColor = (language) => {
               filled
               hide-details
               class="ma-1"
-            ></v-text-field>
+              clearable
+              solo
+              color="primary"
+              placeholder="Search..."
+            >
+              <template #prepend>
+                <v-icon>mdi-magnify</v-icon>
+              </template>
+            </v-text-field>
             <v-data-table
               v-model:items-per-page="itemsPerPage"
               :headers="headers"

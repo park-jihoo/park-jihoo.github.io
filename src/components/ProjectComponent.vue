@@ -2,13 +2,12 @@
 import { ref, computed, onMounted } from "vue";
 import { getPageTable } from "vue3-notion";
 import { useRoute, useRouter } from "vue-router";
-import { VDataTable } from "vuetify/labs/components";
+import { VDataTableServer, VDataTable } from "vuetify/labs/components";
 
 const pageTable = ref([]);
 const selectedClass = ref(["Paper"]);
 const route = useRoute();
 const router = useRouter();
-const itemsPerPage = ref(10);
 
 const classes = computed(() => {
   const allClasses = pageTable.value.map((post) => post.class);
@@ -44,6 +43,10 @@ onMounted(async () => {
     }
   });
 });
+
+const search = ref("");
+
+const itemsPerPageOptions = ref([10, 20, 30, 40, 50]);
 </script>
 
 <template>
@@ -57,12 +60,14 @@ onMounted(async () => {
           color="primary"
           density="comfortable"
           divided
-          multiple
+          dense
+          group
         >
           <v-btn
             v-for="classItem in classes"
             :key="classItem"
             :value="classItem"
+            outlined
           >
             {{ classItem }}
           </v-btn>
@@ -70,22 +75,41 @@ onMounted(async () => {
       </v-col>
     </v-row>
     <v-row>
+      <v-col>
+        <v-text-field
+          v-model="search"
+          label="Search"
+          filled
+          hide-details
+          class="ma-1"
+          clearable
+          solo
+          color="primary"
+          placeholder="Search..."
+        >
+          <template #prepend>
+            <v-icon>mdi-magnify</v-icon>
+          </template>
+        </v-text-field>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col class="ma-2" align-self="start">
-        <v-card class="pa-3 elevation-2">
+        <v-card class="pa-3 elevation-4 rounded-lg">
           <v-data-table
-            v-model:items-per-page="itemsPerPage"
             :headers="headers"
             :items="filteredTable"
             :items-length="filteredTable.length"
             hide-default-footer
             dense
             hover
+            :search="search"
             @click:row="navigateTo"
+            :loading="filteredTable.length===0"
+            :items-per-page="10"
           >
-            <template v-slot:item.title="{ item }">
-              <v-chip color="primary" dark class="ma-1">
-                {{ item.selectable.class }}
-              </v-chip>
+            <template #item.title="{ item }">
+              <v-icon class="mr-2" icon="mdi-file-document-outline"></v-icon>
               {{ item.selectable.title }}
             </template>
           </v-data-table>
