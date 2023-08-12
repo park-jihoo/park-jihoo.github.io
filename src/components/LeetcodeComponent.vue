@@ -2,7 +2,6 @@
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { VDataTable } from "vuetify/labs/components";
-import { VDataTableServer } from "vuetify/labs/components";
 
 const router = useRouter();
 const posts = ref([]);
@@ -95,11 +94,11 @@ const getLanguageColor = (language) => {
 </script>
 
 <template>
-  <v-container>
+  <v-container class="my-5">
     <v-row justify="center">
-      <v-col cols="12" md="8">
-        <v-card class="elevation-4">
-          <v-card-title class="text-center text-uppercase text-grey">
+      <v-col align-self="start" class="ma-2">
+        <v-card class="elevation-4 rounded-lg">
+          <v-card-title class="text-center text-uppercase text-button">
             LeetCode Solutions
           </v-card-title>
           <v-card-text>
@@ -109,13 +108,13 @@ const getLanguageColor = (language) => {
               filled
               hide-details
               class="ma-1"
-              clearable
+              :clearable="true"
               solo
               color="primary"
               placeholder="Search..."
             >
               <template #prepend>
-                <v-icon>mdi-magnify</v-icon>
+                <v-icon color="primary">mdi-magnify</v-icon>
               </template>
             </v-text-field>
             <v-data-table
@@ -126,20 +125,24 @@ const getLanguageColor = (language) => {
               :search="search"
               hover
               dense
+              :loading="filteredPosts.length === 0"
               hide-default-footer
               item-class="px-4 py-2"
               @click:row="navigateTo"
             >
               <template v-slot:item.languages="{ item }">
-                <v-chip
-                  v-for="language in item.selectable.languages"
-                  :key="language"
-                  :color="getLanguageColor(language)"
-                  class="ma-1"
-                >
-                  <v-icon class="mr-2">{{ getLanguageIcon(language)}}</v-icon>
-                  {{ language }}
-                </v-chip>
+                <v-chip-group>
+                  <v-chip
+                    v-for="language in item.selectable.languages"
+                    :key="language"
+                    class="ma-1"
+                    color="primary"
+                    outlined
+                  >
+                    <v-icon left class="mr-2">{{ getLanguageIcon(language) }}</v-icon>
+                    {{ language }}
+                  </v-chip>
+                </v-chip-group>
               </template>
             </v-data-table>
           </v-card-text>

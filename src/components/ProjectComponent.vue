@@ -2,16 +2,19 @@
 import { ref, computed, onMounted } from "vue";
 import { getPageTable } from "vue3-notion";
 import { useRoute, useRouter } from "vue-router";
-import { VDataTableServer, VDataTable } from "vuetify/labs/components";
+import { VDataTable } from "vuetify/labs/components";
 
 const pageTable = ref([]);
-const selectedClass = ref(["Paper"]);
+const selectedClass = ref([]);
 const route = useRoute();
 const router = useRouter();
 
 const classes = computed(() => {
   const allClasses = pageTable.value.map((post) => post.class);
-  return [...new Set(allClasses)];
+  selectedClass.value = [...new Set(allClasses)].sort((a, b) =>
+    a.localeCompare(b),
+  )[0];
+  return [...new Set(allClasses)].sort((a, b) => a.localeCompare(b));
 });
 
 const filteredTable = computed(() => {
@@ -33,20 +36,10 @@ onMounted(async () => {
     selectedClass.value = route.query.class;
   }
 
-  pageTable.value.sort((a, b) => {
-    if (a.title < b.title) {
-      return -1;
-    } else if (a.title > b.title) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+  pageTable.value.sort((a, b) => a.title.localeCompare(b.title));
 });
 
 const search = ref("");
-
-const itemsPerPageOptions = ref([10, 20, 30, 40, 50]);
 </script>
 
 <template>
@@ -56,10 +49,8 @@ const itemsPerPageOptions = ref([10, 20, 30, 40, 50]);
         <v-btn-toggle
           v-model="selectedClass"
           :mandatory="'force'"
-          rounded="0"
+          rounded
           color="primary"
-          density="comfortable"
-          divided
           dense
           group
         >
@@ -75,27 +66,23 @@ const itemsPerPageOptions = ref([10, 20, 30, 40, 50]);
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
-        <v-text-field
-          v-model="search"
-          label="Search"
-          filled
-          hide-details
-          class="ma-1"
-          clearable
-          solo
-          color="primary"
-          placeholder="Search..."
-        >
-          <template #prepend>
-            <v-icon>mdi-magnify</v-icon>
-          </template>
-        </v-text-field>
-      </v-col>
-    </v-row>
-    <v-row>
       <v-col class="ma-2" align-self="start">
         <v-card class="pa-3 elevation-4 rounded-lg">
+          <v-text-field
+            v-model="search"
+            label="Search"
+            filled
+            hide-details
+            class="ma-1"
+            clearable
+            solo
+            color="primary"
+            placeholder="Search..."
+          >
+            <template #prepend>
+              <v-icon color="primary">mdi-magnify</v-icon>
+            </template>
+          </v-text-field>
           <v-data-table
             :headers="headers"
             :items="filteredTable"
@@ -105,12 +92,12 @@ const itemsPerPageOptions = ref([10, 20, 30, 40, 50]);
             hover
             :search="search"
             @click:row="navigateTo"
-            :loading="filteredTable.length===0"
+            :loading="filteredTable.length === 0"
             :items-per-page="10"
           >
-            <template #item.title="{ item }">
-              <v-icon class="mr-2" icon="mdi-file-document-outline"></v-icon>
-              {{ item.selectable.title }}
+            <template v-slot:item.title="{ item }">
+              <v-icon class="mr-2" color="primary">mdi-file-document-outline</v-icon>
+              <span class="font-weight-regular">{{ item.selectable.title }}</span>
             </template>
           </v-data-table>
         </v-card>
