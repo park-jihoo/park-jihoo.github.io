@@ -51,7 +51,7 @@ const renderMermaid = () => {
     <v-row no-gutters>
       <v-col cols="12" md="8" offset-md="2">
         <v-card class="elevation-3 pa-4">
-          <v-card-title class="mt-2 text-wrap text-h3">
+          <v-card-title class="mt-2 text-wrap text-h4">
             {{ title }}
             <v-btn-group>
               <v-btn
@@ -66,7 +66,7 @@ const renderMermaid = () => {
               </v-btn>
             </v-btn-group>
           </v-card-title>
-                    <NotionRenderer
+            <NotionRenderer
                       v-if="post"
                       :blockMap="post"
                       katex
