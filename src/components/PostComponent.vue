@@ -1,29 +1,42 @@
 <script setup>
 import {
-  computed,
   onMounted,
   onUpdated,
-  ref,
-  watch,
-  watchEffect,
-  watchSyncEffect,
+  ref
 } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { NotionRenderer, getPageBlocks, useGetPageBlocks } from "vue3-notion";
+import { useRoute } from "vue-router";
+import { NotionRenderer, getPageBlocks, getPageTable } from "vue3-notion";
 import mermaid from "mermaid";
 import "prismjs";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
 
+import { CodeBlock } from "vue3-code-block";
+
 const route = useRoute();
 
 const post = ref(null);
+const table = ref(null);
+const title = ref(null);
+const pdf = ref(null);
+const code = ref([]);
 
 onMounted(async () => {
   const id = route.params.id;
   if (id) {
     post.value = await getPageBlocks(id);
+    table.value = await getPageTable(id);
+    for (let row of table.value) {
+      if (row.id === id) {
+        title.value = row.title;
+        if (row.pdf)
+          pdf.value = row.pdf;
+        break;
+      }
+    }
+    console.log(post.value);
+
   }
   mermaid.initialize({ startOnLoad: true });
 });
@@ -31,20 +44,36 @@ onMounted(async () => {
 const renderMermaid = () => {
   mermaid.init(undefined, document.getElementsByClassName("language-mermaid"));
 };
+
 </script>
 <template>
   <v-container>
     <v-row no-gutters>
-      <v-col align-self="auto">
-        <NotionRenderer
-          v-if="post"
-          :blockMap="post"
-          prism
-          katex
-          fullPage
-          :class="$vuetify.theme.global.current.dark ? 'dark-mode' : ''"
-          @click="renderMermaid"
-        />
+      <v-col cols="12" md="8" offset-md="2">
+        <v-card class="elevation-3 pa-4">
+          <v-card-title class="mt-2 text-wrap text-h3">
+            {{ title }}
+            <v-btn-group>
+              <v-btn
+                v-for="file in pdf"
+                :key="file.name"
+                :href="file.name"
+                target="_blank"
+                icon
+                class="ma-1"
+              >
+                <v-icon>mdi-file-outline</v-icon>
+              </v-btn>
+            </v-btn-group>
+          </v-card-title>
+                    <NotionRenderer
+                      v-if="post"
+                      :blockMap="post"
+                      katex
+                      :class="$vuetify.theme.global.current.dark ? 'dark-mode ma-3' : 'ma-3'"
+                      @click="renderMermaid"
+                    />
+        </v-card>
       </v-col>
     </v-row>
   </v-container>

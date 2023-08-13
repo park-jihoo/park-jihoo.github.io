@@ -75,6 +75,7 @@ const search = ref("");
             hide-details
             class="ma-1"
             clearable
+            @click:clear="search = ''"
             solo
             color="primary"
             placeholder="Search..."
@@ -96,7 +97,8 @@ const search = ref("");
             :items-per-page="10"
           >
             <template v-slot:item.title="{ item }">
-              <v-icon class="mr-2" color="primary">mdi-file-document-outline</v-icon>
+              <v-icon v-if="item.selectable.pdf" class="mr-2" color="primary">mdi-file-document-outline</v-icon>
+              <v-icon v-else class="mr-2" color="primary">mdi-file-outline</v-icon>
               <span class="font-weight-regular">{{ item.selectable.title }}</span>
             </template>
           </v-data-table>

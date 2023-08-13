@@ -112,6 +112,7 @@ const getLanguageColor = (language) => {
               solo
               color="primary"
               placeholder="Search..."
+              @click:clear="search = ''"
             >
               <template #prepend>
                 <v-icon color="primary">mdi-magnify</v-icon>
