@@ -26,12 +26,12 @@ const routes = [
     component: PostComponent,
   },
   {
-    path: "/leetcode",
+    path: "/algorithm",
     name: "Leetcode",
     component: LeetCode,
   },
   {
-    path: "/leetcode/:slug",
+    path: "/algorithm/:platform/:difficulty/:slug",
     name: "codes",
     component: CodeComponent,
   },

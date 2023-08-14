@@ -8,6 +8,7 @@ import "prismjs/components/prism-python.js";
 import "prismjs/components/prism-java.js";
 import "prismjs/components/prism-sql.js";
 import { CodeBlock } from "vue3-code-block";
+import {VSkeletonLoader} from "vuetify/lib/labs/components";
 import { useTheme } from "vuetify";
 
 const code = ref("");
@@ -19,7 +20,9 @@ const theme = useTheme();
 
 onMounted(() => {
   const slug = route.params.slug;
-  const langsUrl = `https://api.github.com/repos/park-jihoo/Algorithm/contents/${slug}`;
+  const platform = route.params.platform;
+  difficulty.value = route.params.difficulty;
+  const langsUrl = `https://api.github.com/repos/park-jihoo/Algorithm/contents/${platform}/${difficulty.value}/${slug}`;
   fetch(langsUrl)
     .then((response) => response.json())
     .then((data) => {
@@ -28,48 +31,72 @@ onMounted(() => {
         .map((item) => item.name.split(".")[1]);
       lang.value = langs.value[0];
     });
-
-  const readmeUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${slug}/README.md`;
-  fetch(readmeUrl)
-    .then((response) => response.text())
-    .then((data) => {
-      let parser = new DOMParser();
-      let doc = parser.parseFromString(data, "text/html");
-      difficulty.value = doc.querySelector("h3").innerText;
-    });
 });
 
 watch(lang, (newLang) => {
   // Reload code based on the selected language
   const slug = route.params.slug;
-  const file = route.params.slug + "." + newLang;
-  const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${slug}/${file}`;
+  const platform = route.params.platform;
+  if(platform !== "leetcode"){
+    const file = route.params.slug.split(".")[1].trim() + "." + newLang;
+    const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
 
-  fetch(githubUrl)
-    .then((response) => response.text())
-    .then((data) => {
-      code.value = data;
-      lang.value = newLang;
-    });
+    fetch(githubUrl)
+      .then((response) => response.text())
+      .then((data) => {
+        code.value = data;
+        lang.value = newLang;
+      });
+  }else{
+    const file = route.params.slug + "." + newLang;
+    const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
+
+    fetch(githubUrl)
+      .then((response) => response.text())
+      .then((data) => {
+        code.value = data;
+        lang.value = newLang;
+      });
+  }
 });
+
+const getColor = (difficulty) => {
+  switch (difficulty) {
+    case "Easy":
+      return "green";
+    case "Medium":
+      return "orange";
+    case "Hard":
+      return "red";
+    case "Bronze":
+      return "brown";
+    case "Silver":
+      return "grey";
+    case "Gold":
+      return "yellow darken-2";
+    case "Platinum":
+      return "blue darken-2";
+    case "lv1":
+      return "green";
+    case "lv2":
+      return "orange";
+    case "lv3":
+      return "yellow";
+    case "lv4":
+      return "red";
+  }
+}
 </script>
 
 <template>
   <v-container>
     <v-row justify="center">
       <v-col align-self="auto">
-        <v-card outlined class="mb-5 elevation-2">
+        <v-card outlined class="mb-5 elevation-4">
           <v-card-title class="headline">
             <v-chip
               class="ml-2"
-              :color="
-                difficulty === 'Easy'
-                  ? 'green'
-                  : difficulty === 'Medium'
-                  ? 'orange'
-                  : 'red'
-              "
-              dark
+              :color="getColor(difficulty)"
             >
               {{ difficulty }}
             </v-chip>
@@ -98,18 +125,25 @@ watch(lang, (newLang) => {
               dense
               color="primary"
               :disabled="langs.length === 1"
-            ></v-select>
-            <CodeBlock
-              :code="code"
-              :prismjs="true"
-              :lang="lang"
-              :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`"
-              persistent-copy-button
+            >
+            </v-select>
+            <template v-if="langs.length > 0">
+              <CodeBlock
+                :code="code"
+                :prismjs="true"
+                :lang="`${lang === 'cc' ? 'cpp' : lang}`"
+                :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`"
+                persistent-copy-button
+              />
+            </template>
+            <v-skeleton-loader
+              v-else
+              type="paragraph"
             />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" link :to="`/leetcode`">Back to List</v-btn>
+            <v-btn color="primary" link :to="`/algorithm`">Back to List</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

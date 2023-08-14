@@ -17,7 +17,7 @@ const toggleTheme = () => {
 
 const links = [
   { title: "notes", icon: "mdi-note-multiple" },
-  { title: "Leetcode", icon: "mdi-code-tags" },
+  { title: "algorithm", icon: "mdi-code-tags" },
 ];
 </script>
 

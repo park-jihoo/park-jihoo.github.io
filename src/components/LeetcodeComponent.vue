@@ -9,17 +9,20 @@ const itemsPerPage = ref(10);
 const headers = [
   { title: "id", key: "id", sortable: true },
   { title: "Name", key: "name", sortable: true },
-  { title: "Languages", key: "languages", sortable: false },
+  { title: "Difficulty", key: "difficulty", sortable: false },
+  { title: "Languages", key: "languages", sortable: false }
 ];
 
 const languageIcons = [
   { language: "java", icon: "mdi-language-java" },
   { language: "js", icon: "mdi-language-javascript" },
   { language: "py", icon: "mdi-language-python" },
+  { language: "cc", icon: "mdi-language-cpp" },
   { language: "cpp", icon: "mdi-language-cpp" },
   { language: "c", icon: "mdi-language-c" },
-  { language: "sql", icon: "mdi-database" },
+  { language: "sql", icon: "mdi-database" }
 ];
+
 const search = ref("");
 
 const fetchGithubFiles = async () => {
@@ -33,9 +36,9 @@ const fetchGithubFiles = async () => {
       .filter((item) => item.type === "blob")
       .filter(
         (item) =>
-          item.path.startsWith("0") ||
-          item.path.startsWith("1") ||
-          item.path.startsWith("2"),
+          item.path.includes("leetcode")
+          || item.path.includes("백준")
+          || item.path.includes("프로그래머스")
       )
       .filter((item) => !item.path.includes(".md"));
     return data;
@@ -48,27 +51,57 @@ const filterAndFormatPosts = async (data) => {
   let questions = [];
   for (const item of data) {
     const path = item.path.split("/");
-    if (questions.map((item) => item.url).includes(path[0])) {
-      const index = questions.findIndex((question) => question.url === path[0]);
-      questions[index].languages.push(path[1].split(".").pop());
+    if (questions.map((item) => item.url).includes(path[2])) {
+      const index = questions.findIndex((question) => question.url === path[2]);
+      questions[index].languages.push(path[3].split(".").pop());
     } else {
-      questions.push({
-        id: path[0].split("-")[0],
-        url: path[0],
-        name: path[0]
-          .replace(/-/g, " ")
-          .replace(/\d\d\d\d/g, "")
-          .trim(),
-        languages: [path[1].split(".").pop()],
-      });
+      if (path[0] === "leetcode") {
+        questions.push({
+          id: path[2].split("-")[0],
+          url: path[2],
+          name: path[2]
+            .replace(/-/g, " ")
+            .replace(/\d\d\d\d/g, "")
+            .trim(),
+          languages: [path[3].split(".").pop()],
+          difficulty: path[1],
+          platform: path[0]
+        });
+      } else if (path[0] === "백준") {
+        questions.push({
+          id: path[2].split(".")[0],
+          url: path[2],
+          name: path[2].split(".")[1]
+            .replace(/-/g, " ")
+            .replace(/\d\d\d\d/g, "")
+            .trim(),
+          languages: [path[3].split(".").pop()],
+          difficulty: path[1],
+          platform: path[0]
+        });
+      } else {
+        questions.push({
+          id: path[2].split(".")[0],
+          url: path[2],
+          name: path[2].split(".")[1]
+            .replace(/-/g, " ")
+            .replace(/\d\d\d\d/g, "")
+            .trim(),
+          languages: [path[3].split(".").pop()],
+          difficulty: path[1],
+          platform: path[0]
+        });
+      }
     }
   }
-  return questions;
+  return questions.sort((a, b) => a.id - b.id);
 };
 
 const navigateTo = (event, data) => {
   const link = data.item.selectable.url;
-  router.push({ path: "/leetcode/" + link });
+  const difficulty = data.item.selectable.difficulty;
+  const platform = data.item.selectable.platform;
+  router.push({ path: "/algorithm/" + platform + "/" + difficulty + "/" + link });
 };
 
 onMounted(async () => {
@@ -87,10 +120,33 @@ const getLanguageIcon = (language) => {
   return languageInfo ? languageInfo.icon : "";
 };
 
-const getLanguageColor = (language) => {
-  const languageInfo = languageIcons.find((icon) => icon.language === language);
-  return languageInfo ? "primary" : "";
+const getColor = (query) => {
+  switch (query) {
+    case "Easy":
+      return "green";
+    case "Medium":
+      return "orange";
+    case "Hard":
+      return "red";
+    case "Bronze":
+      return "brown";
+    case "Silver":
+      return "grey";
+    case "Gold":
+      return "yellow darken-2";
+    case "Platinum":
+      return "blue darken-2";
+    case "lv1":
+      return "green";
+    case "lv2":
+      return "orange";
+    case "lv3":
+      return "yellow";
+    case "lv4":
+      return "red";
+  }
 };
+
 </script>
 
 <template>
@@ -98,7 +154,7 @@ const getLanguageColor = (language) => {
     <v-row justify="center">
       <v-col align-self="start" class="ma-2">
         <v-card class="elevation-4 rounded-lg">
-          <v-card-title class="text-center text-uppercase text-button">
+          <v-card-title class="text-center text-h5">
             LeetCode Solutions
           </v-card-title>
           <v-card-text>
@@ -107,12 +163,10 @@ const getLanguageColor = (language) => {
               label="Search"
               filled
               hide-details
-              class="ma-1"
-              :clearable="true"
+              clearable
               solo
               color="primary"
               placeholder="Search..."
-              @click:clear="search = ''"
             >
               <template #prepend>
                 <v-icon color="primary">mdi-magnify</v-icon>
@@ -132,18 +186,21 @@ const getLanguageColor = (language) => {
               @click:row="navigateTo"
             >
               <template v-slot:item.languages="{ item }">
-                <v-chip-group>
                   <v-chip
                     v-for="language in item.selectable.languages"
                     :key="language"
                     class="ma-1"
-                    color="primary"
+                    :color="getColor(item.selectable.difficulty)"
                     outlined
                   >
-                    <v-icon left class="mr-2">{{ getLanguageIcon(language) }}</v-icon>
+                    <v-icon left>{{ getLanguageIcon(language) }}</v-icon>
                     {{ language }}
                   </v-chip>
-                </v-chip-group>
+              </template>
+              <template v-slot:item.difficulty="{ item }">
+                  <v-chip class="ma-1" :color="getColor(item.selectable.difficulty)" outlined>
+                    {{ item.selectable.platform }} - {{ item.selectable.difficulty }}
+                  </v-chip>
               </template>
             </v-data-table>
           </v-card-text>
