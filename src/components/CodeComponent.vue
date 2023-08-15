@@ -86,6 +86,17 @@ const getColor = (difficulty) => {
       return "red";
   }
 }
+
+const getLink = (platform, slug) => {
+  switch (platform){
+    case "leetcode":
+      return `https://leetcode.com/problems/${slug.replace(/\d\d\d\d-/g, "").replace(/ /g, "-")}`;
+    case "프로그래머스":
+      return `https://programmers.co.kr/learn/courses/30/lessons/${slug}`;
+    case "백준":
+      return `https://www.acmicpc.net/problem/${slug.split(".")[0]}`;
+  }
+}
 </script>
 
 <template>
@@ -107,10 +118,7 @@ const getColor = (difficulty) => {
               rounded="0"
               :variant="'text'"
               :ripple="false"
-              :href="`https://leetcode.com/problems/${route.params.slug.replace(
-                /\d\d\d\d-/g,
-                '',
-              )}`"
+              :href="getLink(route.params.platform, route.params.slug)"
               target="_blank"
             >
               <v-icon>mdi-open-in-new</v-icon>

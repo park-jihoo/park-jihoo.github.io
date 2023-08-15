@@ -186,21 +186,25 @@ const getColor = (query) => {
               @click:row="navigateTo"
             >
               <template v-slot:item.languages="{ item }">
-                  <v-chip
-                    v-for="language in item.selectable.languages"
-                    :key="language"
-                    class="ma-1"
-                    :color="getColor(item.selectable.difficulty)"
-                    outlined
-                  >
-                    <v-icon left>{{ getLanguageIcon(language) }}</v-icon>
-                    {{ language }}
-                  </v-chip>
+                <v-chip
+                  v-for="language in item.selectable.languages"
+                  :key="language"
+                  class="ma-1"
+                  :color="getColor(item.selectable.difficulty)"
+                  outlined
+                >
+                  <v-icon left>{{ getLanguageIcon(language) }}</v-icon>
+                  {{ language }}
+                </v-chip>
               </template>
               <template v-slot:item.difficulty="{ item }">
-                  <v-chip class="ma-1" :color="getColor(item.selectable.difficulty)" outlined>
-                    {{ item.selectable.platform }} - {{ item.selectable.difficulty }}
-                  </v-chip>
+                <v-chip class="ma-1" :color="getColor(item.selectable.difficulty)" outlined>
+                  {{ item.selectable.difficulty }}
+                </v-chip>
+              </template>
+              <template v-slot:item.id="{ item }">
+                {{ item.selectable.platform === "leetcode" ? "L" : (item.selectable.platform === "백준" ? "B" : "P") }} -
+                {{ item.selectable.id }}
               </template>
             </v-data-table>
           </v-card-text>
