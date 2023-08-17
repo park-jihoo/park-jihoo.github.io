@@ -1,6 +1,5 @@
 import { App } from "vue";
 import * as components from "./components";
-import "./vue3-notion/src/style.css";
 
 // Default export is library as a whole, registered via Vue.use()
 export default {

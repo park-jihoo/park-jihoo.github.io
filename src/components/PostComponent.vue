@@ -87,6 +87,5 @@ const renderMermaid = () => {
 </template>
 <style>
 @import "katex/dist/katex.min.css";
-@import "vue3-notion/dist/style.css";
 @import "prismjs/themes/prism.css";
 </style>
