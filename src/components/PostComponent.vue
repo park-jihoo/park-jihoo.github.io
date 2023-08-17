@@ -5,7 +5,8 @@ import {
   ref
 } from "vue";
 import { useRoute } from "vue-router";
-import { NotionRenderer, getPageBlocks, getPageTable } from "vue3-notion";
+import NotionRenderer from "./notion-renderer.vue";
+import { getPageBlocks, getPageTable } from "../lib/api";
 import mermaid from "mermaid";
 import "prismjs";
 import "prismjs/components/prism-python";
@@ -20,7 +21,7 @@ const post = ref(null);
 const table = ref(null);
 const title = ref(null);
 const pdf = ref(null);
-const code = ref([]);
+const page = ref(null);
 
 onMounted(async () => {
   const id = route.params.id;
@@ -35,8 +36,14 @@ onMounted(async () => {
         break;
       }
     }
-    console.log(post.value);
 
+    for (let block in post.value){
+      if (post.value[block].value.type === "page") {
+        page.value = post.value[block].value;
+        break;
+      }
+    }
+    console.log( page.value.content);
   }
   mermaid.initialize({ startOnLoad: true });
 });

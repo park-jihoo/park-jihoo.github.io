@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { getPageTable } from "vue3-notion";
+import { getPageTable } from "../lib/api";
 import { useRoute, useRouter } from "vue-router";
 import { VDataTable } from "vuetify/labs/components";
 
@@ -37,6 +37,7 @@ onMounted(async () => {
   }
 
   pageTable.value.sort((a, b) => a.title.localeCompare(b.title));
+  console.log(pageTable.value);
 });
 
 const search = ref("");
@@ -46,23 +47,14 @@ const search = ref("");
   <v-container class="my-5">
     <v-row no-gutters class="justify-center">
       <v-col class="ma-2" align-self="start">
-        <v-btn-toggle
-          v-model="selectedClass"
-          :mandatory="'force'"
-          rounded
-          color="primary"
-          dense
-          group
-        >
-          <v-btn
-            v-for="classItem in classes"
-            :key="classItem"
-            :value="classItem"
-            outlined
-          >
+        <v-tabs v-model="selectedClass" center-active>
+          <v-tab v-for="(classItem, index) in classes" :key="index" :value="classItem">
+            <template v-slot:title>
+              {{ classItem }}
+            </template>
             {{ classItem }}
-          </v-btn>
-        </v-btn-toggle>
+          </v-tab>
+        </v-tabs>
       </v-col>
     </v-row>
     <v-row>
@@ -93,12 +85,13 @@ const search = ref("");
             hover
             :search="search"
             @click:row="navigateTo"
-            :loading="filteredTable.length === 0"
+            :loading="filteredTable.length === 0 && search.length===0"
             :items-per-page="10"
           >
             <template v-slot:item.title="{ item }">
-              <v-icon v-if="item.selectable.pdf" class="mr-2" color="primary">mdi-file-document-outline</v-icon>
-              <v-icon v-else class="mr-2" color="primary">mdi-file-outline</v-icon>
+              <v-chip class="mr-2 mt-2" color="primary">
+                {{ item.selectable.subclass }}
+              </v-chip>
               <span class="font-weight-regular">{{ item.selectable.title }}</span>
             </template>
           </v-data-table>

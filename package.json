@@ -11,19 +11,20 @@
   "dependencies": {
     "@hsorby/vue3-katex": "^0.6.0-rc.5",
     "@popperjs/core": "^2.11.8",
+    "@vueuse/core": "^10.3.0",
+    "katex": "^0.15.6",
     "mermaid": "^10.2.4",
     "prismjs": "^1.29.0",
     "vite-plugin-vuetify": "^1.0.2",
     "vue": "^3.3.4",
-    "vue-notion": "^3.0.0-beta.1",
     "vue-router": "^4.2.2",
     "vue3-code-block": "^2.2.12",
-    "vue3-notion": "^0.1.45",
     "vuetify": "^3.3.5",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@mdi/font": "^7.2.96",
+    "@types/prismjs": "^1.26.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "sass": "^1.32.12",
     "vite": "^4.1.5"

@@ -147,40 +147,60 @@ const getColor = (query) => {
   }
 };
 
+// Define platform tabs
+const platformTabs = ref(["leetcode", "백준", "프로그래머스"]); // Add other platforms as needed
+
+// Selected tab state
+const selectedTab = ref(platformTabs[0]);
+
+// Filter posts based on selected platform
+const selectedPlatformData = computed(() => {
+  return filteredPosts.value.filter(post => post.platform === selectedTab.value);
+});
+
 </script>
 
 <template>
   <v-container class="my-5">
     <v-row justify="center">
       <v-col align-self="start" class="ma-2">
-        <v-card class="elevation-4 rounded-lg">
-          <v-card-title class="text-center text-h5">
-            LeetCode Solutions
-          </v-card-title>
-          <v-card-text>
+        <v-tabs v-model="selectedTab" center-active>
+          <v-tab v-for="(tab, index) in platformTabs" :key="index" :value="tab">
+            {{ tab }}
+          </v-tab>
+        </v-tabs>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col align-self="start" class="ma-2">
+        <v-card class="elevation-4 rounded-lg" >
+          <v-card-text class="pa-3">
             <v-text-field
               v-model="search"
               label="Search"
               filled
               hide-details
-              clearable
+              clearable="true"
               solo
               color="primary"
               placeholder="Search..."
+              @click:clear="search = ''"
             >
               <template #prepend>
                 <v-icon color="primary">mdi-magnify</v-icon>
               </template>
             </v-text-field>
+
             <v-data-table
+              v-if="selectedPlatformData"
               v-model:items-per-page="itemsPerPage"
               :headers="headers"
-              :items-length="filteredPosts.length"
-              :items="filteredPosts"
+              :items-length="selectedPlatformData.length"
+              :items="selectedPlatformData"
               :search="search"
               hover
               dense
-              :loading="filteredPosts.length === 0"
+              :loading="selectedPlatformData.length === 0 && search.length === 0"
               hide-default-footer
               item-class="px-4 py-2"
               @click:row="navigateTo"
@@ -203,7 +223,6 @@ const getColor = (query) => {
                 </v-chip>
               </template>
               <template v-slot:item.id="{ item }">
-                {{ item.selectable.platform === "leetcode" ? "L" : (item.selectable.platform === "백준" ? "B" : "P") }} -
                 {{ item.selectable.id }}
               </template>
             </v-data-table>
