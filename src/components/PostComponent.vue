@@ -88,4 +88,5 @@ const renderMermaid = () => {
 <style>
 @import "katex/dist/katex.min.css";
 @import "prismjs/themes/prism.css";
+@import "style.css";
 </style>
