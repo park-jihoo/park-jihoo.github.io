@@ -56,7 +56,7 @@ const renderMermaid = () => {
 <template>
   <v-container>
     <v-row no-gutters>
-      <v-col cols="12" md="8" offset-md="2">
+      <v-col align-self="start">
         <v-card class="elevation-3 pa-4">
           <v-card-title class="mt-2 text-wrap text-h4">
             {{ title }}
