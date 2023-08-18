@@ -1378,6 +1378,11 @@ uvu@^0.5.0:
     kleur "^4.0.3"
     sade "^1.7.3"
 
+v-lazy-component@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/v-lazy-component/-/v-lazy-component-3.0.9.tgz#e9f5b0659d525c99b0cb8daf790d69ad10ba6474"
+  integrity sha512-B9hiaSVdhPGLen2LFx7CD0Z1Hul3KBUk0Yzs76fxO8tk4OWD7WvTiHFdGTHk8yWRwKqTt1XUz/PvKFyadm/EtQ==
+
 vite-plugin-vuetify@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/vite-plugin-vuetify/-/vite-plugin-vuetify-1.0.2.tgz"

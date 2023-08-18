@@ -2,7 +2,8 @@
 import Prism from "prismjs";
 import CodeBlock from "vue3-code-block";
 import { useNotionBlock, defineNotionProps } from "../lib/blockable";
-import { computed, ref } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
+import LazyComponent from "v-lazy-component";
 
 import "prismjs/components/prism-markup-templating";
 import "prismjs/components/prism-markup";
@@ -54,13 +55,20 @@ const supported = computed(() => {
 });
 
 const computedSlot = computed(() => properties.value?.title.map((i) => i?.[0]).join(""));
+
+watchEffect(() => {
+  if (computedSlot && lang.value==="mermaid"){
+    mermaid.init(undefined, document.getElementsByClassName("mermaid"));
+  }
+});
 </script>
 
 <script lang="ts">
 import mermaid from "mermaid";
 mermaid.initialize({
-  startOnLoad: true
+  startOnLoad: true,
 });
+
 export default {
   name: "NotionCode"
 };
@@ -73,7 +81,9 @@ export default {
     />
   </div>
   <div v-else-if="lang === 'mermaid'">
-    <div class="mermaid" v-html="computedSlot"></div>
+    <div class="mermaid" :class="['notion-code']">
+      {{ computedSlot }}
+    </div>
   </div>
   <div v-else :class="['notion-code']">
     <pre><div :class="langClass">{{ computedSlot }}</div></pre>

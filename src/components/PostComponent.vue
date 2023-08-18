@@ -43,7 +43,6 @@ onMounted(async () => {
         break;
       }
     }
-    console.log( page.value.content);
   }
   mermaid.initialize({ startOnLoad: true });
 });
