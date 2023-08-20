@@ -2,8 +2,7 @@
 import Prism from "prismjs";
 import CodeBlock from "vue3-code-block";
 import { useNotionBlock, defineNotionProps } from "../lib/blockable";
-import { computed, ref, watch, watchEffect } from "vue";
-import LazyComponent from "v-lazy-component";
+import { computed, watchEffect } from "vue";
 
 import "prismjs/components/prism-markup-templating";
 import "prismjs/components/prism-markup";

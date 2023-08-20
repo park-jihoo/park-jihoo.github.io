@@ -13,8 +13,8 @@ export default {
 };
 </script>
 <template>
-  <p v-if="properties" :class="['notion-text', blockColorClass()]">
+  <v-card-text v-if="properties" :class="['notion-text', blockColorClass()]">
     <NotionTextRenderer :text="title" v-bind="pass" />
-  </p>
+  </v-card-text>
   <div v-else class="notion-blank">&nbsp;</div>
 </template>

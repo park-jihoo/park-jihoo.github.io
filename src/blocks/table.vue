@@ -5,10 +5,13 @@ export default {
 </script>
 <template>
   <div class="notion-simple-table-wrapper">
-    <table class="notion-simple-table">
+    <v-table class="notion-simple-table ma-2"
+             density="compact"
+             hover="true"
+    >
       <tbody>
         <slot />
       </tbody>
-    </table>
+    </v-table>
   </div>
 </template>

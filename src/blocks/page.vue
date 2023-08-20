@@ -4,6 +4,7 @@ import NotionPageIcon from "./helpers/page-icon.vue";
 import NotionTextRenderer from "./helpers/text-renderer.vue";
 import { computed, StyleValue } from "vue";
 import { getTextContent } from "../lib/utils";
+import NotionPageHeader from "./helpers/page-header.vue";
 
 const props = defineProps({ ...defineNotionProps });
 //@ts-ignore
@@ -31,8 +32,8 @@ export default {
 
 <template>
   <div v-if="props.level === 0 && props.fullPage" class="notion" :style="computedFont">
-    <!-- todo: add header -->
-    <!-- <NotionPageHeader v-if="!hideHeader" v-bind="pass" /> -->
+<!--     todo: add header -->
+<!--     <NotionPageHeader v-bind="pass" />-->
     <!-- todo: hide image if no .format is available -->
     <img
       v-if="format && format.page_cover"
@@ -56,7 +57,12 @@ export default {
       <slot />
     </main>
   </div>
-  <main v-else-if="props.level === 0" class="notion"><slot /></main>
+  <main v-else-if="props.level === 0" class="notion">
+    <div class="notion-title">
+      <NotionTextRenderer :text="title" v-bind="pass" />
+    </div>
+    <slot />
+  </main>
   <component
     v-else-if="hasPageLinkOptions"
     class="notion-page-link"

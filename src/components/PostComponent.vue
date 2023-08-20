@@ -14,6 +14,7 @@ import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
 
 import { CodeBlock } from "vue3-code-block";
+import NotionPageHeader from "../blocks/helpers/page-header.vue";
 
 const route = useRoute();
 
@@ -44,40 +45,20 @@ onMounted(async () => {
       }
     }
   }
-  mermaid.initialize({ startOnLoad: true });
 });
-
-const renderMermaid = () => {
-  mermaid.init(undefined, document.getElementsByClassName("language-mermaid"));
-};
 
 </script>
 <template>
   <v-container>
+    <NotionPageHeader v-if="post" :blockMap="post" />
     <v-row no-gutters>
       <v-col align-self="start">
         <v-card class="elevation-3 pa-4">
-          <v-card-title class="mt-2 text-wrap text-h4">
-            {{ title }}
-            <v-btn-group>
-              <v-btn
-                v-for="file in pdf"
-                :key="file.name"
-                :href="file.name"
-                target="_blank"
-                icon
-                class="ma-1"
-              >
-                <v-icon>mdi-file-outline</v-icon>
-              </v-btn>
-            </v-btn-group>
-          </v-card-title>
             <NotionRenderer
                       v-if="post"
                       :blockMap="post"
                       katex
                       :class="$vuetify.theme.global.current.dark ? 'dark-mode ma-3' : 'ma-3'"
-                      @click="renderMermaid"
                     />
         </v-card>
       </v-col>

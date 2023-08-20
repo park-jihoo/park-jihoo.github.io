@@ -14,13 +14,13 @@ export default {
 </script>
 
 <template>
-  <h1 class="notion-h1" :id="block.value.id" v-if="type === 'header'">
+  <v-card-title class="notion-h1" :id="block.value.id" v-if="type === 'header'">
     <NotionTextRenderer :text="title" v-bind="pass" />
-  </h1>
-  <h2 class="notion-h2" :id="block.value.id" v-else-if="type === 'sub_header'">
+  </v-card-title>
+  <v-card-title class="notion-h2" :id="block.value.id" v-else-if="type === 'sub_header'">
     <NotionTextRenderer :text="title" v-bind="pass" />
-  </h2>
-  <h3 class="notion-h3" :id="block.value.id" v-else-if="type === 'sub_sub_header'">
+  </v-card-title>
+  <v-card-title class="notion-h3" :id="block.value.id" v-else-if="type === 'sub_sub_header'">
     <NotionTextRenderer :text="title" v-bind="pass" />
-  </h3>
+  </v-card-title>
 </template>
