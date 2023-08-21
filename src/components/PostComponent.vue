@@ -10,6 +10,7 @@ import "prismjs";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
+import {VSkeletonLoader} from "vuetify/lib/labs/components";
 
 import { CodeBlock } from "vue3-code-block";
 
@@ -49,7 +50,8 @@ onMounted(async () => {
   <v-container>
     <v-row no-gutters>
       <v-col align-self="start">
-        <v-card class="elevation-3 pa-4">
+        <v-skeleton-loader v-if="!post" type="card, paragraph, actions" />
+        <v-card class="elevation-3 pa-4" v-if="post">
             <NotionRenderer
                       v-if="post"
                       :blockMap="post"
