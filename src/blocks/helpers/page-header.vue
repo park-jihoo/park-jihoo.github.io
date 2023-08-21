@@ -6,7 +6,6 @@ import { ref } from "vue";
 const props = defineProps({ overrideLang: String, overrideLangClass: String, ...defineNotionProps });
 //@ts-ignore
 const { properties } = useNotionBlock(props);
-console.log(properties.value);
 </script>
 
 <script lang="ts">

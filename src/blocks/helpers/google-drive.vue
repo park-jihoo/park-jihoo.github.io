@@ -37,23 +37,23 @@ export default {
         <img :src="constructThumbnail(properties.thumbnail)" :alt="properties.title" />
       </div>
 
-      <div className="notion-google-drive-body">
-        <div className="notion-google-drive-body-title">
+      <div class="notion-google-drive-body">
+        <div class="notion-google-drive-body-title">
           {{ properties.title }}
         </div>
 
-        <div className="notion-google-drive-body-modified-time">
+        <div class="notion-google-drive-body-modified-time">
           Last modified
           {{ properties.user_name ? `by ${properties.user_name} ` : "" }}
           {{ useTimeAgo(properties.modified_time).value }}
         </div>
 
-        <div className="notion-google-drive-body-source">
+        <div class="notion-google-drive-body-source">
           <div
-            className="notion-google-drive-body-source-icon"
+            class="notion-google-drive-body-source-icon"
             :style="{ backgroundImage: 'url(' + properties.icon + ')' }"
           />
-          <div className="notion-google-drive-body-source-domain">{{ constructDomain(properties.url) }}</div>
+          <div class="notion-google-drive-body-source-domain">{{ constructDomain(properties.url) }}</div>
         </div>
       </div>
     </a>

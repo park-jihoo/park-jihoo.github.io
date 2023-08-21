@@ -85,7 +85,8 @@ export default {
     </div>
   </div>
   <div v-else :class="['notion-code']">
-    <pre><div :class="langClass">{{ computedSlot }}</div></pre>
+    <CodeBlock :code="computedSlot" prismjs persistent-copy-button theme="tomorrow"
+               :class="langClass"/>
   </div>
 </template>
 

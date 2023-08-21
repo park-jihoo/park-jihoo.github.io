@@ -7,7 +7,7 @@ export default {
   <div class="notion-simple-table-wrapper">
     <v-table class="notion-simple-table ma-2"
              density="compact"
-             hover="true"
+             hover
     >
       <tbody>
         <slot />

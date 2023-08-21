@@ -1,20 +1,17 @@
 <script setup>
 import {
   onMounted,
-  onUpdated,
   ref
 } from "vue";
 import { useRoute } from "vue-router";
 import NotionRenderer from "./notion-renderer.vue";
 import { getPageBlocks, getPageTable } from "../lib/api";
-import mermaid from "mermaid";
 import "prismjs";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
 
 import { CodeBlock } from "vue3-code-block";
-import NotionPageHeader from "../blocks/helpers/page-header.vue";
 
 const route = useRoute();
 
@@ -50,7 +47,6 @@ onMounted(async () => {
 </script>
 <template>
   <v-container>
-    <NotionPageHeader v-if="post" :blockMap="post" />
     <v-row no-gutters>
       <v-col align-self="start">
         <v-card class="elevation-3 pa-4">
@@ -60,6 +56,10 @@ onMounted(async () => {
                       katex
                       :class="$vuetify.theme.global.current.dark ? 'dark-mode ma-3' : 'ma-3'"
                     />
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" link :to="`/notes`">Back to List</v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
