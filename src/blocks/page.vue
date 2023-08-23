@@ -58,6 +58,7 @@ export default {
     </main>
   </div>
   <main v-else-if="props.level === 0" class="notion">
+    <NotionPageHeader v-bind="pass" />
     <div class="notion-title">
       <NotionTextRenderer :text="title" v-bind="pass" />
     </div>
