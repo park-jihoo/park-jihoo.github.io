@@ -1,33 +1,27 @@
 {
-  "name": "githubio",
+  "name": "nuxt-app",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@hsorby/vue3-katex": "^0.6.0-rc.5",
-    "@popperjs/core": "^2.11.8",
-    "@vueuse/core": "^10.3.0",
-    "katex": "^0.15.6",
-    "mermaid": "^10.2.4",
-    "prismjs": "^1.29.0",
-    "v-lazy-component": "^3.0.9",
-    "vite-plugin-vuetify": "^1.0.2",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.2",
-    "vue3-code-block": "^2.2.12",
-    "vuetify": "^3.3.5",
-    "yarn": "^1.22.19"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxt/types": "^2.17.1",
+    "@types/node": "^18.17.3",
+    "nuxt": "^3.6.5"
+  },
+  "dependencies": {
     "@mdi/font": "^7.2.96",
-    "@types/prismjs": "^1.26.0",
-    "@vitejs/plugin-vue": "^4.0.0",
-    "sass": "^1.32.12",
-    "vite": "^4.1.5"
+    "@nuxtjs/vuetify": "^1.12.3",
+    "sass": "^1.66.1",
+    "sass-loader": "^13.3.2",
+    "vue-router": "^4.2.4",
+    "vue3-code-block": "^2.2.12",
+    "vue3-notion": "^0.1.45",
+    "vuetify": "^3.3.14"
   }
 }
