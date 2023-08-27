@@ -5,4 +5,13 @@ export default defineNuxtConfig({
   build:{
     transpile: ['vuetify']
   },
+  modules: [
+    ["vue3-notion/nuxt", {css: true}],
+    'nuxt-gtag',
+    'nuxt-simple-sitemap',
+    'nuxt-og-image'
+  ],
+  gtag: {
+    id: 'G-5H39DYHZK8'
+  }
 })

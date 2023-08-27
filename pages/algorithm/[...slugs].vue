@@ -113,9 +113,9 @@ const getLink = (platform, slug) => {
                 icon
                 class="elevation-0"
                 rounded="0"
-                :variant="'text'"
+                variant="text"
                 :ripple="false"
-                :href="getLink(route.params.slugs[1], route.params.slugs[2])"
+                :href="getLink(route.params.slugs[0], route.params.slugs[2])"
                 target="_blank"
             >
               <v-icon>mdi-open-in-new</v-icon>
