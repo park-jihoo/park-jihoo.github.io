@@ -13,5 +13,8 @@ export default defineNuxtConfig({
   ],
   gtag: {
     id: 'G-5H39DYHZK8'
+  },
+  site:{
+    url: 'https://park-jihoo.github.io',
   }
 })
