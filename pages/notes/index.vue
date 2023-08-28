@@ -1,5 +1,5 @@
 <script setup>
-import { getPageTable } from "vue3-notion"
+import { getPageTable } from "/lib/api"
 import { useRoute, useRouter } from "vue-router";
 import { VDataTable } from "vuetify/labs/components";
 

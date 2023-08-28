@@ -17,6 +17,8 @@ const links = [
   { title: "notes", icon: "mdi-note-multiple" },
   { title: "algorithm", icon: "mdi-code-tags" },
 ];
+
+defineOgImageScreenshot();
 </script>
 
 <template>

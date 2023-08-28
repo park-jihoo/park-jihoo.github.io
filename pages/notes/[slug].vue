@@ -1,5 +1,5 @@
 <script setup>
-import { NotionRenderer } from "vue3-notion";
+import { NotionRenderer } from "#components";
 import "prismjs";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-c";
