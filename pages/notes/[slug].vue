@@ -6,7 +6,6 @@ import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
 import {VSkeletonLoader} from "vuetify/lib/labs/components";
 
-import { CodeBlock } from "vue3-code-block";
 const route = useRoute();
 
 const {$notion} = useNuxtApp();

@@ -36,6 +36,7 @@ import "prismjs/components/prism-stylus";
 import "prismjs/components/prism-swift";
 import "prismjs/components/prism-wasm";
 import "prismjs/components/prism-yaml";
+import mermaid from "mermaid";
 
 const props = defineProps({ overrideLang: String, overrideLangClass: String, ...defineNotionProps });
 //@ts-ignore
@@ -53,6 +54,18 @@ const supported = computed(() => {
 });
 
 const computedSlot = computed(() => properties.value?.title.map((i) => i?.[0]).join(""));
+
+mermaid.initialize({
+  startOnLoad: false,
+})
+
+watchEffect(async () => {
+  if (lang.value === "mermaid" && process.client) {
+    await mermaid.run({
+      querySelector: ".language-mermaid"
+    });
+  }
+});
 </script>
 
 <script lang="ts">
@@ -63,9 +76,10 @@ export default {
 
 <template>
   <div v-if="supported" :class="['notion-code']">
-    <pre><div :class="lang">
-      {{ computedSlot}}
-    </div></pre>
+    <pre><code :class="langClass">{{ computedSlot }}</code></pre>
+  </div>
+  <div v-else-if="lang.value === 'mermaid'">
+    <div class="mermaid" v-html="computedSlot"></div>
   </div>
   <div v-else :class="['notion-code']">
     <pre><div :class="langClass">{{ computedSlot }}</div></pre>
