@@ -36,7 +36,6 @@ onMounted(async () => {
   }
 
   pageTable.value.sort((a, b) => a.title.localeCompare(b.title));
-  console.log(pageTable.value);
 });
 
 const search = ref("");
