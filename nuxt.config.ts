@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import { getPageTable } from "vue3-notion";
+import { getPageTable } from "./lib/api";
 
 const fetchGithubFiles = async () => {
   try {
@@ -81,7 +81,6 @@ export default defineNuxtConfig({
     transpile: ['vuetify']
   },
   modules: [
-    ["vue3-notion/nuxt", {css: true}],
     'nuxt-gtag',
     'nuxt-og-image',
     'nuxt-simple-robots',

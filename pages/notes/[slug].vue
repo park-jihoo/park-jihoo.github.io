@@ -5,11 +5,11 @@ import "prismjs/components/prism-python";
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
 import {VSkeletonLoader} from "vuetify/lib/labs/components";
+import {getPageBlocks} from "~/lib/api";
 
 const route = useRoute();
 
-const {$notion} = useNuxtApp();
-const { data, pending } = await useLazyAsyncData("notion", ()=> $notion.getPageBlocks(route.params.slug))
+const { data, pending } = await useLazyAsyncData("notion", ()=> getPageBlocks(route.params.slug))
 </script>
 <template>
   <v-container>
@@ -37,4 +37,5 @@ const { data, pending } = await useLazyAsyncData("notion", ()=> $notion.getPageB
 <style>
 @import "katex/dist/katex.min.css";
 @import "prismjs/themes/prism.css";
+@import "public/style.css";
 </style>

@@ -30,7 +30,6 @@
     "sass-loader": "^13.3.2",
     "vue-router": "^4.2.4",
     "vue3-code-block": "^2.2.12",
-    "vue3-notion": "^0.1.45",
     "vuetify": "^3.3.14"
   }
 }
