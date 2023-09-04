@@ -6,10 +6,10 @@ export default {
 
 <template>
   <div class="notion-simple-table-wrapper">
-    <table class="notion-simple-table">
+    <v-table class="notion-simple-table">
       <tbody>
         <slot />
       </tbody>
-    </table>
+    </v-table>
   </div>
 </template>

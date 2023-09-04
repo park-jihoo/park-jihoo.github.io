@@ -37,7 +37,6 @@ import "prismjs/components/prism-stylus";
 import "prismjs/components/prism-swift";
 import "prismjs/components/prism-wasm";
 import "prismjs/components/prism-yaml";
-import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 import mermaid from "mermaid";
 
 const props = defineProps({ overrideLang: String, overrideLangClass: String, ...defineNotionProps });
@@ -57,20 +56,20 @@ const supported = computed(() => {
 
 const computedSlot = computed(() => properties.value?.title.map((i) => i?.[0]).join(""));
 
+const theme = useTheme();
+
 mermaid.initialize({
-  startOnLoad: false
+  startOnLoad: false,
+  theme: `${theme.global.current.value.dark ? 'dark' : 'default'}`
 });
 
 watchEffect(async () => {
   if (lang.value === "mermaid" && process.client) {
     await mermaid.run({
-      querySelector: ".mermaid"
+      querySelector: ".language-mermaid",
     });
   }
 });
-
-
-const theme = useTheme();
 </script>
 
 <script lang="ts">
@@ -80,9 +79,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="lang === 'mermaid'">
-    <div class="mermaid" v-html="computedSlot"></div>
-  </div>
+  <div v-if="lang === 'mermaid'" class="language-mermaid" v-html="computedSlot"/>
   <div v-else-if="supported" :class="['notion-code']">
     <ClientOnly>
       <CodeBlock :code="computedSlot" :lang="lang" :class="langClass" prismjs persistent-copy-button :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`" />

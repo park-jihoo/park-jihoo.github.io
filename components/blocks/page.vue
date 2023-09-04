@@ -32,7 +32,6 @@ export default {
 
 <template>
   <div v-if="props.level === 0 && props.fullPage" class="notion" :style="computedFont">
-    <!-- todo: add header -->
     <NotionPageHeader v-bind="pass" />
     <!-- todo: hide image if no .format is available -->
     <img
