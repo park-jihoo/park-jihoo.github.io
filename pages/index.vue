@@ -1,5 +1,4 @@
 <script setup>
-import { ref, computed } from "vue";
 
 const name = "Jihoo Park";
 const title = "Data Scientist";

@@ -1,6 +1,5 @@
 <script setup>
 import { getPageTable } from "/lib/api"
-import { useRoute, useRouter } from "vue-router";
 import { VDataTable } from "vuetify/labs/components";
 
 const pageTable = ref([]);

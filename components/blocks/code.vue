@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Prism from "prismjs";
 import { useNotionBlock, defineNotionProps } from "~/lib/blockable";
-import { computed } from "vue";
+import CodeBlock from "vue3-code-block";
+import { useTheme } from "vuetify";
 
 import "prismjs/components/prism-markup-templating";
 import "prismjs/components/prism-markup";
@@ -57,36 +58,44 @@ const supported = computed(() => {
 const computedSlot = computed(() => properties.value?.title.map((i) => i?.[0]).join(""));
 
 mermaid.initialize({
-  startOnLoad: false,
-})
+  startOnLoad: false
+});
 
 watchEffect(async () => {
   if (lang.value === "mermaid" && process.client) {
     await mermaid.run({
-      querySelector: ".language-mermaid"
+      querySelector: ".mermaid"
     });
-    Prism.highlightAll();
   }
 });
+
+
+const theme = useTheme();
 </script>
 
 <script lang="ts">
 export default {
-  name: "NotionCode",
+  name: "NotionCode"
 };
 </script>
 
 <template>
-  <div v-if="supported" :class="['notion-code']">
-    <pre><code data-prismjs-copy :lang="lang" :class="langClass">{{ computedSlot }}</code></pre>
-  </div>
-  <div v-else-if="lang.value === 'mermaid'">
+  <div v-if="lang === 'mermaid'">
     <div class="mermaid" v-html="computedSlot"></div>
   </div>
+  <div v-else-if="supported" :class="['notion-code']">
+    <ClientOnly>
+      <CodeBlock :code="computedSlot" :lang="lang" :class="langClass" prismjs persistent-copy-button :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`" />
+    </ClientOnly>
+  </div>
   <div v-else :class="['notion-code']">
-    <pre data-prismjs-copy><div :class="langClass">{{ computedSlot }}</div></pre>
+    <ClientOnly>
+      <CodeBlock :code="computedSlot" :class="langClass" prismjs persistent-copy-button :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`" />
+    </ClientOnly>
   </div>
 </template>
+
 <style>
-@import "prismjs/themes/prism.css";
+@use "prismjs/themes/prism-dark.css";
+@use "prismjs/themes/prism.css";
 </style>
