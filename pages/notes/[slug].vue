@@ -21,7 +21,6 @@ const { data, pending } = await useLazyAsyncData("notion", ()=> getPageBlocks(ro
               v-if="data"
               :blockMap="data"
               prismjs
-              fullPage
               katex
               :class="$vuetify.theme.global.current.dark ? 'dark-mode ma-3' : 'ma-3'"
           />
