@@ -14,8 +14,14 @@ export default {
 </script>
 
 <template>
-  <details class="notion-toggle">
-    <summary><NotionTextRenderer :text="title" v-bind="pass" /></summary>
-    <div><slot /></div>
-  </details>
+  <v-expansion-panels>
+    <v-expansion-panel elevation="0" :hide-actions="true">
+      <v-expansion-panel-title>
+        <NotionTextRenderer :text="title" v-bind="pass" />
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
+        <slot />
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+  </v-expansion-panels>
 </template>
