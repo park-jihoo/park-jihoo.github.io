@@ -1,11 +1,14 @@
 <script setup>
 import { getPageTable } from "/lib/api"
 import { VDataTable } from "vuetify/labs/components";
+import { useGetPageTable } from "~/lib/composables";
 
 const pageTable = ref([]);
 const selectedClass = ref([]);
 const route = useRoute();
 const router = useRouter();
+
+const {data} = useGetPageTable("619787c75b60479886c147cf746bfbb8");
 
 const classes = computed(() => {
   const allClasses = pageTable.value.map((post) => post.class);
@@ -28,6 +31,7 @@ const navigateTo = (event, data) => {
   router.push({ path: "/notes/" + link });
 };
 
+
 onMounted(async () => {
   pageTable.value = await getPageTable("619787c75b60479886c147cf746bfbb8");
   if (route.query.class) {
@@ -41,6 +45,7 @@ const search = ref("");
 </script>
 
 <template>
+  <div>
   <v-container class="my-5">
     <v-row no-gutters class="justify-center">
       <v-col class="ma-2" align-self="start">
@@ -96,4 +101,5 @@ const search = ref("");
       </v-col>
     </v-row>
   </v-container>
+  </div>
 </template>

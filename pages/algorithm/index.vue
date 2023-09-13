@@ -159,21 +159,22 @@ const selectedPlatformData = computed(() => {
 </script>
 
 <template>
-  <v-container class="my-5">
-    <v-row justify="center">
-      <v-col align-self="start" class="ma-2">
-        <v-tabs v-model="selectedTab" center-active>
-          <v-tab v-for="(tab, index) in platformTabs" :key="index" :value="tab">
-            {{ tab }}
-          </v-tab>
-        </v-tabs>
-      </v-col>
-    </v-row>
-    <v-row justify="center">
-      <v-col align-self="start" class="ma-2">
-        <v-card class="elevation-4 rounded-lg" >
-          <v-card-text class="pa-3">
-            <v-text-field
+  <div>
+    <v-container class="my-5">
+      <v-row justify="center">
+        <v-col align-self="start" class="ma-2">
+          <v-tabs v-model="selectedTab" center-active>
+            <v-tab v-for="(tab, index) in platformTabs" :key="index" :value="tab">
+              {{ tab }}
+            </v-tab>
+          </v-tabs>
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col align-self="start" class="ma-2">
+          <v-card class="elevation-4 rounded-lg" >
+            <v-card-text class="pa-3">
+              <v-text-field
                 v-model="search"
                 label="Search"
                 filled
@@ -183,13 +184,13 @@ const selectedPlatformData = computed(() => {
                 color="primary"
                 placeholder="Search..."
                 @click:clear="search = ''"
-            >
-              <template #prepend>
-                <v-icon color="primary">mdi-magnify</v-icon>
-              </template>
-            </v-text-field>
+              >
+                <template #prepend>
+                  <v-icon color="primary">mdi-magnify</v-icon>
+                </template>
+              </v-text-field>
 
-            <v-data-table
+              <v-data-table
                 v-if="selectedPlatformData"
                 v-model:items-per-page="itemsPerPage"
                 :headers="headers"
@@ -202,31 +203,33 @@ const selectedPlatformData = computed(() => {
                 hide-default-footer
                 item-class="px-4 py-2"
                 @click:row="navigateTo"
-            >
-              <template v-slot:item.languages="{ item }">
-                <v-chip
+              >
+                <template v-slot:item.languages="{ item }">
+                  <v-chip
                     v-for="language in item.selectable.languages"
                     :key="language"
                     class="ma-1"
                     :color="getColor(item.selectable.difficulty)"
                     outlined
-                >
-                  <v-icon left>{{ getLanguageIcon(language) }}</v-icon>
-                  {{ language }}
-                </v-chip>
-              </template>
-              <template v-slot:item.difficulty="{ item }">
-                <v-chip class="ma-1" :color="getColor(item.selectable.difficulty)" outlined>
-                  {{ item.selectable.difficulty }}
-                </v-chip>
-              </template>
-              <template v-slot:item.id="{ item }">
-                {{ item.selectable.id }}
-              </template>
-            </v-data-table>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
-</template>
+                  >
+                    <v-icon left>{{ getLanguageIcon(language) }}</v-icon>
+                    {{ language }}
+                  </v-chip>
+                </template>
+                <template v-slot:item.difficulty="{ item }">
+                  <v-chip class="ma-1" :color="getColor(item.selectable.difficulty)" outlined>
+                    {{ item.selectable.difficulty }}
+                  </v-chip>
+                </template>
+                <template v-slot:item.id="{ item }">
+                  {{ item.selectable.id }}
+                </template>
+              </v-data-table>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+
+  </div>
+  </template>

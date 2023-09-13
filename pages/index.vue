@@ -45,6 +45,8 @@ const goTo = (url) => {
 </script>
 
 <template>
+  <div>
+
   <v-container>
     <v-row no-gutters>
       <v-col align-self="auto">
@@ -102,4 +104,6 @@ const goTo = (url) => {
       </v-col>
     </v-row>
   </v-container>
+
+  </div>
 </template>

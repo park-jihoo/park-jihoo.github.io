@@ -74,6 +74,20 @@ const filterAndFormatPosts = async (data) => {
   return questions.sort((a, b) => a.id - b.id);
 };
 
+const getDynamicRoutes = async () => {
+  const githubFiles = await fetchGithubFiles();
+  const formattedPosts = await filterAndFormatPosts(githubFiles);
+  const pageTable = await getPageTable("619787c75b60479886c147cf746bfbb8");
+  const dynamicRoutes = []
+  for (const post of formattedPosts) {
+    dynamicRoutes.push(`/algorithm/${post.platform}/${post.difficulty}/${post.url}`)
+  }
+  for (const page of pageTable) {
+    dynamicRoutes.push(`/notes/${page.id}`)
+  }
+  return dynamicRoutes;
+}
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css:['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css'],
@@ -94,17 +108,16 @@ export default defineNuxtConfig({
   },
   sitemap: {
     urls: async () => {
-      const githubFiles = await fetchGithubFiles();
-      const formattedPosts = await filterAndFormatPosts(githubFiles);
-      const pageTable = await getPageTable("619787c75b60479886c147cf746bfbb8");
-      const dynamicRoutes = []
-      for (const post of formattedPosts) {
-        dynamicRoutes.push(`/algorithm/${post.platform}/${post.difficulty}/${post.url}`)
-      }
-      for (const page of pageTable) {
-        dynamicRoutes.push(`/notes/${page.id}`)
-      }
+      const dynamicRoutes = await getDynamicRoutes();
       return dynamicRoutes;
+    }
+  },
+  ssr: true,
+  hooks: {
+    async 'nitro:config'(nitroConfig) {
+      const dynamicRoutes = await getDynamicRoutes();
+      // @ts-ignore
+      nitroConfig.prerender.routes.push(...dynamicRoutes);
     }
   }
 })

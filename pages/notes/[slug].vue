@@ -4,34 +4,36 @@ import "prismjs";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
-import {VSkeletonLoader} from "vuetify/lib/labs/components";
-import {getPageBlocks} from "~/lib/api";
+import { VSkeletonLoader } from "vuetify/lib/labs/components";
+import { getPageBlocks } from "~/lib/api";
 
 const route = useRoute();
 
-const { data, pending } = await useLazyAsyncData("notion", ()=> getPageBlocks(route.params.slug))
+const { data, pending } = await useLazyAsyncData("notion", () => getPageBlocks(route.params.slug));
 </script>
 <template>
-  <v-container>
-    <v-row no-gutters>
-      <v-col align-self="start">
-        <v-skeleton-loader v-if="pending" type="card, paragraph, actions" />
-        <v-card class="elevation-3 pa-4" v-else>
-          <NotionRenderer
+  <div>
+    <v-container>
+      <v-row no-gutters>
+        <v-col align-self="start">
+          <v-skeleton-loader v-if="pending" type="card, paragraph, actions" />
+          <v-card class="elevation-3 pa-4" v-else>
+            <NotionRenderer
               v-if="data"
               :blockMap="data"
               prismjs
               katex
               :class="$vuetify.theme.global.current.dark ? 'dark-mode ma-3' : 'ma-3'"
-          />
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" link :to="`/notes`">Back to List</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+            />
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" link :to="`/notes`">Back to List</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 <style>
 @import "katex/dist/katex.min.css";
