@@ -9,53 +9,49 @@ import { CodeBlock } from "vue3-code-block";
 import { VSkeletonLoader } from "vuetify/lib/labs/components";
 import { useTheme } from "vuetify";
 
-const code = ref("");
 const lang = ref("");
 const difficulty = ref("");
-const langs = ref([]);
 const route = useRoute();
 const theme = useTheme();
 
-onMounted(() => {
-  const slug = route.params.slugs[2];
-  const platform = route.params.slugs[0];
-  difficulty.value = route.params.slugs[1];
-  const langsUrl = `https://api.github.com/repos/park-jihoo/Algorithm/contents/${platform}/${difficulty.value}/${slug}`;
-  fetch(langsUrl)
-    .then((response) => response.json())
+const slug = route.params.slugs[2];
+const platform = route.params.slugs[0];
+difficulty.value = route.params.slugs[1];
+const langsUrl = `https://api.github.com/repos/park-jihoo/Algorithm/contents/${platform}/${difficulty.value}/${slug}`;
+
+fetch(langsUrl)
+  .then((response) => response.json())
+  .then((data) => {
+    langs.value = data
+      .filter((item) => !item.name.includes(".md"))
+      .map((item) => item.name.split(".")[1]);
+    lang.value = langs.value[0];
+  });
+
+const { data: langs } = useAsyncData("langs", () => $fetch(langsUrl)
     .then((data) => {
-      langs.value = data
+      const temp = data
         .filter((item) => !item.name.includes(".md"))
         .map((item) => item.name.split(".")[1]);
-      lang.value = langs.value[0];
-    });
-});
+      lang.value = temp[0];
+      return temp;
+    }),
+  { immediate: true }
+);
 
-watch(lang, (newLang) => {
-  // Reload code based on the selected language
-  const slug = route.params.slugs[2];
-  const platform = route.params.slugs[0];
-  if (platform !== "leetcode") {
-    const file = route.params.slugs[2].split(".")[1].trim() + "." + newLang;
-    const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
-    fetch(githubUrl)
-      .then((response) => response.text())
-      .then((data) => {
-        code.value = data;
-        lang.value = newLang;
-      });
-  } else {
-    const file = route.params.slugs[2] + "." + newLang;
-    const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
+let githubUrl = "";
 
-    fetch(githubUrl)
-      .then((response) => response.text())
-      .then((data) => {
-        code.value = data;
-        lang.value = newLang;
-      });
-  }
-});
+if (platform !== "leetcode") {
+  const file = route.params.slugs[2].split(".")[1].trim() + "." + lang.value;
+  githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
+} else {
+  const file = route.params.slugs[2] + "." + lang.value;
+  githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
+}
+
+const { data: code } = useAsyncData("code", () => $fetch(githubUrl + lang.value),
+  { watch: [lang] }
+);
 
 const getColor = (difficulty) => {
   switch (difficulty) {
@@ -134,13 +130,15 @@ const getLink = (platform, slug) => {
               >
               </v-select>
               <template v-if="langs.length > 0">
-                <CodeBlock
-                  :code="code"
-                  :prismjs="true"
-                  :lang="`${lang === 'cc' ? 'cpp' : lang}`"
-                  :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`"
-                  persistent-copy-button
-                />
+                <ClientOnly>
+                  <CodeBlock
+                    :code="code"
+                    :prismjs="true"
+                    :lang="`${lang === 'cc' ? 'cpp' : lang}`"
+                    :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`"
+                    persistent-copy-button
+                  />
+                </ClientOnly>
               </template>
               <v-skeleton-loader
                 v-else
