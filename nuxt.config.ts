@@ -107,12 +107,15 @@ export default defineNuxtConfig({
     url: 'https://park-jihoo.github.io',
   },
   ssr: true,
+  sitemap: {
+    urls: async () => {
+      const dynamicRoutes = await getDynamicRoutes()
+      return dynamicRoutes
+    },
+  },
   nitro:{
     prerender:{
       crawlLinks: true,
-      routes:[
-        '/',
-      ]
     }
   }
 })

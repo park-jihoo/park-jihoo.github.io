@@ -5,10 +5,6 @@ const router = useRouter();
 const theme = useTheme();
 const drawer = ref(false);
 
-const navigateTo = (link) => {
-  router.push(`/${link.toLowerCase()}`);
-};
-
 const toggleTheme = () => {
   theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
 };
@@ -29,9 +25,8 @@ defineOgImageScreenshot();
             class="py-0"
             v-for="link in links"
             :key="link.title"
-            @click="() => navigateTo(link.title)"
-            ripple
         >
+          <NuxtLink :to="'/'+`${link.title.toLowerCase()}`" style="text-decoration: none;color:inherit;">
           <v-list-item-title
               :class="
               $vuetify.theme.global.current.dark
@@ -44,6 +39,7 @@ defineOgImageScreenshot();
               }}</v-icon>
             {{ link.title }}
           </v-list-item-title>
+            </NuxtLink>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -65,10 +61,11 @@ defineOgImageScreenshot();
           :key="link.title"
           text
           color="primary"
-          @click="() => navigateTo(link.title)"
       >
+        <NuxtLink :to="'/'+`${link.title.toLowerCase()}`" style="text-decoration: none;color:inherit;">
         <v-icon left small class="mr-2">{{ link.icon }}</v-icon>
         {{ link.title }}
+        </NuxtLink>
       </v-btn>
 
       <v-btn @click="toggleTheme" outlined class="mx-2" color="primary">

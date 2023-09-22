@@ -27,7 +27,11 @@ const { data, pending } = await useLazyAsyncData("notion", () => getPageBlocks(r
             />
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" link :to="`/notes`">Back to List</v-btn>
+              <v-btn color="primary">
+                <NuxtLink to="/notes" style="color: inherit;text-decoration: none;">
+                  Back to List
+                </NuxtLink>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>

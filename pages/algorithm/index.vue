@@ -204,6 +204,13 @@ const selectedPlatformData = computed(() => {
                 item-class="px-4 py-2"
                 @click:row="navigateTo"
               >
+                <template v-slot:item.name="{ item }">
+                  <NuxtLink :to="`/algorithm/${item.selectable.platform}/${item.selectable.difficulty}/${item.selectable.url}`"
+                  style="text-decoration: none;color:inherit;"
+                  >
+                    {{ item.selectable.name }}
+                  </NuxtLink>
+                </template>
                 <template v-slot:item.languages="{ item }">
                   <v-chip
                     v-for="language in item.selectable.languages"

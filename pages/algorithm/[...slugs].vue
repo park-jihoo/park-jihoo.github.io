@@ -147,7 +147,11 @@ const getLink = (platform, slug) => {
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" link :to="`/algorithm`">Back to List</v-btn>
+              <v-btn color="primary">
+                <NuxtLink :to="`/algorithm`" style="text-decoration: none; color: inherit">
+                Back to List
+                </NuxtLink>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
