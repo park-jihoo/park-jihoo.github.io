@@ -2,7 +2,6 @@
 import { VDataTable } from "vuetify/labs/components";
 
 const router = useRouter();
-const posts = ref([]);
 const itemsPerPage = ref(10);
 const headers = [
   { title: "id", key: "id", sortable: true },
@@ -95,17 +94,18 @@ const filterAndFormatPosts = async (data) => {
   return questions.sort((a, b) => a.id - b.id);
 };
 
+
+const { data: posts } = await useAsyncData("posts", () => {
+  return fetchGithubFiles()
+      .then((data) => filterAndFormatPosts(data));
+});
+
 const navigateTo = (event, data) => {
   const link = data.item.selectable.url;
   const difficulty = data.item.selectable.difficulty;
   const platform = data.item.selectable.platform;
   router.push({ path: "/algorithm/" + platform + "/" + difficulty + "/" + link });
 };
-
-onMounted(async () => {
-  const githubFiles = await fetchGithubFiles();
-  posts.value = await filterAndFormatPosts(githubFiles);
-});
 
 const filteredPosts = computed(() => {
   return posts.value.filter((post) => {
@@ -240,3 +240,10 @@ const selectedPlatformData = computed(() => {
 
   </div>
   </template>
+<script>
+export default {
+  async fetch() {
+    await Promise.all([posts.value]);
+  },
+}
+</script>

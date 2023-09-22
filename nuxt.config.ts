@@ -108,14 +108,20 @@ export default defineNuxtConfig({
   },
   ssr: true,
   sitemap: {
-    urls: async () => {
-      const dynamicRoutes = await getDynamicRoutes()
-      return dynamicRoutes
-    },
+    // urls: async () => {
+    //   const dynamicRoutes = await getDynamicRoutes()
+    //   return dynamicRoutes
+    // },
+
   },
   nitro:{
-    prerender:{
+    prerender: {
       crawlLinks: true,
+      concurrency: 1,
+      interval: 250,
+      routes: ['/',
+        '/sitemap.xml',
+      ]
     }
   }
 })
