@@ -22,89 +22,13 @@ const languageIcons = [
 
 const search = ref("");
 
-const fetchGithubFiles = async () => {
-  try {
-    const owner = "park-jihoo";
-    const repo = "Algorithm";
-    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`;
-    const response = await fetch(apiUrl);
-    let data = await response.json();
-    data = data.tree
-        .filter((item) => item.type === "blob")
-        .filter(
-            (item) =>
-                item.path.includes("leetcode")
-                || item.path.includes("백준")
-                || item.path.includes("프로그래머스")
-        )
-        .filter((item) => !item.path.includes(".md"));
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const filterAndFormatPosts = async (data) => {
-  let questions = [];
-  for (const item of data) {
-    const path = item.path.split("/");
-    if (questions.map((item) => item.url).includes(path[2])) {
-      const index = questions.findIndex((question) => question.url === path[2]);
-      questions[index].languages.push(path[3].split(".").pop());
-    } else {
-      if (path[0] === "leetcode") {
-        questions.push({
-          id: path[2].split("-")[0],
-          url: path[2],
-          name: path[2]
-              .replace(/-/g, " ")
-              .replace(/\d\d\d\d/g, "")
-              .trim(),
-          languages: [path[3].split(".").pop()],
-          difficulty: path[1],
-          platform: path[0]
-        });
-      } else if (path[0] === "백준") {
-        questions.push({
-          id: path[2].split(".")[0],
-          url: path[2],
-          name: path[2].split(".")[1]
-              .replace(/-/g, " ")
-              .replace(/\d\d\d\d/g, "")
-              .trim(),
-          languages: [path[3].split(".").pop()],
-          difficulty: path[1],
-          platform: path[0]
-        });
-      } else {
-        questions.push({
-          id: path[2].split(".")[0],
-          url: path[2],
-          name: path[2].split(".")[1]
-              .replace(/-/g, " ")
-              .replace(/\d\d\d\d/g, "")
-              .trim(),
-          languages: [path[3].split(".").pop()],
-          difficulty: path[1],
-          platform: path[0]
-        });
-      }
-    }
-  }
-  return questions.sort((a, b) => a.id - b.id);
-};
-
-
-const { data: posts } = await useAsyncData("posts", () => {
-  return fetchGithubFiles()
-      .then((data) => filterAndFormatPosts(data));
-});
+const { data: posts } = await useFetch('/api/algorithm');
 
 const navigateTo = (event, data) => {
-  const link = data.item.selectable.url;
+  const link = data.item.selectable.slug;
   const difficulty = data.item.selectable.difficulty;
   const platform = data.item.selectable.platform;
-  router.push({ path: "/algorithm/" + platform + "/" + difficulty + "/" + link });
+  router.push({ path: data.item.selectable.url});
 };
 
 const filteredPosts = computed(() => {
@@ -172,7 +96,7 @@ const selectedPlatformData = computed(() => {
       </v-row>
       <v-row justify="center">
         <v-col align-self="start" class="ma-2">
-          <v-card class="elevation-4 rounded-lg" >
+          <v-card class="elevation-4 rounded-lg">
             <v-card-text class="pa-3">
               <v-text-field
                 v-model="search"
@@ -189,7 +113,6 @@ const selectedPlatformData = computed(() => {
                   <v-icon color="primary">mdi-magnify</v-icon>
                 </template>
               </v-text-field>
-
               <v-data-table
                 v-if="selectedPlatformData"
                 v-model:items-per-page="itemsPerPage"
@@ -205,8 +128,9 @@ const selectedPlatformData = computed(() => {
                 @click:row="navigateTo"
               >
                 <template v-slot:item.name="{ item }">
-                  <NuxtLink :to="`/algorithm/${item.selectable.platform}/${item.selectable.difficulty}/${item.selectable.url}`"
-                  style="text-decoration: none;color:inherit;"
+                  <NuxtLink
+                    :to="item.selectable.url"
+                    style="text-decoration: none;color:inherit;"
                   >
                     {{ item.selectable.name }}
                   </NuxtLink>
@@ -239,11 +163,4 @@ const selectedPlatformData = computed(() => {
     </v-container>
 
   </div>
-  </template>
-<script>
-export default {
-  async fetch() {
-    await Promise.all([posts.value]);
-  },
-}
-</script>
+</template>
