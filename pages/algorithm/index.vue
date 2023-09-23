@@ -25,9 +25,6 @@ const search = ref("");
 const { data: posts } = await useFetch('/api/algorithm');
 
 const navigateTo = (event, data) => {
-  const link = data.item.selectable.slug;
-  const difficulty = data.item.selectable.difficulty;
-  const platform = data.item.selectable.platform;
   router.push({ path: data.item.selectable.url});
 };
 

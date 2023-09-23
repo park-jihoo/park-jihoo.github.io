@@ -9,7 +9,6 @@ import { CodeBlock } from "vue3-code-block";
 import { VSkeletonLoader } from "vuetify/lib/labs/components";
 import { useTheme } from "vuetify";
 
-const lang = ref("");
 const difficulty = ref("");
 const route = useRoute();
 const theme = useTheme();
@@ -19,37 +18,26 @@ const platform = route.params.slugs[0];
 difficulty.value = route.params.slugs[1];
 const langsUrl = `https://api.github.com/repos/park-jihoo/Algorithm/contents/${platform}/${difficulty.value}/${slug}`;
 
-fetch(langsUrl)
-  .then((response) => response.json())
-  .then((data) => {
-    langs.value = data
-      .filter((item) => !item.name.includes(".md"))
-      .map((item) => item.name.split(".")[1]);
-    lang.value = langs.value[0];
-  });
+const { data: langs } = useAsyncData("langs", () => $fetch('/api/algorithm').then((res) => {
+    return res.filter((item) => item.slug === slug)[0].languages;
+  })
+);
 
-const { data: langs } = useAsyncData("langs", () => $fetch(langsUrl)
-    .then((data) => {
-      const temp = data
-        .filter((item) => !item.name.includes(".md"))
-        .map((item) => item.name.split(".")[1]);
-      lang.value = temp[0];
-      return temp;
-    }),
-  { immediate: true }
+const {data: lang} = useAsyncData("lang", () => $fetch('/api/algorithm').then((res) => {
+    return res.filter((item) => item.slug === slug)[0].languages[0];
+  })
 );
 
 let githubUrl = "";
 
-if (platform !== "leetcode") {
-  const file = route.params.slugs[2].split(".")[1].trim() + "." + lang.value;
+watch([lang], () => {
+  const file = platform !== "leetcode"
+    ? `${slug.split(".")[1].trim()}.${lang.value}`
+    : `${slug}.${lang.value}`;
   githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
-} else {
-  const file = route.params.slugs[2] + "." + lang.value;
-  githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
-}
+});
 
-const { data: code } = useAsyncData("code", () => $fetch(githubUrl + lang.value),
+const { data: code } = useAsyncData("code", () => $fetch(githubUrl),
   { watch: [lang] }
 );
 
