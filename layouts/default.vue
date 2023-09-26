@@ -14,7 +14,10 @@ const links = [
   { title: "algorithm", icon: "mdi-code-tags" },
 ];
 
-defineOgImageScreenshot();
+defineOgImage({
+  component: 'template',
+  title: 'Park Jihoo',
+});
 </script>
 
 <template>
