@@ -2,14 +2,13 @@
 import { getPageTable } from "/lib/api";
 import { VDataTable } from "vuetify/labs/components";
 
-const selectedClass = ref([]);
+const selectedClass = ref("");
 const route = useRoute();
 const router = useRouter();
 
-const { data: pageTable } = useAsyncData("notion", async () => {
+const { data: pageTable } = useLazyAsyncData("notion", async () => {
     return await getPageTable("619787c75b60479886c147cf746bfbb8");
-  });
-
+});
 
 const classes = computed(() => {
   const allClasses = pageTable.value.map((post) => post.class);
@@ -96,10 +95,3 @@ const search = ref("");
     </v-container>
   </div>
 </template>
-<script>
-export default{
-  async fetch(){
-    await Promise.all([pageTable.value, classes.value])
-  }
-}
-</script>

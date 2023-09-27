@@ -13,9 +13,9 @@ const difficulty = ref("");
 const route = useRoute();
 const theme = useTheme();
 
-const slug = route.params.slugs[2];
-const platform = route.params.slugs[0];
-difficulty.value = route.params.slugs[1];
+const slug = route.params.slug;
+const platform = route.params.platform;
+difficulty.value = route.params.difficulty;
 const langsUrl = `https://api.github.com/repos/park-jihoo/Algorithm/contents/${platform}/${difficulty.value}/${slug}`;
 
 const { data: langs } = useAsyncData("langs", () => $fetch('/api/algorithm').then((res) => {
@@ -93,14 +93,14 @@ const getLink = (platform, slug) => {
               >
                 {{ difficulty }}
               </v-chip>
-              {{ route.params.slugs[2].replace(/\d\d\d\d-/g, "").replace(/-/g, " ") }}
+              {{ route.params.slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ") }}
               <v-btn
                 icon
                 class="elevation-0"
                 rounded="0"
                 variant="text"
                 :ripple="false"
-                :href="getLink(route.params.slugs[0], route.params.slugs[2])"
+                :href="getLink(route.params.platform, route.params.slug)"
                 target="_blank"
               >
                 <v-icon>mdi-open-in-new</v-icon>
@@ -137,7 +137,7 @@ const getLink = (platform, slug) => {
               <v-spacer></v-spacer>
               <v-btn color="primary">
                 <NuxtLink :to="`/algorithm`" style="text-decoration: none; color: inherit">
-                Back to List
+                  Back to List
                 </NuxtLink>
               </v-btn>
             </v-card-actions>
