@@ -25,7 +25,7 @@ const search = ref("");
 const { data: posts } = await useFetch('/api/algorithm');
 
 const navigateTo = (event, data) => {
-  router.push({ path: data.item.selectable.url});
+  router.replace({ path: data.item.selectable.url});
 };
 
 const filteredPosts = computed(() => {

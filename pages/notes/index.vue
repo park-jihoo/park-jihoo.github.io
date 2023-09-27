@@ -28,7 +28,7 @@ const headers = [{ title: "Title", key: "title", sortable: true }];
 
 const navigateTo = (event, data) => {
   const link = data.item.value;
-  router.push({ path: "/notes/" + link });
+  router.replace({ path: "/notes/" + link });
 };
 
 const search = ref("");
