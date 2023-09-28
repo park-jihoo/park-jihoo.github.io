@@ -1,28 +1,11 @@
 <script setup>
-import { getPageTable } from "/lib/api";
+import { useGetPageTable } from "~/lib/composables";
 import { VDataTable } from "vuetify/labs/components";
 
-const selectedClass = ref("");
 const route = useRoute();
 const router = useRouter();
 
-const { data: pageTable } = useLazyAsyncData("notion", async () => {
-    return await getPageTable("619787c75b60479886c147cf746bfbb8");
-});
-
-const classes = computed(() => {
-  const allClasses = pageTable.value.map((post) => post.class);
-  selectedClass.value = [...new Set(allClasses)].sort((a, b) =>
-    a.localeCompare(b)
-  )[0];
-  return [...new Set(allClasses)].sort((a, b) => a.localeCompare(b));
-});
-
-const filteredTable = computed(() => {
-  return pageTable.value.filter((post) =>
-    selectedClass.value.includes(post.class)
-  );
-});
+const { data: pageTable } = useGetPageTable("619787c75b60479886c147cf746bfbb8");
 
 const headers = [{ title: "Title", key: "title", sortable: true }];
 
@@ -32,19 +15,40 @@ const navigateTo = (event, data) => {
 };
 
 const search = ref("");
+
+const selectedTab = ref("");
+
+const classList = computed(() => {
+  const uniqueClass = new Set();
+  if (pageTable.value) {
+    pageTable.value.forEach((item) => {
+      uniqueClass.add(item.class);
+    });
+  }
+  return Array.from(uniqueClass).sort((a, b) => a.localeCompare(b));
+});
+
+const filteredPageTable = computed(() => {
+  if (!selectedTab.value) {
+    selectedTab.value = classList.value[0];
+  }
+  if (pageTable.value) {
+    return pageTable.value.filter((item) => {
+      return item.class === selectedTab.value && item.title.toLowerCase().includes(search.value.toLowerCase());
+    });
+  }
+  return [];
+});
 </script>
 
 <template>
   <div>
     <v-container class="my-5">
-      <v-row no-gutters class="justify-center">
+      <v-row >
         <v-col class="ma-2" align-self="start">
-          <v-tabs v-model="selectedClass" center-active>
-            <v-tab v-for="(classItem, index) in classes" :key="index" :value="classItem">
-              <template v-slot:title>
-                {{ classItem }}
-              </template>
-              {{ classItem }}
+          <v-tabs v-model="selectedTab" grow>
+            <v-tab v-for="(tab, index) in classList" :key="index" :value="tab">
+              {{ tab }}
             </v-tab>
           </v-tabs>
         </v-col>
@@ -57,27 +61,28 @@ const search = ref("");
               label="Search"
               filled
               hide-details
-              class="ma-1"
               clearable
-              @click:clear="search = ''"
               solo
               color="primary"
               placeholder="Search..."
+              @click:clear="search = ''"
+              class="text-body-2"
             >
               <template #prepend>
                 <v-icon color="primary">mdi-magnify</v-icon>
               </template>
             </v-text-field>
             <v-data-table
+              v-if="filteredPageTable"
               :headers="headers"
-              :items="filteredTable"
-              :items-length="filteredTable.length"
+              :items="filteredPageTable"
+              :items-length="filteredPageTable.length"
               hide-default-footer
               dense
               hover
               :search="search"
               @click:row="navigateTo"
-              :loading="filteredTable.length === 0 && search.length===0"
+              :loading="filteredPageTable.length===0 && search.length ===0"
               :items-per-page="10"
             >
               <template v-slot:item.title="{ item }">
