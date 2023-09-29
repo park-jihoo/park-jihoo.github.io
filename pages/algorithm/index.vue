@@ -22,13 +22,16 @@ const languageIcons = [
 
 const search = ref("");
 
-const { data: posts } = await useFetch('/api/algorithm');
+const { data: posts, pending } = useLazyAsyncData('algorithm', () => {
+  return $fetch('/api/algorithm')
+})
 
 const navigateTo = (event, data) => {
   router.replace({ path: data.item.selectable.url});
 };
 
 const filteredPosts = computed(() => {
+  if (!posts.value) return [];
   return posts.value.filter((post) => {
     return post.name.toLowerCase().includes(search.value.toLowerCase());
   });
@@ -74,6 +77,7 @@ const selectedTab = ref(platformTabs[0]);
 
 // Filter posts based on selected platform
 const selectedPlatformData = computed(() => {
+  if (!filteredPosts.value) return [];
   return filteredPosts.value.filter(post => post.platform === selectedTab.value);
 });
 
@@ -84,7 +88,7 @@ const selectedPlatformData = computed(() => {
     <v-container class="my-5">
       <v-row justify="center">
         <v-col align-self="start" class="ma-2">
-          <v-tabs v-model="selectedTab" center-active>
+          <v-tabs v-model="selectedTab" grow>
             <v-tab v-for="(tab, index) in platformTabs" :key="index" :value="tab">
               {{ tab }}
             </v-tab>
@@ -119,7 +123,7 @@ const selectedPlatformData = computed(() => {
                 :search="search"
                 hover
                 dense
-                :loading="selectedPlatformData.length === 0 && search.length === 0"
+                :loading="pending"
                 hide-default-footer
                 item-class="px-4 py-2"
                 @click:row="navigateTo"
@@ -158,6 +162,5 @@ const selectedPlatformData = computed(() => {
         </v-col>
       </v-row>
     </v-container>
-
   </div>
 </template>

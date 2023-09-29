@@ -28,16 +28,15 @@ const {data: lang} = useAsyncData("lang", () => $fetch('/api/algorithm').then((r
   })
 );
 
-let githubUrl = "";
-
-watch([lang], () => {
+const { data: code, pending:pending } = useLazyAsyncData("code", () => {
   const file = platform !== "leetcode"
     ? `${slug.split(".")[1].trim()}.${lang.value}`
     : `${slug}.${lang.value}`;
-  githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
-});
-
-const { data: code } = useAsyncData("code", () => $fetch(githubUrl),
+  const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
+  return $fetch(githubUrl).then((res) => {
+      return res;
+    });
+  },
   { watch: [lang] }
 );
 
@@ -108,6 +107,7 @@ const getLink = (platform, slug) => {
             </v-card-title>
             <v-card-text>
               <v-select
+                v-if="langs"
                 v-model="lang"
                 :items="langs"
                 label="Select Language"
@@ -117,7 +117,7 @@ const getLink = (platform, slug) => {
                 :disabled="langs.length === 1"
               >
               </v-select>
-              <template v-if="langs.length > 0">
+              <template v-if="code">
                 <ClientOnly>
                   <CodeBlock
                     :code="code"
