@@ -18,7 +18,7 @@ export default defineEventHandler(async () => {
 
   for (const a of algorithm) {
     urls.push({
-      loc : `/algorithm/${a.url}`,
+      loc : `/${a.url}`,
     })
   }
 
