@@ -2,7 +2,12 @@
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css:['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css'],
+  css:[
+    'vuetify/lib/styles/main.sass',
+    '@mdi/font/css/materialdesignicons.min.css',
+    'katex/dist/katex.min.css',
+    'prismjs/themes/prism.css',
+  ],
   build:{
     transpile: ['vuetify']
   },
@@ -23,6 +28,17 @@ export default defineNuxtConfig({
     head:{
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1'
+    }
+  },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: [
+        '/',
+        '/notes',
+        '/algorithm',
+        '/sitemap.xml'
+      ]
     }
   }
 })

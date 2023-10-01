@@ -40,7 +40,5 @@ const { data, pending } = await useLazyAsyncData("notion", () => getPageBlocks(r
   </div>
 </template>
 <style>
-@import "katex/dist/katex.min.css";
-@import "prismjs/themes/prism.css";
-@import "public/style.css";
+@import 'public/style.css';
 </style>
