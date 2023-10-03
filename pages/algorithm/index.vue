@@ -26,13 +26,14 @@ const search = ref("");
 
 const algorithmStore = useAlgorithmStore();
 
-const {getQuestions: posts} = storeToRefs(algorithmStore);
-
-onMounted(() => {
-  if(posts.value.length === 0) {
-    algorithmStore.fetchQuestions();
-  }
+onServerPrefetch(async () => {
+  await algorithmStore.fetchQuestions();
 });
+
+const { data: posts } = await useAsyncData("data", async () => {
+  await algorithmStore.fetchQuestions();
+  return algorithmStore.getQuestions;
+})
 
 const navigateTo = (event, data) => {
   router.replace({ path: data.item.selectable.url});

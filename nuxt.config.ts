@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+import { usePinia } from "#imports";
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css:[

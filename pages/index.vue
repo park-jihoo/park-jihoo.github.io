@@ -1,5 +1,4 @@
 <script setup>
-
 const name = "Jihoo Park";
 const title = "Data Scientist";
 const email = "wlgn8648@gmail.com";

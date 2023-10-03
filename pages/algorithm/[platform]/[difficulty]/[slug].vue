@@ -18,17 +18,13 @@ const theme = useTheme();
 const slug = route.params.slug;
 const platform = route.params.platform;
 difficulty.value = route.params.difficulty;
-const langsUrl = `https://api.github.com/repos/park-jihoo/Algorithm/contents/${platform}/${difficulty.value}/${slug}`;
 
 const algorithmStore = useAlgorithmStore();
 
-const { getQuestions: posts} = storeToRefs(algorithmStore);
-
-onMounted(() => {
-  if(posts.value.length === 0) {
-    algorithmStore.fetchQuestions();
-  }
-});
+const { data: posts } = await useAsyncData("data", async () => {
+  await algorithmStore.fetchQuestions();
+  return algorithmStore.getQuestions;
+})
 
 const { data: langs } = await useAsyncData("langs", () => {
     return posts.value.filter((post) => post.slug === slug)[0].languages;
@@ -39,7 +35,7 @@ const {data: lang} = await useAsyncData("lang", () => {
   return langs.value[0];
 });
 
-const { data: code, pending:pending } = useLazyAsyncData("code", () => {
+const { data: code, pending:pending } = await useLazyAsyncData("code", () => {
   const file = platform !== "leetcode"
     ? `${slug.split(".")[1].trim()}.${lang.value}`
     : `${slug}.${lang.value}`;
