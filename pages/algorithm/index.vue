@@ -1,5 +1,7 @@
 <script setup>
 import { VDataTable } from "vuetify/labs/components";
+import { useAlgorithmStore } from "~/stores/algorithm";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
 const itemsPerPage = ref(10);
@@ -22,9 +24,15 @@ const languageIcons = [
 
 const search = ref("");
 
-const { data: posts, pending } = useLazyAsyncData('algorithm', () => {
-  return $fetch('/api/algorithm')
-})
+const algorithmStore = useAlgorithmStore();
+
+const {getQuestions: posts} = storeToRefs(algorithmStore);
+
+onMounted(() => {
+  if(posts.value.length === 0) {
+    algorithmStore.fetchQuestions();
+  }
+});
 
 const navigateTo = (event, data) => {
   router.replace({ path: data.item.selectable.url});
@@ -123,18 +131,19 @@ const selectedPlatformData = computed(() => {
                 :search="search"
                 hover
                 dense
-                :loading="pending"
+                :loading="posts.length === 0"
                 hide-default-footer
                 item-class="px-4 py-2"
                 @click:row="navigateTo"
               >
                 <template v-slot:item.name="{ item }">
-                  <NuxtLink
+                  <nuxt-link
+                    prefetch
                     :to="item.selectable.url"
                     style="text-decoration: none;color:inherit;"
                   >
                     {{ item.selectable.name }}
-                  </NuxtLink>
+                  </nuxt-link>
                 </template>
                 <template v-slot:item.languages="{ item }">
                   <v-chip

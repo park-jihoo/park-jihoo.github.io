@@ -8,6 +8,8 @@ import "prismjs/components/prism-sql.js";
 import { CodeBlock } from "vue3-code-block";
 import { VSkeletonLoader } from "vuetify/lib/labs/components";
 import { useTheme } from "vuetify";
+import { useAlgorithmStore } from "~/stores/algorithm";
+import { storeToRefs } from "pinia";
 
 const difficulty = ref("");
 const route = useRoute();
@@ -18,15 +20,24 @@ const platform = route.params.platform;
 difficulty.value = route.params.difficulty;
 const langsUrl = `https://api.github.com/repos/park-jihoo/Algorithm/contents/${platform}/${difficulty.value}/${slug}`;
 
-const { data: langs } = useAsyncData("langs", () => $fetch('/api/algorithm').then((res) => {
-    return res.filter((item) => item.slug === slug)[0].languages;
-  })
+const algorithmStore = useAlgorithmStore();
+
+const { getQuestions: posts} = storeToRefs(algorithmStore);
+
+onMounted(() => {
+  if(posts.value.length === 0) {
+    algorithmStore.fetchQuestions();
+  }
+});
+
+const { data: langs } = await useAsyncData("langs", () => {
+    return posts.value.filter((post) => post.slug === slug)[0].languages;
+  }
 );
 
-const {data: lang} = useAsyncData("lang", () => $fetch('/api/algorithm').then((res) => {
-    return res.filter((item) => item.slug === slug)[0].languages[0];
-  })
-);
+const {data: lang} = await useAsyncData("lang", () => {
+  return langs.value[0];
+});
 
 const { data: code, pending:pending } = useLazyAsyncData("code", () => {
   const file = platform !== "leetcode"
@@ -77,6 +88,12 @@ const getLink = (platform, slug) => {
       return `https://www.acmicpc.net/problem/${slug.split(".")[0]}`;
   }
 };
+
+useServerSeoMeta({
+  ogTitle: () => `${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")} | Algorithm`,
+  ogDescription: () => `${platform} - ${difficulty.value} | ${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")}`,
+  twitterTitle: () => `${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")} | Algorithm`,
+})
 </script>
 
 <template>

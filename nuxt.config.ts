@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     'nuxt-og-image',
     'nuxt-simple-robots',
-    'nuxt-simple-sitemap',
+    '@pinia/nuxt',
   ],
   gtag: {
     id: 'G-5H39DYHZK8'
@@ -32,13 +32,18 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      crawlLinks: true,
       routes: [
-        '/',
-        '/notes',
+        '/sitemap.xml',
         '/algorithm',
-        '/sitemap.xml'
-      ]
+        '/notes'
+        ],
+      crawlLinks: true,
     }
+  },
+  imports: {
+    dirs: ['./stores']
+  },
+  pinia: {
+    autoImports: ['defineStore', 'acceptHMRUpdate'],
   }
 })

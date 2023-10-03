@@ -86,7 +86,9 @@ const filteredPageTable = computed(() => {
               :items-per-page="10"
             >
               <template v-slot:item.title="{ item }">
-                <NuxtLink :to="`/notes/${item.selectable.id}`" style="text-decoration: none;color:inherit;">
+                <NuxtLink :to="`/notes/${item.selectable.id}`"
+                          prefetch
+                          style="text-decoration: none;color:inherit;">
                   <v-chip class="mr-2 mt-2" color="primary">
                     {{ item.selectable.subclass }}
                   </v-chip>
