@@ -15,6 +15,9 @@ useSeoMeta({
 });
 </script>
 <template>
+  <Head>
+    <Meta name="google-site-verification" content="kQoktB1lk0tqFRLs4-vqhVfEVWlRMX8VRQtLC_L09uw" />
+  </Head>
   <OgImage/>
   <NuxtLayout>
     <NuxtPage/>
