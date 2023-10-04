@@ -92,6 +92,7 @@ export const useAlgorithmStore = defineStore("algorithm", {
       const data = await fetchGithubFiles();
       this.questions = await filterAndFormatPosts(data);
       this.loading = false;
+      const app = useNuxtApp();
     }
   },
   async $reset() {

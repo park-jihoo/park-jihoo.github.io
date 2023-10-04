@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
   for (const dynamicRoute of dynamicRoutes) {
     sitemap.write({ url: dynamicRoute.loc, changefreq: 'daily' })
   }
+
   sitemap.end()
 
   return streamToPromise(sitemap)

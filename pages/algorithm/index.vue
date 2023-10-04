@@ -26,10 +26,6 @@ const search = ref("");
 
 const algorithmStore = useAlgorithmStore();
 
-onServerPrefetch(async () => {
-  await algorithmStore.fetchQuestions();
-});
-
 const { data: posts } = await useAsyncData("data", async () => {
   await algorithmStore.fetchQuestions();
   return algorithmStore.getQuestions;
