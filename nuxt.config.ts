@@ -10,16 +10,18 @@ const fetchGithubFiles = async () => {
     const response = await fetch(apiUrl);
     let data = await response.json();
     if(data.tree){
-      data = data.tree
-        .filter((item) => item.type === "blob")
-        .filter(
+      data = data.tree.filter((item) => item.type === "tree");
+      if(data){
+        data = data.filter(
           (item) =>
-            item.path.includes("leetcode")
-            || item.path.includes("백준")
-            || item.path.includes("프로그래머스")
-        )
-        .filter((item) => !item.path.includes(".md"));
-      return data;
+            (item.path.includes("leetcode")
+              || item.path.includes("백준")
+              || item.path.includes("프로그래머스"))
+        ).map((item) => '/algorithm/'+item.path);
+        return data;
+      }else{
+        return [];
+      }
     }else{
       return [];
     }
@@ -28,66 +30,13 @@ const fetchGithubFiles = async () => {
   }
 };
 
-const filterAndFormatPosts = async (data) => {
-  let questions = [];
-  for (const item of data) {
-    const path = item.path.split("/");
-    if (questions.map((item) => item.slug).includes(path[2])) {
-      const index = questions.findIndex((question) => question.slug === path[2]);
-      questions[index].languages.push(path[3].split(".").pop());
-    } else {
-      if (path[0] === "leetcode") {
-        questions.push({
-          id: path[2].split("-")[0],
-          slug: path[2],
-          name: path[2]
-            .replace(/-/g, " ")
-            .replace(/\d\d\d\d/g, "")
-            .trim(),
-          languages: [path[3].split(".").pop()],
-          difficulty: path[1],
-          platform: path[0],
-          url: '/algorithm/'+path[0]+'/' + path[1]+'/' + path[2]
-        });
-      } else if (path[0] === "백준") {
-        questions.push({
-          id: path[2].split(".")[0],
-          slug: path[2],
-          name: path[2].split(".")[1]
-            .replace(/-/g, " ")
-            .replace(/\d\d\d\d/g, "")
-            .trim(),
-          languages: [path[3].split(".").pop()],
-          difficulty: path[1],
-          platform: path[0],
-          url: '/algorithm/'+path[0]+'/' + path[1]+'/' + path[2]
-        });
-      } else {
-        questions.push({
-          id: path[2].split(".")[0],
-          slug: path[2],
-          name: path[2].split(".")[1]
-            .replace(/-/g, " ")
-            .replace(/\d\d\d\d/g, "")
-            .trim(),
-          languages: [path[3].split(".").pop()],
-          difficulty: path[1],
-          platform: path[0],
-          url: '/algorithm/'+path[0]+'/' + path[1]+'/' + path[2]
-        });
-      }
-    }
-  }
-  return questions.sort((a, b) => a.id - b.id);
-};
-
 async function getDynamicRoutes(){
   const [
     notes,
     algorithm,
   ] = await Promise.all([
-    getPageTable("619787c75b60479886c147cf746bfbb8"),
-    filterAndFormatPosts(await fetchGithubFiles())
+    await getPageTable("619787c75b60479886c147cf746bfbb8"),
+    await fetchGithubFiles()
   ])
 
   let urls = []
@@ -102,11 +51,15 @@ async function getDynamicRoutes(){
 
   if(algorithm){
     for (const a of algorithm) {
-      urls.push({
-        loc : `${a.url}`,
-      })
+      if(a.split('/').length === 5){
+        urls.push({
+          loc : a,
+        })
+      }
     }
   }
+
+  urls.push('/algorithm');
 
   return urls;
 }
@@ -127,6 +80,7 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     'nuxt-simple-robots',
     '@pinia/nuxt',
+    'nuxt-simple-sitemap',
   ],
   gtag: {
     id: 'G-5H39DYHZK8'
@@ -157,12 +111,9 @@ export default defineNuxtConfig({
   pinia: {
     autoImports: ['defineStore', 'acceptHMRUpdate'],
   },
-  routeRules: {
-    '/algorithm/**':{prerender: true},
-    '/notes/**':{prerender: true},
-  },
   hooks: {
     async 'nitro:config' (nitroConfig) {
+      if(nitroConfig.prerender.routes.length === 0) return;
       const routes = await getDynamicRoutes();
       const staticEndpoints = routes.map((route) => route.loc);
       nitroConfig.prerender.routes.push(...staticEndpoints);
