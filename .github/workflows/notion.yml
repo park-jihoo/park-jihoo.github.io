@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  import:
+  notion:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -17,7 +17,9 @@ jobs:
         with:
           NOTION_SECRET: ${{ secrets.NOTION_API_KEY }}
           NOTION_DATABASE: 619787c75b60479886c147cf746bfbb8
-          ARTICLE_PATH: content
-          ASSETS_PATH: assets
+          FILTER_PROP: class
+          FILTER_VALUES: RL, Coursework, Paper
+          ARTICLE_PATH: ./content/{class}/{subclass}/{title}.md
+          ASSETS_PATH: ./assets/{class}/{subclass}/{title}/
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v5
