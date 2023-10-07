@@ -1,27 +1,21 @@
-name: Notion2Github
+name: import
+
 on:
   schedule:
-    - cron: '0 14 * * *'
-  workflow_dispatch:
+    - cron: '0 0 * * *'
+
 jobs:
-  auto-sync-from-notion-to-github:
+  import:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Notion2Github
-        uses: younho9/notion2github@v1.1.0
-        with:
-          database-url: 'https://www.notion.so/619787c75b60479886c147cf746bfbb8'
-          docs-directory: content
+      - id: import
+        uses: ega4432/notion-to-markdown-action@v0
         env:
-          NOTION_TOKEN: 'v02:user_token_or_cookies:sjcP38aQjLyFRXzQ7JpKRXzRGsPAkQn8OvVPu3PlaUuwiblXbqDY4dDjIaBvTBo4BYL2gNmn1CvyAI3r80RjxoUoB3tF1UgsS0_TXU_MsJki4TEPkeYfONRwXVoZb4HO0M5L'
-
-      - name: Format documents
-        uses: creyD/prettier_action@v3.1
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: '619787c75b60479886c147cf746bfbb8'
         with:
-          prettier_options: --write ./contents/**/*.md
-          commit_message: 'docs: Update docs (auto)'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional
+          output_path: content # default: output
+      # You can check output files count
+      - run: |
+          echo "Exported count: ${{ steps.import.outputs.files_count }}"
