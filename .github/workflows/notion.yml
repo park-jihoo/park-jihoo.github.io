@@ -16,7 +16,7 @@ jobs:
           NOTION_DATABASE_ID: '619787c75b60479886c147cf746bfbb8'
         with:
           # Optional
-          output_path: ./content # default: output
+          output_path: content # default: output
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
