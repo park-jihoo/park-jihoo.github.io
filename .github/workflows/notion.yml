@@ -17,7 +17,7 @@ jobs:
         with:
           NOTION_SECRET: ${{ secrets.NOTION_API_KEY }}
           NOTION_DATABASE: 619787c75b60479886c147cf746bfbb8
-          ARTICLE_PATH: content/{class}/{subclass}/{title}/index.md
+          ARTICLE_PATH: content
           ASSETS_PATH: assets
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v5
