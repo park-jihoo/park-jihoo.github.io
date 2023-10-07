@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: notion-jam
-        uses: victornpb/notion-jam@v0.0.10
+        uses: victornpb/notion-jam@v0.0.13
         with:
           NOTION_SECRET: ${{ secrets.NOTION_API_KEY }}
           NOTION_DATABASE: 619787c75b60479886c147cf746bfbb8
