@@ -17,13 +17,7 @@ jobs:
         with:
           # Optional
           output_path: ./content # default: output
-      - name: Commit & push
-        if: steps.import.outputs.files_count > 0
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add -Av "*.md"
-          if ! git diff --cached --quiet --exit-code; then
-            git commit -m '[bot] Automatically import contents from Notion'
-            git push
-          fi
+      - name: Git Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: "Notion Import"
