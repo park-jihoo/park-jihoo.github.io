@@ -12,13 +12,12 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - id: import
-        uses: ega4432/notion-to-markdown-action@v0
-        env:
-          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-          NOTION_DATABASE_ID: '619787c75b60479886c147cf746bfbb8'
+      - name: notion-jam
+        uses: victornpb/notion-jam@v0.0.10
         with:
-          # Optional
-          output_path: content # default: output
+          NOTION_SECRET: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE: https://www.notion.so/619787c75b60479886c147cf746bfbb8
+          ARTICLE_PATH: content/{title}.md
+          ASSETS_PATH: assets
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v5
