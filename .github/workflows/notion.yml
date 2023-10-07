@@ -21,6 +21,7 @@ jobs:
           FILTER_VALUES: 'RL, Coursework, Paper'
           ARTICLE_PATH: ./content/{class}/{subclass}/{title}.md
           ASSETS_PATH: ./assets/{class}/{subclass}/{title}/
-          PARALLEL_PAGES: 10
+          PARALLEL_PAGES: 50
+          PARALLEL_DOWNLOADS_PER_PAGE: 10
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v5
