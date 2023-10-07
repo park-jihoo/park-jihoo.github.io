@@ -18,7 +18,7 @@ jobs:
           NOTION_SECRET: ${{ secrets.NOTION_API_KEY }}
           NOTION_DATABASE: 619787c75b60479886c147cf746bfbb8
           FILTER_PROP: class
-          FILTER_VALUES: RL, Coursework, Paper
+          FILTER_VALUES: 'RL, Coursework, Paper'
           ARTICLE_PATH: ./content/{class}/{subclass}/{title}.md
           ASSETS_PATH: ./assets/{class}/{subclass}/{title}/
       - name: Git Auto Commit
