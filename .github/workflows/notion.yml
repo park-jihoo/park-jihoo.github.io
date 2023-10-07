@@ -14,9 +14,9 @@ jobs:
         uses: younho9/notion2github@v1.1.0
         with:
           database-url: 'https://www.notion.so/619787c75b60479886c147cf746bfbb8'
-          docs-directory: docs
+          docs-directory: content
         env:
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_TOKEN: 'v02:user_token_or_cookies:sjcP38aQjLyFRXzQ7JpKRXzRGsPAkQn8OvVPu3PlaUuwiblXbqDY4dDjIaBvTBo4BYL2gNmn1CvyAI3r80RjxoUoB3tF1UgsS0_TXU_MsJki4TEPkeYfONRwXVoZb4HO0M5L'
 
       - name: Format documents
         uses: creyD/prettier_action@v3.1
