@@ -132,9 +132,17 @@ _thumbnail: https://www.notion.so/images/page-cover/gradients_11.jpg
 
 *   For state-action distribution D, define
 
+    ```undefined
+    L(w;\theta,D):=\mathbb E_{s,a\sim D}\left[\left(Q^{\pi_\theta}(s,a)-w\cdot\phi_{s,a}\right)^2\right]
+    ```
+
 *   The approximate version \theta^{(t+1)} = \theta^{(t)}+\eta w^{(t)}, where w^{(t)} \approx\argmin\_{|w|\_2\le W}L(w;\theta^{(t)},d^{(t)})
 
 *   Equivalently,
+
+    ```undefined
+    \pi^{(t+1)}(a|s)\leftarrow\frac{\pi^{(t)}(a|s)\exp(w^{(t)}\cdot\phi_{s,a})}{Z_s}
+    ```
 
 # Generic Perturbation Analysis of NPG
 
@@ -142,11 +150,31 @@ _thumbnail: https://www.notion.so/images/page-cover/gradients_11.jpg
 
 *   Fix any comparison policy \tilde\pi and any state distribution \rho. Assume \log\pi\_\theta(a|s) is \beta-smooth function of \theta. Let
 
+    ```undefined
+    \text{err}_t = \mathbb E_{s\sim\tilde d}\left[\mathbb E _{a\sim\tilde\pi(\cdot|s)}\left[A^{(t)}(s,a)-w^{(t)}\cdot\nabla_\theta\log\pi^{(t)}(a|s)\right]\right]
+    ```
+
+    then we have
+
+    ```undefined
+    \min_{t<T}\left\{V^{\tilde\pi}(\rho)-V^{(t)}(\rho)\right\}\le\frac 1{1-\gamma}\left(W\sqrt{\frac{2\beta\log A}T}+\frac1T\sum_{t=0}^{T-1}\text{err}_t\right)
+    ```
+
+    (where we set using \eta=\sqrt{2\log A/(\beta W^2 T)}
+
 ## Approximate Q-NPG
 
 *   The approximate version:
 
+    ```undefined
+    \theta^{(t+1)}=\theta^{(t)}+\eta w^{(t)},\ \text{ where }w^{(t)}\approx\argmin_{\|w\|_2\le W}L(w;\theta^{(t)},d^{(t)})
+    ```
+
 *   Error decomposition
+
+    ```undefined
+    L(w^{(t)};\theta^{(t)},d^{(t)})=\underbrace{L(w^{(t)};\theta^{(t)},d^{(t)})-L(w_*^{(t)};\theta^{(t)},d^{(t)})}_{\text{Excess risk}}+\underbrace{L(w_*^{(t)};\theta^{(t)},d^{(t)})}_{\text{Approximation error}}
+    ```
 
 ## Q-NPG Conv Rate with Estimation error
 
@@ -154,11 +182,23 @@ _thumbnail: https://www.notion.so/images/page-cover/gradients_11.jpg
 
 *   Conditioning: suppose |\phi\_{s,a}|\_2\le 1 and for the initial measure \nu,
 
+    ```undefined
+    \sigma_{\min}\left(\mathbb E_{s,a\sim\nu}\left[\phi_{s,a}\phi_{s,a}^\top\right]\right)=\lambda_{\min},\ \kappa=1/\lambda
+    ```
+
 *   Fix any state distribution \rho, any comparator policy \pi^\*. With \eta set appropriately and under the above assumptions, we have that
+
+    ```undefined
+    \mathbb E\left[\min_{t<T}\left\{V^{\tilde\pi}(\rho)-V^{(t)}(\rho)\right\}\right]\le\frac W{1-\gamma}\sqrt{\frac{2\log A}T}+\sqrt{\frac{4A}{(1-\gamma)^3}\left(\kappa\cdot\epsilon_{\text{stat}}\right)}
+    ```
 
 ## Q-NPG Conv Rate with Approximation error and estimation error
 
 *   Fix any state distribution \rho, any comparator policy \pi^\*. With \eta set appropriately and under the above assumptions, we have that
+
+    ```undefined
+    \mathbb E\left[\min_{t<T}\left\{V^{\tilde\pi}(\rho)-V^{(t)}(\rho)\right\}\right]\le\frac {BW}{1-\gamma}\sqrt{\frac{2\log A}T}+\sqrt{\frac{4A}{(1-\gamma)^3}\left(\kappa\cdot\epsilon_{\text{stat}}+\left\|\frac{d^*}{\nu}\right\|_\infty\cdot\epsilon_{\text{approx}}\right)}
+    ```
 
 # NPG & Neural Policy Class
 
@@ -167,3 +207,7 @@ _thumbnail: https://www.notion.so/images/page-cover/gradients_11.jpg
 *   We have \nabla\_\theta\log\pi\_\theta(a|s)=g\_\theta(s,a), where g\_\theta(s,a) = \nabla\_\theta f\_\theta(s,a)-\mathbb E\_{a'\sim\pi\_\theta(\cdot|s)}\[\nabla\_\theta f\_\theta(s,a')]
 
 *   The NPG update rule is  \theta\leftarrow\theta+\eta w\_\* with
+
+    ```undefined
+    w_*\in\argmin_w\mathbb E_{s\sim d_\rho^{\pi_\theta},a\sim\pi_\theta(\cdot|s)}\left[\left(A^{\pi_\theta}(s,a)-w\cdot g_\theta(s,a)\right)^2\right]
+    ```

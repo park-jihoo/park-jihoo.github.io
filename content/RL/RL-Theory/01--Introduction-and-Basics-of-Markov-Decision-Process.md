@@ -92,6 +92,14 @@ V^*(s) = \max_a \left[ r(s,a) +  \gamma \textbf{E}_{s' \sim P(\cdot|s,a)}V^*(s')
 
 *   What is the probability of \pi visiting state (s, a) at time step h?
 
+    ```undefined
+    \mathbb{P}^\pi_h (s,a;s_0)= \sum_{a_0,s_1, a_1,\dots,s_{h-1},a_{h-1}}\mathbb{P}^\pi(s_0,a_0,\dots,s_{h-1},a_{h-1},s_h=s,a_h=a)
+    ```
+
 ## State action occupancy measure
 
 *   \mathbb{P}\_h(s,a;s\_0,\pi): probability of \pi visiting (s,a) at time step h \in \N, starting at s\_0
+
+    ```undefined
+    d_{s_0}^\pi(s,a) = (1-\gamma) \sum_{h=0}^\infty \gamma^h \mathbb{P}_h(s,a;s_0,\pi) \\ V_{s_0}^\pi(s_0) = \frac 1 {1-\gamma} \sum_{s,a} d_{s_0}^\pi(s,a)r(s,a)
+    ```

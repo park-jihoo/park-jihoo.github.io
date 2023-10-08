@@ -146,9 +146,33 @@ where x^*\in D is an optimial decision for \mu^*, i.e x^\* \in \arg\max\_{x\in D
 
     *   Define the uncertainty region
 
+        ```undefined
+        \text{BALL}_t = \left\{\mu| (\hat\mu_t-\mu)^\top \Sigma_t(\hat\mu_t-\mu)\le\beta_t  \right\}
+        ```
+
 *   Algorithm
 
+    ```python
+    def LinUCB(lam, beta_t):
+    	for t in range(T):
+    		x[t] = argmax(max(mu dot x))
+    		observe reward r_t
+    		update ball[t+1]
+    ```
+
 *   Regret Bound: R\_t \le O^\*(d\sqrt{T})
+
+    *   Theorem: Suppose bounded noise |\eta\_t|\le\sigma, that ||\mu^\*||\le W, and that ||x|| \le B for all x \in D. Set \lambda = \sigma^2/W^2 and
+
+        ```undefined
+        \beta_t := \sigma^2\left(2+4d\log\left(1+\frac{tB^2W^2}{d}\right) + 8\log\left(\frac 4 \delta\right) \right)
+        ```
+
+        With probability greater than 1-\delta, for all T \ge 0,
+
+        ```undefined
+        R_T \le c_\sigma\sqrt{T}\left( d\log \left( 1 + \frac{TB^2W^2}{d\sigma^2} \right) + \log(4/\delta)\right)
+        ```
 
 # Analysis
 
@@ -156,8 +180,18 @@ where x^*\in D is an optimial decision for \mu^*, i.e x^\* \in \arg\max\_{x\in D
 
 *   Sum of squares regret bound: define \text{regret}\_t = \mu^*\cdot x^* - \mu^\* \cdot x\_t
 
+    Suppose ||x||\le B  for x \in D, Suppose \beta\_t is increasing, and \mu^\* \in \text{BALL}\_t, \forall t
+
+          ```undefined
+          \sum_{t=0}^{T-1}\text{regret}_t^2 \le 4\beta_T d\log\left(1 + \frac{TB^2}{d\lambda} \right)
+          ```
+
 ## Regret Analysis
 
 *   Width of confidence ball: |(\mu - \hat\mu\_t)^\top x|\le\sqrt{\beta\_t x^\top\sum\_t^{-1}x}
 
 *   Define w\_t := \sqrt{x\_t^\top \Sigma\_t^{-1}x\_t} which is the normalized width at time t, then
+
+    ```undefined
+    \text{regret}_t \le 2\min(\sqrt{\beta_t}w_t,1)\le 2\sqrt{\beta_T}\min(w_t,1)
+    ```

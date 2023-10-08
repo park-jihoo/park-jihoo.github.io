@@ -166,4 +166,14 @@ r_t^i=f(s_t;\theta^e)=\text{iForest}(s_t;\theta^e)
 
 *   Let \hat s^i,\hat s^j, \hat s^k be labeled anomaly, unlabeled anomaly and unlabeled normal observations. We have
 
+    ```undefined
+    h(\hat s^i,a^1)>h(\hat s^j,a^1)>h(\hat s^k,a^1).f(\hat s^i;\theta^e)\approx f(\hat s^j;\theta^e)>f(\hat s^i;\theta^e)
+    ```
+
+    also holds provided that f well captures the abnormality of the threee observations
+
 *   Under the same policy \pi, this holds
+
+    ```undefined
+    q_\pi(\hat s^i,a^1)>q_\pi(\hat s^j,a^1)>q_\pi(\hat s^k,a^1)
+    ```
