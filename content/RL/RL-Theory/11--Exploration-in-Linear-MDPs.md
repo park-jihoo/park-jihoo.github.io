@@ -18,11 +18,11 @@ _thumbnail: https://www.notion.so/images/page-cover/webb3.jpg
 
 *   Lemma \[Self Normalized bound for vector-valued martingales]
 
-    Suppose {\epsilon\_n}*{n=1}^\infty are mean zero random variables with |\epsilon\_n|\le\alpha,\forall n; Let {x\_i \in \R^d}*{n=1}^\infty be some stochastic random process. Define \Lambda^n = \lambda I + \sum\_{i=1}^nx\_ix\_i^\top, then with probability at least 1-\delta, \forall n \ge 1,
+  Suppose {\epsilon\_n}*{n=1}^\infty are mean zero random variables with |\epsilon\_n|\le\alpha,\forall n; Let {x\_i \in \R^d}*{n=1}^\infty be some stochastic random process. Define \Lambda^n = \lambda I + \sum\_{i=1}^nx\_ix\_i^\top, then with probability at least 1-\delta, \forall n \ge 1,
 
-    ```undefined
-    \left\| \sum_{i=1}^nx_ie_i \right\|^2 \le 2\delta^2\ln\left(\frac{\det(\Lambda^n)^{1/2}\det(\lambda I)^{-1/2}}\delta\right)
-    ```
+  ```undefined
+  \left\| \sum_{i=1}^nx_ie_i \right\|^2 \le 2\delta^2\ln\left(\frac{\det(\Lambda^n)^{1/2}\det(\lambda I)^{-1/2}}\delta\right)
+  ```
 
 > 💡 Can we extend discrete MDPs to some kind linear MDPs?
 
@@ -32,23 +32,23 @@ _thumbnail: https://www.notion.so/images/page-cover/webb3.jpg
 
 *   For real-value matrix A
 
-    ```undefined
-    ||A||_F^2 = \sum_{i,j}A_{i,j}^2 \ ||A||_2 = \sup_{x:\|x\|_2 \le1}\|Ax\|_2 \le \|A\|_2\|x\|_2
-    ```
+  ```undefined
+  ||A||_F^2 = \sum_{i,j}A_{i,j}^2 \ ||A||_2 = \sup_{x:\|x\|_2 \le1}\|Ax\|_2 \le \|A\|_2\|x\|_2
+  ```
 
 *   For positive definite matrix \Lambda
 
-    ```undefined
-    \det(\Lambda)=\prod_{i=1}^d\sigma_i, \ \|x\|_\lambda^2 = x^\top\Lambda x \\ \mathbb{E}_{s'\sim P_h(\cdot|s,a)}f(s') = P_h(\cdot|s,a)\cdot f
-    ```
+  ```undefined
+  \det(\Lambda)=\prod_{i=1}^d\sigma_i, \ \|x\|_\lambda^2 = x^\top\Lambda x \\ \mathbb{E}_{s'\sim P_h(\cdot|s,a)}f(s') = P_h(\cdot|s,a)\cdot f
+  ```
 
 ## Definition of Low-rank MDP
 
 *   Finite horizon time-dependent episodic MDP \mathscr{M} = {S,A,H,{r}\_h,{P}\_h, s\_0 }, S & A could be large or even continuous, hence poly(S,A) is not acceptable
 
-    ```undefined
-    P_h(s'|s,a) = \mu_h^*(s') \cdot \phi(s,a), \ \mu_h^* \in S \rightarrow \R^d, \ \phi \in S\times A \rightarrow \R^d\\r(s,a) = \theta_h^*\cdot \phi(s,a), \theta_h^* \in \R^d
-    ```
+  ```undefined
+  P_h(s'|s,a) = \mu_h^*(s') \cdot \phi(s,a), \ \mu_h^* \in S \rightarrow \R^d, \ \phi \in S\times A \rightarrow \R^d\\r(s,a) = \theta_h^*\cdot \phi(s,a), \theta_h^* \in \R^d
+  ```
 
 *   Feature map \phi is known to the learner!
 
@@ -70,9 +70,9 @@ _thumbnail: https://www.notion.so/images/page-cover/webb3.jpg
 
 *   Each state s has an emission distribution \mu\_s \in \Delta(X), also \mu\_s, \mu\_{s'} have disjoint support for any s \not= s'
 
-    ```undefined
-    P(x'|x,a) = \sum_{s'\in\{s_1,s_2,s_3\}}T(s'|\omega(x),a)\mu_{s'}(x')
-    ```
+  ```undefined
+  P(x'|x,a) = \sum_{s'\in\{s_1,s_2,s_3\}}T(s'|\omega(x),a)\mu_{s'}(x')
+  ```
 
 # Planning in low-rank MDP and UCBVI algorithm
 
@@ -100,9 +100,9 @@ At the beginning of iteration n:
 
 *   Additional Assumptions in Linear MDPs to permit linear regression analysis
 
-    ```undefined
-    \sup\| \phi(s,a)\|_2 \le1, \|\theta_h^*\|_2\le W, \|v^\top\mu_h^*\|_2\le\sqrt{d} ,\forall v \text{ s.t.} \|v\|_\infty\le1
-    ```
+  ```undefined
+  \sup\| \phi(s,a)\|_2 \le1, \|\theta_h^*\|_2\le W, \|v^\top\mu_h^*\|_2\le\sqrt{d} ,\forall v \text{ s.t.} \|v\|_\infty\le1
+  ```
 
 ## Model Learning in Linear MDPs
 
@@ -114,9 +114,9 @@ Lemma(model average error under a fixed V)
 
 *   Consider a fixed V : S \rightarrow\[0,H]. With probability at least 1-\delta, for all s,a,n,h, we have:
 
-    ```undefined
-    \left|\left(\hat P_h^n(\cdot|s,a) - P_h(\cdot|s,a) \right)\cdot V\right| \le \|\phi(s,a)^\top\|_{(\Lambda_h^n)^{-1}}\times \left(2H\sqrt{\frac{H\det(\Lambda_h^n)^{1/2}\det(\lambda I)^{-1/2}}{\delta}}+H\sqrt{\lambda D} \right) = \widetilde{O}(H\sqrt{d} + H\sqrt{\ln(1/\delta)})\|\phi(s,a)\|_{(\Lambda_h^n)^{-1}}
-    ```
+  ```undefined
+  \left|\left(\hat P_h^n(\cdot|s,a) - P_h(\cdot|s,a) \right)\cdot V\right| \le \|\phi(s,a)^\top\|_{(\Lambda_h^n)^{-1}}\times \left(2H\sqrt{\frac{H\det(\Lambda_h^n)^{1/2}\det(\lambda I)^{-1/2}}{\delta}}+H\sqrt{\lambda D} \right) = \widetilde{O}(H\sqrt{d} + H\sqrt{\ln(1/\delta)})\|\phi(s,a)\|_{(\Lambda_h^n)^{-1}}
+  ```
 
 > Can we get a uniform convergence argument for a function class \mathscr{F}?
 
@@ -130,9 +130,9 @@ Lemma(uniform convergence)
 
 *   With probability at least 1-\delta, and for all s,a,h,n and all f \in \mathscr{F}:
 
-    ```undefined
-    \left|\left(\hat P(\cdot|s,a) - P(\cdot|s,a)\right) \cdot f\right| = \widetilde{O}(Hd)\cdot \|\phi(s,a)\|_{(\Lambda_h^n)^{-1}}
-    ```
+  ```undefined
+  \left|\left(\hat P(\cdot|s,a) - P(\cdot|s,a)\right) \cdot f\right| = \widetilde{O}(Hd)\cdot \|\phi(s,a)\|_{(\Lambda_h^n)^{-1}}
+  ```
 
 ### UCBVI in Linear MDPs
 

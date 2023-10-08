@@ -13,391 +13,391 @@ class: Coursework
 
 # Linear Algebra
 
-    ## Systems of Linear Equations
+  ## Systems of Linear Equations
 
-    	- We write the system in following form
+  	- We write the system in following form
 
-    		```undefined
-    		\begin{bmatrix}a_{11}\\\vdots\\a_{m1}\end{bmatrix}x_1+\begin{bmatrix}a_{12}\\\vdots\\a_{m2}\end{bmatrix}x_2+\cdots+\begin{bmatrix}a_{1n}\\\vdots\\a_{mn}\end{bmatrix}x_n=\begin{bmatrix}b_{1}\\\vdots\\b_{m}\end{bmatrix}\iff\begin{bmatrix}a_{11}&\cdots&a_{1n}\\\vdots&&\vdots\\a_{m1}&\cdots&a_{mn}\end{bmatrix}\begin{bmatrix}x_{1}\\\vdots\\x_{m}\end{bmatrix}=\begin{bmatrix}b_{1}\\\vdots\\b_{m}\end{bmatrix}
-    		```
+  		```undefined
+  		\begin{bmatrix}a_{11}\\\vdots\\a_{m1}\end{bmatrix}x_1+\begin{bmatrix}a_{12}\\\vdots\\a_{m2}\end{bmatrix}x_2+\cdots+\begin{bmatrix}a_{1n}\\\vdots\\a_{mn}\end{bmatrix}x_n=\begin{bmatrix}b_{1}\\\vdots\\b_{m}\end{bmatrix}\iff\begin{bmatrix}a_{11}&\cdots&a_{1n}\\\vdots&&\vdots\\a_{m1}&\cdots&a_{mn}\end{bmatrix}\begin{bmatrix}x_{1}\\\vdots\\x_{m}\end{bmatrix}=\begin{bmatrix}b_{1}\\\vdots\\b_{m}\end{bmatrix}
+  		```
 
-    ## Matrices
+  ## Matrices
 
-    	- With m,n\in\N a real valued (m,n) matrix A is an m\cdot n tuple of the element a_{ij},i=1,...,n,j=1,...,n which is ordered according to a rectangular scheme consisting of m rows and n columns
+  	- With m,n\in\N a real valued (m,n) matrix A is an m\cdot n tuple of the element a_{ij},i=1,...,n,j=1,...,n which is ordered according to a rectangular scheme consisting of m rows and n columns
 
-    		```undefined
-    		A = \begin{bmatrix}a_{11}&a_{12}&\cdots&a_{1n}\\a_{21}&a_{22}&\cdots&a_{2n}\\\vdots&\vdots&&\vdots\\a_{m1}&a_{m2}&\cdots&a_{mn}\end{bmatrix},a_{ij}\in\R
-    		```
+  		```undefined
+  		A = \begin{bmatrix}a_{11}&a_{12}&\cdots&a_{1n}\\a_{21}&a_{22}&\cdots&a_{2n}\\\vdots&\vdots&&\vdots\\a_{m1}&a_{m2}&\cdots&a_{mn}\end{bmatrix},a_{ij}\in\R
+  		```
 
-    	### Matrix Addition and Multiplication
+  	### Matrix Addition and Multiplication
 
-    	- The sum of two matrices A,B is defined as the elementwise sum
+  	- The sum of two matrices A,B is defined as the elementwise sum
 
-    	- For matrix A \in \R^{m\times n}, B\in\R^{n\times k}, the elements c_{ij} of the product C=AB\in\R^{m\times k} are computed as
+  	- For matrix A \in \R^{m\times n}, B\in\R^{n\times k}, the elements c_{ij} of the product C=AB\in\R^{m\times k} are computed as
 
-    		```undefined
-    		c_{ij}=\sum_{l=1}^na_{il}b_{lj}
-    		```
+  		```undefined
+  		c_{ij}=\sum_{l=1}^na_{il}b_{lj}
+  		```
 
-    	- In \R^{n\times n}, we define the identity matrix as the n \times n matrix containing 1 on the diagonal and 0 everywhere else
+  	- In \R^{n\times n}, we define the identity matrix as the n \times n matrix containing 1 on the diagonal and 0 everywhere else
 
-    	- Matrix multiplication, Addition have Associativity and Distributivity
+  	- Matrix multiplication, Addition have Associativity and Distributivity
 
-    	### Inverse and Transpose
+  	### Inverse and Transpose
 
-    	- Consider a square matrix A,B\in\R^{n\times n}. Let AB = I_n = BA then B is called the inverse of A and denoted by A^{-1}
+  	- Consider a square matrix A,B\in\R^{n\times n}. Let AB = I_n = BA then B is called the inverse of A and denoted by A^{-1}
 
-    	- In 2\times 2 matrix
+  	- In 2\times 2 matrix
 
-    		```undefined
-    		A^{-1} = \frac1{a_{11}a_{22}-a_{21}a_{12}}\begin{bmatrix}a_{22}&-a_{12}\\-a_{21}&a_{11}\end{bmatrix}
-    		```
+  		```undefined
+  		A^{-1} = \frac1{a_{11}a_{22}-a_{21}a_{12}}\begin{bmatrix}a_{22}&-a_{12}\\-a_{21}&a_{11}\end{bmatrix}
+  		```
 
-    	- For A \in \R^{m\times n}, the matrix B\in\R^{n\times m} with b_{ij}=a_{ji} is called a transpose of A and we write B^\top = A
+  	- For A \in \R^{m\times n}, the matrix B\in\R^{n\times m} with b_{ij}=a_{ji} is called a transpose of A and we write B^\top = A
 
-    	- If A^\top = A, then A is symmetric
+  	- If A^\top = A, then A is symmetric
 
-    	### Multiplication by Scalar
+  	### Multiplication by Scalar
 
-    	- Associativity
+  	- Associativity
 
-    		```undefined
-    		(\lambda\psi)C=\lambda(\psi C)\\\lambda(BC)=(\lambda B)C=B(\lambda C)=(BC)\lambda
-    		```
+  		```undefined
+  		(\lambda\psi)C=\lambda(\psi C)\\\lambda(BC)=(\lambda B)C=B(\lambda C)=(BC)\lambda
+  		```
 
-    	- Distributivity
+  	- Distributivity
 
-    		```undefined
-    		(\lambda+\psi)C=\lambda C+\psi C\\\lambda(B+C)=\lambda B+\lambda C
-    		```
+  		```undefined
+  		(\lambda+\psi)C=\lambda C+\psi C\\\lambda(B+C)=\lambda B+\lambda C
+  		```
 
-    	### Compact representation of Systems of Linear Equations
+  	### Compact representation of Systems of Linear Equations
 
-    	```undefined
-    	Ax =b
-    	```
+  	```undefined
+  	Ax =b
+  	```
 
-    ## Solving Systems of Linear Equations
+  ## Solving Systems of Linear Equations
 
-    	### Particular and General Solution
+  	### Particular and General Solution
 
-    	- Find a particular solution to Ax=b
+  	- Find a particular solution to Ax=b
 
-    	- Find all solutions to Ax=0
+  	- Find all solutions to Ax=0
 
-    	- Combine the solutions from steps 1 and 2 to the general solutions
+  	- Combine the solutions from steps 1 and 2 to the general solutions
 
-    	### Elementary Transformations
+  	### Elementary Transformations
 
-    	- Exchange of two matrix
+  	- Exchange of two matrix
 
-    	- Multiplication of an equation(row) with a constant \lambda\in\R\backslash\{0\}
+  	- Multiplication of an equation(row) with a constant \lambda\in\R\backslash\{0\}
 
-    	- Addition of two equation(row)
+  	- Addition of two equation(row)
 
-    	- A matrix is in row-echelon form if
+  	- A matrix is in row-echelon form if
 
-    		- All rows that contain only zeros are at the bottom of the matrix
+  		- All rows that contain only zeros are at the bottom of the matrix
 
-    		- Looking at nonzero rows only, the first nonzero number from the left is always strictly to the right of the pivot of the row above it
+  		- Looking at nonzero rows only, the first nonzero number from the left is always strictly to the right of the pivot of the row above it
 
-    	### Algorithms for Solving a System of Linear Equations
+  	### Algorithms for Solving a System of Linear Equations
 
-    	- If square, then x=A^{-1}b
+  	- If square, then x=A^{-1}b
 
-    	- If not, then x=(A^\top A)^{-1}A^\top b
+  	- If not, then x=(A^\top A)^{-1}A^\top b
 
-    ## Vector Spaces
+  ## Vector Spaces
 
-    	### Groups
+  	### Groups
 
-    	- Consider a set \mathcal G and an operation \otimes defined on \mathcal G. Then G:=(\mathcal G, \otimes) is called a group if the following holds
+  	- Consider a set \mathcal G and an operation \otimes defined on \mathcal G. Then G:=(\mathcal G, \otimes) is called a group if the following holds
 
-    		- Closure of \mathcal G under \otimes: \forall x, y \in \mathcal G: x\otimes y \in \mathcal G
+  		- Closure of \mathcal G under \otimes: \forall x, y \in \mathcal G: x\otimes y \in \mathcal G
 
-    		- Associativity: \forall x,y,z\in\mathcal G:(x\otimes y)\otimes z = x \otimes(y\otimes z)
+  		- Associativity: \forall x,y,z\in\mathcal G:(x\otimes y)\otimes z = x \otimes(y\otimes z)
 
-    		- Neutral element: \exists e\in\mathcal G\ \forall x\in \mathcal G:x\otimes e=x\text{ and }e\otimes x = x
+  		- Neutral element: \exists e\in\mathcal G\ \forall x\in \mathcal G:x\otimes e=x\text{ and }e\otimes x = x
 
-    		- Inverse element: \forall x\in \mathcal G,\exist y\in\mathcal G:x\otimes y = e \text{ and }y\otimes x=e
+  		- Inverse element: \forall x\in \mathcal G,\exist y\in\mathcal G:x\otimes y = e \text{ and }y\otimes x=e
 
-    	### Vector Space
+  	### Vector Space
 
-    	- A real-valued vector space V=(\mathcal V,+,\cdot) is a set \mathcal V with two operations
+  	- A real-valued vector space V=(\mathcal V,+,\cdot) is a set \mathcal V with two operations
 
-    		```undefined
-    		\begin{aligned}+&:\mathcal V \times \mathcal V\to\mathcal V\\\cdot&:\R\times\mathcal V\to\mathcal V\end{aligned}
-    		```
+  		```undefined
+  		\begin{aligned}+&:\mathcal V \times \mathcal V\to\mathcal V\\\cdot&:\R\times\mathcal V\to\mathcal V\end{aligned}
+  		```
 
-    		where
+  		where
 
-    			- (\mathcal V,+) is an Abelian group
+  			- (\mathcal V,+) is an Abelian group
 
-    			- Distributivity
+  			- Distributivity
 
-    			- Associativity(outer operation)
+  			- Associativity(outer operation)
 
-    			- Neural element with respect to the outer operation
+  			- Neural element with respect to the outer operation
 
-    	### Vector Subspaces
+  	### Vector Subspaces
 
-    	- Let V=(\mathcal V,+,\cdot) be a vector space and \mathcal{U}\subseteq\mathcal{V,U\neq }\empty. Then U = (\mathcal U, +,\cdot) is called vector subspace of V if U is a vector space with operations + and \cdot restricted to \mathcal U\times\mathcal U and \R\times\mathcal U
+  	- Let V=(\mathcal V,+,\cdot) be a vector space and \mathcal{U}\subseteq\mathcal{V,U\neq }\empty. Then U = (\mathcal U, +,\cdot) is called vector subspace of V if U is a vector space with operations + and \cdot restricted to \mathcal U\times\mathcal U and \R\times\mathcal U
 
-    ## Linear Independence
+  ## Linear Independence
 
-    	- Consider a vector space V and a finite number of vectors x_1,…,x_k\in V, Then every v\in V of the form
+  	- Consider a vector space V and a finite number of vectors x_1,…,x_k\in V, Then every v\in V of the form
 
-    		```undefined
-    		v = \lambda_1x_1+\cdots+\lambda_kx_k=\sum_{i=1}^k\lambda_ix_i\in V
-    		```
+  		```undefined
+  		v = \lambda_1x_1+\cdots+\lambda_kx_k=\sum_{i=1}^k\lambda_ix_i\in V
+  		```
 
-    		with \lambda_1,…,\lambda_k\in\R is a linear combination of vectors x_1,…,x_k
+  		with \lambda_1,…,\lambda_k\in\R is a linear combination of vectors x_1,…,x_k
 
-    	- If there is a non-trivial linear combination with at least one \lambda_i\ne0, the vectors x_1,…,x_k are linearly dependent. If only one trivial solutions exists, i.e., \lambda_1=...=\lambda_k=0 the vectors x_1,…,x_k are linearly independent
+  	- If there is a non-trivial linear combination with at least one \lambda_i\ne0, the vectors x_1,…,x_k are linearly dependent. If only one trivial solutions exists, i.e., \lambda_1=...=\lambda_k=0 the vectors x_1,…,x_k are linearly independent
 
-    ## Basis and Rank
+  ## Basis and Rank
 
-    	### Generating Set and Basis
+  	### Generating Set and Basis
 
-    	- Consider a vector space V and set of vectors \mathcal A = \{x_1,...,x_k\}\sube \mathcal V. If every vector v\in\mathcal V can be expressed as a linear combination of x_1,…,x_k, \mathcal A is called a generating set of V
+  	- Consider a vector space V and set of vectors \mathcal A = \{x_1,...,x_k\}\sube \mathcal V. If every vector v\in\mathcal V can be expressed as a linear combination of x_1,…,x_k, \mathcal A is called a generating set of V
 
-    	- The set of all linear combinations of vectors in \mathcal A is called the span of \mathcal A. We write V=\text{span}[\mathcal A]
+  	- The set of all linear combinations of vectors in \mathcal A is called the span of \mathcal A. We write V=\text{span}[\mathcal A]
 
-    	- If a generating set \mathcal A of V is minimal if there exists no smaller set that spans V. Every linearly independent generating set of V is minimal and is called a basis of V
+  	- If a generating set \mathcal A of V is minimal if there exists no smaller set that spans V. Every linearly independent generating set of V is minimal and is called a basis of V
 
-    	- Basis of subspace U can be found by executing the following steps
+  	- Basis of subspace U can be found by executing the following steps
 
-    		- Write the spanning vectors as columns of matrix A
+  		- Write the spanning vectors as columns of matrix A
 
-    		- Determine the row-echelon form of A
+  		- Determine the row-echelon form of A
 
-    		- The spanning vectors associated with the pivot columns are a basis of U
+  		- The spanning vectors associated with the pivot columns are a basis of U
 
-    	### Rank
+  	### Rank
 
-    	- The number of linearly independent columns of a matrix A\in\R^{m\times n} equals the number of linearly independent rows and is called the rank of A and is denoted by \text{rk}(A)
+  	- The number of linearly independent columns of a matrix A\in\R^{m\times n} equals the number of linearly independent rows and is called the rank of A and is denoted by \text{rk}(A)
 
-    ## Linear Mappings
+  ## Linear Mappings
 
-    	- For vector spaces V,W, a mapping \Phi:V\to W is called a linear mapping if
+  	- For vector spaces V,W, a mapping \Phi:V\to W is called a linear mapping if
 
-    		```undefined
-    		\forall x,y\in V,\forall \lambda,\psi\in\R:\Phi(\lambda x+\psi y) =\lambda\Phi(x)+\psi\Phi(y)
-    		```
+  		```undefined
+  		\forall x,y\in V,\forall \lambda,\psi\in\R:\Phi(\lambda x+\psi y) =\lambda\Phi(x)+\psi\Phi(y)
+  		```
 
-    	- Consider a mapping \Phi:\mathcal{V\to W} where \mathcal{V,W} be arbitrarysets. Then \Phi is called
+  	- Consider a mapping \Phi:\mathcal{V\to W} where \mathcal{V,W} be arbitrarysets. Then \Phi is called
 
-    		- Injective if \forall x,y\in\mathcal V:\Phi(x)=\Phi(y)\implies x=y
+  		- Injective if \forall x,y\in\mathcal V:\Phi(x)=\Phi(y)\implies x=y
 
-    		- Surjective if \mathcal{\Phi(V)=W}
+  		- Surjective if \mathcal{\Phi(V)=W}
 
-    		- Bijective if it is injective and surjective
+  		- Bijective if it is injective and surjective
 
 # Analytical Geometry
 
-    ## Norms
+  ## Norms
 
-    	- A norm on vector space V is a function
+  	- A norm on vector space V is a function
 
-    		```undefined
-    		\begin{aligned}\|\cdot\|:V&\mapsto\R\\x&\mapsto\|x\|\end{aligned}
-    		```
+  		```undefined
+  		\begin{aligned}\|\cdot\|:V&\mapsto\R\\x&\mapsto\|x\|\end{aligned}
+  		```
 
-    		which assigns each vector x on its length \|x\|\in\R
+  		which assigns each vector x on its length \|x\|\in\R
 
-    	- Norms hold
+  	- Norms hold
 
-    		- Absolutely homogeneous: \|\lambda x\|=|\lambda|\|x\|
+  		- Absolutely homogeneous: \|\lambda x\|=|\lambda|\|x\|
 
-    		- Triangle inequality: ||x+y||\le\|x\|+\|y\|
+  		- Triangle inequality: ||x+y||\le\|x\|+\|y\|
 
-    		- Positive definite: \|x\|\ge0\text{ and }\|x\|=0 \iff x=0
+  		- Positive definite: \|x\|\ge0\text{ and }\|x\|=0 \iff x=0
 
-    	- Manhattan norm
+  	- Manhattan norm
 
-    		```undefined
-    		\|x\|_1:=\sum_{i=1}^n|x_i|
-    		```
+  		```undefined
+  		\|x\|_1:=\sum_{i=1}^n|x_i|
+  		```
 
-    	- Euclidean norm
+  	- Euclidean norm
 
-    		```undefined
-    		\|x\|_2 :=\sqrt{\sum_{i=1}^nx_i^2}=\sqrt{x^\top x}
-    		```
+  		```undefined
+  		\|x\|_2 :=\sqrt{\sum_{i=1}^nx_i^2}=\sqrt{x^\top x}
+  		```
 
-    ## Inner Products
+  ## Inner Products
 
-    	### Dot Product
+  	### Dot Product
 
-    	- The scalar product/dot product in \R^n is given by
+  	- The scalar product/dot product in \R^n is given by
 
-    		```undefined
-    		x^\top y = \sum_{i=1}^nx_iy_i
-    		```
+  		```undefined
+  		x^\top y = \sum_{i=1}^nx_iy_i
+  		```
 
-    	### General Inner Products
+  	### General Inner Products
 
-    	- Let V be a vector space and \Omega:V\times V\to\R be a bilinear mapping that takes two vectors and maps them onto a real number. Then
+  	- Let V be a vector space and \Omega:V\times V\to\R be a bilinear mapping that takes two vectors and maps them onto a real number. Then
 
-    		- \Omega is called symmetric if \Omega(x,y)=\Omega(y,x) for all x,y\in V, i.e the order of the arguments does not matter
+  		- \Omega is called symmetric if \Omega(x,y)=\Omega(y,x) for all x,y\in V, i.e the order of the arguments does not matter
 
-    		- \Omega is called positive definite if
+  		- \Omega is called positive definite if
 
-    			```undefined
-    			\forall x\in V\backslash \{0\}:\Omega(x,x)>0,\,\Omega(0,0)=0
-    			```
+  			```undefined
+  			\forall x\in V\backslash \{0\}:\Omega(x,x)>0,\,\Omega(0,0)=0
+  			```
 
-    	- Let V be a vector space and \Omega:V\times V\to\R be a bilinear mapping that takes two vectors and maps them onto a real number. Then
+  	- Let V be a vector space and \Omega:V\times V\to\R be a bilinear mapping that takes two vectors and maps them onto a real number. Then
 
-    		- A positive definite, symmetric bilinear mapping \Omega:V\times V\to\R is called an inner product on V. We typically write \braket{x,y} instead of \Omega(x,y)
+  		- A positive definite, symmetric bilinear mapping \Omega:V\times V\to\R is called an inner product on V. We typically write \braket{x,y} instead of \Omega(x,y)
 
-    		- The pair (V,\braket{\cdot,\cdot}) is called an inner product space or vector spacew ith inner product
+  		- The pair (V,\braket{\cdot,\cdot}) is called an inner product space or vector spacew ith inner product
 
-    	### Symmetric, Positive Definite Matrices
+  	### Symmetric, Positive Definite Matrices
 
-    	- It holds for all x,y\in V that
+  	- It holds for all x,y\in V that
 
-    		```undefined
-    		\braket{x,y}= \left\lang\sum_{i=1}^n\psi_ib_i\sum_{j=1}^n\lambda_jb_j\right\rang = \hat xA^\top\hat y
-    		```
+  		```undefined
+  		\braket{x,y}= \left\lang\sum_{i=1}^n\psi_ib_i\sum_{j=1}^n\lambda_jb_j\right\rang = \hat xA^\top\hat y
+  		```
 
-    	- A symmetric matrix A \in\R^{n\times n} satisfies \forall x\in V\backslash\{0\}:x^\top Ax>0 is called symmetric, positive definite or just positive definite. If only \ge holds, then symmetric, positive semidefinite
+  	- A symmetric matrix A \in\R^{n\times n} satisfies \forall x\in V\backslash\{0\}:x^\top Ax>0 is called symmetric, positive definite or just positive definite. If only \ge holds, then symmetric, positive semidefinite
 
-    	- Theorem
+  	- Theorem
 
-    		> 📖 For a real-valued, finite-dimensional vector space V and an ordered basis B of V, it holds that \braket{\cdot,\cdot}:V\times V\to\R is an inner product if and only if there exists a symmetric, positive definite matrix A \in \R^{n\times n} with
+  		> 📖 For a real-valued, finite-dimensional vector space V and an ordered basis B of V, it holds that \braket{\cdot,\cdot}:V\times V\to\R is an inner product if and only if there exists a symmetric, positive definite matrix A \in \R^{n\times n} with
 
-    			```undefined
-    			\braket{x,y}=\hat x^\top A\hat y
-    			```
+  			```undefined
+  			\braket{x,y}=\hat x^\top A\hat y
+  			```
 
-    ## Lengths and Distances
+  ## Lengths and Distances
 
-    	- Any inner product induces a norm
+  	- Any inner product induces a norm
 
-    		```undefined
-    		\|x\|:=\sqrt{\braket{x,x}}
-    		```
+  		```undefined
+  		\|x\|:=\sqrt{\braket{x,x}}
+  		```
 
-    	- Consider an inner product space \braket{V,\braket{\cdot,\cdot}}, Then
+  	- Consider an inner product space \braket{V,\braket{\cdot,\cdot}}, Then
 
-    		```undefined
-    		d(x,y):=\|x-y\|=\sqrt{\braket{x-y,x-y}}
-    		```
+  		```undefined
+  		d(x,y):=\|x-y\|=\sqrt{\braket{x-y,x-y}}
+  		```
 
-    		is called the distance between x and y for x,y\in V
+  		is called the distance between x and y for x,y\in V
 
-    	- A metric d satisfies
+  	- A metric d satisfies
 
-    		- d is positive definite
+  		- d is positive definite
 
-    		- d is symmetric
+  		- d is symmetric
 
-    		- Triangle inequality
+  		- Triangle inequality
 
-    ## Angles and Orthogonality
+  ## Angles and Orthogonality
 
-    	- There exists a unique \omega\in[0,\pi] with
+  	- There exists a unique \omega\in[0,\pi] with
 
-    		```undefined
-    		\cos\omega=\frac{\braket{x,y}}{||x||\cdot||y||}
-    		```
+  		```undefined
+  		\cos\omega=\frac{\braket{x,y}}{||x||\cdot||y||}
+  		```
 
-    	- Two vectors x and y are orthogonal if and only if \braket{x,y}=0, and we write x\perp y. If additionally \|x\|=1=\|y\|, then x and y are orthonormal
+  	- Two vectors x and y are orthogonal if and only if \braket{x,y}=0, and we write x\perp y. If additionally \|x\|=1=\|y\|, then x and y are orthonormal
 
-    	- A square matrix A \in\R^{n\times n} is an orthogonal matrix if and only if its columns are orthonormal so that
+  	- A square matrix A \in\R^{n\times n} is an orthogonal matrix if and only if its columns are orthonormal so that
 
-    		 
+  		 
 
-    		```undefined
-    		AA^\top=I=A^\top A
-    		```
+  		```undefined
+  		AA^\top=I=A^\top A
+  		```
 
-    ## Orthonormal Basis
+  ## Orthonormal Basis
 
-    	- Consider an n-dimensional vector space V and a basis \{b_1,...,b_n\} of V. If
+  	- Consider an n-dimensional vector space V and a basis \{b_1,...,b_n\} of V. If
 
-    		```undefined
-    		\begin{aligned}\braket{b_i,b_j}&=0 &\text{for }i\neq j \\\braket{b_i,b_i}&=1\end{aligned}
-    		```
+  		```undefined
+  		\begin{aligned}\braket{b_i,b_j}&=0 &\text{for }i\neq j \\\braket{b_i,b_i}&=1\end{aligned}
+  		```
 
-    		for all i,j=1,…,n then the basis is called an orthonormal basis
+  		for all i,j=1,…,n then the basis is called an orthonormal basis
 
-    ## Orthogonal Complement
+  ## Orthogonal Complement
 
-    	- Consider a D-dimensional vector space V and M-dimensional subspace U\subseteq V. Then its orthogonal complement U^\perp is a (D-M)-dimensional subspace of V and contains all vectors in V that are orthogonal to every vector in U. Furthermore, U\cap U^\perp =\{0\} so that any vector x\in V can be uniquely decomposed
+  	- Consider a D-dimensional vector space V and M-dimensional subspace U\subseteq V. Then its orthogonal complement U^\perp is a (D-M)-dimensional subspace of V and contains all vectors in V that are orthogonal to every vector in U. Furthermore, U\cap U^\perp =\{0\} so that any vector x\in V can be uniquely decomposed
 
-    ## Orthogonal Projection
+  ## Orthogonal Projection
 
-    	- The projection \pi_U(x) is closest to x, where **closest** implies that the distance \|x-\pi_U(x)\| is minimal
+  	- The projection \pi_U(x) is closest to x, where **closest** implies that the distance \|x-\pi_U(x)\| is minimal
 
-    	- Find the coordinate \lambda. The orthogonality condition yields
+  	- Find the coordinate \lambda. The orthogonality condition yields
 
-    		```undefined
-    		\lambda=\frac{b^\top x}{b^\top b}=\frac{b^\top x}{\|b\|^2}
-    		```
+  		```undefined
+  		\lambda=\frac{b^\top x}{b^\top b}=\frac{b^\top x}{\|b\|^2}
+  		```
 
-    	- Finding the projection point \pi_U(x)\in U, Since \pi_U(x)=\lambda b
+  	- Finding the projection point \pi_U(x)\in U, Since \pi_U(x)=\lambda b
 
-    		```undefined
-    		\pi_U(x)=\lambda b=\frac{\braket{x,b}}{\|b\|^2}b=\frac{b^\top x}{\|b\|^2}b
-    		```
+  		```undefined
+  		\pi_U(x)=\lambda b=\frac{\braket{x,b}}{\|b\|^2}b=\frac{b^\top x}{\|b\|^2}b
+  		```
 
-    	- Finding the projection matrix P
+  	- Finding the projection matrix P
 
-    		```undefined
-    		P_\pi = \frac{bb^\top}{\|b\|^2}
-    		```
+  		```undefined
+  		P_\pi = \frac{bb^\top}{\|b\|^2}
+  		```
 
-    	### Projection into General Subspace
+  	### Projection into General Subspace
 
-    	- Find the coordinate \lambda_1,...,\lambda_m of the projection
+  	- Find the coordinate \lambda_1,...,\lambda_m of the projection
 
-    		```undefined
-    		\pi_U(x) = \sum_{i=1}^m\lambda_ib_i=B\lambda\\\lambda=(B^\top B)^{-1}B^\top x
-    		```
+  		```undefined
+  		\pi_U(x) = \sum_{i=1}^m\lambda_ib_i=B\lambda\\\lambda=(B^\top B)^{-1}B^\top x
+  		```
 
-    	- Finding the projection point \pi_U(x)\in U, Since \pi_U(x)=B\lambda
+  	- Finding the projection point \pi_U(x)\in U, Since \pi_U(x)=B\lambda
 
-    		```undefined
-    		\pi_U(x)=B(B^\top B)^{-1}B^\top x
-    		```
+  		```undefined
+  		\pi_U(x)=B(B^\top B)^{-1}B^\top x
+  		```
 
-    	- Find the Projection matrix P_\pi
+  	- Find the Projection matrix P_\pi
 
-    		```undefined
-    		P_\pi = B(B^\top B)^{-1}B^\top
-    		```
+  		```undefined
+  		P_\pi = B(B^\top B)^{-1}B^\top
+  		```
 
 # Matrix Decompositions
 
-    ## Determinant and Trace
+  ## Determinant and Trace
 
-    	- The determinant of a square matrix A \in \R^{n\times n} is a function that maps A onto real number.
+  	- The determinant of a square matrix A \in \R^{n\times n} is a function that maps A onto real number.
 
-    	- For any square matrix A\in\R^{n\times n} it holds that A is invertible iff \det(A)\neq 0
+  	- For any square matrix A\in\R^{n\times n} it holds that A is invertible iff \det(A)\neq 0
 
-    	- n=2
+  	- n=2
 
-    	- At upper triangular matrix T, \det(T) = \prod_{i=1}^n T_{ii}
+  	- At upper triangular matrix T, \det(T) = \prod_{i=1}^n T_{ii}
 
-    	- Laplace Expansion
+  	- Laplace Expansion
 
-    	- Determinant has following properties
+  	- Determinant has following properties
 
-    	- A square matrix A\in\R^{n \times n} has \det(A)\neq 0 iff \text{rk}(A)=n. A is invertible iff it’s full rank
+  	- A square matrix A\in\R^{n \times n} has \det(A)\neq 0 iff \text{rk}(A)=n. A is invertible iff it’s full rank
 
-    	- The trace of square matrix A is defined as
+  	- The trace of square matrix A is defined as
 
-    	- For \lambda\in\R and a square matrix A,
+  	- For \lambda\in\R and a square matrix A,
 
-    ## Eigenvalues and eigenvectors
+  ## Eigenvalues and eigenvectors
 
-    ## Cholesky Decomposition
+  ## Cholesky Decomposition
 
-    ## Eigendecomposition and Diagonalization
+  ## Eigendecomposition and Diagonalization
 
-    ## SVD
+  ## SVD
 
 # Vector Calculus
 

@@ -28,9 +28,9 @@ pdf: https://wensun.github.io/CS6789_data_fall_2021/PG_OPT1_annotated.pdf
 
 *   Proposition(Stationary point convergence): Assume F(\theta) is \beta-smooth. Suppose we run gradient **ascent** \theta\_{t+1} = \theta\_{t}+\eta \nabla\_\theta F(\theta\_t) with \eta = 1/2\beta. Then
 
-    ```undefined
-    \min_{t\le T}\|\nabla_\theta F(\theta_t)\|_2^2 \le \frac{2\beta(\max_\theta F(\theta)-F(\theta_0))}{T}
-    ```
+  ```undefined
+  \min_{t\le T}\|\nabla_\theta F(\theta_t)\|_2^2 \le \frac{2\beta(\max_\theta F(\theta)-F(\theta_0))}{T}
+  ```
 
 # Vanila PG for the Softmax
 
@@ -48,17 +48,17 @@ pdf: https://wensun.github.io/CS6789_data_fall_2021/PG_OPT1_annotated.pdf
 
 *   We have that
 
-    ```undefined
-    \frac{\partial\log\pi_\theta(a|s)}{\partial\theta_{s',a'}} = 1[s=s'](1[a=a']-\pi_\theta(a'|s))
-    ```
+  ```undefined
+  \frac{\partial\log\pi_\theta(a|s)}{\partial\theta_{s',a'}} = 1[s=s'](1[a=a']-\pi_\theta(a'|s))
+  ```
 
-    where 1\[\cdot] is the indicator function
+  where 1\[\cdot] is the indicator function
 
 *   Lemma: For the softmax policy class, we have
 
-    ```undefined
-    \frac{\partial V^{\pi_\theta}(\mu)}{\partial\theta_{s,a}} = \frac1{1-\gamma}d_\mu^{\pi_\theta}(s)\pi_\theta(a|s)A^{\pi_\theta}(s,a)
-    ```
+  ```undefined
+  \frac{\partial V^{\pi_\theta}(\mu)}{\partial\theta_{s,a}} = \frac1{1-\gamma}d_\mu^{\pi_\theta}(s)\pi_\theta(a|s)A^{\pi_\theta}(s,a)
+  ```
 
 ## Global Convergence
 
@@ -74,23 +74,23 @@ pdf: https://wensun.github.io/CS6789_data_fall_2021/PG_OPT1_annotated.pdf
 
 *   Consider the log barrier \lambda-regularized objective:
 
-    ```undefined
-    \begin{aligned}L_\lambda(\theta)&\coloneqq V^{\pi_\theta}(\mu) - \lambda \mathbb{E}_{s\sim\text{Unif}(s)}[KL(\text{Unif}_A, \pi_\theta(\cdot|s))]\\ &= V^{\pi_\theta}(\mu) + \frac{\lambda}{SA}\sum_{s,a}\log\pi_\theta(a|s)+\lambda\log A\end{aligned}
-    ```
+  ```undefined
+  \begin{aligned}L_\lambda(\theta)&\coloneqq V^{\pi_\theta}(\mu) - \lambda \mathbb{E}_{s\sim\text{Unif}(s)}[KL(\text{Unif}_A, \pi_\theta(\cdot|s))]\\ &= V^{\pi_\theta}(\mu) + \frac{\lambda}{SA}\sum_{s,a}\log\pi_\theta(a|s)+\lambda\log A\end{aligned}
+  ```
 
 ## Stationarity and Optimality
 
 *   Theorem(Log barrier Regularization) Suppose \theta is such that |\nabla\_\theta L\_\lambda(\theta)|*2\le\varepsilon*{opt} and \varepsilon\_{opt}\le\lambda/(2SA) then we have for all starting state distributions \rho
 
-    ```undefined
-    V^{\pi_\theta}(\rho)\ge V^*(\rho)-\frac{2\lambda}{1-\gamma}\left\| \frac{d_\rho^{\pi^*}}{\mu}\right\|_\infty
-    ```
+  ```undefined
+  V^{\pi_\theta}(\rho)\ge V^*(\rho)-\frac{2\lambda}{1-\gamma}\left\| \frac{d_\rho^{\pi^*}}{\mu}\right\|_\infty
+  ```
 
-    where the **distribution mismatch coefficient** is
+  where the **distribution mismatch coefficient** is
 
-    ```undefined
-    \left\| \frac{d_\rho^{\pi^*}}{\mu}\right\|_\infty = \max_s\left( \frac{d_\rho^{\pi^*}(s)}{\mu(s)}\right)
-    ```
+  ```undefined
+  \left\| \frac{d_\rho^{\pi^*}}{\mu}\right\|_\infty = \max_s\left( \frac{d_\rho^{\pi^*}(s)}{\mu(s)}\right)
+  ```
 
 ## Global Convergence with Log Barrier
 

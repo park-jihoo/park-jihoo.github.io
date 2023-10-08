@@ -48,42 +48,42 @@ _thumbnail: https://www.notion.so/images/page-cover/solid_yellow.png
 
 *   Then Regret becomes difference between the optimal arm and of arm i at time t
 
-    ```undefined
-    \Delta_i(t) = b_{a^*(t)}(t)^\top\mu - b_i(t)^\top\mu
-    ```
+  ```undefined
+  \Delta_i(t) = b_{a^*(t)}(t)^\top\mu - b_i(t)^\top\mu
+  ```
 
-    ```undefined
-    regret(t) = \Delta_{a(t)}(t)
-    ```
+  ```undefined
+  regret(t) = \Delta_{a(t)}(t)
+  ```
 
 *   We need to minimize total regret in time T
 
 *   We assume that \eta\_{i,t} = r\_i(t)-b\_i(t)^\top\mu is conditionally R-sub-gaussian for a constant R\ge 0
 
-    ```undefined
-    \forall\lambda\in\reals,\Bbb{E}[e^{\lambda_{\eta_{i,t}}}|\{b_i(t)\}{i=1}^N, H{t-1}]\le\exp(\frac{\lambda^2R^2}{2})
-    ```
+  ```undefined
+  \forall\lambda\in\reals,\Bbb{E}[e^{\lambda_{\eta_{i,t}}}|\{b_i(t)\}{i=1}^N, H{t-1}]\le\exp(\frac{\lambda^2R^2}{2})
+  ```
 
 ### Thompson Sampling Algorithm
 
 *   Suppose that the likelihood of reward r\_i(t) at time t, given context b\_i(t) and parameter \mu, were given by the pdf of Gaussian distribution N(b\_i(t)^\top\mu, v^2), v=R\sqrt{9d\ln(\frac T \delta)}
 
-    ```undefined
-    B(t) = I_d + \sum_{r=1}^{t-1}b_{a(\tau)}(\tau)b_{a(\tau)}(\tau)^\top
-    \\
-    \tilde{\mu}(t) = B(t)^{-1}(\sum_{r=1}^{t-1}b_{a(\tau)}(\tau)r_{a(\tau)}(\tau))
-    ```
+  ```undefined
+  B(t) = I_d + \sum_{r=1}^{t-1}b_{a(\tau)}(\tau)b_{a(\tau)}(\tau)^\top
+  \\
+  \tilde{\mu}(t) = B(t)^{-1}(\sum_{r=1}^{t-1}b_{a(\tau)}(\tau)r_{a(\tau)}(\tau))
+  ```
 
 *   If **prior** for \mu at time t is given by N(\tilde{\mu}(t), v^2B(t)^{-1}), **posterior** distribution at t+1 is \Pr(\tilde{\mu}|r\_i(t))\propto\Pr(r\_i(t)|\tilde\mu)\Pr(\tilde\mu)
 
 *   Algorithm: Thompson Sampling for Contextual Bandits
 
-    ```plain text
-    for all t= 1, 2, ... do
-      Sample mu(t) from distribution N(mu(t), v^2B(t)^-1)
-      Play arm a(t):= argmax_i b_i(t).T * mu(t) and observe the reward
+  ```plain text
+  for all t= 1, 2, ... do
+    Sample mu(t) from distribution N(mu(t), v^2B(t)^-1)
+    Play arm a(t):= argmax_i b_i(t).T * mu(t) and observe the reward
 
-    ```
+  ```
 
 ### Our Results
 

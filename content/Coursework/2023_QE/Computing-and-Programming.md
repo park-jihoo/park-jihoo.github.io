@@ -13,96 +13,96 @@ class: Coursework
 
 # Python Programming Basics
 
-    - Types: Every value in python has particular type(int, float)
+  - Types: Every value in python has particular type(int, float)
 
-    - Call expressions: an expression that calls a function
+  - Call expressions: an expression that calls a function
 
-    - Values do not have any meaning, so now we want to name them as **Variable**
+  - Values do not have any meaning, so now we want to name them as **Variable**
 
-    - You can create a new variable by naming and assigning it a value
+  - You can create a new variable by naming and assigning it a value
 
-    - String type is a type to represent text values
+  - String type is a type to represent text values
 
-    - Type **bool** has only two values True or False
+  - Type **bool** has only two values True or False
 
-    - Class: another type of **object** that has variables and functions similar to module
+  - Class: another type of **object** that has variables and functions similar to module
 
-    - Object Oriented Programming
+  - Object Oriented Programming
 
-    	- Encapsulation: Contain related information in an object
+  	- Encapsulation: Contain related information in an object
 
-    	- Abstraction: Expose only high level interfaces to the outside world
+  	- Abstraction: Expose only high level interfaces to the outside world
 
-    	- Inheritance: Child classes inherit data and behaviors from parent class
+  	- Inheritance: Child classes inherit data and behaviors from parent class
 
-    	- Polymorphism: A single method acts in a different way depending on objects
+  	- Polymorphism: A single method acts in a different way depending on objects
 
 # Recursion, Search and Sorting algorithms
 
-    ## Search
+  ## Search
 
-    	### Linear Search
+  	### Linear Search
 
-    		- Search from the first item to the last item sequentially
+  		- Search from the first item to the last item sequentially
 
-    			```python
-    			def linear_search(L, value):
-    				for i in range(len(L)):
-    					if L[i] == value:
-    						return i
-    				return -1
-    			```
+  			```python
+  			def linear_search(L, value):
+  				for i in range(len(L)):
+  					if L[i] == value:
+  						return i
+  				return -1
+  			```
 
-    		- Time complexity: Linearly Increasing
+  		- Time complexity: Linearly Increasing
 
-    	### Binary Search
+  	### Binary Search
 
-    		- One evaluation removes **half** of candidate entries
+  		- One evaluation removes **half** of candidate entries
 
-    			```python
-    			def binary_search(L, v):
-    				start, end = 0, len(L)-1
-    				while start != end + 1:
-    					mid = (start + end) // 2
-    					if L[mid] < v:
-    						start = mid + 1
-    					else:
-    						end = mid - 1
-    				if start < len(L) and L[start] == v:
-    					return start
-    				else:
-    					return -1
-    			```
+  			```python
+  			def binary_search(L, v):
+  				start, end = 0, len(L)-1
+  				while start != end + 1:
+  					mid = (start + end) // 2
+  					if L[mid] < v:
+  						start = mid + 1
+  					else:
+  						end = mid - 1
+  				if start < len(L) and L[start] == v:
+  					return start
+  				else:
+  					return -1
+  			```
 
-    		- Time complexity: proportional to log 2
+  		- Time complexity: proportional to log 2
 
-    ## Sort
+  ## Sort
 
-    	### Selection Sort
+  	### Selection Sort
 
-    		- Find the minimum value of the unsorted list and swap it with the leftmost entry
+  		- Find the minimum value of the unsorted list and swap it with the leftmost entry
 
-    			```python
-    			def selection_sort(L):
-    				for i in range(len(L)):
-    					smallest = i
-    						for j in range(i+1, len(L)):
-    							if L[j]<L[smallest]:
-    								smallest = j
-    					L[i], L[smallest] = L[smallest], L[i]
-    			```
+  			```python
+  			def selection_sort(L):
+  				for i in range(len(L)):
+  					smallest = i
+  						for j in range(i+1, len(L)):
+  							if L[j]<L[smallest]:
+  								smallest = j
+  					L[i], L[smallest] = L[smallest], L[i]
+  			```
 
-    		- Time complexity O(n^2)
+  		- Time complexity O(n^2)
 
-    	### Insertion Sort
+  	### Insertion Sort
 
-    		- Insert the leftmost item of the unsorted list to the proper location of the sorted list
+  		- Insert the leftmost item of the unsorted list to the proper location of the sorted list
 
-    		- Time complexity O(n^2)
+  		- Time complexity O(n^2)
 
-    	### Merge Sort
+  	### Merge Sort
 
-    ## Recursion
+  ## Recursion
 
 # Linked Lists
 

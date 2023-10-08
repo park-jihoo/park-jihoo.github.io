@@ -22,9 +22,9 @@ _thumbnail: https://www.notion.so/images/page-cover/solid_red.png
 
 *   Given feature \phi, take any linear function w^\top\phi(s,a)
 
-    ```undefined
-    \forall h, \exist\theta\in\R^d,s.t.,\theta^\top\phi(s,a)=r(s,a)+\mathbb{E}_{s'\sim P_h(s,a)}\max_{a'}w^\top\phi(s',a'),\forall s,a
-    ```
+  ```undefined
+  \forall h, \exist\theta\in\R^d,s.t.,\theta^\top\phi(s,a)=r(s,a)+\mathbb{E}_{s'\sim P_h(s,a)}\max_{a'}w^\top\phi(s',a'),\forall s,a
+  ```
 
 *   This implies that Q\_h^\* is linear in \phi: Q\_h^\* = (\theta^\*)^\top,\forall h
 
@@ -32,11 +32,11 @@ _thumbnail: https://www.notion.so/images/page-cover/solid_red.png
 
 *   In tabluar MDP
 
-    *   We can set \phi(s,a) to be one-hot encoding vector in \R^{SA}, i.e., \phi(s,a)=\[0,\dots,0,1,0,\dots,0]^\top
+  *   We can set \phi(s,a) to be one-hot encoding vector in \R^{SA}, i.e., \phi(s,a)=\[0,\dots,0,1,0,\dots,0]^\top
 
 *   Linear System with Quadratic feature \phi
 
-    *   Claim: r(s,a) + \mathbb{E}*{s'\sim P(s,a)}\max*{a'}w^\top\phi(s,a) is a linear function in \phi
+  *   Claim: r(s,a) + \mathbb{E}*{s'\sim P(s,a)}\max*{a'}w^\top\phi(s,a) is a linear function in \phi
 
 ## Why this is a strong assumption?
 
@@ -60,9 +60,9 @@ _thumbnail: https://www.notion.so/images/page-cover/solid_red.png
 
 *   For h = H-1 to 0:
 
-    *   \theta\_h=\arg\min\_\theta \sum\_{\mathscr{D}*h}\left(\theta^T\phi(s,a) - (r+V*{h+1}(s'))\right)
+  *   \theta\_h=\arg\min\_\theta \sum\_{\mathscr{D}*h}\left(\theta^T\phi(s,a) - (r+V*{h+1}(s'))\right)
 
-    *   Set V\_h(s)\coloneqq \max\_a \theta\_h^\top\phi(s,a),\forall s
+  *   Set V\_h(s)\coloneqq \max\_a \theta\_h^\top\phi(s,a),\forall s
 
 *   Return \hat\pi\_h(s) = \arg\max\_a \theta\_h^\top\phi(s,a),\forall h
 
@@ -76,11 +76,11 @@ x := \phi(s,a), y:= r+ V_{h+1}(s')
 
 *   We note that
 
-    ```undefined
-    \mathbb{E}[y|x] = r(s,a) + \mathbb{E}_{s'\sim P_h(s,a)}\max_{a'} \theta_{h+1}^\top\phi(s',a')
-    ```
+  ```undefined
+  \mathbb{E}[y|x] = r(s,a) + \mathbb{E}_{s'\sim P_h(s,a)}\max_{a'} \theta_{h+1}^\top\phi(s',a')
+  ```
 
-    i.e., our regression target is indeed linear in \phi, and it is close to Q\_h^\* if V\_{h+1} \approx V^\*\_{h+1}
+  i.e., our regression target is indeed linear in \phi, and it is close to Q\_h^\* if V\_{h+1} \approx V^\*\_{h+1}
 
 *   If V\_{h+1} \approx V^*\_{h+1}, and linear regression succeeds(e.g., \theta\_h \approx \mathscr{T}*h(\theta*{h+1})), then we should hope \theta\_h^\top\phi(s,a) \approx Q\_h^*(s,a)
 
@@ -90,11 +90,11 @@ x := \phi(s,a), y:= r+ V_{h+1}(s')
 
 *   There exists a way to construct datasets { \mathscr{D}*h}*{h=0}^{H-1},  such that with probability at least 1-\delta, we have
 
-    ```undefined
-    V^{\hat\pi} - V^* \le \epsilon
-    ```
+  ```undefined
+  V^{\hat\pi} - V^* \le \epsilon
+  ```
 
-    with total number of samples in these datasets scaling \tilde O (d^2+H^6d^2/\epsilon^2)
+  with total number of samples in these datasets scaling \tilde O (d^2+H^6d^2/\epsilon^2)
 
 ## Detour
 
@@ -104,9 +104,9 @@ x := \phi(s,a), y:= r+ V_{h+1}(s')
 
 *   With probability at least 1-\delta, we have
 
-    ```undefined
-    (\hat\theta - \theta^*)^\top \Lambda(\hat\theta - \theta^*) \le O \left( \frac {\sigma^2d\ln(1/\delta)}{N} \right)
-    ```
+  ```undefined
+  (\hat\theta - \theta^*)^\top \Lambda(\hat\theta - \theta^*) \le O \left( \frac {\sigma^2d\ln(1/\delta)}{N} \right)
+  ```
 
 *   Issue: it the test point x is not covered by the training data, then we cannot guarantee \hat\theta^\top xis close to (\theta^\*)^\top x
 
@@ -118,9 +118,9 @@ x := \phi(s,a), y:= r+ V_{h+1}(s')
 
 *   Properties of D-optimal design:
 
-    *   \text{support}(\rho^\*) \le d(d+1)/2
+  *   \text{support}(\rho^\*) \le d(d+1)/2
 
-    *   \max\_{y\in\mathscr{X}}y^\top \[\mathbb{E}\_{x\in\rho}xx^\top]^{-1} y \le d
+  *   \max\_{y\in\mathscr{X}}y^\top \[\mathbb{E}\_{x\in\rho}xx^\top]^{-1} y \le d
 
 ### OLS with D-optimal design
 
@@ -128,9 +128,9 @@ x := \phi(s,a), y:= r+ V_{h+1}(s')
 
 *   For each x \in \mathscr{D}, query y and the OLS solution \hat\theta on \mathscr{D} has the following point-wise guarantee: with probability 1-δ,
 
-    ```undefined
-    \max_{x\in\mathscr{X}}\left|\lang \hat\theta - \theta^*,x\rang \right| \le \frac{\sigma d \ln(1/\delta)}{\sqrt{N}}
-    ```
+  ```undefined
+  \max_{x\in\mathscr{X}}\left|\lang \hat\theta - \theta^*,x\rang \right| \le \frac{\sigma d \ln(1/\delta)}{\sqrt{N}}
+  ```
 
 ### Using D-optimal design to construct \mathscr{D}\_h in LSVI
 
@@ -140,18 +140,18 @@ x := \phi(s,a), y:= r+ V_{h+1}(s')
 
 *   OLS with D-optimal design implies that \theta\_h is point-wise accurate
 
-    ```undefined
-    \max_{s,a} |\theta_h\phi(s,a)-\mathscr{T}_h(\theta_{h+1})^\top\phi(s,a)| \le O(Hd/\sqrt{N})
-    ```
+  ```undefined
+  \max_{s,a} |\theta_h\phi(s,a)-\mathscr{T}_h(\theta_{h+1})^\top\phi(s,a)| \le O(Hd/\sqrt{N})
+  ```
 
 *   This implies our estimator Q\_h := \theta\_h^\top\phi is nearly Bellman-constant
 
-    ```undefined
-    ||Q_h-\mathscr{T}_hQ_h^* ||_\infty \le O(Hd/\sqrt{N})
-    ```
+  ```undefined
+  ||Q_h-\mathscr{T}_hQ_h^* ||_\infty \le O(Hd/\sqrt{N})
+  ```
 
 *   Nearly Bellman consistency implies Q\_h is close to Q\_h^\*(this holds in general)
 
-    ```undefined
-    ||Q_h-Q_h^* ||_\infty \le O(H^2d/\sqrt{N})
-    ```
+  ```undefined
+  ||Q_h-Q_h^* ||_\infty \le O(H^2d/\sqrt{N})
+  ```

@@ -56,17 +56,17 @@ _thumbnail: https://www.notion.so/images/page-cover/webb1.jpg
 
 *   **Simulation Environment** E enable meaningful automatic interaction between our agent and environment. Paper define an anomaly-biased observation sampling function
 
-    ```undefined
-    g(s_{t+1}|s_t,a_t)
-    ```
+  ```undefined
+  g(s_{t+1}|s_t,a_t)
+  ```
 
-    in the environment, which responds differently to the agent with next observation dependent on the observation and the action at t
+  in the environment, which responds differently to the agent with next observation dependent on the observation and the action at t
 
 *   There are two **reward** function defined.
 
-    *   External reward h(r\_t^e|s\_t,a\_t) is defined to provide high rewards for the agent when it’s able to correctly recognized a labeled anomaly observation
+  *   External reward h(r\_t^e|s\_t,a\_t) is defined to provide high rewards for the agent when it’s able to correctly recognized a labeled anomaly observation
 
-    *   Unsupervised intrinsic reward function f(s\_t) is defined to measure the novelty of an observation the agent perceives compared to other observation
+  *   Unsupervised intrinsic reward function f(s\_t) is defined to measure the novelty of an observation the agent perceives compared to other observation
 
 *   A combined external and intrinsic reward is then defined c(r^e,r^i) to provide an overall reward
 
@@ -88,19 +88,19 @@ _thumbnail: https://www.notion.so/images/page-cover/webb1.jpg
 
 *   The value function can be approximated as Q function
 
-    ```undefined
-    Q^*(s,a) = \max_\pi\mathbb E[r_t+\gamma r_{t+1}+\gamma^2 r_{t+2}+\cdots|s_t=s,a_t=a,\pi]
-    ```
+  ```undefined
+  Q^*(s,a) = \max_\pi\mathbb E[r_t+\gamma r_{t+1}+\gamma^2 r_{t+2}+\cdots|s_t=s,a_t=a,\pi]
+  ```
 
-    which is the maximum expected return starting from s
+  which is the maximum expected return starting from s
 
 *   DQN will be used, and it learns \theta=Q^\*(s,a). It minimizes
 
-    ```undefined
-    L_j(\theta_j)=\mathbb E_{(s,a,r,s')\sim U(\cal E)}\left[\left(r+\gamma \max_{\alpha'}Q(s',a';\theta_j^-)-Q(s,a;\theta_j)\right)\right]
-    ```
+  ```undefined
+  L_j(\theta_j)=\mathbb E_{(s,a,r,s')\sim U(\cal E)}\left[\left(r+\gamma \max_{\alpha'}Q(s',a';\theta_j^-)-Q(s,a;\theta_j)\right)\right]
+  ```
 
-    where \cal E is the set of agent’s learning experience and the loss is calculated using minibatch samples drawn uniformly
+  where \cal E is the set of agent’s learning experience and the loss is calculated using minibatch samples drawn uniformly
 
 ## Proximity-driven Observation Sampling g
 
@@ -110,15 +110,15 @@ _thumbnail: https://www.notion.so/images/page-cover/webb1.jpg
 
 *   g\_u is a function that samples s\_{t+1} from \cal D^u based on the proximitiy of current observation.
 
-    ```undefined
-    g_u(s_{t+1}|s_t,a_t;\theta^e)=\begin{cases}\argmin_{s\in \cal S} d(s_t,s;\theta^e)&\text{if }a_t=a^1 \\\argmax_{s\in\cal S}d(s_t,s;\theta^e)&\text{if }a_t=a^0\end{cases}
-    ```
+  ```undefined
+  g_u(s_{t+1}|s_t,a_t;\theta^e)=\begin{cases}\argmin_{s\in \cal S} d(s_t,s;\theta^e)&\text{if }a_t=a^1 \\\argmax_{s\in\cal S}d(s_t,s;\theta^e)&\text{if }a_t=a^0\end{cases}
+  ```
 
-    where \cal S \in D^u is a random subsample, \theta^e are the parameters of \psi(\cdot;\theta^e) that is a feature embedding function of last hidden layer of DQN
+  where \cal S \in D^u is a random subsample, \theta^e are the parameters of \psi(\cdot;\theta^e) that is a feature embedding function of last hidden layer of DQN
 
-    *   g\_u returns the nearest neighbor of s\_t when the agent believes s\_t is an anomaly and takes a^1. If it believes s\_t a normal observation then returns farthest neighbor of s\_t and takes a^0
+  *   g\_u returns the nearest neighbor of s\_t when the agent believes s\_t is an anomaly and takes a^1. If it believes s\_t a normal observation then returns farthest neighbor of s\_t and takes a^0
 
-    *   The nearest and farthest neighbors are approximated on subsample \cal S for efficiency
+  *   The nearest and farthest neighbors are approximated on subsample \cal S for efficiency
 
 *   With probability p the simulator performs g\_a and with probability 1-p the simulator performs g\_u. This way enables the agent to sufficiently exploit the small labeled anomaly data while exploring large unlabeled data.
 
@@ -150,9 +150,9 @@ r_t^i=f(s_t;\theta^e)=\text{iForest}(s_t;\theta^e)
 
 *   The overall reward the agent receives at each step t is
 
-    ```undefined
-    r_t = r_t^e+r_t^i
-    ```
+  ```undefined
+  r_t = r_t^e+r_t^i
+  ```
 
 ## Theoretical Analysis
 
@@ -160,20 +160,20 @@ r_t^i=f(s_t;\theta^e)=\text{iForest}(s_t;\theta^e)
 
 *   Let \pi be policy by Q, then
 
-    ```undefined
-    q_\pi(\hat s,a^1)=\mathbb E_\pi\left[\sum_{n=0}^\infty\gamma^nr_{t+n+1}|\hat s,a^1 \right]
-    ```
+  ```undefined
+  q_\pi(\hat s,a^1)=\mathbb E_\pi\left[\sum_{n=0}^\infty\gamma^nr_{t+n+1}|\hat s,a^1 \right]
+  ```
 
 *   Let \hat s^i,\hat s^j, \hat s^k be labeled anomaly, unlabeled anomaly and unlabeled normal observations. We have
 
-    ```undefined
-    h(\hat s^i,a^1)>h(\hat s^j,a^1)>h(\hat s^k,a^1).f(\hat s^i;\theta^e)\approx f(\hat s^j;\theta^e)>f(\hat s^i;\theta^e)
-    ```
+  ```undefined
+  h(\hat s^i,a^1)>h(\hat s^j,a^1)>h(\hat s^k,a^1).f(\hat s^i;\theta^e)\approx f(\hat s^j;\theta^e)>f(\hat s^i;\theta^e)
+  ```
 
-    also holds provided that f well captures the abnormality of the threee observations
+  also holds provided that f well captures the abnormality of the threee observations
 
 *   Under the same policy \pi, this holds
 
-    ```undefined
-    q_\pi(\hat s^i,a^1)>q_\pi(\hat s^j,a^1)>q_\pi(\hat s^k,a^1)
-    ```
+  ```undefined
+  q_\pi(\hat s^i,a^1)>q_\pi(\hat s^j,a^1)>q_\pi(\hat s^k,a^1)
+  ```

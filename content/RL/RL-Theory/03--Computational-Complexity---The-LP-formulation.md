@@ -46,15 +46,15 @@ _thumbnail: https://www.notion.so/images/page-cover/met_paul_signac.jpg
 
 *   Let’s write the bellman equations with values
 
-    ```undefined
-    V(s) = \max_a \left\{ r(s,a) + \gamma \mathbb{E}_{s'\sim P(\cdot|s,a)}[V(s)] \right\}
-    ```
+  ```undefined
+  V(s) = \max_a \left\{ r(s,a) + \gamma \mathbb{E}_{s'\sim P(\cdot|s,a)}[V(s)] \right\}
+  ```
 
 *   With variables V \in \R ^S, the LP is \min V(s\_0) such that
 
-    ```undefined
-    V(s) \ge r(s,a)+\gamma\mathbb{E}_{s'\sim P(\cdot|s,a)}V(s')\ \  \forall s,a \in S \times A
-    ```
+  ```undefined
+  V(s) \ge r(s,a)+\gamma\mathbb{E}_{s'\sim P(\cdot|s,a)}V(s')\ \  \forall s,a \in S \times A
+  ```
 
 *   This LP solver gives poly time algorithm S^3AL(P, r, \gamma)
 
@@ -64,20 +64,20 @@ _thumbnail: https://www.notion.so/images/page-cover/met_paul_signac.jpg
 
 *   For a fixed policy π, define the state-action visitation distribution \nu^\pias
 
-    ```undefined
-    \nu^\pi(s,a) = (1-\gamma)\sum_{t=0}^\infty \gamma^t\Pr^\pi(s_t=s, a_t=a|s_0)
-    ```
+  ```undefined
+  \nu^\pi(s,a) = (1-\gamma)\sum_{t=0}^\infty \gamma^t\Pr^\pi(s_t=s, a_t=a|s_0)
+  ```
 
 *   Then for all states,
 
-    ```undefined
-    \sum_a \nu^\pi(s,a) = (1-\gamma)I(s=s_0)+\gamma\sum_{s',a'}P(s|s',a')\nu^\pi(s',a')
-    ```
+  ```undefined
+  \sum_a \nu^\pi(s,a) = (1-\gamma)I(s=s_0)+\gamma\sum_{s',a'}P(s|s',a')\nu^\pi(s',a')
+  ```
 
 *   Define state-action polytotype K as
 
-    ```undefined
-    K := \left\{\nu |\nu\ge0 \text{ and }\sum_a\nu(s,a) = (1-\gamma)I(s=s_0)+\gamma \sum_{s',a'}P(s|s',a')\nu(s',a') \right\}
-    ```
+  ```undefined
+  K := \left\{\nu |\nu\ge0 \text{ and }\sum_a\nu(s,a) = (1-\gamma)I(s=s_0)+\gamma \sum_{s',a'}P(s|s',a')\nu(s',a') \right\}
+  ```
 
 *   Lemma: \nu\in K if and only if ther exists a (possibly randomized) policy π s.t \nu^\pi=\nu

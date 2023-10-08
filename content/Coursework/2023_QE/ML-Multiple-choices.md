@@ -14,339 +14,339 @@ class: Coursework
 
 # Set 01
 
-    - High entropy means that the partitions in classification are
+  - High entropy means that the partitions in classification are
 
-    	- Pure
+  	- Pure
 
-    	- Not pure
+  	- Not pure
 
-    	- Useful
+  	- Useful
 
-    	- Useless
+  	- Useless
 
-    	Answer
+  	Answer
 
-    		(b) Not Pure
+  		(b) Not Pure
 
-    - A machine learning problem involves four attributes plus a class. The attributes have 3, 2, 2, and 2 possible values each. The class has 3 possible values. How many maximum possible different examples are there?
+  - A machine learning problem involves four attributes plus a class. The attributes have 3, 2, 2, and 2 possible values each. The class has 3 possible values. How many maximum possible different examples are there?
 
-    	- 12
+  	- 12
 
-    	- 24
+  	- 24
 
-    	- 48
+  	- 48
 
-    	- 72
+  	- 72
 
-    	Answer
+  	Answer
 
-    		(d) 72
+  		(d) 72
 
-    - Which of the following is NOT supervised leraning
+  - Which of the following is NOT supervised leraning
 
-    	- PCA
+  	- PCA
 
-    	- Decision Tree
+  	- Decision Tree
 
-    	- Linear Regression
+  	- Linear Regression
 
-    	- Naive Bayesian
+  	- Naive Bayesian
 
-    	Answer
+  	Answer
 
-    		(a) PCA
+  		(a) PCA
 
-    - Which of the following statements about Naive Bayes is incorrect?
+  - Which of the following statements about Naive Bayes is incorrect?
 
-    	- Attributes are equally important.
+  	- Attributes are equally important.
 
-    	- Attributes are statistically dependent of one other given the class value.
+  	- Attributes are statistically dependent of one other given the class value.
 
-    	- Attributes are statistically independent of one other given the class value
+  	- Attributes are statistically independent of one other given the class value
 
-    	- Attributes can be nominal or numeric
+  	- Attributes can be nominal or numeric
 
-    	Answer
+  	Answer
 
-    		(b) Attributes are statically dependent of one other given the class value
+  		(b) Attributes are statically dependent of one other given the class value
 
-    - Suppose we would like to perform clustering on spatial data such as the geometrical locations of houses. We wish to produce clusters of many different sizes and shapes. Which of the following methods is the most appropriate?
+  - Suppose we would like to perform clustering on spatial data such as the geometrical locations of houses. We wish to produce clusters of many different sizes and shapes. Which of the following methods is the most appropriate?
 
-    	- Decision Trees
+  	- Decision Trees
 
-    	- Density-based clustering
+  	- Density-based clustering
 
-    	- Model-based clustering
+  	- Model-based clustering
 
-    	- K-means Clustering
+  	- K-means Clustering
 
-    	Answer
+  	Answer
 
-    		Density-based clustering
+  		Density-based clustering
 
 # Set 02
 
-    - Which of the following are the spatial clustering algorithms?
+  - Which of the following are the spatial clustering algorithms?
 
-    	- Partitioning based clustering
+  	- Partitioning based clustering
 
-    	- K-means clustering
+  	- K-means clustering
 
-    	- Grid based clustering
+  	- Grid based clustering
 
-    	- All of the above
+  	- All of the above
 
-    	Answer
+  	Answer
 
-    		(d) All of the above
+  		(d) All of the above
 
-    - Which of the following tasks can be best solved using Clustering?
+  - Which of the following tasks can be best solved using Clustering?
 
-    	- Predicting the amount of rainfall based on various cues
+  	- Predicting the amount of rainfall based on various cues
 
-    	- Detecting fradulent credit card transactions
+  	- Detecting fradulent credit card transactions
 
-    	- Training a robot to solve a maze
+  	- Training a robot to solve a maze
 
-    	- All of the above
+  	- All of the above
 
-    	Answer
+  	Answer
 
-    		(b) Detecting fraudulent credit card transactions
+  		(b) Detecting fraudulent credit card transactions
 
-    - Choose the correct option from the following
+  - Choose the correct option from the following
 
-    	- When working with a small dataset, one should prefer low bias/high variance classifiers over high bias/low variance classifiers.
+  	- When working with a small dataset, one should prefer low bias/high variance classifiers over high bias/low variance classifiers.
 
-    	- When working with a small dataset, one should prefer high bias/low variance classifiers over low bias/high variance classifiers.
+  	- When working with a small dataset, one should prefer high bias/low variance classifiers over low bias/high variance classifiers.
 
-    	- When working with a large dataset, one should prefer high bias/low variance classifiers over low bias/high variance classifiers.
+  	- When working with a large dataset, one should prefer high bias/low variance classifiers over low bias/high variance classifiers.
 
-    	- When working with a large dataset, one should prefer low bias/high variance classifiers over high bias/low variance classifiers.
+  	- When working with a large dataset, one should prefer low bias/high variance classifiers over high bias/low variance classifiers.
 
-    	Answer
+  	Answer
 
-    		(b) and (d)
+  		(b) and (d)
 
 # Set 03
 
-    - Predicting the amount of rainfall in a region based on various cues is a __________ problem.
+  - Predicting the amount of rainfall in a region based on various cues is a __________ problem.
 
-    	- Supervised Learning
+  	- Supervised Learning
 
-    	- Unsupervised Learning
+  	- Unsupervised Learning
 
-    	- Clustering
+  	- Clustering
 
-    	- None of the above
+  	- None of the above
 
-    	Answer
+  	Answer
 
-    		(a) Supervised Learning
+  		(a) Supervised Learning
 
-    - A and B are two events. If P(A, B) decreases while P(A) increases, which of the following is true?
+  - A and B are two events. If P(A, B) decreases while P(A) increases, which of the following is true?
 
-    	- P(A|B) decreases
+  	- P(A|B) decreases
 
-    	- P(B|A) decreases
+  	- P(B|A) decreases
 
-    	- P(B) decreases
+  	- P(B) decreases
 
-    	- All of above
+  	- All of above
 
-    	Answer
+  	Answer
 
-    		(b)
+  		(b)
 
-    - In building a linear regression model for a particular data set, you observe the coefficient of one of the features having a relatively high negative value. This suggests that
+  - In building a linear regression model for a particular data set, you observe the coefficient of one of the features having a relatively high negative value. This suggests that
 
-    	- This feature has a strong effect on the model (should be retained)
+  	- This feature has a strong effect on the model (should be retained)
 
-    	- This feature does not have a strong effect on the model (should be ignored)
+  	- This feature does not have a strong effect on the model (should be ignored)
 
-    	- It is not possible to comment on the importance of this feature without additional information
+  	- It is not possible to comment on the importance of this feature without additional information
 
-    	- Nothing can be determined.
+  	- Nothing can be determined.
 
-    	Answer
+  	Answer
 
-    		(c) It is not possible to comment on the importance of this feature without additional information
+  		(c) It is not possible to comment on the importance of this feature without additional information
 
-    - After applying a regularization penalty in linear regression, you find that some of the coefficients of w are zeroed out. Which of the following penalties might have been used?
+  - After applying a regularization penalty in linear regression, you find that some of the coefficients of w are zeroed out. Which of the following penalties might have been used?
 
-    	- L_0 Norm
+  	- L_0 Norm
 
-    	- L_1 Norm
+  	- L_1 Norm
 
-    	- L_2 Norm
+  	- L_2 Norm
 
-    	- either a or b
+  	- either a or b
 
-    	Answer
+  	Answer
 
-    		(d) either a or b
+  		(d) either a or b
 
-    - MLE Estimators are often undesirable because
+  - MLE Estimators are often undesirable because
 
-    	- They are biased
+  	- They are biased
 
-    	- They have high variance
+  	- They have high variance
 
-    	- They are not consistent estimators
+  	- They are not consistent estimators
 
-    	- None of the above
+  	- None of the above
 
-    	Answer
+  	Answer
 
-    		(b) They have high variance
+  		(b) They have high variance
 
 # Set 04
 
-    - As the number of training examples goes to infinity, your model trained on that data will have
+  - As the number of training examples goes to infinity, your model trained on that data will have
 
-    	- Lower variance
+  	- Lower variance
 
-    	- Higher variance
+  	- Higher variance
 
-    	- Same variance
+  	- Same variance
 
-    	- None of the above
+  	- None of the above
 
-    	Answer
+  	Answer
 
-    		(a) Lower variance
+  		(a) Lower variance
 
-    - Which of the following is/are true regarding an SVM?
+  - Which of the following is/are true regarding an SVM?
 
-    	- For two dimensional data points, the separating hyperplane learnt by a linear SVM will be a straight line.
+  	- For two dimensional data points, the separating hyperplane learnt by a linear SVM will be a straight line.
 
-    	- In theory, a Gaussian kernel SVM cannot model any complex separating hyperplane.
+  	- In theory, a Gaussian kernel SVM cannot model any complex separating hyperplane.
 
-    	- For every kernel function used in a SVM, one can obtain an equivalent closed form basis expansion.
+  	- For every kernel function used in a SVM, one can obtain an equivalent closed form basis expansion.
 
-    	- Overfitting in an SVM is not a function of number of support vectors.
+  	- Overfitting in an SVM is not a function of number of support vectors.
 
-    	Answer
+  	Answer
 
-    		(a) For two dimensional data points, the separating hyperplane learnt by a linear svm will be a straight line
+  		(a) For two dimensional data points, the separating hyperplane learnt by a linear svm will be a straight line
 
 # Set 05
 
-    - The model obtained by applying linear regression on the identified subset of features may differ from the model obtained at the end of the process of identifying the subset during
+  - The model obtained by applying linear regression on the identified subset of features may differ from the model obtained at the end of the process of identifying the subset during
 
-    	- Best-subset selection
+  	- Best-subset selection
 
-    	- Forward stepwise selection
+  	- Forward stepwise selection
 
-    	- Forward stage wise selection
+  	- Forward stage wise selection
 
-    	- All of the above
+  	- All of the above
 
-    	Answer
+  	Answer
 
-    		(c) Forward stage wise selection
+  		(c) Forward stage wise selection
 
-    - You trained a binary classifier model which gives very high accuracy on the training data, but much lower accuracy on validation data. Which of the following may be true?
+  - You trained a binary classifier model which gives very high accuracy on the training data, but much lower accuracy on validation data. Which of the following may be true?
 
-    	- This is an instance of overfitting
+  	- This is an instance of overfitting
 
-    	- This is an instance of underfitting
+  	- This is an instance of underfitting
 
-    	- The training is not well regularized
+  	- The training is not well regularized
 
-    	- The training and testing examples are sampled from different distributions
+  	- The training and testing examples are sampled from different distributions
 
-    	Answer
+  	Answer
 
-    		(a), (c), (d)
+  		(a), (c), (d)
 
-    - What are support vectors?
+  - What are support vectors?
 
-    	- The examples farthest from the decision boundary
+  	- The examples farthest from the decision boundary
 
-    	- The only example necessary to compute f(x) in a SVM
+  	- The only example necessary to compute f(x) in a SVM
 
-    	- The class centroids
+  	- The class centroids
 
-    	- All of the examples that have a non-zero weight \alpha_k in a SVM
+  	- All of the examples that have a non-zero weight \alpha_k in a SVM
 
-    	Answer
+  	Answer
 
-    		(b), (d)
+  		(b), (d)
 
 # Set 06
 
-    - You’ve just finished training a decision tree for spam classification, and it is getting abnormally bad performance on both your training and test sets. You know that your implementation has no bugs, so what could be causing the problem?
+  - You’ve just finished training a decision tree for spam classification, and it is getting abnormally bad performance on both your training and test sets. You know that your implementation has no bugs, so what could be causing the problem?
 
-    	- Your decision trees are too shallow
+  	- Your decision trees are too shallow
 
-    	- You need to increase the learning rate
+  	- You need to increase the learning rate
 
-    	- You are overfitting
+  	- You are overfitting
 
-    	- None of the above
+  	- None of the above
 
-    	Answer
+  	Answer
 
-    		(a) Your decision trees are too shallow
+  		(a) Your decision trees are too shallow
 
-    - ___________  refers to a model that can neither model the training data nor generalize to new data
+  - ___________  refers to a model that can neither model the training data nor generalize to new data
 
-    	- good fitting
+  	- good fitting
 
-    	- overfitting
+  	- overfitting
 
-    	- underfitting
+  	- underfitting
 
-    	- all of the above
+  	- all of the above
 
-    	Answer
+  	Answer
 
-    		(c) underfitting
+  		(c) underfitting
 
 # Set 07
 
-    - Which of the following can only be used when training data are linearly separable?
+  - Which of the following can only be used when training data are linearly separable?
 
-    	- Linear hard-margin SVM
+  	- Linear hard-margin SVM
 
-    	- Linear Logistic Regression
+  	- Linear Logistic Regression
 
-    	- Linear Soft margin SVM
+  	- Linear Soft margin SVM
 
-    	- The centroid method
+  	- The centroid method
 
-    	Answer
+  	Answer
 
-    		(a) Linear hard-margin SVM
+  		(a) Linear hard-margin SVM
 
-    - The K-means algorithm
+  - The K-means algorithm
 
-    	- Requires the dimension of the feature space to be no bigger than the number of samples
+  	- Requires the dimension of the feature space to be no bigger than the number of samples
 
-    	- Has the smallest value of objective function when K=1
+  	- Has the smallest value of objective function when K=1
 
-    	- Minimizes the within class variance for given number of clusters
+  	- Minimizes the within class variance for given number of clusters
 
-    	- Converges to the global optimum if and only if the initial means are chosen as some of the samples themselves
+  	- Converges to the global optimum if and only if the initial means are chosen as some of the samples themselves
 
-    	Answer
+  	Answer
 
-    		(c) Minimizes the within class variance for a given number of clusters
+  		(c) Minimizes the within class variance for a given number of clusters
 
-    - For polynomial regression, which one of these structural assumptions is the one that most affects the trade-off between underfitting and overfitting:
+  - For polynomial regression, which one of these structural assumptions is the one that most affects the trade-off between underfitting and overfitting:
 
-    	- The polynomial degree
+  	- The polynomial degree
 
-    	- Whether we learn the weights by matrix inversion or gradient descent
+  	- Whether we learn the weights by matrix inversion or gradient descent
 
-    	- The assumed variance of the Gaussian noise
+  	- The assumed variance of the Gaussian noise
 
-    	- The use of a constant-term unit input
+  	- The use of a constant-term unit input
 
-    	Answer
+  	Answer
 
-    		(a) the polynomial degree
+  		(a) the polynomial degree
 
 # Set 08
 
