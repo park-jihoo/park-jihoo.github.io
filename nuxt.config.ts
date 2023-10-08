@@ -81,6 +81,7 @@ export default defineNuxtConfig({
     'nuxt-simple-robots',
     '@pinia/nuxt',
     'nuxt-simple-sitemap',
+    '@nuxt/content',
   ],
   gtag: {
     id: 'G-5H39DYHZK8'
@@ -113,10 +114,10 @@ export default defineNuxtConfig({
   },
   hooks: {
     async 'nitro:config' (nitroConfig) {
-      if(nitroConfig.prerender.routes.length === 0) return;
-      const routes = await getDynamicRoutes();
-      const staticEndpoints = routes.map((route) => route.loc);
-      nitroConfig.prerender.routes.push(...staticEndpoints);
+      // if(nitroConfig.prerender.routes.length === 0) return;
+      // const routes = await getDynamicRoutes();
+      // const staticEndpoints = routes.map((route) => route.loc);
+      // nitroConfig.prerender.routes.push(...staticEndpoints);
     }
   }
 })
