@@ -453,7 +453,7 @@ _thumbnail: https://www.notion.so/images/page-cover/met_john_singer_sargent_moro
 
     	- GCN, GAT, and Transformer
 
-    		![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1bce0d94-57f1-481e-9e5f-803352158c2f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20231008%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20231008T004030Z&X-Amz-Expires=3600&X-Amz-Signature=c0ca3925c39be3cb99409d270656c9a0569bc06e9a14195e54ad85acb6279dea&X-Amz-SignedHeaders=host&x-id=GetObject)
+    		![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1bce0d94-57f1-481e-9e5f-803352158c2f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20231008%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20231008T122317Z&X-Amz-Expires=3600&X-Amz-Signature=4e0b71bd6eea57680ffda7526f283c9e708499ef4bc269d0beb1840c05dff877&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 # Transformers
 
@@ -523,53 +523,3 @@ _thumbnail: https://www.notion.so/images/page-cover/met_john_singer_sargent_moro
     - In-context learning: ability to generalize rapidly from few examples of a new concept
 
 # Bayesian Neural Networks
-
-    - Uncertainty: variance in regression, confidence in classification
-
-    - Towards out-of-distribution leads to more uncertainty
-
-    - More uncertainty gives low confidence, less uncertainty gives high confidence
-
-    - Aleatoric uncertainty : data randomness
-
-    	- Inherent uncertainty in the environment’s dynamics
-
-    	- Homoscedastic: output noise is fixed
-
-    	- Heteroscedastic: output noise can vary with input data(output is distribution)
-
-    - Epistemic uncertainty: lack of knowledge
-
-    	- Uncertainty about the model parameters
-
-    - Calibration = |Confidence - Accuracy|
-
-    	- Confidence: predicted probability of correctness
-
-    	- Accuracy: observed frequency of correctness
-
-    - Under-confident and over-confident
-
-    - Expected calibration error
-
-    	```undefined
-    	\text{ECE} = \sum^B_{b=1} \frac {n_b}{N} |\text{acc}(b) - \text{conf}(b)|
-    	```
-
-    - Bayesian Neural Networks
-
-    	- Maximum a posterior estimation
-
-    		```undefined
-    		\theta^* = \arg\max_\theta p(\theta|x,y) =^* \arg\min_\theta \sum_k y_k\log p_k + \lambda ||\theta||^2
-    		```
-
-    	- One model: one prediction per example
-
-    	- Probabilistic approach: estimate full distribution
-
-    	- Intuitive approach: ensemble approach
-
-    		```undefined
-    		p(y|x,D) = \int p(y|x,\theta)p(\theta|D)d\theta \sim  \frac 1 S \sum_{s=1}^S p(y|x,\theta^{(s)})
-    		```

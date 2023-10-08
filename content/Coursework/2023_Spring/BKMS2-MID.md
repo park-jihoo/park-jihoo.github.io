@@ -896,11 +896,8 @@ class: Coursework
 
     - If 3D, we use octrees
 
-    | QuadTrees                                         | Octrees                                               |
-    |---------------------------------------------------|-------------------------------------------------------|
-    | Represents 2D planes                              | Represents 3D cubical planes                          |
-    | 4 children                                        | 8 children                                            |
-    | Each child represents<br/>a quadrant of sub plane | Each child represents <br/> a 3D octant of sub volume |
+    ||
+    ||
 
     > Tree branches until each sub region satisfies some property!
 
@@ -912,19 +909,10 @@ class: Coursework
 
     - Variations of these trees are based on:
 
-    	- Type of data represented
-
-    	- Property sought through decompositions
-
-    	- Variable or static resolution
-
     ### Quad Tree Example
 
-    | B |   | F | G |
-    |---|---|---|---|
-    |   |   | H | I |
-    | D |   | J | K |
-    |   |   | L | M |
+    ||
+    ||
 
     ### Constructing Region Quadtrees
 
@@ -1003,14 +991,6 @@ class: Coursework
     - Searches for split with smallest possible area
 
     - Idea
-
-    	- Search for pairs of entries that would cause the largest area if placed in the same node. Then put these entries in two different nodes
-
-    	- Then: Considier all remaining entries and consider the one for which the increase in area has the largest possible difference between two nodes.
-
-    	- This entry is assignned to the node with the smaller increase
-
-    	- Repeat until all entries are assigned to a node
 
     ## R* Tree
 

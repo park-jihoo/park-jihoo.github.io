@@ -209,7 +209,7 @@ _thumbnail: https://www.notion.so/images/page-cover/rijksmuseum_vermeer_the_milk
 
     - Probability that c1 and c2 are candidate pair is 1 - (1-s^r)^b
 
-    ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/39e0b223-1835-42aa-b402-55c900b7fe90/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20231008%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20231008T004009Z&X-Amz-Expires=3600&X-Amz-Signature=4ae5923457180314c960c9838a645761ff48bc28090ea95160f27f48cdd19197&X-Amz-SignedHeaders=host&x-id=GetObject)
+    ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/39e0b223-1835-42aa-b402-55c900b7fe90/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20231008%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20231008T122306Z&X-Amz-Expires=3600&X-Amz-Signature=e8cb550dcc238f57ff2bfc806eff96828392cebf9cdb1d5b362332b262453f61&X-Amz-SignedHeaders=host&x-id=GetObject)
 
     - b가 고정되어 있을 때, r이 커질수록 false negative 증가, false positive 감소
 
@@ -490,58 +490,10 @@ _thumbnail: https://www.notion.so/images/page-cover/rijksmuseum_vermeer_the_milk
 
     - BellKor Recommender System
 
-    	- Multi-scale modeling of the data
-
-    		- Global: overall deviations of users/movies
-
-    		- Regional: Factorization → Addressing regional effects
-
-    		- Local: Collaborative Filtering
-
     - Interpolation weights: use a **weighted sum** rather than weighted avg:
-
-    	```undefined
-    	\hat {r_{xi}} = b_{xi} + \sum_{j \in N(i;x)} w_{ij}(r_{xj}-b_{xj})
-    	```
-
-    	- 여기에서 SSE를 minimize하는데, 이는 gradient descent를 이용해서 증명 가능하다
 
     - Latent Factor Models: R = Q \cdot P^T, and sum of squared error is \min_{U,V,\Sigma} \sum_{ij \in A} \left( A_{ij} - [U\Sigma V^T]_{ij} \right) ^2 = \min_{P,Q} \sum_{(i, x) \in R} (r_{xi} - q_i \cdot p_x)^2
 
     - 여기에 regularization term을 추가하여 gradient descent를 적용한 다음 optimal value를 찾는다.
 
 # Product Quantization
-
-    - Quantization: the process of constraining an input from a continuous or otherwise large set of values to a discrete set
-
-    	- Efficient Memory usage
-
-    	- Lower power
-
-    	- Saving RAM memory bandwidth
-
-    	- Improvement of inference speed
-
-    	- Reduce accuracy
-
-    - Searching with Quantization
-
-    	- Symmetric distance computation: distance between query centerioids
-
-    	- Asymmetric distance computation: distance between x and queried y
-
-    		- Train k centroids for each sub vector spaces with k means algorithm
-
-    		- Substitute with the id of the nearest centroid from the respective sub-vector spaces
-
-    		- calculate distence between query sub vector and every centroid
-
-    		- For each row of PQ code, look up the partial distances and sum them
-
-    - Inverted File System with asymetric distance
-
-    	- Inverted index: database index storing a mapping from content to its locations
-
-    	- Partitioning with K-mean clustering: the search can only be performed on vectors belonging to specific partitions
-
-    	- Why using residual here? Residual is more compact distribution and uses lower variance
