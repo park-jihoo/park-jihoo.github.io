@@ -64,8 +64,20 @@ _thumbnail: https://www.notion.so/images/page-cover/met_paul_signac.jpg
 
 *   For a fixed policy π, define the state-action visitation distribution \nu^\pias
 
+    ```undefined
+    \nu^\pi(s,a) = (1-\gamma)\sum_{t=0}^\infty \gamma^t\Pr^\pi(s_t=s, a_t=a|s_0)
+    ```
+
 *   Then for all states,
 
+    ```undefined
+    \sum_a \nu^\pi(s,a) = (1-\gamma)I(s=s_0)+\gamma\sum_{s',a'}P(s|s',a')\nu^\pi(s',a')
+    ```
+
 *   Define state-action polytotype K as
+
+    ```undefined
+    K := \left\{\nu |\nu\ge0 \text{ and }\sum_a\nu(s,a) = (1-\gamma)I(s=s_0)+\gamma \sum_{s',a'}P(s|s',a')\nu(s',a') \right\}
+    ```
 
 *   Lemma: \nu\in K if and only if ther exists a (possibly randomized) policy π s.t \nu^\pi=\nu

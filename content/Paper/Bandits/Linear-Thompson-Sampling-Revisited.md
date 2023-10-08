@@ -70,19 +70,75 @@ _thumbnail: https://www.notion.so/images/page-cover/rijksmuseum_jansz_1649.jpg
 
     > 📖 Input: \hat\theta\_1, V\_1=\lambda I, \delta,T
 
+          Set \delta' = \delta/(4T)
+
+          for t =\{1,...,T\} do
+
+          	Sample \eta_t\sim\mathcal{D}^{TS}
+
+          	Compute parameter
+
+          	```undefined
+          	\widetilde\theta_t = \hat\theta_t+\beta_t(\delta')V_t^{-1/2}\eta_t
+          	```
+
+          	Compute optimal arm
+
+          	```undefined
+          	x_t = x^*(\widetilde\theta_t)=\argmax_{x\in\mathcal X}x^\top\widetilde\theta_t
+          	```
+
+          	Pull arm x_t and observe reward r_{t+1}
+
+          	Compute V_{t+1} and \hat\theta_{t+1} using Regularized Least square
+
+          end for
+
 *   Thompson sampling samples a perturbed parameter \widetilde\theta\_t as
 
+    ```undefined
+    \widetilde\theta_t = \hat\theta_t+\beta_t(\delta')V_t^{-1/2}\eta_t
+    ```
+
+    where \eta\_t is a random sample drawn iid from suitable multivariate distribution \mathcal D^{TS}.
+
 *   \mathcal D^{TS} is a multibvariate distribution on \R^d absolutely continuous with respect to the Lebesgue measure which satisfies the following properties
+
+    *   (anti-concentration) there exists a strictly positive probability p such that for any u\in\R^d with |u|=1,
+
+        ```undefined
+        \mathbb P_{\eta\sim\mathcal D^{TS}}(u^\top\eta\ge1)\ge p
+        ```
+
+    *   (concentration) there exists c,c' posisitve constants such that \forall\delta\in(0,1)
+
+        ```undefined
+        \mathbb P_{\eta\sim\mathcal D^{TS}}\left(\|\eta\|\le\sqrt{cd\log\frac{c'd}{\delta}}\right)\ge1-\delta
+        ```
 
 # Sketch of the proof
 
 *   Bounding R^{\text{RLS}}(T)
 
+    ```undefined
+    \sum_{t=1}^T|r_{t+1}-x_t^\top\hat\theta_{T+1}|^2+\lambda\|\hat\theta_{T+1}\|^2\ge\sum_{t=1}^T|r_{t+1}-x_t^\top\hat\theta_{t+1}|^2+\lambda\|\hat\theta_1\|^2
+    ```
+
 *   Bounding R^{\text{TS}}(T)
+
+    *   Regret and sensitively of J
+
+    *   Sensitivity of J and optimal arm
+
+    *   Optimism
 
 # Formal Proof
 
 *   Theorem: Under assumptions above, the regret of Thompson Sampling is bounded w\.p 1-\delta as(\delta'=\frac{\delta}{4T})
+
+    ```undefined
+    R(T)\le\left((\beta_t(\delta')+\gamma_T(\delta')\left(1+\frac 4p\right)\right)\sqrt{2Td\log\left(1+\frac T\lambda\right)}+\frac{4\gamma_T(\delta')}p\sqrt{\frac{8T}\lambda\log\frac4\delta}
+    ```
 
 *   Definition: we define the filtration \mathcal F\_t as the accumulated information up to time t before the sampling procedure
 
@@ -90,8 +146,34 @@ _thumbnail: https://www.notion.so/images/page-cover/rijksmuseum_jansz_1649.jpg
 
 *   Regret and gradient of J(\theta): On event E\_t,\widetilde\theta\_t belongs to \varepsilon\_t^{TS} and thus
 
+    ```undefined
+    R_t^{TS}\mathbf{1}\{E_t\}\le(J(\theta^*)-\inf_{\theta\in\varepsilon_t^{TS}}J(\theta))\mathbf{1}\{\hat E_t\}
+    ```
+
+    then,
+
+    ```undefined
+    R_t^{TS}\le\mathbb E\left[(J(\widetilde\theta)-\inf_{\theta\in\varepsilon_t^{TS}}J(\theta))\mathbf1 \{\hat E_t\}|\mathcal F_t,\widetilde\theta\in\Theta_t^{opt}\right]
+    ```
+
+    *   Proposition: For any set of arm \mathcal X satisfying assumption 1, J(\theta)=\sup\_x x^\top\theta has the following properties
+
+        *   J is real-valued as superemum is attained in \mathcal X
+
+        *   J is convex on \R^d
+
+        *   J is continuous with continuous first derivative except for a zero-measure set w\.r.t the Lebesgue’s measure
+
 *   From gradient of J(\theta) to optimal arm x^\*(\theta)
+
+    *   In the sketch of the proof, there was a direct relationship between \nabla J(\theta) and the optimal arm
+
+    *   Lemma: Under assumption 1, for any \theta\in\R^d, we have \nabla J(\theta) = x^\*(\theta) except for a zero-measure set w\.r.t the Lebesgue’s measure
 
 *   Optimism: The optimism of TS is a direct consequence of the convexity of J and the fact that the distribution of \eta is oversampling by a factor \sqrt d w\.r.t. the ellipsoid \varepsilon\_t^{\text{RLS}}
 
 *   Finally, with probability at least $$1-\delta
+
+    ```undefined
+    R^{TS}(T) \le \frac{4\gamma_{T}(\delta')}p\left(\sum_{t=1}^T\|x_t\|_{V_t^{-1}}+\sqrt{\frac{8T}\lambda\log\frac4\delta}\right)
+    ```

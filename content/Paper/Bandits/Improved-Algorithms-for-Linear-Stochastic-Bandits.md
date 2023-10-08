@@ -99,13 +99,41 @@ R_n = \left({\sum_{t=1}^n}\braket{x_t^*,\theta_*}\right) - \left({\sum_{t=1}^n}\
 
     > 💡 Assume that for all t and all x\in D, \lang x,\theta\_\*\rang\in\[-1,1]. Then, with probability at least 1-\delta, the regret of OFUL algorithm satisfies
 
+          ```undefined
+          \forall n\ge0,\ R_n\le4\sqrt{nd\log(\lambda+nL/d)}\left(\lambda^{1/2}S+R\sqrt{2\log(1/\delta)+d\log(1+nL/(\lambda d))}\right)
+          ```
+
 ### Saving Computation
 
 *   We essentially need to recompute \widetilde\theta\_t only O(\log n) times up to time n and hence saving computations.
 
 *   Theorem
 
+    > 💡 Under the same assumptions as in the regret of OFUL Algorithm, with probability at least 1-\delta, for all n\ge0, the regret of the RARELY SWITCHING OFUL ALGORITHM satisfies
+
+          ```undefined
+          R_n\le4\sqrt{(1+C)nd\log\left(\lambda+\frac{nL}d\right)}\left\{\sqrt\lambda S + R\sqrt{d\log\left(1+\frac{nL}{\lambda d}\right)+2\log\frac1\delta}\right\}+4\sqrt{d\log\frac nd}
+          ```
+
 *   The rarely switching OFUL Algorithm
+
+    > 📖 Input: Constant C > 0
+
+          \tau = 1{This is the last time step that we changed \widetilde\theta_t
+
+          for t:=1,2,… do
+
+            if \det(V_t)>(1+C)\det(V_\tau) then
+
+              (X_t, \widetilde\theta_t) = \argmax_{(x,\theta)\in D_t\times C_{t-1}}\lang\theta,x\rang
+
+          	\tau=t
+
+            end if
+
+            X_t = \argmax_{x\in D_t}\lang\widetilde\theta_\tau,x\rang.
+
+            Play X_t and observe reward Y_t
 
 ### Problem Dependent Bound
 
@@ -113,12 +141,34 @@ R_n = \left({\sum_{t=1}^n}\braket{x_t^*,\theta_*}\right) - \left({\sum_{t=1}^n}\
 
 *   Theorem
 
+    > 📖 Assume that \lambda\ge 1 and |\theta\_\*|\_2\le S where S \ge 1. With probability at least 1-\delta, for all n\ge 1, the regret of the OFUL satisfies
+
+          ```undefined
+          R_n\le\frac{16R^2\lambda S^2}{\bar\Delta_n}\left(\log(Ln)+(d-1)\log\frac{64R^2\lambda S^2L}{\bar\Delta_n^2}+2(d-1)\log\left(d\log\frac{d\lambda+nL^2}d+2\log(1/\delta)\right)+2\log(1/\delta)\right)^2
+          ```
+
 ## Multi-Armed Bandit Problem
 
 *   Confidence interval: With probability at least 1-\delta
 
+    ```undefined
+    \forall i\in\{1,2,...,d\},\forall t\ge 0\ \ \ \ |\bar X_{i, t}-\mu_i|\le c_{i, t}
+    ```
+
+    where
+
+    ```undefined
+    c_{i, t}=\sqrt{\frac{(1+N_{i,t})}{N^2_{i, t}}\left(1+2\log\left(\frac{d(1+N_{i,t})^{1/2}}{\delta}\right)\right)}
+    ```
+
 *   Using this confidence interval, we modify UCB algorithm and call it as \text{UCB}(\delta)
 
 *   Regret of \text{UCB}(\delta)
+
+    > 📖 Assume that the noise \eta\_t is conditionally  1-sub-gaussian, with probability at least 1-\delta, the total regret of \text{UCB}(\delta) is bounded as
+
+          ```undefined
+          R_n \le\sum_{i:\Delta_i>0}\left(3\Delta_i+\frac{16}{\Delta_i}\log\frac{2d}{\Delta_i\delta}\right)
+          ```
 
 *   We can get O(\log t) upper bound on the expected regret

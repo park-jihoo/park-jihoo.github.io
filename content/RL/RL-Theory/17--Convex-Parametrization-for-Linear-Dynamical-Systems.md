@@ -34,7 +34,15 @@ x_{t+1} = Ax_t+Bu_t+w_t,x_0\sim\mathscr{D},w_t\sim\mathscr{N}(0,\sigma^2I)
 
 *   Goal: find the best linear controllers
 
+    ```undefined
+    \{-K_t^*\}_{t=0}^{H-1}:=\argmin_{\pi\in\Pi}\mathbb E\left[\sum_{t=0}^{H-1}c(x_t,u_t)|\pi \right]
+    ```
+
 *   However, even with quadratic cost, \max\mathbb E\left\[\sum\_{h=0}^{H-1}c(x\_h,a\_h)|\pi \right] is not convex, so we need new convex parameter
+
+    ```undefined
+    u_t = \underbrace{\left[-K_t\left(\prod_{\tau=1}^t(A-BK_{t-\tau})\right)\right]}_{M_t}x_0+\sum_{\tau=0}^{t-1}\underbrace{\left[-K_t\prod_{h=1}^{t-1-\tau}(A-BK_{t-h})\right]}w_\tau
+    ```
 
 *   Claim: for any linear controllers \pi:={-K\_t}*{t=0}^{H-1}, there exists a parametrization \left{{M\_t,M*{t-1;t},...,M\_{0;t}}\right}*{t=0}^{H-1}, that generates the same sequencen trajectory, given any fixed x\_0 and fixed noise w\_0,…,w*{H-1}
 
@@ -49,6 +57,10 @@ x_{t+1} = Ax_t+Bu_t+w_t,x_0\sim\mathscr{D},w_t\sim\mathscr{N}(0,\sigma^2I)
 *   Convexity allows to perform GD directly on parameters {{M\_t,M\_{0;t},...,M\_{t-1;t}}}\_{t=0}^{H-1}
 
 *   Algorithm
+
+    *   Execute the control {{M\_t,M\_{0;t},...,M\_{t-1;t}}}*{t=0}^{H-1} to generate the trajectory (x\_0,u\_0,…,x*{H-1},u\_{H-1})
+
+    *   Compute gradient of \sum\_{t=0}^{H-1}c(x\_t,u\_t) wrt all parameters M, perform gradient descent
 
 # Extension to adversarial online control
 
@@ -72,10 +84,30 @@ Goal: No-regret
 
 *   At iteration t, learner proposes
 
+    ```undefined
+    z_k:=P_{\mathscr E}(z_{k-1}-\eta\nabla\mathcal l_{k-1}(z_{k-1}))
+    ```
+
 *   The OGD guarantee: Although the OGD learner makes choice z\_t without seeing the loss l\_t, it is no regret
+
+    *   Assume \mathscr X is convex, and bounded \max\_{z,y\in\mathscr E}|z-y|\_2\le F, and loss is G-lipschitz, then OGD has following regret
+
+    ```undefined
+    \sum_{k=1}^Kl_k(z_k)-\min_{x\in\mathscr E}\sum_{k=1}^Kl_k(z)\le O\left((F^2+G^2)\sqrt K\right) 
+    ```
 
 ## Reduce online control to online learning
 
 *   We define parameter z:={{M\_t,M\_{0;t},...,M\_{t-1;t}}}\_{t=0}^{H-1}
 
 *   At iteration t, given w\_0^k,…w\_{H-1}^k and c^k which are determined by adversary, we define loss function l\_t(z) as
+
+    ```undefined
+    l_k(z) :=\sum_{h=0}^{H-1}c^k(x_h,u_h)
+    ```
+
+    where
+
+    ```undefined
+    x_0,u_0=M_0x_0, \ x_1=Ax_0+BM_0x_0,\ u_1=M_1x_0+M_{0;1}w_0^k,\ x_2=Ax_1+BM_1x_0+BM_{0;1}w_0^k
+    ```

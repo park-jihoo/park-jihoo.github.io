@@ -115,3 +115,7 @@ graph LR
     ```
 
 *   For performance
+
+    ```undefined
+    V^{\pi^*}-V^\pi\le\frac1{1-\gamma}[\mathbb E_{s,a\sim d^{\pi^*}}r(s,a)-\mathbb E_{s,a\sim d^{\hat\pi}}r(s,a)]
+    ```

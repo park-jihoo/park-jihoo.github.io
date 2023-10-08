@@ -56,6 +56,10 @@ pdf: https://wensun.github.io/CS6789_data_fall_2021/PG_OPT1_annotated.pdf
 
 *   Lemma: For the softmax policy class, we have
 
+    ```undefined
+    \frac{\partial V^{\pi_\theta}(\mu)}{\partial\theta_{s,a}} = \frac1{1-\gamma}d_\mu^{\pi_\theta}(s)\pi_\theta(a|s)A^{\pi_\theta}(s,a)
+    ```
+
 ## Global Convergence
 
 *   Concerns: Non convex functions, and flat gradients if \theta\_t \rightarrow \infty
@@ -70,9 +74,23 @@ pdf: https://wensun.github.io/CS6789_data_fall_2021/PG_OPT1_annotated.pdf
 
 *   Consider the log barrier \lambda-regularized objective:
 
+    ```undefined
+    \begin{aligned}L_\lambda(\theta)&\coloneqq V^{\pi_\theta}(\mu) - \lambda \mathbb{E}_{s\sim\text{Unif}(s)}[KL(\text{Unif}_A, \pi_\theta(\cdot|s))]\\ &= V^{\pi_\theta}(\mu) + \frac{\lambda}{SA}\sum_{s,a}\log\pi_\theta(a|s)+\lambda\log A\end{aligned}
+    ```
+
 ## Stationarity and Optimality
 
 *   Theorem(Log barrier Regularization) Suppose \theta is such that |\nabla\_\theta L\_\lambda(\theta)|*2\le\varepsilon*{opt} and \varepsilon\_{opt}\le\lambda/(2SA) then we have for all starting state distributions \rho
+
+    ```undefined
+    V^{\pi_\theta}(\rho)\ge V^*(\rho)-\frac{2\lambda}{1-\gamma}\left\| \frac{d_\rho^{\pi^*}}{\mu}\right\|_\infty
+    ```
+
+    where the **distribution mismatch coefficient** is
+
+    ```undefined
+    \left\| \frac{d_\rho^{\pi^*}}{\mu}\right\|_\infty = \max_s\left( \frac{d_\rho^{\pi^*}(s)}{\mu(s)}\right)
+    ```
 
 ## Global Convergence with Log Barrier
 

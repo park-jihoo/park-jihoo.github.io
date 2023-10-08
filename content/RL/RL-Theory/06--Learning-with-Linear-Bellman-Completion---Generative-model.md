@@ -140,6 +140,18 @@ x := \phi(s,a), y:= r+ V_{h+1}(s')
 
 *   OLS with D-optimal design implies that \theta\_h is point-wise accurate
 
+    ```undefined
+    \max_{s,a} |\theta_h\phi(s,a)-\mathscr{T}_h(\theta_{h+1})^\top\phi(s,a)| \le O(Hd/\sqrt{N})
+    ```
+
 *   This implies our estimator Q\_h := \theta\_h^\top\phi is nearly Bellman-constant
 
+    ```undefined
+    ||Q_h-\mathscr{T}_hQ_h^* ||_\infty \le O(Hd/\sqrt{N})
+    ```
+
 *   Nearly Bellman consistency implies Q\_h is close to Q\_h^\*(this holds in general)
+
+    ```undefined
+    ||Q_h-Q_h^* ||_\infty \le O(H^2d/\sqrt{N})
+    ```

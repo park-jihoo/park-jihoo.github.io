@@ -65,9 +65,45 @@ Furthermore, \pi(s,h) = \arg\max\_{a \in \mathcal{A}} Q\_h^\*(s,a) is an optimal
 
 *   Assume sampling access to the MDP in a <u>μ-reset model</u>
 
+    *   start at a state s\_0 \sim \mu
+
+    *   we can rollout a policy \pi of our choosing
+
+    *   we can terminate the trajectory at will
+
 *   Importance Sampling
 
+    *   Lemma: For any deterministic policy π,
+
+        ```undefined
+        V_0^\pi(s_0) = |\mathcal{A}|^H\mathbb{E}_{a_{0:H-1}\sim Unif_{\mathcal{A}}}\left[ 1(\pi(s_0) = a_0, \dots, \pi(s_H)=a_H)\sum_{t=0}^{H-1}r(s_t,a_t)|s_0\right]
+        ```
+
+    *   Consider the following empirical estimator of any π
+
+        ```undefined
+        \hat V^\pi(s_0) = \frac {|\mathcal{A}|^H}N \sum^N_{n=1} 1(\pi(s_0^n)=a_0^n,\dots,\pi(s_{H-1}^n)=a_{H-1}^n\sum_{t=0}^{H-1}r(s_t^n,a_t^n)
+        ```
+
+    *   Generalization in RL: Suppose Π is infinite and let \hat\pi = \arg\max\_{\pi\in\Pi} \hat V^\pi(s\_0), with probability at least 1-δ,
+
+        ```undefined
+        V^{\hat\pi}(s_0) \ge \arg\max_{\pi\in\Pi}V^\pi(s_0) - H|\mathcal{A}|^H\sqrt{\frac 2 N \log \frac {2|\Pi|}{\delta}}
+        ```
+
+    *   However, for an agnostic samplex complexity, no dependence on S or poly H dependence is not possible
+
 *   An Easy lower Bound: Suppose \mathcal{A} has access to a generative model. There exists a policy class Π, with |Π| = |\mathcal{A}|^H such that if \mathcal{A} returns a policy \pi where
+
+    ```undefined
+    V_0^\pi(\mu)\ge \arg\max_{\pi\in\Pi}V_0^\pi(\mu)-0.5
+    ```
+
+    with probability greater than 1/2, then \mathcal{A} use a number of samples
+
+    ```undefined
+    N \ge c|\mathcal{A}|^H
+    ```
 
 # Linear relizability
 
@@ -77,7 +113,15 @@ Furthermore, \pi(s,h) = \arg\max\_{a \in \mathcal{A}} Q\_h^\*(s,a) is an optimal
 
 *   (A1) Assume for all s,a,h\in\[H], there exists w\_1^*, \dots, w\_H^*\in R^d s.t
 
+    ```undefined
+    Q_h^*(s,a) = w_h \cdot\phi(s,a)
+    ```
+
 *   (A2)For all a \not= \pi^\*(s),
+
+    ```undefined
+    V_h^*(s) - Q_h^*(s,a) \ge \text{constant}
+    ```
 
 ## Linear Relizability is not Sufficient for RL
 
