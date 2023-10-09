@@ -32,23 +32,23 @@ _thumbnail: https://www.notion.so/images/page-cover/met_william_morris_1877_will
 
 *   기존의 contextual bandit 알고리즘은 t번의 시도에서 다음과 같은 과정을 거친다.
 
-  *   u\_t와 arm의 집합인 A\_t를 feature vector x\_{t,a}로 구해낸다. 이 때 a \in A\_t일 것이며, u\_t와 a를 context라 할 것이다.
+    *   u\_t와 arm의 집합인 A\_t를 feature vector x\_{t,a}로 구해낸다. 이 때 a \in A\_t일 것이며, u\_t와 a를 context라 할 것이다.
 
-  *   이전의 trial을 기준으로 알고리즘은 best arm을 구할 것이며 이를 통한 reward인 r\_{t, a\_t}를 얻어낼 것이다.
+    *   이전의 trial을 기준으로 알고리즘은 best arm을 구할 것이며 이를 통한 reward인 r\_{t, a\_t}를 얻어낼 것이다.
 
-  *   이후 지금까지 **선택되지 않은** arm중 하나를 선택하여 exploitation이 진행될 것이다.
+    *   이후 지금까지 **선택되지 않은** arm중 하나를 선택하여 exploitation이 진행될 것이다.
 
 *   Optimal expected T-trial payoff
 
-  ```undefined
-  E[\sum_{t=1}^{T} r_{t, a_{t^*}}]
-  ```
+    ```undefined
+    E[\sum_{t=1}^{T} r_{t, a_{t^*}}]
+    ```
 
 *   T-trial Regret of algorithm A
 
-  ```undefined
-  R_A(T) \stackrel{\tiny{\text{def}}}{=} \space E[\sum_{t=1}^T r_{t, a_{t^*}}] - E[\sum_{t=1}^T r_{t, a_{t}}] 
-  ```
+    ```undefined
+    R_A(T) \stackrel{\tiny{\text{def}}}{=} \space E[\sum_{t=1}^T r_{t, a_{t^*}}] - E[\sum_{t=1}^T r_{t, a_{t}}] 
+    ```
 
 *   K-armed bandit이라고 하는, t에 상관없이 모든 feature vector이 일치하는 경우를 context-free bandit이라고 부른다.
 
@@ -105,11 +105,11 @@ def LinUCBdisjoint(alpha):
 
 *   Property of this algorithm
 
-  *   Computational Complexity is linear
+    *   Computational Complexity is linear
 
-  *   Algorithm works well for dynamic arm set
+    *   Algorithm works well for dynamic arm set
 
-  *   We can adapt this algorithm to show if arm set is fixed and contains K arms, then confidence interval decreases fast enough and prove strong regret bound
+    *   We can adapt this algorithm to show if arm set is fixed and contains K arms, then confidence interval decreases fast enough and prove strong regret bound
 
 ### LinUCB with Hybrid Linear Models
 

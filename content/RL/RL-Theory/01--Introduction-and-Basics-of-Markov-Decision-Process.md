@@ -20,15 +20,15 @@ _thumbnail: https://www.notion.so/images/page-cover/gradients_11.jpg
 
 *   Policy: determine action based on state
 
-  ```undefined
-  a \sim \pi(s)
-  ```
+    ```undefined
+    a \sim \pi(s)
+    ```
 
 *   Send reward and next state form a Markovian transition dynaimcs
 
-  ```undefined
-  r(s,a),s' = P(\cdot |s,a)
-  ```
+    ```undefined
+    r(s,a),s' = P(\cdot |s,a)
+    ```
 
 ## Infinite Horizon Discounted MDP
 
@@ -42,15 +42,15 @@ _thumbnail: https://www.notion.so/images/page-cover/gradients_11.jpg
 
 *   Value Function
 
-  ```undefined
-  V^\pi(s) = \textbf{E}_{a\sim \pi(s)} \left[ r(s,a) + \gamma \textbf{E}_{s' \sim P(\cdot|s,a)}V^\pi(s') \right]
-  ```
+    ```undefined
+    V^\pi(s) = \textbf{E}_{a\sim \pi(s)} \left[ r(s,a) + \gamma \textbf{E}_{s' \sim P(\cdot|s,a)}V^\pi(s') \right]
+    ```
 
 *   Q function
 
-  ```undefined
-  Q^\pi(s, a) = r(s,a) + \gamma \textbf{E}_{s' \sim P(\cdot|s,a)}V^\pi(s')
-  ```
+    ```undefined
+    Q^\pi(s, a) = r(s,a) + \gamma \textbf{E}_{s' \sim P(\cdot|s,a)}V^\pi(s')
+    ```
 
 # Bellman Optimality
 
@@ -58,9 +58,9 @@ _thumbnail: https://www.notion.so/images/page-cover/gradients_11.jpg
 
 *   For infinite horizon discounted MDP, there exists a deterministic stationary policy
 
-  ```undefined
-  \pi^* = S \rightarrow A, V^{\pi^*}(s) \ge V^\pi(s) , \forall s, \pi
-  ```
+    ```undefined
+    \pi^* = S \rightarrow A, V^{\pi^*}(s) \ge V^\pi(s) , \forall s, \pi
+    ```
 
 ### Bellman Optimality
 
@@ -86,20 +86,20 @@ V^*(s) = \max_a \left[ r(s,a) +  \gamma \textbf{E}_{s' \sim P(\cdot|s,a)}V^*(s')
 
 *   What is the probability of \pi generating trajectory \tau = {s\_0, a\_0, s\_1, \dots, s\_h,a\_h}?
 
-  ```undefined
-  \mathbb{P}^\pi(s_0,a_0,\dots,s_h,a_h) = \pi(a_0|s_0)P(s_1|s_0,a_0)\pi(a_1|s_1)P(s_2|s_1,a_2)\dots P(s_h|s_{h-1},a_{h-1})\pi(a_h|s_h)
-  ```
+    ```undefined
+    \mathbb{P}^\pi(s_0,a_0,\dots,s_h,a_h) = \pi(a_0|s_0)P(s_1|s_0,a_0)\pi(a_1|s_1)P(s_2|s_1,a_2)\dots P(s_h|s_{h-1},a_{h-1})\pi(a_h|s_h)
+    ```
 
 *   What is the probability of \pi visiting state (s, a) at time step h?
 
-  ```undefined
-  \mathbb{P}^\pi_h (s,a;s_0)= \sum_{a_0,s_1, a_1,\dots,s_{h-1},a_{h-1}}\mathbb{P}^\pi(s_0,a_0,\dots,s_{h-1},a_{h-1},s_h=s,a_h=a)
-  ```
+    ```undefined
+    \mathbb{P}^\pi_h (s,a;s_0)= \sum_{a_0,s_1, a_1,\dots,s_{h-1},a_{h-1}}\mathbb{P}^\pi(s_0,a_0,\dots,s_{h-1},a_{h-1},s_h=s,a_h=a)
+    ```
 
 ## State action occupancy measure
 
 *   \mathbb{P}\_h(s,a;s\_0,\pi): probability of \pi visiting (s,a) at time step h \in \N, starting at s\_0
 
-  ```undefined
-  d_{s_0}^\pi(s,a) = (1-\gamma) \sum_{h=0}^\infty \gamma^h \mathbb{P}_h(s,a;s_0,\pi) \\ V_{s_0}^\pi(s_0) = \frac 1 {1-\gamma} \sum_{s,a} d_{s_0}^\pi(s,a)r(s,a)
-  ```
+    ```undefined
+    d_{s_0}^\pi(s,a) = (1-\gamma) \sum_{h=0}^\infty \gamma^h \mathbb{P}_h(s,a;s_0,\pi) \\ V_{s_0}^\pi(s_0) = \frac 1 {1-\gamma} \sum_{s,a} d_{s_0}^\pi(s,a)r(s,a)
+    ```

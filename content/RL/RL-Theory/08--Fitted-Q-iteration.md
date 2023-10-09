@@ -30,29 +30,29 @@ _thumbnail: https://www.notion.so/images/page-cover/met_william_morris_1877_will
 
 *   Sampling distribution \nu has full coverage(diverse)
 
-  ```undefined
-  \max_\pi\max_{s,a}\frac{d^\pi(s,a)}{\nu(s,a)}\le C < \infty
-  ```
+    ```undefined
+    \max_\pi\max_{s,a}\frac{d^\pi(s,a)}{\nu(s,a)}\le C < \infty
+    ```
 
 *   Small inherent Bellman error, i.e. near Bellman completion
 
-  ```undefined
-  \max_{g\in\mathscr{F}}\min_{f\in\mathscr{F}}\mathbb{E}_{s,a\sim\nu}(f(s,a)-\mathscr{T}g(s,a))^2\le\epsilon_{approx, \nu}
-  ```
+    ```undefined
+    \max_{g\in\mathscr{F}}\min_{f\in\mathscr{F}}\mathbb{E}_{s,a\sim\nu}(f(s,a)-\mathscr{T}g(s,a))^2\le\epsilon_{approx, \nu}
+    ```
 
 # Fitted Q Iteration
 
 *   Sample data points in an i.i.d fashion:
 
-  ```undefined
-  \mathscr{D} = \{s,a,r,s'\}, \ (s,a)\sim\nu,r=r(s,a),s'\sim P(\cdot|s,a)
-  ```
+    ```undefined
+    \mathscr{D} = \{s,a,r,s'\}, \ (s,a)\sim\nu,r=r(s,a),s'\sim P(\cdot|s,a)
+    ```
 
 *   Initialize f\_0 \in \mathscr{F}, and iterate
 
-  ```undefined
-  f_{t+1} = \arg\min_{\mathscr{f\in F}} \sum_{\mathscr{s,a,r,s'\in D}}\left( f(s,a) - r - \gamma\max_{a'}f_t(s',a') \right)^2
-  ```
+    ```undefined
+    f_{t+1} = \arg\min_{\mathscr{f\in F}} \sum_{\mathscr{s,a,r,s'\in D}}\left( f(s,a) - r - \gamma\max_{a'}f_t(s',a') \right)^2
+    ```
 
 *   After K iterations, return \pi(s) = \arg\max\_a f\_K(s,a),\forall s
 
@@ -60,9 +60,9 @@ _thumbnail: https://www.notion.so/images/page-cover/met_william_morris_1877_will
 
 *   Near Bellman completion means regression target \mathscr{T}f\_t nearby belongs to \mathscr{F}
 
-  ```undefined
-  \mathbb{E}_{s,a\sim\nu} (f_{t+1}(s,a)-\mathscr{T}f_t(s,a))^2 \approx \frac 1 N + \epsilon_{appprox, \nu}
-  ```
+    ```undefined
+    \mathbb{E}_{s,a\sim\nu} (f_{t+1}(s,a)-\mathscr{T}f_t(s,a))^2 \approx \frac 1 N + \epsilon_{appprox, \nu}
+    ```
 
 *   f\_{t+1} \approx \mathscr{T}f\_t(under the diverse \nu)
 
@@ -76,37 +76,37 @@ V^*-V^\pi \le O \left(\frac 1 {(1-\gamma)^4}\sqrt{\frac{C\ln(|\mathscr{F}|K/\del
 
 *   Least Squares regression ensure near Bellman consistency
 
-  *   Denote: \hat f := \arg\min\_{f\in\mathscr{F}}\sum
-    \_{i=1}^N(f(x\_i)-y\_i)^2 as the least square minimizer, then with probability 1-\delta:
+    *   Denote: \hat f := \arg\min\_{f\in\mathscr{F}}\sum
+        \_{i=1}^N(f(x\_i)-y\_i)^2 as the least square minimizer, then with probability 1-\delta:
+
+        ```undefined
+        \mathbb{E}_{x\sim\nu}\left(\hat f(x) - f^*(x)\right)^2\le O \left( \frac {Y^2\ln|\mathscr{F}|/\delta}{N} + \epsilon \right)
+        ```
+
+    *   Via small inherent BE, we know that \min\_{\mathscr{f \in F}} \mathbb{E}*{s,a\sim\nu}(f(s,a)-\mathscr{T}f\_t(s,a))^2\le\epsilon*{approx, \nu}
 
     ```undefined
-    \mathbb{E}_{x\sim\nu}\left(\hat f(x) - f^*(x)\right)^2\le O \left( \frac {Y^2\ln|\mathscr{F}|/\delta}{N} + \epsilon \right)
+    \mathbb{E}_{s,a\sim\nu}(f_{t+1}(s,a)-\mathscr{T}f_t(s,a))^2 \le \frac 1 {(1-\gamma)^2} \frac{\ln(|\mathscr{F}|/\delta)}N+\epsilon_{approx, \nu}
     ```
 
-  *   Via small inherent BE, we know that \min\_{\mathscr{f \in F}} \mathbb{E}*{s,a\sim\nu}(f(s,a)-\mathscr{T}f\_t(s,a))^2\le\epsilon*{approx, \nu}
-
-  ```undefined
-  \mathbb{E}_{s,a\sim\nu}(f_{t+1}(s,a)-\mathscr{T}f_t(s,a))^2 \le \frac 1 {(1-\gamma)^2} \frac{\ln(|\mathscr{F}|/\delta)}N+\epsilon_{approx, \nu}
-  ```
-
-  *   Let \epsilon\_{regress} =\sqrt{\frac 1 {(1-\gamma)^2} \frac{\ln(|\mathscr{F}|/\delta)}N+\epsilon\_{approx, \nu}}
+    *   Let \epsilon\_{regress} =\sqrt{\frac 1 {(1-\gamma)^2} \frac{\ln(|\mathscr{F}|/\delta)}N+\epsilon\_{approx, \nu}}
 
 *   Near Bellman consistency implies convergence
 
-  *   Consider any state-action distribution \beta(s,a) and
+    *   Consider any state-action distribution \beta(s,a) and
 
-    ```undefined
-    \sqrt{\mathbb{E}_{s,a\sim\beta}(f_t(s,a)-Q^*(s,a))^2}:= ||f_t-Q^*||_{\beta,2}\le \mathscr{||f_t - Tf_{t-1}||_{2,\beta}+||T}f_{t-1}-Q^*||_{2,\beta}
-    ```
+        ```undefined
+        \sqrt{\mathbb{E}_{s,a\sim\beta}(f_t(s,a)-Q^*(s,a))^2}:= ||f_t-Q^*||_{\beta,2}\le \mathscr{||f_t - Tf_{t-1}||_{2,\beta}+||T}f_{t-1}-Q^*||_{2,\beta}
+        ```
 
-  *   Apply 1, then this is smaller than \sqrt{C}\epsilon\_{regress} + \gamma ||f\_{t-1}-Q^\*||\_{2, \beta'}
+    *   Apply 1, then this is smaller than \sqrt{C}\epsilon\_{regress} + \gamma ||f\_{t-1}-Q^\*||\_{2, \beta'}
 
-  *   Do it until t = 0, then ||f\_t-Q^\*||*{\beta,2} \le \frac{\sqrt{C}\epsilon*{regress}}{1-\gamma}+\gamma^k/(1-\gamma)
+    *   Do it until t = 0, then ||f\_t-Q^\*||*{\beta,2} \le \frac{\sqrt{C}\epsilon*{regress}}{1-\gamma}+\gamma^k/(1-\gamma)
 
 *   Turn in error ||f\_k - Q^\*||\_{2,\beta} to policy \pi^k performance
 
-  ```undefined
-  V^* - V^{\pi_k} =\mathbb{E}_{s_0\sim\mu} [Q^*(s_0, \pi^*(s_0)) - Q^{\pi^k}(s_0, \pi^k(s_0)]\\=\frac{1}{1-\gamma}\mathbb{E}_{s\sim d^{\pi^k}}[Q^*(s,\pi^*(s))-Q^*(s, a)] \\ \le \frac 1{1-\gamma}\mathbb{E}_{s\sim d^{\pi^k}}[Q^*(s,\pi^*(s))-f_k(s,\pi^*(s))+f_k(s, \pi^k(s))-Q^*(s, a)] 
-  ```
+    ```undefined
+    V^* - V^{\pi_k} =\mathbb{E}_{s_0\sim\mu} [Q^*(s_0, \pi^*(s_0)) - Q^{\pi^k}(s_0, \pi^k(s_0)]\\=\frac{1}{1-\gamma}\mathbb{E}_{s\sim d^{\pi^k}}[Q^*(s,\pi^*(s))-Q^*(s, a)] \\ \le \frac 1{1-\gamma}\mathbb{E}_{s\sim d^{\pi^k}}[Q^*(s,\pi^*(s))-f_k(s,\pi^*(s))+f_k(s, \pi^k(s))-Q^*(s, a)] 
+    ```
 
-  *   This converges by 2
+    *   This converges by 2

@@ -14,986 +14,1006 @@ class: Coursework
 
 # Data Warehouse
 
-  ## Why Business Intelligence?
+    ## Why Business Intelligence?
 
-  - Business intelligence is the activity which contributes to the growth of any company
+    - Business intelligence is the activity which contributes to the growth of any company
 
-  - How does it work?
+    - How does it work?
 
-  	- BI based on Data warehouse technology extracts informations from a company's operational systems
+    	- BI based on Data warehouse technology extracts informations from a company's operational systems
 
-  	- The data is transformed and loaded to data warehouses
+    	- The data is transformed and loaded to data warehouses
 
-  	- Since this data is credible, it is used for business insights
+    	- Since this data is credible, it is used for business insights
 
-  ## Why Data Warehouse?
+    ## Why Data Warehouse?
 
-  - Data collected from various sources & stored in various databases cannot be directly visualized
+    - Data collected from various sources & stored in various databases cannot be directly visualized
 
-  - The data first needs to be **integrated** and then **processed** before visualization takes place
+    - The data first needs to be **integrated** and then **processed** before visualization takes place
 
-  ## What is a Data Warehouse?
+    ## What is a Data Warehouse?
 
-  - A central location where consolidated data from multiple locations are stored
+    - A central location where consolidated data from multiple locations are stored
 
-  - Data warehouse is maintained separately from an organization's operational database
+    - Data warehouse is maintained separately from an organization's operational database
 
-  - End users access it whenever any information is needed
+    - End users access it whenever any information is needed
 
-  - Data warehouse is like a relational database designed for analytical needs
+    - Data warehouse is like a relational database designed for analytical needs
 
-  - It functions on the basis of OLAPp
+    - It functions on the basis of OLAPp
 
-  - It is a central location where consolidated data from multiple locations are stored
+    - It is a central location where consolidated data from multiple locations are stored
 
-  ## What are the advantages of DW?
+    ## What are the advantages of DW?
 
-  - Faster and more accurate
+    - Faster and more accurate
 
-  ## Properties of a DW
+    ## Properties of a DW
 
-  - Subject-oriented: Data is categorized and stored by business subject rather than by application
+    - Subject-oriented: Data is categorized and stored by business subject rather than by application
 
-  - Integrated: Data on a given subject is collected from disparate sources and stored in a single place
+    - Integrated: Data on a given subject is collected from disparate sources and stored in a single place
 
-  - Time-variant: Data is stored as a series of snapshots, each representing a period of time
+    - Time-variant: Data is stored as a series of snapshots, each representing a period of time
 
-  - Non-volatile: Typically data in the data warehouse is not updated or deleted
+    - Non-volatile: Typically data in the data warehouse is not updated or deleted
 
-  ### OLTP vs OLAP
+    ### OLTP vs OLAP
 
-  | Relational Database(OLTP)             | Analytical Data Warehouse(OLAP)         |
-  |-------------------------------------------------|-------------------------------------------------|
-  | Contains current data               | Contains Historical Data            |
-  | Useful in running business            | Useful in analyzing business          |
-  | Based on ER model                 | Based on Star, snowflake schema         |
-  | Provides primitive and highly<br/>detailed data | Provieds summarized and <br/> consolidated data |
-  | Used for writing data into DB           | Used for reading data from DW           |
-  | DB size ranges from 100MB to 1GB        | DW size ranges from 100GB to 1TB        |
-  | Fast: high performance              | Highly flexible, slow               |
-  | Numbers of records accessed<br/> is in tens   | Number of records accesssed<br/> is in millions |
+    | Relational Database(OLTP)                       | Analytical Data Warehouse(OLAP)                 |
+    |-------------------------------------------------|-------------------------------------------------|
+    | Contains current data                           | Contains Historical Data                        |
+    | Useful in running business                      | Useful in analyzing business                    |
+    | Based on ER model                               | Based on Star, snowflake schema                 |
+    | Provides primitive and highly<br/>detailed data | Provieds summarized and <br/> consolidated data |
+    | Used for writing data into DB                   | Used for reading data from DW                   |
+    | DB size ranges from 100MB to 1GB                | DW size ranges from 100GB to 1TB                |
+    | Fast: high performance                          | Highly flexible, slow                           |
+    | Numbers of records accessed<br/> is in tens     | Number of records accesssed<br/> is in millions |
 
-  ## ETL (Extract, Transform & Load)
+    ## ETL (Extract, Transform & Load)
 
-  > ETL is the process of extracting the data from various sources, transforming this data to meet your requirement and  
-  >then loading it into a target DW
+    > ETL is the process of extracting the data from various sources, transforming this data to meet your requirement and  
+    >then loading it into a target DW
 
-  ## Data Mart
+    ## Data Mart
 
-  - Smaller version of DW which deals with single subject
+    - Smaller version of DW which deals with single subject
 
-  - It's focused on one area. Hence, they draw data from a limited number of sources
+    - It's focused on one area. Hence, they draw data from a limited number of sources
 
-  - Time taken to build Data mart is very less compared to time build a DW
+    - Time taken to build Data mart is very less compared to time build a DW
 
-  ```mermaid
-  flowchart LR
-  a[(Data Warehouse)]---b1[(Data Mart1, Sales)]
-  a --- b2[(Data Mart2, Marketing)]
-  a --- b3[(Data Mart3, Operations)]
+    ```mermaid
+    flowchart LR
+    a[(Data Warehouse)]---b1[(Data Mart1, Sales)]
+    a --- b2[(Data Mart2, Marketing)]
+    a --- b3[(Data Mart3, Operations)]
 
-  ```
+    ```
 
-  ### Types of Data Mart
+    ### Types of Data Mart
 
-  - Dependent Data Mart
+    - Dependent Data Mart
 
-  	- The data is first extracted from the OLTP systems and then populated in the central DWH
+    	- The data is first extracted from the OLTP systems and then populated in the central DWH
 
-  	- From the DWH, the data travels to the data mart
+    	- From the DWH, the data travels to the data mart
 
-  		```mermaid
-  		  flowchart LR
-  		  a[(OLTP)]-->b[(DW)]-->c[(Data Mart)]
-  		
-  		```
+    		```mermaid
+    		    flowchart LR
+    		    a[(OLTP)]-->b[(DW)]-->c[(Data Mart)]
+    		
+    		```
 
-  - Independent Data Mart
+    - Independent Data Mart
 
-  	- The data is directly received from the source system
+    	- The data is directly received from the source system
 
-  	- This is suitable for small organizations or smaller group within an organization
+    	- This is suitable for small organizations or smaller group within an organization
 
-  	```mermaid
-  	flowchart LR
-  	A[(OLTP)]-->B[(Data Mart)]
-  	
-  	```
+    	```mermaid
+    	flowchart LR
+    	A[(OLTP)]-->B[(Data Mart)]
+    	
+    	```
 
-  - Hybrid Data Mart
+    - Hybrid Data Mart
 
-  	- The data is fed both from OLTP system and DW
+    	- The data is fed both from OLTP system and DW
 
-  	```mermaid
-  	flowchart LR
-  	A[(OLTP)] & B[(DW)] --> C[(Data Mart)]
-  	
-  	```
+    	```mermaid
+    	flowchart LR
+    	A[(OLTP)] & B[(DW)] --> C[(Data Mart)]
+    	
+    	```
 
-  ## Metadata
+    ## Metadata
 
-  - Metadata is defined as about data
+    - Metadata is defined as about data
 
-  - Metadata in DW defines the source data
+    - Metadata in DW defines the source data
 
-  - Metadata is used to define which table is source and target, and which concept is used to build business logic called
-  transformation to actual output
+    - Metadata is used to define which table is source and target, and which concept is used to build business logic called
+    transformation to actual output
 
-  ## What is Data Warehousing?
+    ## What is Data Warehousing?
 
-  - Data Warehousing is the act of organizing&storing data in a way so as to make its retrieval effect and insightful
+    - Data Warehousing is the act of organizing&storing data in a way so as to make its retrieval effect and insightful
 
-  - It's also called as the process of transforming data into information
+    - It's also called as the process of transforming data into information
 
-  ## OLAP
+    ## OLAP
 
-  - OLAP is a flexible way for you to make complicated analysis of multidimensional data.
+    - OLAP is a flexible way for you to make complicated analysis of multidimensional data.
 
-  - DW is modeled on the concept of **OLAP**. DBs are modeled on the concept of OLTP
+    - DW is modeled on the concept of **OLAP**. DBs are modeled on the concept of OLTP
 
-  - OLTP system use data stored in the form of two-dimensional tables, with rows and columns
+    - OLTP system use data stored in the form of two-dimensional tables, with rows and columns
 
-  ### Advantages of OLTP over OLAP
+    ### Advantages of OLTP over OLAP
 
-  - Opens up new views of looking at data.
+    - Opens up new views of looking at data.
 
-  - Supports filtering/sorting of data.
+    - Supports filtering/sorting of data.
 
-  - Data can be refined
+    - Data can be refined
 
-  ### Multidimensional modeling
+    ### Multidimensional modeling
 
-  - Predict analytic pattern of users
+    - Predict analytic pattern of users
 
-  - Data Structures
+    - Data Structures
 
-  	- Descriptive information(**cube edges**) -> dimensions
+    	- Descriptive information(**cube edges**) -> dimensions
 
-  		- Hierarchies, dimensional attributes
+    		- Hierarchies, dimensional attributes
 
-  		- Structural basis for selection and aggregation
+    		- Structural basis for selection and aggregation
 
-  	- Quantified information(**cube cells**) -> facts
+    	- Quantified information(**cube cells**) -> facts
 
-  		- Measures / key performances indicators for analysis / aggregation
+    		- Measures / key performances indicators for analysis / aggregation
 
-  - Goal
+    - Goal
 
-  	- Orthogonal dimensional descriptions
+    	- Orthogonal dimensional descriptions
 
-  	- Clear separation of measures
+    	- Clear separation of measures
 
-  ### Mapping the Multidimensional Model(MOLAP)
+    ### Mapping the Multidimensional Model(MOLAP)
 
-  - Multidimensional model is _conceptual_ not physical
+    - Multidimensional model is _conceptual_ not physical
 
-  - Requirements
+    - Requirements
 
-  	- Physical storage of OLAP system data
+    	- Physical storage of OLAP system data
 
-  	- Historic data
+    	- Historic data
 
-  	- Consistency fast response times
+    	- Consistency fast response times
 
-  	- Multi-user operation
+    	- Multi-user operation
 
-  	- Scalability, maintainability, flexibility, secure data access
+    	- Scalability, maintainability, flexibility, secure data access
 
-  - Realization w.r.t analysis and loading phase
+    - Realization w.r.t analysis and loading phase
 
-  	- Goal of analysis: efficient extraction of information from data
+    	- Goal of analysis: efficient extraction of information from data
 
-  	- Specialized data base for applications and users
+    	- Specialized data base for applications and users
 
-  ### ROLAP
+    ### ROLAP
 
-  - Properties
+    - Properties
 
-  	- Data is stored in RDBMS
+    	- Data is stored in RDBMS
 
-  	- Information is created via SQL
+    	- Information is created via SQL
 
-  	- Additional tables for aggregates
+    	- Additional tables for aggregates
 
-  - Pros
+    - Pros
 
-  	- Proven DB technology
+    	- Proven DB technology
 
-  	- Scalability for big volume data
+    	- Scalability for big volume data
 
-  	- High number of dimensions
+    	- High number of dimensions
 
-  - Cons
+    - Cons
 
-  	- Installation overhead, slow
+    	- Installation overhead, slow
 
-  	- Overhead for mapping complex queries
+    	- Overhead for mapping complex queries
 
-  	- Extensive meta data management
+    	- Extensive meta data management
 
-  - Products: Almost all RDBMS Vendors
+    - Products: Almost all RDBMS Vendors
 
-  ### OLAP Operations
+    ### OLAP Operations
 
-  ### Roll-up
+    ### Roll-up
 
-  - Roll-up performs aggregation on a data cube by either
+    - Roll-up performs aggregation on a data cube by either
 
-  	- Climbing up a concept hierarchy for a dimension
+    	- Climbing up a concept hierarchy for a dimension
 
-  	- Dimension reduction
+    	- Dimension reduction
 
-  ### Drill-down
+    ### Drill-down
 
-  - Drill-down is the reverse operation of roll-up, and it's performed by either
+    - Drill-down is the reverse operation of roll-up, and it's performed by either
 
-  	- Stepping down a concept hierarchy for a dimension
+    	- Stepping down a concept hierarchy for a dimension
 
-  	- Introducing a new dimension
+    	- Introducing a new dimension
 
-  ### Slice
+    ### Slice
 
-  - The slice operation provides new sub-cube from one particular dimension in a given cube
+    - The slice operation provides new sub-cube from one particular dimension in a given cube
 
-  ### Dice
+    ### Dice
 
-  - The dice operation provides a new sub-cube from two or more dimensions in a given cube
+    - The dice operation provides a new sub-cube from two or more dimensions in a given cube
 
-  ### Dimensions
+    ### Dimensions
 
-  - The tables that describe the dimensions involved are called **Dimension tables**.
+    - The tables that describe the dimensions involved are called **Dimension tables**.
 
-  - Dividing a data warehouse project into dimensions provides structured information for analysis and reporting
+    - Dividing a data warehouse project into dimensions provides structured information for analysis and reporting
 
-  ### Facts & Measures
+    ### Facts & Measures
 
-  - A fact is a measure that can be summed, averaged or manipulated
+    - A fact is a measure that can be summed, averaged or manipulated
 
-  - A fact table contains 2 kinds of data - a dimension key and a measure
+    - A fact table contains 2 kinds of data - a dimension key and a measure
 
-  - Every Dimension table is linked to a Fact table
+    - Every Dimension table is linked to a Fact table
 
-  ```mermaid
-  flowchart LR
-  A[Product]-->B[Product ID]
-  A --> D[Number of units sold]
-  B --- C(Dimension Key)
-  D --- E(Measure)
+    ```mermaid
+    flowchart LR
+    A[Product]-->B[Product ID]
+    A --> D[Number of units sold]
+    B --- C(Dimension Key)
+    D --- E(Measure)
 
-  ```
+    ```
 
-  ### Schemas
+    ### Schemas
 
-  - A schema gives the local description of entire DB
+    - A schema gives the local description of entire DB
 
-  - It gives details about the constraints placed on the tables, key values present & how the key values are linked
-  between the different tables
+    - It gives details about the constraints placed on the tables, key values present & how the key values are linked
+    between the different tables
 
-  - A database uses relational model, while a data warehouse uses star, snowflake and fact constellation schema
+    - A database uses relational model, while a data warehouse uses star, snowflake and fact constellation schema
 
-  ### Star Schema
+    ### Star Schema
 
-  - Each dimension in a star schema is represented with one-dimensional table and fact table is at the center
+    - Each dimension in a star schema is represented with one-dimensional table and fact table is at the center
 
-  ### Snowflake Schema
+    ### Snowflake Schema
 
-  - Dimension tables in the snowflake schema are normalized
+    - Dimension tables in the snowflake schema are normalized
 
-  ## Federated Database System
+    ## Federated Database System
 
-  ### What is a federated database?
+    ### What is a federated database?
 
-  - Logical association of independent database that provides a single, integrated, coherent view.
+    - Logical association of independent database that provides a single, integrated, coherent view.
 
-  - Federation also provide a cohesive, unified view of data derived from multiple sources.
+    - Federation also provide a cohesive, unified view of data derived from multiple sources.
 
-  ### Characteristics of Federate Database System
+    ### Characteristics of Federate Database System
 
-  - Transparency: Federated databases masks from the user difference, idiosyncrasies, and implementations of underlying
-  data sources
+    - Transparency: Federated databases masks from the user difference, idiosyncrasies, and implementations of underlying
+    data sources
 
-  - Heterogeneity of data sources: Heterogeneity is the degree of differentiation in the various data sources.
+    - Heterogeneity of data sources: Heterogeneity is the degree of differentiation in the various data sources.
 
-  - Extensibility and openness of the federation: In a federated system, new sources may be needed to meet the changing
-  needs of the users' business.
+    - Extensibility and openness of the federation: In a federated system, new sources may be needed to meet the changing
+    needs of the users' business.
 
-  - Autonomy for data sources: Federated database does not disturb the local operation of an existing data source.
+    - Autonomy for data sources: Federated database does not disturb the local operation of an existing data source.
 
-  - Data integration: Federated database system can integrate data from different procotols, DBMS, using wrapper
+    - Data integration: Federated database system can integrate data from different procotols, DBMS, using wrapper
 
-  ### Benefits of Federated Database
+    ### Benefits of Federated Database
 
-  - Offer an alternative to merge database together
+    - Offer an alternative to merge database together
 
-  - Help programmers avoid the tight coupling of application
+    - Help programmers avoid the tight coupling of application
 
-  - Applications only need to be connected to the federal database
+    - Applications only need to be connected to the federal database
 
-  ### Issues in Database Federation
+    ### Issues in Database Federation
 
-  - Query Performance: The query algorithm for federated database should be carefully designed, or get slow response time
+    - Query Performance: The query algorithm for federated database should be carefully designed, or get slow response time
 
-  - Dependence on autonomous data sources: The federation is highly dependent on data sources that are largely beyond
-  direct control of the federation management system.
+    - Dependence on autonomous data sources: The federation is highly dependent on data sources that are largely beyond
+    direct control of the federation management system.
 
-  - Scalability: Federated system can add new data sources relatively quickly and with minimal cost, and are thus
-  reasonably scalable architectures. However scaling up new sources adds to the complexity of the infrastructure
+    - Scalability: Federated system can add new data sources relatively quickly and with minimal cost, and are thus
+    reasonably scalable architectures. However scaling up new sources adds to the complexity of the infrastructure
 
-  - Technical Skills: Considerable expertise my be required to design and manage federated DB system.
+    - Technical Skills: Considerable expertise my be required to design and manage federated DB system.
 
 # DocumentDB
 
-  ## Row-Oriented Database
+    ## Row-Oriented Database
 
-  - Tables are stored as rows in disk
+    - Tables are stored as rows in disk
 
-  - A single block io read the table fetches multiple rows with their columns
+    - A single block io read the table fetches multiple rows with their columns
 
-  - More IOs are required to find a particular row in the table
+    - More IOs are required to find a particular row in the table
 
-  ## Column-Oriented Database
+    ## Column-Oriented Database
 
-  - Tables are stored as columns in disk
+    - Tables are stored as columns in disk
 
-  - A single block io read the table fetches multiple columns with their rows
+    - A single block io read the table fetches multiple columns with their rows
 
-  - Less IOs are required to find a particular row in the table
+    - Less IOs are required to find a particular row in the table
 
-  ## Pros and Cons
+    ## Pros and Cons
 
-  - Row-Based
+    - Row-Based
 
-  	- Optimal for read/write
+    	- Optimal for read/write
 
-  	- OLTP
+    	- OLTP
 
-  	- Compression, aggregation is not efficient
+    	- Compression, aggregation is not efficient
 
-  	- Efficient queries with multi-columns
+    	- Efficient queries with multi-columns
 
-  - Column-Based
+    - Column-Based
 
-  	- Slow Write
+    	- Slow Write
 
-  	- OLAP
+    	- OLAP
 
-  	- Compression, aggregation is efficient
+    	- Compression, aggregation is efficient
 
-  	- Inefficient queries with multi-columns
+    	- Inefficient queries with multi-columns
 
-  ## NoSQL Databases
+    ## NoSQL Databases
 
-  - Relational Databases scale vertically, and NoSQL scale horizontally
+    - Relational Databases scale vertically, and NoSQL scale horizontally
 
-  - It's schema-less and non-relational
+    - It's schema-less and non-relational
 
-  - Uses for cashing, pub/sub, leaderboards, etc.
+    - Uses for cashing, pub/sub, leaderboards, etc.
 
-  - Tradeoff between schema-less and joins
+    - Tradeoff between schema-less and joins
 
-  - Good for time-series data, historical records, high-write but low-read
+    - Good for time-series data, historical records, high-write but low-read
 
-  - Graph Databases are used for graphs, knowledge, recommendation, etc.
+    - Graph Databases are used for graphs, knowledge, recommendation, etc.
 
 # StreamDB
 
-  ## Data Streams
+    ## Data Streams
 
-  ### Traditional Data Ingestion
+    ### Traditional Data Ingestion
 
-  - Data sources are extracted, transformed, Loaded to a data warehouse
+    - Data sources are extracted, transformed, Loaded to a data warehouse
 
-  - It's unsuitable for Reacting in Real Time!
+    - It's unsuitable for Reacting in Real Time!
 
-  ### Stream Data Requirements
+    ### Stream Data Requirements
 
-  - Traditional ETL supports queries on static snapshots
+    - Traditional ETL supports queries on static snapshots
 
-  - Delay between snapshots is often too high
+    - Delay between snapshots is often too high
 
-  - Streams keep generating new data with high frequency
+    - Streams keep generating new data with high frequency
 
-  - Query results keep changing
+    - Query results keep changing
 
-  - It's useful to have a query result that is always up-to-date
+    - It's useful to have a query result that is always up-to-date
 
-  ### Comparing Stream and DBMS
+    ### Comparing Stream and DBMS
 
-  |     | Stream  | DBMS  |
-  |-------|---------|---------|
-  | Data  | Static  | Dynamic |
-  | Query | Dynaimc | Static  |
+    |       | Stream  | DBMS    |
+    |-------|---------|---------|
+    | Data  | Static  | Dynamic |
+    | Query | Dynaimc | Static  |
 
-  ### ksqlDB - Streaming SQL
+    ### ksqlDB - Streaming SQL
 
-  ### Collection types
+    ### Collection types
 
-  |             | Stream                 | Table                           |
-  |-------------------------|--------------------------------------|-----------------------------------------------------------|
-  | Insertion<br/>Semantics | New entries are<br/>appended     | New entries override<br/>prior entries with<br/> same key |
-  | Purpose         | Represent historical<br/>information | Represent the<br/>current state               |
+    |                         | Stream                               | Table                                                     |
+    |-------------------------|--------------------------------------|-----------------------------------------------------------|
+    | Insertion<br/>Semantics | New entries are<br/>appended         | New entries override<br/>prior entries with<br/> same key |
+    | Purpose                 | Represent historical<br/>information | Represent the<br/>current state                           |
 
-  ## Data Stream Topics
+    ## Data Stream Topics
 
-  - Temporal DB(Database with time stamp)
+    - Temporal DB(Database with time stamp)
 
-  - STREAM system(~2003)
+    - STREAM system(~2003)
 
-  - kSQL system: kafka as the engine started as a project in LinkedIn
+    - kSQL system: kafka as the engine started as a project in LinkedIn
 
-  ## Stream Data Types
+    ## Stream Data Types
 
-  | Database <br/>management system     | Data Stream <br/> mamagement system  |
-  |---------------------------------------|--------------------------------------|
-  | Relation R : static<br/>until changed | Relation R(t) : varies<br/>over time |
-  |                     | Stream S: timestamped tuples     |
+    | Database <br/>management system       | Data Stream <br/> mamagement system  |
+    |---------------------------------------|--------------------------------------|
+    | Relation R : static<br/>until changed | Relation R(t) : varies<br/>over time |
+    |                                       | Stream S: timestamped tuples         |
 
-  ### Stream to relation
+    ### Stream to relation
 
-  - Relation R(t) is specified as a window over stream S
+    - Relation R(t) is specified as a window over stream S
 
-  - Tuple-based sliding window: S [Rows N]
+    - Tuple-based sliding window: S [Rows N]
 
-  	- R(t) contains N tuples from S with the highest timestamps
+    	- R(t) contains N tuples from S with the highest timestamps
 
-  - Time-based sliding window: S [Range T]
+    - Time-based sliding window: S [Range T]
 
-  	- R(t) contains tuples from S starting from Now() - T
+    	- R(t) contains tuples from S starting from Now() - T
 
-  - Partitioned sliding window: S [Partition by A1,A2,... Rows N]
+    - Partitioned sliding window: S [Partition by A1,A2,... Rows N]
 
-  	- Separate windows for each value combination in A1,A2,...
+    	- Separate windows for each value combination in A1,A2,...
 
-  ### Relation to stream
+    ### Relation to stream
 
-  - Istream(R): R's inserted tuples with insertion timestamp
+    - Istream(R): R's inserted tuples with insertion timestamp
 
-  - Dstream(R): R's deleted tuples with deletion timestamp
+    - Dstream(R): R's deleted tuples with deletion timestamp
 
-  - Rstream(R): R's inserted tuples with current timestamp
+    - Rstream(R): R's inserted tuples with current timestamp
 
-  ### Query Processing
+    ### Query Processing
 
-  - Input query is compiled into continuous query plan
+    - Input query is compiled into continuous query plan
 
-  - Query plan is composed from standard operators
+    - Query plan is composed from standard operators
 
-  - Operators exchange tuple additions and deletions(Streams - additions, Relations - addition and deletions)
+    - Operators exchange tuple additions and deletions(Streams - additions, Relations - addition and deletions)
 
-  ## Operators
+    ## Operators
 
-  ```mermaid
-  graph LR
-  A[Input queue] --> B[Operator]
-  B-->C[Output Queue]
-  B-.->D[query synopsis]
+    ```mermaid
+    graph LR
+    A[Input queue] --> B[Operator]
+    B-->C[Output Queue]
+    B-.->D[query synopsis]
 
-  ```
+    ```
 
-  ### Join operator
+    ### Join operator
 
-  ```mermaid
-  graph LR
-  A[Input 1] --> O[operator]
-  B[Input 2] --> O
-  O --> C[Output]
-  O -.-> D[Hash table for each input]
+    ```mermaid
+    graph LR
+    A[Input 1] --> O[operator]
+    B[Input 2] --> O
+    O --> C[Output]
+    O -.-> D[Hash table for each input]
 
-  ```
+    ```
 
-  - Join Algorithm
+    - Join Algorithm
 
-  	- Tuple addition/deletion in input 1 queue
+    	- Tuple addition/deletion in input 1 queue
 
-  	- Extract join key from added queue
+    	- Extract join key from added queue
 
-  	- Probe hash table of input 2 with key
+    	- Probe hash table of input 2 with key
 
-  	- Add/delete resulting join tuples to output
+    	- Add/delete resulting join tuples to output
 
-  	- Update synopsis(hash table for input 1)
+    	- Update synopsis(hash table for input 1)
 
-  ## Adaptive Query Planning
+    ## Adaptive Query Planning
 
-  ```mermaid
-  graph LR
-  A[Executor] -.Can Combine.- B[Profiler]
-  B--Statistics-->C[Re-Optimizer]
-  C--Join Order Cashing Constraints-->A
-  C--Request Statistics-->B
+    ```mermaid
+    graph LR
+    A[Executor] -.Can Combine.- B[Profiler]
+    B--Statistics-->C[Re-Optimizer]
+    C--Join Order Cashing Constraints-->A
+    C--Request Statistics-->B
 
-  ```
+    ```
 
-  ### Minimizing Space Requirements
+    ### Minimizing Space Requirements
 
-  - Very important for Stream DBs(it's size is unbounded)
+    - Very important for Stream DBs(it's size is unbounded)
 
-  - Eliminate redundant data by synopsis sharing(especially in pub/sub)
+    - Eliminate redundant data by synopsis sharing(especially in pub/sub)
 
-  - Exploit constraints to prune unnecessary data
+    - Exploit constraints to prune unnecessary data
 
-  - Shrink intermediate results via optimized scheduling
+    - Shrink intermediate results via optimized scheduling
 
-  ### Synopsis Sharing
+    ### Synopsis Sharing
 
-  - Synopses of operators in same plan often overlap
+    - Synopses of operators in same plan often overlap
 
-  - Storing synopses separately means redundancy
+    - Storing synopses separately means redundancy
 
-  - Instead: global synopses with operator-specific views
+    - Instead: global synopses with operator-specific views
 
-  - Can extend to merge synopses of different plans
+    - Can extend to merge synopses of different plans
 
-  ## Constraint Types
+    ## Constraint Types
 
-  - Referential integrity k-constraint
+    - Referential integrity k-constraint
 
-  	- Refers to key-foreign key joins
+    	- Refers to key-foreign key joins
 
-  	- Delay at most k between matching tuples arriving
+    	- Delay at most k between matching tuples arriving
 
-  - Ordered-arrival k-constraint
+    - Ordered-arrival k-constraint
 
-  	- Stream elements at least k tuple apart are sorted
+    	- Stream elements at least k tuple apart are sorted
 
-  - Clustered-arrival k-constraint
+    - Clustered-arrival k-constraint
 
-  	- Elements with same key can be at most k tuples apart
+    	- Elements with same key can be at most k tuples apart
 
-  - These can exploit each constraint for dropping tuples in certain scenarios
+    - These can exploit each constraint for dropping tuples in certain scenarios
 
-  ## Scheduling Policies
+    ## Scheduling Policies
 
-  - We have flexibility to decide when to invoke operators
+    - We have flexibility to decide when to invoke operators
 
-  - Scheduling policy may influence queue sizes
+    - Scheduling policy may influence queue sizes
 
-  - FIFO: Fully process tuple batches in the order of arrival
+    - FIFO: Fully process tuple batches in the order of arrival
 
-  - Greedy: invoke operator discarding most tuples
+    - Greedy: invoke operator discarding most tuples
 
-  - Mix: combine a=operators into chains
+    - Mix: combine a=operators into chains
 
-  ### Example
+    ### Example
 
-  ```mermaid
-  graph LR
-  A[Input 1] --> B[Operator 1 with Selectivity:0.2]
-  B --> C[Intermediate Result]
-  C --> D[Operator 2]
-  D --> E[Output]
+    ```mermaid
+    graph LR
+    A[Input 1] --> B[Operator 1 with Selectivity:0.2]
+    B --> C[Intermediate Result]
+    C --> D[Operator 2]
+    D --> E[Output]
 
-  ```
+    ```
 
-  | Policy | T=0 | T=1 | T=2 | T=3 | T=4 | T=5 | T=6 |
-  |--------|-----|-----|-----|-----|-----|-----|-----|
-  | FIFO   | 1   | 1.2 | 2   | 2.2 | 3   | 3.2 | 4   |
-  | Greedy | 1   | 1.2 | 1.4 | 1.6 | 1.8 | 2   | 2.2 |
+    | Policy | T=0 | T=1 | T=2 | T=3 | T=4 | T=5 | T=6 |
+    |--------|-----|-----|-----|-----|-----|-----|-----|
+    | FIFO   | 1   | 1.2 | 2   | 2.2 | 3   | 3.2 | 4   |
+    | Greedy | 1   | 1.2 | 1.4 | 1.6 | 1.8 | 2   | 2.2 |
 
-  ## Approximation
+    ## Approximation
 
-  - Load Shedding: drop tuples to save overheads
+    - Load Shedding: drop tuples to save overheads
 
-  	- Can approximate aggregates based on samples
+    	- Can approximate aggregates based on samples
 
-  	- Try to balance impact over all aggregates
+    	- Try to balance impact over all aggregates
 
-  - Reducing synopses size: save memory
+    - Reducing synopses size: save memory
 
-  	- Often reduces output size of following operators with potential drawback
+    	- Often reduces output size of following operators with potential drawback
 
-  ## Apache Kafka Overview
+    ## Apache Kafka Overview
 
-  - Kafka is a java-based, distributed stream processing engine
+    - Kafka is a java-based, distributed stream processing engine
 
-  - Producer: Add records to different topics
+    - Producer: Add records to different topics
 
-  - Consumer: Subscribe to specific topics
+    - Consumer: Subscribe to specific topics
 
-  - Kafka Streams API offers filter, grouping, ... operators
+    - Kafka Streams API offers filter, grouping, ... operators
 
-  ## Kafka Topics
+    ## Kafka Topics
 
-  - Each topic corresponds to a log of ordered records and each are key-value pair
+    - Each topic corresponds to a log of ordered records and each are key-value pair
 
-  - Producers append to this log
+    - Producers append to this log
 
-  - Consumers receive updates for topics they subscribe to
+    - Consumers receive updates for topics they subscribe to
 
-  - Regular topic: delete tuples by space/time constraint
+    - Regular topic: delete tuples by space/time constraint
 
-  - Compacted topic: new tuples override old keys
+    - Compacted topic: new tuples override old keys
 
-  ## Distributed Processing
+    ## Distributed Processing
 
-  - Each topic is divided into partitions
+    - Each topic is divided into partitions
 
-  - Partitions are replicated across servers
+    - Partitions are replicated across servers
 
-  	- Fault tolerance by redundancy
+    	- Fault tolerance by redundancy
 
-  	- Allows to scale to more consumers
+    	- Allows to scale to more consumers
 
-  - Each partition has one dedicated leader
+    - Each partition has one dedicated leader
 
-  	- Leader access topics updates
+    	- Leader access topics updates
 
-  	- Synchronizes with other replicas
+    	- Synchronizes with other replicas
 
-  ### Example
+    ### Example
 
-  ```mermaid
-  flowchart TD
-  subgraph s1 [server1]
-  direction TB
-  a1([Topic1,Partition1])
-  a2[Topic1,Partition2]
-  a3[Topic2,Partition1]
-  end
-  subgraph s2 [server2]
-  direction TB
-  b1[Topic1,Partition1]
-  b2([Topic1,Partition2])
-  b3[Topic2,Partition1]
-  end
-  subgraph s3 [servern]
-  direction TB
-  c1[Topic1,Partition1]
-  c2[Topic1,Partition2]
-  c3([Topic2,Partition1])
-  end
-  a1-->b1
-  a1-->|Forward Changes|c1
-  b2-->a2
-  b2-->c2
-  c3-->a3
-  c3-->b3
+    ```mermaid
+    flowchart TD
+    subgraph s1 [server1]
+    direction TB
+    a1([Topic1,Partition1])
+    a2[Topic1,Partition2]
+    a3[Topic2,Partition1]
+    end
+    subgraph s2 [server2]
+    direction TB
+    b1[Topic1,Partition1]
+    b2([Topic1,Partition2])
+    b3[Topic2,Partition1]
+    end
+    subgraph s3 [servern]
+    direction TB
+    c1[Topic1,Partition1]
+    c2[Topic1,Partition2]
+    c3([Topic2,Partition1])
+    end
+    a1-->b1
+    a1-->|Forward Changes|c1
+    b2-->a2
+    b2-->c2
+    c3-->a3
+    c3-->b3
 
-  ```
+    ```
 
-  ## Copying with Insertions
+    ## Copying with Insertions
 
-  - Need to handle insertions with a very high frequency
+    - Need to handle insertions with a very high frequency
 
-  - Kafka streams uses RocksDB as underlying engine
+    - Kafka streams uses RocksDB as underlying engine
 
-  - Highly optimized for writes, good read performance(Key idea: sequential access)
+    - Highly optimized for writes, good read performance(Key idea: sequential access)
 
-  - Put logs in buffer first and then make page in disk
+    - Put logs in buffer first and then make page in disk
 
-  ## Optimize for Reads
+    ## Optimize for Reads
 
-  - Typically use index structure
+    - Typically use index structure
 
-  - But then insertions require random data access, which leads to slow insertions
+    - But then insertions require random data access, which leads to slow insertions
 
-  - Instead: Log structured Merge Tree
+    - Instead: Log structured Merge Tree
 
-  ### Log Structured Merge Tree
+    ### Log Structured Merge Tree
 
-  - Maintains multiple levels containing sorted/indexed data
+    - Maintains multiple levels containing sorted/indexed data
 
-  	- Upper levels are stored in main memory
+    	- Upper levels are stored in main memory
 
-  	- Lower levels are stored on hard disk
+    	- Lower levels are stored on hard disk
 
-  	- Constant size ratio between consecutive level
+    	- Constant size ratio between consecutive level
 
-  - Data from one level is merged into next at overflow
+    - Data from one level is merged into next at overflow
 
-  	- Merge operations need only sequential writes
+    	- Merge operations need only sequential writes
 
-  ### Reading LSM Tree
+    ### Reading LSM Tree
 
-  - May have to check every level to find data
+    - May have to check every level to find data
 
-  - Checking each level is fast as data is sorted/indexed
+    - Checking each level is fast as data is sorted/indexed
 
-  - Bloom filters reduce the number of levels to consider
+    - Bloom filters reduce the number of levels to consider
 
-  	- Bloom filter captures non-empty hash buckets
+    	- Bloom filter captures non-empty hash buckets
 
-  	- Used to summarize keys present at each level
+    	- Used to summarize keys present at each level
 
-  ## ksqlDB
+    ## ksqlDB
 
-  - High-level API on top of Kafka Streams
+    - High-level API on top of Kafka Streams
 
-  - Trans SQL-like queries to kafka operators(Some similarities to STREAM query language)
+    - Trans SQL-like queries to kafka operators(Some similarities to STREAM query language)
 
-  - Process collections of events: streams, tables
+    - Process collections of events: streams, tables
 
-  - Pull queries execute once on current state
+    - Pull queries execute once on current state
 
-  - Push query results get continuously updated
+    - Push query results get continuously updated
 
-  ### ksqlDB Collection Types
+    ### ksqlDB Collection Types
 
-  |       | Stream                           | Table                          |
-  |-----------|----------------------------------------------------------|----------------------------------------------------------|
-  | Insertion | New entries override<br/>prior entries with<br/>same key | New entries override<br/>prior entries with<br/>same key |
-  | Purpose   | Represent Historical<br/>information           | Represent the <br/> current state            |
+    |           | Stream                                                   | Table                                                    |
+    |-----------|----------------------------------------------------------|----------------------------------------------------------|
+    | Insertion | New entries override<br/>prior entries with<br/>same key | New entries override<br/>prior entries with<br/>same key |
+    | Purpose   | Represent Historical<br/>information                     | Represent the <br/> current state                        |
 
-  ### ksqlDB Example
+    ### ksqlDB Example
 
-  - Creating Collections
+    - Creating Collections
 
-  	```sql
-  	CREATE STREAM priceHistory(
-  	  symbol VARCHAR, price INT)
-  	  WITH (kafka_topic='tickerTopic', value_format='json');
-  	CREATE TABLE curStockPrice(
-  	  symbol VARCHAR PRIMARY KEY, price INT)
-  	  WITH (kafka_topic='tickerTopic', value_format='json');
-  	
-  	```
+    	```sql
+    	CREATE STREAM priceHistory(
+    	    symbol VARCHAR, price INT)
+    	    WITH (kafka_topic='tickerTopic', value_format='json');
+    	CREATE TABLE curStockPrice(
+    	    symbol VARCHAR PRIMARY KEY, price INT)
+    	    WITH (kafka_topic='tickerTopic', value_format='json');
+    	
+    	```
 
-  - Deriving Collections
+    - Deriving Collections
 
-  	```plain text
-  	CREATE STREAM appleTicker AS
-  	  SELECT symbol, price FROM priceHistory
-  	  WHERE symbol = 'AAPL';
-  	CREATE STREAM advertisementStream AS
-  	  SELECT * from clickStream C JOIN advertisertable A ON C.adId = A.adId;
-  	
-  	```
+    	```plain text
+    	CREATE STREAM appleTicker AS
+    	    SELECT symbol, price FROM priceHistory
+    	    WHERE symbol = 'AAPL';
+    	CREATE STREAM advertisementStream AS
+    	    SELECT * from clickStream C JOIN advertisertable A ON C.adId = A.adId;
+    	
+    	```
 
-  - Inserting Data
+    - Inserting Data
 
-  	```plain text
-  	INSERT INTO temperatureStream(Location, temperature)
-  	VALUES ('San Francisco', 70);
-  	
-  	```
+    	```plain text
+    	INSERT INTO temperatureStream(Location, temperature)
+    	VALUES ('San Francisco', 70);
+    	
+    	```
 
-  - Pull Query
+    - Pull Query
 
-  	```plain text
-  	SELECT * FROM pageviewsByReginTable WHERE region = 'San Francisco';
-  	
-  	```
+    	```plain text
+    	SELECT * FROM pageviewsByReginTable WHERE region = 'San Francisco';
+    	
+    	```
 
-  - Push Query
+    - Push Query
 
-  	```plain text
-  	SELECT * FROM clickEventStream WHERE region='San Francisco' EMIT CHANGES;
-  	
-  	```
+    	```plain text
+    	SELECT * FROM clickEventStream WHERE region='San Francisco' EMIT CHANGES;
+    	
+    	```
 
-  ### Query Types
+    ### Query Types
 
-  |              | Push Query          | Pull Query                 |
-  |--------------------------|-----------------------------|--------------------------------------------|
-  | Data Sources       | Table, Stream         | Table                    |
-  | Specific<br/>Restriction | -               | Non-windowed<br/>Aggregation:lookup by key |
-  | Life Time        | Keeps returning<br/>updates | Returns one result             |
+    |                          | Push Query                  | Pull Query                                 |
+    |--------------------------|-----------------------------|--------------------------------------------|
+    | Data Sources             | Table, Stream               | Table                                      |
+    | Specific<br/>Restriction | -                           | Non-windowed<br/>Aggregation:lookup by key |
+    | Life Time                | Keeps returning<br/>updates | Returns one result                         |
 
 # SpatialDB
 
-  ## Types
+    ## Types
 
-  ### Types of Spatial Data
+    ### Types of Spatial Data
 
-  - Point Data: Characterized completed by the location
+    - Point Data: Characterized completed by the location
 
-  - Region Data: Defined by a boundary and may have anchor location
+    - Region Data: Defined by a boundary and may have anchor location
 
-  ### Types of Spatial Queries
+    ### Types of Spatial Queries
 
-  - Spatial range queries: show me restaurants in Seoul
+    - Spatial range queries: show me restaurants in Seoul
 
-  - Nearest neighbor queries: show me the nearest restaurant to my location
+    - Nearest neighbor queries: show me the nearest restaurant to my location
 
-  - Spatial join queries: show me the restaurants in Seoul that are Korean
+    - Spatial join queries: show me the restaurants in Seoul that are Korean
 
-  ## Indexing Types
+    ## Indexing Types
 
-  - B+ trees for spatial data
+    - B+ trees for spatial data
 
-  - Space-filling curves
+    - Space-filling curves
 
-  - Region quad-trees/region oct-trees
+    - Region quad-trees/region oct-trees
 
-  - Point region quad-tree
+    - Point region quad-tree
 
-  - Grid files
+    - Grid files
 
-  - R-trees
+    - R-trees
 
-  ## Problems with B+ trees
+    ## Problems with B+ trees
 
-  - Close points in 2D are not close in index
+    - Close points in 2D are not close in index
 
-  - Answering range query is inefficient
+    - Answering range query is inefficient
 
-  - Could use one tree per dimension and merge RIDS(but various overheads)
+    - Could use one tree per dimension and merge RIDS(but various overheads)
 
-  ## Z-ordering
+    ## Z-ordering
 
-  - Numbers each space coordinate
+    - Numbers each space coordinate
 
-  - Close points have close numbers(counterexample Hilbert curves)
+    - Close points have close numbers(counterexample Hilbert curves)
 
-  - Binary representation for each coordinate
+    - Binary representation for each coordinate
 
-  - Z-ordering assigns number $a_1b_1a_2b_2...a_nb_n$
+    - Z-ordering assigns number $a_1b_1a_2b_2...a_nb_n$
 
-  ### Z-order curve example
+    ### Z-order curve example
 
-  ```mermaid
-  %%{
-    init: {
-    'theme': 'base',
-    'themeVariables': {
-      'secondaryColor': '#006100',
-      'tertiaryColor': '#fff'
-    }
-    }
-  }%%
-  flowchart BT
-    subgraph sub1
-    a[3,0] ~~~ b[2,0] ~~~ c[1,0] ~~~ d[0,0]
-    end
-    subgraph sub2
-    e[3,1] ~~~ f[2,1] ~~~ g[1,1] ~~~ h[0,1]
-    end
-    subgraph sub3
-    i[3,2] ~~~ j[2,2] ~~~ k[1,2] ~~~ l[0,2]
-    end
-    subgraph sub4
-    m[3,3] ~~~ n[3,2] ~~~ o[1,3] ~~~ p[0,3]
-    end
-    sub1 ~~~ sub2 ~~~ sub3 ~~~ sub4
-    a-->e-->b-->f-->i-->m-->j-->n-->c
-    c-->g-->d-->h-->k-->o --> l --> p
+    ```mermaid
+    %%{
+      init: {
+        'theme': 'base',
+        'themeVariables': {
+          'secondaryColor': '#006100',
+          'tertiaryColor': '#fff'
+        }
+      }
+    }%%
+    flowchart BT
+        subgraph sub1
+        a[3,0] ~~~ b[2,0] ~~~ c[1,0] ~~~ d[0,0]
+        end
+        subgraph sub2
+        e[3,1] ~~~ f[2,1] ~~~ g[1,1] ~~~ h[0,1]
+        end
+        subgraph sub3
+        i[3,2] ~~~ j[2,2] ~~~ k[1,2] ~~~ l[0,2]
+        end
+        subgraph sub4
+        m[3,3] ~~~ n[3,2] ~~~ o[1,3] ~~~ p[0,3]
+        end
+        sub1 ~~~ sub2 ~~~ sub3 ~~~ sub4
+        a-->e-->b-->f-->i-->m-->j-->n-->c
+        c-->g-->d-->h-->k-->o --> l --> p
 
-  ```
+    ```
 
-  ### Indexing with Z-ordering
+    ### Indexing with Z-ordering
 
-  - Z-ordering reduces multi-dimensional spaces to 1d
+    - Z-ordering reduces multi-dimensional spaces to 1d
 
-  - Can use standard index(e.g. B+ tree) to index Z value
+    - Can use standard index(e.g. B+ tree) to index Z value
 
-  ## Region Quad Trees
+    ## Region Quad Trees
 
-  - Z ordering enables us to store points efficiently
+    - Z ordering enables us to store points efficiently
 
-  - Storing entire regions as set of point is inefficient
+    - Storing entire regions as set of point is inefficient
 
-  - Region quad trees divide space recursively into 4 quadrants
+    - Region quad trees divide space recursively into 4 quadrants
 
-  ### Grid Files
+    ### Grid Files
 
-  - Region quad tree partition independently of data
+    - Region quad tree partition independently of data
 
-  - This is not optimal if data is highly skewed
+    - This is not optimal if data is highly skewed
 
-  - Grid files adapt space partition to data distribution
+    - Grid files adapt space partition to data distribution
 
-  - More find-grained representation for high density regions
+    - More find-grained representation for high density regions
 
-  - If 3D, we use octrees
+    - If 3D, we use octrees
 
-  ||
-  ||
+    | QuadTrees                                         | Octrees                                               |
+    |---------------------------------------------------|-------------------------------------------------------|
+    | Represents 2D planes                              | Represents 3D cubical planes                          |
+    | 4 children                                        | 8 children                                            |
+    | Each child represents<br/>a quadrant of sub plane | Each child represents <br/> a 3D octant of sub volume |
 
-  > Tree branches until each sub region satisfies some property!
+    > Tree branches until each sub region satisfies some property!
 
-  ### Desiderata on Recursive Decompositions
+    ### Desiderata on Recursive Decompositions
 
-  - Recursivie decomposition: specify information more robustly at a lower level of description
+    - Recursivie decomposition: specify information more robustly at a lower level of description
 
-  - Quadtrees and octrees are based on recursive decomposition
+    - Quadtrees and octrees are based on recursive decomposition
 
-  - Variations of these trees are based on:
+    - Variations of these trees are based on:
 
-  ### Quad Tree Example
+    	- Type of data represented
 
-  ||
-  ||
+    	- Property sought through decompositions
 
-  ### Constructing Region Quadtrees
+    	- Variable or static resolution
 
-  - Iterate through a multi-dimensional array row-by-row
+    ### Quad Tree Example
 
-  - If all 4 sub-regions exhibit desired property, merge into single node
+    | B |   | F | G |
+    |---|---|---|---|
+    |   |   | H | I |
+    | D |   | J | K |
+    |   |   | L | M |
 
-  - $O(n^2)$ runtime complexity when $n$ is the number of points
+    ### Constructing Region Quadtrees
 
-  - Construction algorithm is called bottom-up neighbor finding
+    - Iterate through a multi-dimensional array row-by-row
 
-  ### Region Quadtree Operations
+    - If all 4 sub-regions exhibit desired property, merge into single node
 
-  - Either node is white, output is white
+    - $O(n^2)$ runtime complexity when $n$ is the number of points
 
-  - Both nodes are black, output is black
+    - Construction algorithm is called bottom-up neighbor finding
 
-  - One node is black and other is gray, gray node's subtree is copied to output tree
+    ### Region Quadtree Operations
 
-  - Both nodes are gray, output is gray and recurse to children in input quadtrees
+    - Either node is white, output is white
 
-  ## Application of Spatial Data Structures
+    - Both nodes are black, output is black
 
-  - Image processing
+    - One node is black and other is gray, gray node's subtree is copied to output tree
 
-  - Image compression
+    - Both nodes are gray, output is gray and recurse to children in input quadtrees
 
-  - Location queries
+    ## Application of Spatial Data Structures
 
-  - 3D rendering
+    - Image processing
 
-  - Nearest-neighbor search
+    - Image compression
 
-  - Object collision
+    - Location queries
 
-  - Color quantization
+    - 3D rendering
 
-  ## R Trees
+    - Nearest-neighbor search
 
-  - Adaptation of B+ tree to handle spatial data
+    - Object collision
 
-  - Search key: multi-dimensional bounding box
+    - Color quantization
 
-  - Data Entries: (bounding box, rid) -> box is the smallest box of the data entry
+    ## R Trees
 
-  - Index Entries: (bounding box, pointer to child)
+    - Adaptation of B+ tree to handle spatial data
 
-  ### Lookups in R Trees
+    - Search key: multi-dimensional bounding box
 
-  - Compute bounding box for query object. It can be single point or region
+    - Data Entries: (bounding box, rid) -> box is the smallest box of the data entry
 
-  - Start at root node of R Tree
+    - Index Entries: (bounding box, pointer to child)
 
-  - Check children containing query object(may need to check multiple children)
+    ### Lookups in R Trees
 
-  ### Insertion in R Trees
+    - Compute bounding box for query object. It can be single point or region
 
-  - Compute bounding box for new object
+    - Start at root node of R Tree
 
-  - Start at root node of R Tree
+    - Check children containing query object(may need to check multiple children)
 
-  - Select child needing minimal extension for object
+    ### Insertion in R Trees
 
-  - Insert object at leaf node(may have to enlarge bounding box, may have to rebalance the tree)
+    - Compute bounding box for new object
 
-  ### Split problem
+    - Start at root node of R Tree
 
-  - Given M+1 entries, how to split into 2 nodes?
+    - Select child needing minimal extension for object
 
-  - Guttman states in the original paper that there are $2^{M+1}$ possibilities and M=50 would be reasonable to assume
+    - Insert object at leaf node(may have to enlarge bounding box, may have to rebalance the tree)
 
-  - That means, the naive approach to look at all possible subsets and pick the best one is not practical
+    ### Split problem
 
-  ### Approach with tQuadratic cost
+    - Given M+1 entries, how to split into 2 nodes?
 
-  - Searches for split with smallest possible area
+    - Guttman states in the original paper that there are $2^{M+1}$ possibilities and M=50 would be reasonable to assume
 
-  - Idea
+    - That means, the naive approach to look at all possible subsets and pick the best one is not practical
 
-  ## R* Tree
+    ### Approach with tQuadratic cost
 
-  - Various subsequent publications proposed improvements of R tree via better split algorithms
+    - Searches for split with smallest possible area
 
-  - The most prominent approach is described as R* Tree
+    - Idea
+
+    	- Search for pairs of entries that would cause the largest area if placed in the same node. Then put these entries in two different nodes
+
+    	- Then: Considier all remaining entries and consider the one for which the increase in area has the largest possible difference between two nodes.
+
+    	- This entry is assignned to the node with the smaller increase
+
+    	- Repeat until all entries are assigned to a node
+
+    ## R* Tree
+
+    - Various subsequent publications proposed improvements of R tree via better split algorithms
+
+    - The most prominent approach is described as R* Tree

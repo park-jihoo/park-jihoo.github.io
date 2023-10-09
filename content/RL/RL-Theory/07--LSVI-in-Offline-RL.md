@@ -19,9 +19,9 @@ _thumbnail: https://www.notion.so/images/page-cover/woodcuts_14.jpg
 
 *   Learner cannot interact with the environment, instead learner is given **static** datasets
 
-  ```undefined
-  \mathscr{D}_h = \{s,a,r,s'\}, s,a\sim\nu, r=r(s,a),s' \sim P_h(\cdot|s,a)
-  ```
+    ```undefined
+    \mathscr{D}_h = \{s,a,r,s'\}, s,a\sim\nu, r=r(s,a),s' \sim P_h(\cdot|s,a)
+    ```
 
 *   Offline RL is promising for safety critical applications
 
@@ -31,22 +31,22 @@ _thumbnail: https://www.notion.so/images/page-cover/woodcuts_14.jpg
 
 *   Assumptions
 
-  *   Full offline data coverage: \sigma\_{\min}(\mathbb{E}\_{s,a\sim\nu}\phi(s,a)\phi(s,a)^\top)\ge \kappa
+    *   Full offline data coverage: \sigma\_{\min}(\mathbb{E}\_{s,a\sim\nu}\phi(s,a)\phi(s,a)^\top)\ge \kappa
 
-  *   Linear Bellman completion
+    *   Linear Bellman completion
 
 *   Then, with probability at least 1-δ, LSVI return \hat\pi with V^\*-V^{\hat\pi} \le \epsilon, using at most \text{poly}(H,1/\epsilon,1/\kappa,d,\ln(1/\delta))
 
 *   Proof: Linear Bellman completion + Linear Regression with full data coverage
 
-  *   With N training samples where (s,a)\sim\nu, and r=r(s,a),s'\sim P\_h(\cdot|s,a)m we have
+    *   With N training samples where (s,a)\sim\nu, and r=r(s,a),s'\sim P\_h(\cdot|s,a)m we have
 
-    ```undefined
-    \mathbb{E}_{s,a\sim\nu}(\theta_h^\top\phi(s,a)-\mathscr{T}_h(\theta_{h+1})^\top\phi(s,a))^2\le \text{poly}(H,d,1/N)
-    ```
+        ```undefined
+        \mathbb{E}_{s,a\sim\nu}(\theta_h^\top\phi(s,a)-\mathscr{T}_h(\theta_{h+1})^\top\phi(s,a))^2\le \text{poly}(H,d,1/N)
+        ```
 
-    Then with Cauchy-Schwartz, we get
+        Then with Cauchy-Schwartz, we get
 
-    ```undefined
-    \forall s,a, \left|(\theta_h-\mathscr{T}_h(\theta_{h+1}))^\top \phi(s,a)\right| \le ||\theta_h - \mathscr{T}_h(\theta_{h+1})||_\Sigma||\phi(s,a)||_{\Sigma^{-1}}
-    ```
+        ```undefined
+        \forall s,a, \left|(\theta_h-\mathscr{T}_h(\theta_{h+1}))^\top \phi(s,a)\right| \le ||\theta_h - \mathscr{T}_h(\theta_{h+1})||_\Sigma||\phi(s,a)||_{\Sigma^{-1}}
+        ```

@@ -22,21 +22,21 @@ _thumbnail: https://www.notion.so/images/page-cover/woodcuts_8.jpg
 
 *   Softmax policy for Tabluar MDPs: \theta\_{s,a}\in\R, \forall s,a \in S\times A
 
-  ```undefined
-  \pi_\theta(a|s) = \frac{\exp(\theta_{s,a})}{\sum_{a'}\exp(\theta_{s,a'})}
-  ```
+    ```undefined
+    \pi_\theta(a|s) = \frac{\exp(\theta_{s,a})}{\sum_{a'}\exp(\theta_{s,a'})}
+    ```
 
 *   Softmax linear policy: Feature vector \phi(s,a)\in\R^d and parameter \theta\in\R^d
 
-  ```undefined
-  \pi_\theta(a|s) = \frac{\exp(\theta^\top\phi(s,a))}{\sum_{a'}\exp(\theta^\top\phi(s,a'))}
-  ```
+    ```undefined
+    \pi_\theta(a|s) = \frac{\exp(\theta^\top\phi(s,a))}{\sum_{a'}\exp(\theta^\top\phi(s,a'))}
+    ```
 
 *   Neural Policy: Neural lnetwork f\_\theta:S\times A\rightarrow\R
 
-  ```undefined
-  \pi_\theta(a|s)=\frac{\exp(f_\theta(s,a))}{\sum_{a'}\exp(f_\theta(s,a'))}
-  ```
+    ```undefined
+    \pi_\theta(a|s)=\frac{\exp(f_\theta(s,a))}{\sum_{a'}\exp(f_\theta(s,a'))}
+    ```
 
 ## Warm up
 
@@ -46,23 +46,23 @@ J(\theta) = \mathbb{E}*{x\sim P*\theta}\[f(x)], then \nabla\_\theta J(\theta)|*{
 
 *   Assume: \tau = {s\_0,a\_0,s\_1,a\_1,...}, \rho\_\theta(t) =\rho(s\_0)\pi\_\theta(a\_0|s\_0)P(s\_1|s\_0,a\_0)\pi\_\theta(a\_1|s\_1)..., J(\pi\_\theta) = \mathbb{E}*{\tau\sim\rho*\theta(\tau)}\left\[\sum\_{h=0}^\infty \gamma^hr(s\_h,a\_h) \right]
 
-  ```undefined
-  \nabla_\theta J(\pi_\theta) = \mathbb{E}_{\tau\sim\rho_\theta(\tau)}\left[\left(\sum_{h=0}^{\infty}\nabla_\theta\ln\pi_\theta(a_h|s_h)\right)R(\tau)\right]
-  ```
+    ```undefined
+    \nabla_\theta J(\pi_\theta) = \mathbb{E}_{\tau\sim\rho_\theta(\tau)}\left[\left(\sum_{h=0}^{\infty}\nabla_\theta\ln\pi_\theta(a_h|s_h)\right)R(\tau)\right]
+    ```
 
 ## Derivation of Policy Gradient with Q^\pi
 
 *   Recall definition of value function V^{\pi\_\theta}(s)
 
-  ```undefined
-  \begin{aligned}\nabla_\theta J(\pi_\theta) &= \nabla_\theta\mathbb{E}_{s_0\sim \rho}\left[V^{\pi_\theta}(s_0) \right]\\&=\nabla_\theta\mathbb{E}_{s_0\sim \rho}\left[\nabla_\theta\mathbb{E}_{a_0\sim \pi_\theta(s_0)}Q^{\pi_\theta}(s_0, a_0) \right]\\&=\frac 1{1-\gamma}\mathbb{E}_{s,a\sim d^{\pi_\theta}}\nabla_\theta\ln\pi_\theta(a|s)Q^{\pi_\theta}(s,a)\end{aligned}
-  ```
+    ```undefined
+    \begin{aligned}\nabla_\theta J(\pi_\theta) &= \nabla_\theta\mathbb{E}_{s_0\sim \rho}\left[V^{\pi_\theta}(s_0) \right]\\&=\nabla_\theta\mathbb{E}_{s_0\sim \rho}\left[\nabla_\theta\mathbb{E}_{a_0\sim \pi_\theta(s_0)}Q^{\pi_\theta}(s_0, a_0) \right]\\&=\frac 1{1-\gamma}\mathbb{E}_{s,a\sim d^{\pi_\theta}}\nabla_\theta\ln\pi_\theta(a|s)Q^{\pi_\theta}(s,a)\end{aligned}
+    ```
 
 *   Derivation of unbiased stochastic policy gradient: roll in \pi\_\theta to generate s\_h, a\_h \sim \mathbb{P}*h^{\pi*\theta}
 
-  *   Terminate with probability 1-\gamma, \widetilde Q^{\pi\_\theta}(s\_h,a\_h) = \sum\_{\tau=h}^{t\ge h}r\_\tau
+    *   Terminate with probability 1-\gamma, \widetilde Q^{\pi\_\theta}(s\_h,a\_h) = \sum\_{\tau=h}^{t\ge h}r\_\tau
 
-  *   Unbiased estimate \nabla\_\theta\ln\pi\_\theta(a\_h|s\_h)\widetilde Q^{\pi\_\theta}(s\_h,a\_h)
+    *   Unbiased estimate \nabla\_\theta\ln\pi\_\theta(a\_h|s\_h)\widetilde Q^{\pi\_\theta}(s\_h,a\_h)
 
 # Variance Reduction
 
@@ -92,12 +92,12 @@ b(s_h) = \frac{\mathbb{E}\left[ \nabla_\theta\ln\pi_\theta(a_h|s_h)^\top \nabla_
 
 *   Theorem: if J(\theta) is \beta-smooth, and we run SGA: \theta\_{t+1} = \theta\_t+\eta\widetilde\nabla\_\theta J(\theta\_t) where
 
-  ```undefined
-  \mathbb{E}\left[\widetilde \nabla_\theta J(\theta_t)\right] = \nabla_\theta J(\theta_t), \mathbb{E}\left[\left\| \nabla_\theta J(\theta_t)\right\|^2_2\right]\le\sigma^2
-  ```
+    ```undefined
+    \mathbb{E}\left[\widetilde \nabla_\theta J(\theta_t)\right] = \nabla_\theta J(\theta_t), \mathbb{E}\left[\left\| \nabla_\theta J(\theta_t)\right\|^2_2\right]\le\sigma^2
+    ```
 
-  then
+    then
 
-  ```undefined
-  \mathbb{E}\left[\frac 1T\sum_t \| \nabla_\theta J(\theta_t) \|_2^2 \right] \le O\left(\sqrt{\beta\sigma^2/T} \right)
-  ```
+    ```undefined
+    \mathbb{E}\left[\frac 1T\sum_t \| \nabla_\theta J(\theta_t) \|_2^2 \right] \le O\left(\sqrt{\beta\sigma^2/T} \right)
+    ```

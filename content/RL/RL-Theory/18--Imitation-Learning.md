@@ -40,9 +40,9 @@ graph LR
 
 *   BC with Maximum Likelihood estimation
 
-  ```undefined
-  \hat\pi = \argmax_{\pi\in\Pi}\sum_{i=1}^M\ln\pi(a_i^*|s_i^*)
-  ```
+    ```undefined
+    \hat\pi = \argmax_{\pi\in\Pi}\sum_{i=1}^M\ln\pi(a_i^*|s_i^*)
+    ```
 
 ### Analysis
 
@@ -50,17 +50,17 @@ graph LR
 
 *   Supervised learning (MLE) guarantee with probability at least 1-\delta, we have
 
-  ```undefined
-  \mathbb E_{s\sim d^{\pi^*}}\left\| \hat\pi(\cdot|s)-\pi^*(\cdot|s)\right\|_{tv}\le\sqrt{\frac{\ln(|\Pi|/\delta)}{M}}
-  ```
+    ```undefined
+    \mathbb E_{s\sim d^{\pi^*}}\left\| \hat\pi(\cdot|s)-\pi^*(\cdot|s)\right\|_{tv}\le\sqrt{\frac{\ln(|\Pi|/\delta)}{M}}
+    ```
 
 *   Transfer supervised learning error to policy’s performance gap
 
-  *   With probability at least 1-\delta, BC returns a policy \hat\pi
+    *   With probability at least 1-\delta, BC returns a policy \hat\pi
 
-    ```undefined
-    V^{\pi^*}-V^{\hat\pi}\le\frac2{(1-\gamma)^2}\underbrace{\sqrt{\frac{\ln(|\Pi|/\delta)}{M}}}_{\text{MLE Error}}
-    ```
+        ```undefined
+        V^{\pi^*}-V^{\hat\pi}\le\frac2{(1-\gamma)^2}\underbrace{\sqrt{\frac{\ln(|\Pi|/\delta)}{M}}}_{\text{MLE Error}}
+        ```
 
 # Hybrid Imitation Learning
 
@@ -76,9 +76,9 @@ graph LR
 
 *   Given a discriminator class \mathscr F = {f:X\rightarrow\R}, and two distributions p\_1 and p\_2
 
-  ```undefined
-  \text{IPM}_{\mathscr F}(p_1,p_2)=\max_{f\in\mathscr F}\left[\mathbb E_{x\sim p_1}f(x) - \mathbb E_{x \sim p_2} f(x)\right]\\\mathscr F = \{f:\|f\|_\infty\le1\}\implies \text{IPM}_{\mathscr F}:=\|p_1-p_2\|_{tv}\\\mathscr F = \{f:\|f \text{ is 1-Lipschitz}\}\implies \text{IPM}_{\mathscr F}:=\text{wasserstein dis}(p_1,p_2)
-  ```
+    ```undefined
+    \text{IPM}_{\mathscr F}(p_1,p_2)=\max_{f\in\mathscr F}\left[\mathbb E_{x\sim p_1}f(x) - \mathbb E_{x \sim p_2} f(x)\right]\\\mathscr F = \{f:\|f\|_\infty\le1\}\implies \text{IPM}_{\mathscr F}:=\|p_1-p_2\|_{tv}\\\mathscr F = \{f:\|f \text{ is 1-Lipschitz}\}\implies \text{IPM}_{\mathscr F}:=\text{wasserstein dis}(p_1,p_2)
+    ```
 
 ### Algorithm
 
@@ -88,34 +88,34 @@ graph LR
 
 *   Select useful discribminators: for all pair \pi & \pi', with \pi\neq\pi’
 
-  ```undefined
-  f_{\pi,\pi'}=\argmax_{f\in\mathscr F}\left[\mathbb E_{s,a\sim d^\pi}f(s,a)-\mathbb E_{s,a \sim d^{\pi'}}f(s,a) \right]
-  ```
+    ```undefined
+    f_{\pi,\pi'}=\argmax_{f\in\mathscr F}\left[\mathbb E_{s,a\sim d^\pi}f(s,a)-\mathbb E_{s,a \sim d^{\pi'}}f(s,a) \right]
+    ```
 
-  Set refined discriminator class \widetilde{\mathscr F}:= {f\_{\pi,\pi'}:\pi&\pi'\in\Pi,\pi\neq\pi'}
+    Set refined discriminator class \widetilde{\mathscr F}:= {f\_{\pi,\pi'}:\pi&\pi'\in\Pi,\pi\neq\pi'}
 
 *   Set a policy using expert dataset \mathscr D = {s\_i^*,a\_i^*}\_{i=1}^M
 
-  ```undefined
-  \hat\pi:=\argmin_{\pi\in\Pi}\left[\max_{f\in\mathscr F}\left[\mathbb E_{s,a\sim d^\pi f(s,a)}-\frac1M\sum_{i=1}^M f(s_i^*,a_i^*)\right]\right]
-  ```
+    ```undefined
+    \hat\pi:=\argmin_{\pi\in\Pi}\left[\max_{f\in\mathscr F}\left[\mathbb E_{s,a\sim d^\pi f(s,a)}-\frac1M\sum_{i=1}^M f(s_i^*,a_i^*)\right]\right]
+    ```
 
 ### Theorem: Distribution Matching TV distance
 
 *   With probability at least 1-\delta, our algorithm finds policy \hat\pi s.t
 
-  ```undefined
-  V^{\pi^*}-V^{\hat\pi}\le\mathcal O\left(\frac1{1-\gamma}\sqrt{\frac{\ln(|\Pi|/\delta)}M}\right)
-  ```
+    ```undefined
+    V^{\pi^*}-V^{\hat\pi}\le\mathcal O\left(\frac1{1-\gamma}\sqrt{\frac{\ln(|\Pi|/\delta)}M}\right)
+    ```
 
 *   Key step is to prove
 
-  ```undefined
-  \left\|d^{\hat\pi}-d^{\pi^*}\right\|_{tv}\le\sqrt{\frac{\ln(|\Pi|/\delta)}M}
-  ```
+    ```undefined
+    \left\|d^{\hat\pi}-d^{\pi^*}\right\|_{tv}\le\sqrt{\frac{\ln(|\Pi|/\delta)}M}
+    ```
 
 *   For performance
 
-  ```undefined
-  V^{\pi^*}-V^\pi\le\frac1{1-\gamma}[\mathbb E_{s,a\sim d^{\pi^*}}r(s,a)-\mathbb E_{s,a\sim d^{\hat\pi}}r(s,a)]
-  ```
+    ```undefined
+    V^{\pi^*}-V^\pi\le\frac1{1-\gamma}[\mathbb E_{s,a\sim d^{\pi^*}}r(s,a)-\mathbb E_{s,a\sim d^{\hat\pi}}r(s,a)]
+    ```

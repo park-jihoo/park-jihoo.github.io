@@ -13,455 +13,455 @@ class: Coursework
 
 # SQL
 
-  - **S**tructured **Q**uery **L**anguage
+    - **S**tructured **Q**uery **L**anguage
 
-  ## DDL
+    ## DDL
 
-  	- DDL: Data Definition Language
+    	- DDL: Data Definition Language
 
-  	- CREATE, DROP, ALTER,…
+    	- CREATE, DROP, ALTER,…
 
-  	- Defining database schema
+    	- Defining database schema
 
-  		- Define tables with schema - columns and data types
+    		- Define tables with schema - columns and data types
 
-  		- Define constraints - primary key and foreign key
+    		- Define constraints - primary key and foreign key
 
-  	```sql
-  	CREATE TABLE Students(Sid int, Sname text, Gpa real);
-  	CREATE TABLE Enrollment(Sid int, Cid int);
-  	CREATE TABLE Courses(Cid int, Cname text);
-  	ALTER TABLE Students ADD PRIMARY KEY(Sid);
-  	ALTER TABLE Enrollment ADD PRIMARY KEY(Sid, Cid);
-  	ALTER TABLE Courses ADD PRIMARY KEY(Cid);
-  	ALTER TABLE Enrollment
-  	ADD FOREIGN KEY(Sid) REFERENCES Students(Sid);
-  	ALTER TABLE Enrollment
-  	ADD FOREIGN KEY(Cid) REFERENCES Courses(Cid);
-  	```
+    	```sql
+    	CREATE TABLE Students(Sid int, Sname text, Gpa real);
+    	CREATE TABLE Enrollment(Sid int, Cid int);
+    	CREATE TABLE Courses(Cid int, Cname text);
+    	ALTER TABLE Students ADD PRIMARY KEY(Sid);
+    	ALTER TABLE Enrollment ADD PRIMARY KEY(Sid, Cid);
+    	ALTER TABLE Courses ADD PRIMARY KEY(Cid);
+    	ALTER TABLE Enrollment
+    	ADD FOREIGN KEY(Sid) REFERENCES Students(Sid);
+    	ALTER TABLE Enrollment
+    	ADD FOREIGN KEY(Cid) REFERENCES Courses(Cid);
+    	```
 
-  ## DML
+    ## DML
 
-  	- DML: Data Manipulation Language
+    	- DML: Data Manipulation Language
 
-  	- DML change and retrieve database content
+    	- DML change and retrieve database content
 
-  	- A syntax for insert, delete, update, and analyze data in a database
+    	- A syntax for insert, delete, update, and analyze data in a database
 
-  	```sql
-  	INSERT INTO Students VALUES (3, 'Alice', 4.0);
-  	INSERT INTO Students (Sid, Sname) VALUES (5, 'Bob');
-  	INSERT INTO Students VALUES
-  	(6, 'Charlie', 3.3), (7, 'Daniel', 3.9), (9, 'Eric', 3.6), (10, 'Fred', 4.2);
-  	DELETE FROM Courses WHERE Cname = 'CS6320';
-  	UPDATE Courses SET Cid = 7 WHERE Cname = 'CS4320';
-  	```
+    	```sql
+    	INSERT INTO Students VALUES (3, 'Alice', 4.0);
+    	INSERT INTO Students (Sid, Sname) VALUES (5, 'Bob');
+    	INSERT INTO Students VALUES
+    	(6, 'Charlie', 3.3), (7, 'Daniel', 3.9), (9, 'Eric', 3.6), (10, 'Fred', 4.2);
+    	DELETE FROM Courses WHERE Cname = 'CS6320';
+    	UPDATE Courses SET Cid = 7 WHERE Cname = 'CS4320';
+    	```
 
-  	- Diverse SELECT clauses
+    	- Diverse SELECT clauses
 
-  		- ***** selects all columns
+    		- ***** selects all columns
 
-  		- Can use arithmetic expression in select clause
+    		- Can use arithmetic expression in select clause
 
-  		- Can assign new names for output columns
+    		- Can assign new names for output columns
 
-  	- Diverse WHERE conditions
+    	- Diverse WHERE conditions
 
-  		- Equal, Inequalities: =, >, <, ≤, ≥
+    		- Equal, Inequalities: =, >, <, ≤, ≥
 
-  		- Writing not equal <>
+    		- Writing not equal <>
 
-  		- Dealing with null values: IS NULL, IS NOT NULL
+    		- Dealing with null values: IS NULL, IS NOT NULL
 
-  		- Check if value is in list: IN
+    		- Check if value is in list: IN
 
-  		- Regular Expressions: LIKE ‘CS_320’, ‘CS43%’
+    		- Regular Expressions: LIKE ‘CS_320’, ‘CS43%’
 
-  - DCL: Data Control Language
+    - DCL: Data Control Language
 
 # Storage
 
-  - Computer memory hierarchy
+    - Computer memory hierarchy
 
-  	- Tape storage: bits as magnetic information, very slow access but very cheap
+    	- Tape storage: bits as magnetic information, very slow access but very cheap
 
-  	- Hard Disk: Slow access, cheap, used for less frequently accessed data
+    	- Hard Disk: Slow access, cheap, used for less frequently accessed data
 
-  	- SSD: Elevated price, fast access, elevated speed, but limited number of write cycles
+    	- SSD: Elevated price, fast access, elevated speed, but limited number of write cycles
 
-  	- Main memory(volatile): expensive, very fast access, high bandwidth
+    	- Main memory(volatile): expensive, very fast access, high bandwidth
 
-  	- Caches: organized as cache hierarchy(L1,L2,L3), Very expensive, near-instantaneous access, very high bandwidth
+    	- Caches: organized as cache hierarchy(L1,L2,L3), Very expensive, near-instantaneous access, very high bandwidth
 
-  - Row-wise data store: data for same row is close together
+    - Row-wise data store: data for same row is close together
 
-  - Record Format: Fixed length
+    - Record Format: Fixed length
 
-  	- Each row has the same data size
+    	- Each row has the same data size
 
-  	- Column type information is stored in system catalogs
+    	- Column type information is stored in system catalogs
 
-  	- Finding i’th column doesn’t require scan of record
+    	- Finding i’th column doesn’t require scan of record
 
-  - Page Format: Fixed-Length records:
+    - Page Format: Fixed-Length records:
 
-  	- In packed page, records will move for free space
+    	- In packed page, records will move for free space
 
-  	- Record id = <page id, slot id>
+    	- Record id = <page id, slot id>
 
-  - Record Format: Variable length
+    - Record Format: Variable length
 
-  	- Each row has different datasize(VARCHAR)
+    	- Each row has different datasize(VARCHAR)
 
-  	- Second format offers direct access to i’th columns
+    	- Second format offers direct access to i’th columns
 
-  - Page Format: Variable Length Records:
+    - Page Format: Variable Length Records:
 
-  	- Can move records within page without changing Rid
+    	- Can move records within page without changing Rid
 
 # Tree Index
 
-  - Index: auxiliary data structure for finding data faster
+    - Index: auxiliary data structure for finding data faster
 
-  	- Index stores references to data records
+    	- Index stores references to data records
 
-  	- Index sorts rows by values in specific columns
+    	- Index sorts rows by values in specific columns
 
-  	- Index retrieves rows for specific search key values
+    	- Index retrieves rows for specific search key values
 
-  ## B Tree
+    ## B Tree
 
-  	- A balanced multi-way search tree
+    	- A balanced multi-way search tree
 
-  	- Each tree node must have elements at least 50% of capacity of node, except the root
+    	- Each tree node must have elements at least 50% of capacity of node, except the root
 
-  	- All leaf nodes have the same depth
+    	- All leaf nodes have the same depth
 
-  	### Find
+    	### Find
 
-  	- Starting at root node, recursively traverse child nodes from top to bottom
+    	- Starting at root node, recursively traverse child nodes from top to bottom
 
-  	### Traverse
+    	### Traverse
 
-  	- Inorder traversal
+    	- Inorder traversal
 
-  	- A leaf node: list the element at the first time we pass it
+    	- A leaf node: list the element at the first time we pass it
 
-  	- A non-leaf node: list the element the second time we pass it
+    	- A non-leaf node: list the element the second time we pass it
 
-  	### Insert
+    	### Insert
 
-  	- First, find a leaf node to insert the value
+    	- First, find a leaf node to insert the value
 
-  	- Insert the new element on the leaf node
+    	- Insert the new element on the leaf node
 
-  	- If the node overflows
+    	- If the node overflows
 
-  		- Pick a single median among elements of the leaf node
+    		- Pick a single median among elements of the leaf node
 
-  		- Split the leaf node
+    		- Split the leaf node
 
-  		- The median node is inserted to the parent node
+    		- The median node is inserted to the parent node
 
-  	### Delete
+    	### Delete
 
-  	- Delete from left node
+    	- Delete from left node
 
-  		- If node underflows → borrow from adjacent sibling nodes or merge them
+    		- If node underflows → borrow from adjacent sibling nodes or merge them
 
-  	- Delete fron non-leaf node
+    	- Delete fron non-leaf node
 
-  		- Delete and borrow element from child node
+    		- Delete and borrow element from child node
 
-  ## B+ Tree
+    ## B+ Tree
 
-  	- Leaf node contain all data values
+    	- Leaf node contain all data values
 
-  	- Adjacent leaf nodes are bidirectionally linked
+    	- Adjacent leaf nodes are bidirectionally linked
 
-  	- Efficient data traversal than B Tree
+    	- Efficient data traversal than B Tree
 
-  	- Consists of index node and data node(bidirectionally linked)
+    	- Consists of index node and data node(bidirectionally linked)
 
-  	### Find
+    	### Find
 
-  	- Same as B tree but recursively search to a data node even if the value matches the element in index node
+    	- Same as B tree but recursively search to a data node even if the value matches the element in index node
 
-  	### Traverse
+    	### Traverse
 
-  	- Search the smallest value and then traverse sequentially using links
+    	- Search the smallest value and then traverse sequentially using links
 
-  	### Insert
+    	### Insert
 
-  	- Split data nodes, copy median key ot the parent(first element in the right child node)
+    	- Split data nodes, copy median key ot the parent(first element in the right child node)
 
-  	### Delete
+    	### Delete
 
-  	- In borrow/merge procedure, parent node must keep the first value of its right child node
+    	- In borrow/merge procedure, parent node must keep the first value of its right child node
 
-  	> 📖 B+ Tree can cover large table with shallow depth
+    	> 📖 B+ Tree can cover large table with shallow depth
 
 # Hashing
 
-  - Performs the operations rapidly
+    - Performs the operations rapidly
 
-  	- Find, Insert, Delete in O(1) with high probability
+    	- Find, Insert, Delete in O(1) with high probability
 
-  - Hash function maps each key to a hash value
+    - Hash function maps each key to a hash value
 
-  	- Key x is usually a character string
+    	- Key x is usually a character string
 
-  	- Hash value h(x) is bucket(=cell) index in a hash table 0≤h(x)<B
+    	- Hash value h(x) is bucket(=cell) index in a hash table 0≤h(x)<B
 
-  	- Hash table: a B-element array
+    	- Hash table: a B-element array
 
-  - Collision: it’s possible that different keys may be mapped into the same location
+    - Collision: it’s possible that different keys may be mapped into the same location
 
-  	- Open hashing: keeps a list of all elements that hash to the same value
+    	- Open hashing: keeps a list of all elements that hash to the same value
 
-  	- Closed Hashing: To keep all keys in the table itself
+    	- Closed Hashing: To keep all keys in the table itself
 
-  - A good hash function is simple, and produce less collisions
+    - A good hash function is simple, and produce less collisions
 
-  	- For a K-character key x, h(x) can be given by
+    	- For a K-character key x, h(x) can be given by
 
-  		```undefined
-  		h(x) = \left(\sum_{i=0}^{K-1}x[K-i-1]*32^i\right)\%B
-  		```
+    		```undefined
+    		h(x) = \left(\sum_{i=0}^{K-1}x[K-i-1]*32^i\right)\%B
+    		```
 
-  - Probing sequence
+    - Probing sequence
 
-  	- Linear probing: f(i)=i → Leads to primary clustering
+    	- Linear probing: f(i)=i → Leads to primary clustering
 
-  	- Quadratic probing: f(i)=i^2 → secondary clustering
+    	- Quadratic probing: f(i)=i^2 → secondary clustering
 
-  	- Double hashing: f(i)=i\times g(x), where g(x) is a hash function
+    	- Double hashing: f(i)=i\times g(x), where g(x) is a hash function
 
 # Query Processing
 
-  ```mermaid
-  graph LR
-    A[Input Query] -->|Parse| B[Query Parser]
-    B -->|Rewrite| C[Query Rewriter]
-    C -->|Optimize| D[Query Optimizer]
-    D -->|Plan| E[Physical Plan]
-    E -->|Execute| F[Query Executor]
-    F -->|Result| G[Query Result]
-  ```
+    ```mermaid
+    graph LR
+      A[Input Query] -->|Parse| B[Query Parser]
+      B -->|Rewrite| C[Query Rewriter]
+      C -->|Optimize| D[Query Optimizer]
+      D -->|Plan| E[Physical Plan]
+      E -->|Execute| F[Query Executor]
+      F -->|Result| G[Query Result]
+    ```
 
-  ## Relational Algebra
+    ## Relational Algebra
 
-  	- Example
+    	- Example
 
-  		```undefined
-  		\pi_{\text{S.sname}}((\sigma\text{S.major}=\text{'Data science'}\land \text{C.cname='DS5700'}((\text{students}\Join_{\text{S.sid=E.sid}}\text{enrollment})\Join_{\text{E.cid=C.cid}}\text{courses})))
-  		```
+    		```undefined
+    		\pi_{\text{S.sname}}((\sigma\text{S.major}=\text{'Data science'}\land \text{C.cname='DS5700'}((\text{students}\Join_{\text{S.sid=E.sid}}\text{enrollment})\Join_{\text{E.cid=C.cid}}\text{courses})))
+    		```
 
-  	- Operational description of a computation
+    	- Operational description of a computation
 
-  	- Systems execute relational algebra query plan
+    	- Systems execute relational algebra query plan
 
-  	- Unary operators: on single relation
+    	- Unary operators: on single relation
 
-  		- Projection(\pi) : Retains only desired columns
+    		- Projection(\pi) : Retains only desired columns
 
-  		- Selection(\sigma): Selects a subset of rows
+    		- Selection(\sigma): Selects a subset of rows
 
-  		- Renaming(\rho): Rename attributes and relations
+    		- Renaming(\rho): Rename attributes and relations
 
-  	- Binary operators: on pairs of relations
+    	- Binary operators: on pairs of relations
 
-  		- Union(\cup): Tuples in r1 or in r2
+    		- Union(\cup): Tuples in r1 or in r2
 
-  		- Set-difference(-): Tuples in r1, but not in r2
+    		- Set-difference(-): Tuples in r1, but not in r2
 
-  		- Cross-product(\times): Allows us to combine two relations
+    		- Cross-product(\times): Allows us to combine two relations
 
-  	- Compound operators: common “macros” for above
+    	- Compound operators: common “macros” for above
 
-  		- Intersection(\cap): Tuples in r1 and in r2
+    		- Intersection(\cap): Tuples in r1 and in r2
 
-  		- Joins(\Join): Combine relations that satisfy predicates(= \sigma_\theta(R\times S))
+    		- Joins(\Join): Combine relations that satisfy predicates(= \sigma_\theta(R\times S))
 
-  ## Projection, Selection
+    ## Projection, Selection
 
-  	- Query Execution in Row store
+    	- Query Execution in Row store
 
-  		- On every Page, check condition for all slots
+    		- On every Page, check condition for all slots
 
-  	- Query Execution in Column store
+    	- Query Execution in Column store
 
-  		- Look-up the sorted dictionary to find the value which satisfies condition
+    		- Look-up the sorted dictionary to find the value which satisfies condition
 
-  		- Calculate the binary code of condition
+    		- Calculate the binary code of condition
 
-  		- Compare the binary code with the encoded column of target column
+    		- Compare the binary code with the encoded column of target column
 
-  		- Create a bit vector with length of #rows
+    		- Create a bit vector with length of #rows
 
-  		- Materialize the result with the bit vector, encoded column of sname and the dictionary of sname
+    		- Materialize the result with the bit vector, encoded column of sname and the dictionary of sname
 
-  ## Join, Query Plan and Optimization
+    ## Join, Query Plan and Optimization
 
-  	### Join(\Join)
+    	### Join(\Join)
 
-  	- Simple nested loops join: Cost O(MN)
+    	- Simple nested loops join: Cost O(MN)
 
-  	- Index nested loops join: if there is an index of join column of one table, can make it the inner and exploit the index
+    	- Index nested loops join: if there is an index of join column of one table, can make it the inner and exploit the index
 
-  	- Sort-merge join: sort two tables on the join column, and scan them to do a merge
+    	- Sort-merge join: sort two tables on the join column, and scan them to do a merge
 
-  	- Hash join: Same value in join column implies same hash values
+    	- Hash join: Same value in join column implies same hash values
 
-  	- Join in Column Store
+    	- Join in Column Store
 
-  		- Make a dictionary translation table for join columns
+    		- Make a dictionary translation table for join columns
 
-  		- List row IDs of T2 with the value IDs of T1.A using the translation table
+    		- List row IDs of T2 with the value IDs of T1.A using the translation table
 
-  		- List matching row IDs
+    		- List matching row IDs
 
-  	### Query Plan
+    	### Query Plan
 
-  	- Logical query plan just specifies types of operators
+    	- Logical query plan just specifies types of operators
 
-  	- Physical query plan specifies implementations as well(ex. if join, then use hash join)
+    	- Physical query plan specifies implementations as well(ex. if join, then use hash join)
 
-  	### Query Optimization
+    	### Query Optimization
 
-  	- Query Plan search space: heuristic restrictions for query plan
+    	- Query Plan search space: heuristic restrictions for query plan
 
-  		- Apply predicate/projection early
+    		- Apply predicate/projection early
 
-  		- Avoid predicate-less joins
+    		- Avoid predicate-less joins
 
-  		- Focus on left-deep plans to allow pipelining
+    		- Focus on left-deep plans to allow pipelining
 
 # Transactions
 
-  ## ACID Properties
+    ## ACID Properties
 
-  	- Lifecycles of transaction
+    	- Lifecycles of transaction
 
-  		- Begin a transaction with command BEGIN
+    		- Begin a transaction with command BEGIN
 
-  		- End a transaction with command COMMIT
+    		- End a transaction with command COMMIT
 
-  		- Abort a transaction with command ROLLBACK
+    		- Abort a transaction with command ROLLBACK
 
-  	- Integrity Constraints must be maintained before and after transaction
+    	- Integrity Constraints must be maintained before and after transaction
 
-  	### Atomicity
+    	### Atomicity
 
-  	- A transaction’s all steps are executed OR none of them are executed
+    	- A transaction’s all steps are executed OR none of them are executed
 
-  	### Consistency
+    	### Consistency
 
-  	- Data is consistent with all constraints(PK, FK, Domain integrity)
+    	- Data is consistent with all constraints(PK, FK, Domain integrity)
 
-  	- DBMS will abort transactions threatening consistency
+    	- DBMS will abort transactions threatening consistency
 
-  	### Isolation
+    	### Isolation
 
-  	- Different users may execute transactions concurrently
+    	- Different users may execute transactions concurrently
 
-  	- Isolation means give an illusion of sequential execution to users
+    	- Isolation means give an illusion of sequential execution to users
 
-  	### Durability
+    	### Durability
 
-  	- Durability guarantees that committed updates persist
+    	- Durability guarantees that committed updates persist
 
-  ## Concurrency Control
+    ## Concurrency Control
 
-  	- A procedure of managing simultaneous operations without conflicting with each other
+    	- A procedure of managing simultaneous operations without conflicting with each other
 
-  	- Ensures that transactions are performed concurrently and to produce correct results without violating data integrity
+    	- Ensures that transactions are performed concurrently and to produce correct results without violating data integrity
 
-  	- Schedule: ordered steps from multiple tranactions and a good schedule preserves the illusion of isolation
+    	- Schedule: ordered steps from multiple tranactions and a good schedule preserves the illusion of isolation
 
-  	- Final state equivalence: comparing two schedules based on final database state
+    	- Final state equivalence: comparing two schedules based on final database state
 
-  	- Final state serializable if there is a serial schedule that is final state equivalent
+    	- Final state serializable if there is a serial schedule that is final state equivalent
 
-  	- View equivalence
+    	- View equivalence
 
-  		- If transaction X reads the initial value for some object in S1, then also does S2
+    		- If transaction X reads the initial value for some object in S1, then also does S2
 
-  		- If transaction X reads a value written by transaction Y in S1, then also does S2
+    		- If transaction X reads a value written by transaction Y in S1, then also does S2
 
-  		- If transaction X writes the final value written by transaction Y in S1, then also does S2
+    		- If transaction X writes the final value written by transaction Y in S1, then also does S2
 
-  	- View serializable if there is a serial schedule that is view equivalent
+    	- View serializable if there is a serial schedule that is view equivalent
 
-  	- Conflict Equivalence
+    	- Conflict Equivalence
 
-  		- Conflict: if one of two operations of different transactions on the same object is a write operation
+    		- Conflict: if one of two operations of different transactions on the same object is a write operation
 
-  		- Swapping conflicting options changes results and view
+    		- Swapping conflicting options changes results and view
 
-  		- Can get from S1 to S2 by swapping non-conflicting operation is conflict equivalence
+    		- Can get from S1 to S2 by swapping non-conflicting operation is conflict equivalence
 
-  	- Conflict Serializable if conflict equivalent with serial schedule
+    	- Conflict Serializable if conflict equivalent with serial schedule
 
-  		- Draw conflict graph for schedule to test conflict serializability
+    		- Draw conflict graph for schedule to test conflict serializability
 
-  ## MVCC
+    ## MVCC
 
-  	### Lock-based CC
+    	### Lock-based CC
 
-  	- Read lock disallows write access to the object, other transactions can read the object freely
+    	- Read lock disallows write access to the object, other transactions can read the object freely
 
-  	- Write lock disallows read/write access to the object
+    	- Write lock disallows read/write access to the object
 
-  	### MVCC Protocol
+    	### MVCC Protocol
 
-  	- Each transaction receives start timestamp(STS)
+    	- Each transaction receives start timestamp(STS)
 
-  	- Each writing transaction creates a new version of an object which has commit timestamp(CTS)
+    	- Each writing transaction creates a new version of an object which has commit timestamp(CTS)
 
-  	- Read operation reads latest version’s value, which depends on isolation level
+    	- Read operation reads latest version’s value, which depends on isolation level
 
-  	### Isolation Level
+    	### Isolation Level
 
-  	|          | Dirty Reads  | Non-repeatable reads | Phantom reads |
-  	|------------------|--------------|----------------------|---------------|
-  	| Read Uncommitted | Possible   | Possible       | Possible    |
-  	| Read Committed   | Not possible | Possible       | Possible    |
-  	| Repeated Read  | Not possible | Not possible     | Possible    |
-  	| Serializable   | Not possible | Not possible     | Not possible  |
+    	|                  | Dirty Reads  | Non-repeatable reads | Phantom reads |
+    	|------------------|--------------|----------------------|---------------|
+    	| Read Uncommitted | Possible     | Possible             | Possible      |
+    	| Read Committed   | Not possible | Possible             | Possible      |
+    	| Repeated Read    | Not possible | Not possible         | Possible      |
+    	| Serializable     | Not possible | Not possible         | Not possible  |
 
-  	### Garbage collection
+    	### Garbage collection
 
-  	- There are no running transactions looking previous versions of A which can lead to memory overhead
+    	- There are no running transactions looking previous versions of A which can lead to memory overhead
 
-  	- Copy the latest version with CTS is less than the minimum STS of running transactions
+    	- Copy the latest version with CTS is less than the minimum STS of running transactions
 
-  	- Delete all versions with CTS is less then the minimum STS of running transactions
+    	- Delete all versions with CTS is less then the minimum STS of running transactions
 
 # Column Store RDBMS
 
-  - Data for some column is close together
+    - Data for some column is close together
 
-  - Values in same columns are often repeated → we can compress the data
+    - Values in same columns are often repeated → we can compress the data
 
-  - Dictionary Encoding: create sorted dictionary of each column
+    - Dictionary Encoding: create sorted dictionary of each column
 
-  	- Consists of encoded values in bit string and corresponding original values
+    	- Consists of encoded values in bit string and corresponding original values
 
-  	- Values are stored in sorted order
+    	- Values are stored in sorted order
 
-  	- We can use array index and code size to get each encoded value
+    	- We can use array index and code size to get each encoded value
 
-  - Insert/Delete/Update
+    - Insert/Delete/Update
 
-  	- If values are unique, then we need to recreate dictionaries and re-encode columns
+    	- If values are unique, then we need to recreate dictionaries and re-encode columns
 
-  	- Solution: Delta with row store
+    	- Solution: Delta with row store
 
-  		- Divide table into main and delta
+    		- Divide table into main and delta
 
-  		- Delta store captures recent changes
+    		- Delta store captures recent changes
 
-  - Contiguous storage : store table in contiguously allocated memory
+    - Contiguous storage : store table in contiguously allocated memory
 
-  - Paged storage : split table into multiple pages
+    - Paged storage : split table into multiple pages

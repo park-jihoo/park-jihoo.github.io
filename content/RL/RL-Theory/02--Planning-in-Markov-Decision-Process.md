@@ -34,11 +34,11 @@ _thumbnail: https://www.notion.so/images/page-cover/gradients_11.jpg
 
 *   Lemma: Given any Q,Q', we have
 
-  ```undefined
-  ||\mathscr{T}Q - \mathscr{T}Q'||_\infty \le \gamma||Q-Q'||_\infty
-  ```
+    ```undefined
+    ||\mathscr{T}Q - \mathscr{T}Q'||_\infty \le \gamma||Q-Q'||_\infty
+    ```
 
-  *   Proof: |\mathscr{T}Q(s,a)-\mathscr{T}Q'(s,a)| \le\gamma\max\_{s'}\max\_{a'}|(Q(s',a')-Q'(s',a')| = \gamma||Q-Q'||\_\infty
+    *   Proof: |\mathscr{T}Q(s,a)-\mathscr{T}Q'(s,a)| \le\gamma\max\_{s'}\max\_{a'}|(Q(s',a')-Q'(s',a')| = \gamma||Q-Q'||\_\infty
 
 *   Convergence Lemma: Given Q^0, we have ||Q^t-Q^*||\_\infty\le\gamma^t||Q^0-Q^*||\_\infty
 
@@ -54,9 +54,9 @@ V^{\pi^t}(s)\ge V^*(s)-\frac{2\gamma^t}{1-\gamma}||Q^0-Q^*||_\infty\forall s\in 
 
 *   Proof
 
-  ```undefined
-  V^{\pi^t}(s) - V^*(s) = Q^{\pi^t}(s, \pi^t(s))-Q^*(s,\pi^*(s)) = Q^{\pi^t}(s, \pi^t(s))-Q^*(s,\pi^t(s))+Q^*(s,\pi^t(s))-Q^*(s,\pi^*(s)) = \gamma \mathbb{E}_{s'\sim P(s,\pi^t(s))}(V^{\pi^t}(s')-V^*(s')) + Q^*(s,\pi^t(s))-Q^*(s,\pi^*(s)) 
-  ```
+    ```undefined
+    V^{\pi^t}(s) - V^*(s) = Q^{\pi^t}(s, \pi^t(s))-Q^*(s,\pi^*(s)) = Q^{\pi^t}(s, \pi^t(s))-Q^*(s,\pi^t(s))+Q^*(s,\pi^t(s))-Q^*(s,\pi^*(s)) = \gamma \mathbb{E}_{s'\sim P(s,\pi^t(s))}(V^{\pi^t}(s')-V^*(s')) + Q^*(s,\pi^t(s))-Q^*(s,\pi^*(s)) 
+    ```
 
 # Policy Iteration
 
