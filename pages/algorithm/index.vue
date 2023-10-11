@@ -1,7 +1,6 @@
 <script setup>
 import { VDataTable } from "vuetify/labs/components";
 import { useAlgorithmStore } from "~/stores/algorithm";
-import { storeToRefs } from "pinia";
 
 const router = useRouter();
 const itemsPerPage = ref(10);
@@ -35,12 +34,13 @@ const navigateTo = (event, data) => {
   router.replace({ path: data.item.selectable.url});
 };
 
-const filteredPosts = computed(() => {
+const {data: filteredPosts} = await useAsyncData("filteredPosts", async () => {
   if (!posts.value) return [];
   return posts.value.filter((post) => {
     return post.name.toLowerCase().includes(search.value.toLowerCase());
   });
-});
+})
+
 
 const getLanguageIcon = (language) => {
   const languageInfo = languageIcons.find((icon) => icon.language === language);
@@ -78,14 +78,12 @@ const getColor = (query) => {
 const platformTabs = ref(["leetcode", "백준", "프로그래머스"]); // Add other platforms as needed
 
 // Selected tab state
-const selectedTab = ref(platformTabs[0]);
+const selectedTab = ref(platformTabs.value[0]);
 
-// Filter posts based on selected platform
-const selectedPlatformData = computed(() => {
+const {data: selectedPlatformData} = await useAsyncData("selectedPlatformData", async () => {
   if (!filteredPosts.value) return [];
   return filteredPosts.value.filter(post => post.platform === selectedTab.value);
-});
-
+}, {watch: selectedTab})
 </script>
 
 <template>

@@ -72,9 +72,9 @@ const goTo = (url) => {
           <v-card-text class="text-button">
             <div v-for="(skillset, category) in skills" :key="category">
               <div class="mb-2">{{ category }}</div>
-              <v-img
+              <NuxtImg
                   :src="`https://skillicons.dev/icons?i=${skillset.join()}&theme=light`"
-                  :max-width="`${70 * skillset.length}px`"
+                  :width="`${70 * skillset.length}px`"
                   class="my-2"
               />
             </div>

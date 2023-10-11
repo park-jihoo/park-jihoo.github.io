@@ -81,7 +81,7 @@ export default defineNuxtConfig({
     'nuxt-simple-robots',
     '@pinia/nuxt',
     'nuxt-simple-sitemap',
-    '@nuxt/content',
+    '@nuxt/image',
   ],
   gtag: {
     id: 'G-5H39DYHZK8'
@@ -101,7 +101,8 @@ export default defineNuxtConfig({
       routes: [
         '/sitemap.xml',
         '/algorithm',
-        '/notes'
+        '/notes',
+        '/200.html',
         ],
       crawlLinks: true,
     }
