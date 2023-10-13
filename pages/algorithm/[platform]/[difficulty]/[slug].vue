@@ -24,27 +24,29 @@ const algorithmStore = useAlgorithmStore();
 const { data: posts } = await useAsyncData("data", async () => {
   await algorithmStore.fetchQuestions();
   return algorithmStore.getQuestions;
-})
+});
 
 const { data: langs } = await useAsyncData("langs", () => {
-    return posts.value.filter((post) => post.slug === slug)[0].languages;
-  }
-);
+  return posts.value.filter((post) => post.slug === slug)[0].languages;
+});
 
-const {data: lang} = await useAsyncData("lang", () => {
+const { data: lang } = await useAsyncData("lang", () => {
   return langs.value[0];
 });
 
-const { data: code, pending:pending } = await useLazyAsyncData("code", () => {
-  const file = platform !== "leetcode"
-    ? `${slug.split(".")[1].trim()}.${lang.value}`
-    : `${slug}.${lang.value}`;
-  const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
-  return $fetch(githubUrl).then((res) => {
+const { data: code, pending: pending } = await useLazyAsyncData(
+  "code",
+  () => {
+    const file =
+      platform !== "leetcode"
+        ? `${slug.split(".")[1].trim()}.${lang.value}`
+        : `${slug}.${lang.value}`;
+    const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
+    return $fetch(githubUrl).then((res) => {
       return res;
     });
   },
-  { watch: [lang] }
+  { watch: [lang] },
 );
 
 const getColor = (difficulty) => {
@@ -77,7 +79,9 @@ const getColor = (difficulty) => {
 const getLink = (platform, slug) => {
   switch (platform) {
     case "leetcode":
-      return `https://leetcode.com/problems/${slug.replace(/\d\d\d\d-/g, "").replace(/ /g, "-")}`;
+      return `https://leetcode.com/problems/${slug
+        .replace(/\d\d\d\d-/g, "")
+        .replace(/ /g, "-")}`;
     case "프로그래머스":
       return `https://programmers.co.kr/learn/courses/30/lessons/${slug}`;
     case "백준":
@@ -86,10 +90,15 @@ const getLink = (platform, slug) => {
 };
 
 useServerSeoMeta({
-  ogTitle: () => `${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")} | Algorithm`,
-  ogDescription: () => `${platform} - ${difficulty.value} | ${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")}`,
-  twitterTitle: () => `${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")} | Algorithm`,
-})
+  ogTitle: () =>
+    `${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")} | Algorithm`,
+  ogDescription: () =>
+    `${platform} - ${difficulty.value} | ${slug
+      .replace(/\d\d\d\d-/g, "")
+      .replace(/-/g, " ")}`,
+  twitterTitle: () =>
+    `${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")} | Algorithm`,
+});
 </script>
 
 <template>
@@ -99,13 +108,12 @@ useServerSeoMeta({
         <v-col align-self="auto">
           <v-card outlined class="mb-5 elevation-4">
             <v-card-title class="headline">
-              <v-chip
-                class="ml-2"
-                :color="getColor(difficulty)"
-              >
+              <v-chip class="ml-2" :color="getColor(difficulty)">
                 {{ difficulty }}
               </v-chip>
-              {{ route.params.slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ") }}
+              {{
+                route.params.slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")
+              }}
               <v-btn
                 icon
                 class="elevation-0"
@@ -136,20 +144,22 @@ useServerSeoMeta({
                     :code="code"
                     :prismjs="true"
                     :lang="`${lang === 'cc' ? 'cpp' : lang}`"
-                    :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`"
+                    :theme="`${
+                      theme.global.current.value.dark ? 'dark' : 'default'
+                    }`"
                     persistent-copy-button
                   />
                 </ClientOnly>
               </template>
-              <v-skeleton-loader
-                v-else
-                type="paragraph"
-              />
+              <v-skeleton-loader v-else type="paragraph" />
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="primary">
-                <NuxtLink :to="`/algorithm`" style="text-decoration: none; color: inherit">
+                <NuxtLink
+                  :to="`/algorithm`"
+                  style="text-decoration: none; color: inherit"
+                >
                   Back to List
                 </NuxtLink>
               </v-btn>

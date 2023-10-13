@@ -5,23 +5,27 @@ import { Octokit } from "@octokit/rest";
 
 const fetchGithubFiles = async () => {
   try {
-    const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN});
-    const tree = await octokit.request('GET /repos/park-jihoo/Algorithm/git/trees/main?recursive=1');
+    const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+    const tree = await octokit.request(
+      "GET /repos/park-jihoo/Algorithm/git/trees/main?recursive=1",
+    );
     let data = tree.data;
-    if(data.tree){
+    if (data.tree) {
       data = data.tree.filter((item) => item.type === "tree");
-      if(data){
-        data = data.filter(
-          (item) =>
-            (item.path.includes("leetcode")
-              || item.path.includes("백준")
-              || item.path.includes("프로그래머스"))
-        ).map((item) => '/algorithm/'+item.path);
+      if (data) {
+        data = data
+          .filter(
+            (item) =>
+              item.path.includes("leetcode") ||
+              item.path.includes("백준") ||
+              item.path.includes("프로그래머스"),
+          )
+          .map((item) => "/algorithm/" + item.path);
         return data;
-      }else{
+      } else {
         return [];
       }
-    }else{
+    } else {
       return [];
     }
   } catch (error) {
@@ -29,95 +33,86 @@ const fetchGithubFiles = async () => {
   }
 };
 
-async function getDynamicRoutes(){
-  const [
-    notes,
-    algorithm,
-  ] = await Promise.all([
+async function getDynamicRoutes() {
+  const [notes, algorithm] = await Promise.all([
     await getPageTable("619787c75b60479886c147cf746bfbb8"),
-    await fetchGithubFiles()
-  ])
+    await fetchGithubFiles(),
+  ]);
 
-  let urls = []
-  if (notes){
+  let urls = [];
+  if (notes) {
     for (const note of notes) {
       urls.push({
         loc: `/notes/${note.id}`,
-      })
+      });
     }
-
   }
 
-  if(algorithm){
+  if (algorithm) {
     for (const a of algorithm) {
-      if(a.split('/').length === 5){
+      if (a.split("/").length === 5) {
         urls.push({
-          loc : a,
-        })
+          loc: a,
+        });
       }
     }
   }
 
-  urls.push('/algorithm');
+  urls.push("/algorithm");
 
   return urls;
 }
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css:[
-    'vuetify/lib/styles/main.sass',
-    '@mdi/font/css/materialdesignicons.min.css',
-    'katex/dist/katex.min.css',
-    'prismjs/themes/prism.css',
+  css: [
+    "vuetify/lib/styles/main.sass",
+    "@mdi/font/css/materialdesignicons.min.css",
+    "katex/dist/katex.min.css",
+    "prismjs/themes/prism.css",
   ],
-  build:{
-    transpile: ['vuetify']
+  build: {
+    transpile: ["vuetify"],
   },
   modules: [
-    'nuxt-gtag',
-    'nuxt-og-image',
-    'nuxt-simple-robots',
-    '@pinia/nuxt',
-    'nuxt-simple-sitemap',
-    '@nuxt/image',
+    "nuxt-gtag",
+    "nuxt-og-image",
+    "nuxt-simple-robots",
+    "@pinia/nuxt",
+    "nuxt-simple-sitemap",
+    "@nuxt/image",
   ],
   gtag: {
-    id: 'G-5H39DYHZK8'
+    id: "G-5H39DYHZK8",
   },
   site: {
-    url: 'https://park-jihoo.github.io',
+    url: "https://park-jihoo.github.io",
   },
   ssr: true,
-  app:{
-    head:{
-      charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1'
-    }
+  app: {
+    head: {
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+    },
   },
   nitro: {
     prerender: {
-      routes: [
-        '/sitemap.xml',
-        '/algorithm',
-        '/notes',
-        '/200.html',
-        ],
+      routes: ["/sitemap.xml", "/algorithm", "/notes", "/200.html"],
       crawlLinks: true,
-    }
+    },
   },
   imports: {
-    dirs: ['./stores']
+    dirs: ["./stores"],
   },
   pinia: {
-    autoImports: ['defineStore', 'acceptHMRUpdate'],
+    autoImports: ["defineStore", "acceptHMRUpdate"],
   },
   hooks: {
-    async 'nitro:config' (nitroConfig) {
-      if(nitroConfig.prerender.routes.length === 0) return;
+    async "nitro:config"(nitroConfig) {
+      if (nitroConfig.prerender.routes.length === 0) return;
       const routes = await getDynamicRoutes();
       const staticEndpoints = routes.map((route) => route.loc);
       nitroConfig.prerender.routes.push(...staticEndpoints);
-    }
-  }
-})
+    },
+  },
+});

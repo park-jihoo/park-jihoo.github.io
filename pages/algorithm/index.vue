@@ -8,7 +8,7 @@ const headers = [
   { title: "id", key: "id", sortable: true },
   { title: "Name", key: "name", sortable: true },
   { title: "Difficulty", key: "difficulty", sortable: false },
-  { title: "Languages", key: "languages", sortable: false }
+  { title: "Languages", key: "languages", sortable: false },
 ];
 
 const languageIcons = [
@@ -18,7 +18,7 @@ const languageIcons = [
   { language: "cc", icon: "mdi-language-cpp" },
   { language: "cpp", icon: "mdi-language-cpp" },
   { language: "c", icon: "mdi-language-c" },
-  { language: "sql", icon: "mdi-database" }
+  { language: "sql", icon: "mdi-database" },
 ];
 
 const search = ref("");
@@ -28,19 +28,21 @@ const algorithmStore = useAlgorithmStore();
 const { data: posts } = await useAsyncData("data", async () => {
   await algorithmStore.fetchQuestions();
   return algorithmStore.getQuestions;
-})
+});
 
 const navigateTo = (event, data) => {
-  router.replace({ path: data.item.selectable.url});
+  router.replace({ path: data.item.selectable.url });
 };
 
-const {data: filteredPosts} = await useAsyncData("filteredPosts", async () => {
-  if (!posts.value) return [];
-  return posts.value.filter((post) => {
-    return post.name.toLowerCase().includes(search.value.toLowerCase());
-  });
-})
-
+const { data: filteredPosts } = await useAsyncData(
+  "filteredPosts",
+  async () => {
+    if (!posts.value) return [];
+    return posts.value.filter((post) => {
+      return post.name.toLowerCase().includes(search.value.toLowerCase());
+    });
+  },
+);
 
 const getLanguageIcon = (language) => {
   const languageInfo = languageIcons.find((icon) => icon.language === language);
@@ -80,10 +82,16 @@ const platformTabs = ref(["leetcode", "백준", "프로그래머스"]); // Add o
 // Selected tab state
 const selectedTab = ref(platformTabs.value[0]);
 
-const {data: selectedPlatformData} = await useAsyncData("selectedPlatformData", async () => {
-  if (!filteredPosts.value) return [];
-  return filteredPosts.value.filter(post => post.platform === selectedTab.value);
-}, {watch: selectedTab})
+const { data: selectedPlatformData } = await useAsyncData(
+  "selectedPlatformData",
+  async () => {
+    if (!filteredPosts.value) return [];
+    return filteredPosts.value.filter(
+      (post) => post.platform === selectedTab.value,
+    );
+  },
+  { watch: selectedTab },
+);
 </script>
 
 <template>
@@ -92,7 +100,11 @@ const {data: selectedPlatformData} = await useAsyncData("selectedPlatformData", 
       <v-row justify="center">
         <v-col align-self="start" class="ma-2">
           <v-tabs v-model="selectedTab" grow>
-            <v-tab v-for="(tab, index) in platformTabs" :key="index" :value="tab">
+            <v-tab
+              v-for="(tab, index) in platformTabs"
+              :key="index"
+              :value="tab"
+            >
               {{ tab }}
             </v-tab>
           </v-tabs>
@@ -135,7 +147,7 @@ const {data: selectedPlatformData} = await useAsyncData("selectedPlatformData", 
                   <nuxt-link
                     prefetch
                     :to="item.selectable.url"
-                    style="text-decoration: none;color:inherit;"
+                    style="text-decoration: none; color: inherit"
                   >
                     {{ item.selectable.name }}
                   </nuxt-link>
@@ -153,7 +165,11 @@ const {data: selectedPlatformData} = await useAsyncData("selectedPlatformData", 
                   </v-chip>
                 </template>
                 <template v-slot:item.difficulty="{ item }">
-                  <v-chip class="ma-1" :color="getColor(item.selectable.difficulty)" outlined>
+                  <v-chip
+                    class="ma-1"
+                    :color="getColor(item.selectable.difficulty)"
+                    outlined
+                  >
                     {{ item.selectable.difficulty }}
                   </v-chip>
                 </template>

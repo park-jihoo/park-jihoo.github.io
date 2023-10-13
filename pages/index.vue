@@ -45,64 +45,62 @@ const goTo = (url) => {
 
 <template>
   <div>
-
-  <v-container>
-    <v-row no-gutters>
-      <v-col align-self="auto">
-        <v-card class="mb-6">
-          <v-card-title>{{ name }}</v-card-title>
-          <v-card-subtitle class="mb-2 text-button">{{
+    <v-container>
+      <v-row no-gutters>
+        <v-col align-self="auto">
+          <v-card class="mb-6">
+            <v-card-title>{{ name }}</v-card-title>
+            <v-card-subtitle class="mb-2 text-button">{{
               title
             }}</v-card-subtitle>
-          <v-card-actions class="ml-2">
-            <v-icon
+            <v-card-actions class="ml-2">
+              <v-icon
                 medium
                 class="mr-2"
                 v-for="link in links"
                 :key="link.icon"
                 @click="goTo(link.url)"
-            >
-              {{ link.icon }}
-            </v-icon>
-          </v-card-actions>
+              >
+                {{ link.icon }}
+              </v-icon>
+            </v-card-actions>
 
-          <v-divider class="my-2" />
+            <v-divider class="my-2" />
 
-          <v-card-title>SKILLS</v-card-title>
-          <v-card-text class="text-button">
-            <div v-for="(skillset, category) in skills" :key="category">
-              <div class="mb-2">{{ category }}</div>
-              <NuxtImg
+            <v-card-title>SKILLS</v-card-title>
+            <v-card-text class="text-button">
+              <div v-for="(skillset, category) in skills" :key="category">
+                <div class="mb-2">{{ category }}</div>
+                <NuxtImg
                   :src="`https://skillicons.dev/icons?i=${skillset.join()}&theme=light`"
                   :width="`${70 * skillset.length}px`"
                   class="my-2"
-              />
-            </div>
-          </v-card-text>
-          <v-divider class="my-2" />
-          <v-card-title>EDUCATION</v-card-title>
-          <v-card-text>
-            <div v-for="education in educationList" :key="education.degree">
-              {{ education.degree }} at {{ education.university }} ({{
-                education.start
-              }}
-              - {{ education.end }})
-            </div>
-          </v-card-text>
+                />
+              </div>
+            </v-card-text>
+            <v-divider class="my-2" />
+            <v-card-title>EDUCATION</v-card-title>
+            <v-card-text>
+              <div v-for="education in educationList" :key="education.degree">
+                {{ education.degree }} at {{ education.university }} ({{
+                  education.start
+                }}
+                - {{ education.end }})
+              </div>
+            </v-card-text>
 
-          <v-divider class="my-2" />
+            <v-divider class="my-2" />
 
-          <v-card-title>JOB EXPERIENCE</v-card-title>
-          <v-card-text>
-            <div v-for="job in jobList" :key="job.position">
-              {{ job.position }} at {{ job.company }} ({{ job.start }} -
-              {{ job.end }})
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
-
+            <v-card-title>JOB EXPERIENCE</v-card-title>
+            <v-card-text>
+              <div v-for="job in jobList" :key="job.position">
+                {{ job.position }} at {{ job.company }} ({{ job.start }} -
+                {{ job.end }})
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>

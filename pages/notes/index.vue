@@ -34,7 +34,10 @@ const filteredPageTable = computed(() => {
   }
   if (pageTable.value) {
     return pageTable.value.filter((item) => {
-      return item.class === selectedTab.value && item.title.toLowerCase().includes(search.value.toLowerCase());
+      return (
+        item.class === selectedTab.value &&
+        item.title.toLowerCase().includes(search.value.toLowerCase())
+      );
     });
   }
   return [];
@@ -44,7 +47,7 @@ const filteredPageTable = computed(() => {
 <template>
   <div>
     <v-container class="my-5">
-      <v-row >
+      <v-row>
         <v-col class="ma-2" align-self="start">
           <v-tabs v-model="selectedTab" grow>
             <v-tab v-for="(tab, index) in classList" :key="index" :value="tab">
@@ -82,17 +85,21 @@ const filteredPageTable = computed(() => {
               hover
               :search="search"
               @click:row="navigateTo"
-              :loading="filteredPageTable.length===0 && search.length ===0"
+              :loading="filteredPageTable.length === 0 && search.length === 0"
               :items-per-page="10"
             >
               <template v-slot:item.title="{ item }">
-                <NuxtLink :to="`/notes/${item.selectable.id}`"
-                          prefetch
-                          style="text-decoration: none;color:inherit;">
+                <NuxtLink
+                  :to="`/notes/${item.selectable.id}`"
+                  prefetch
+                  style="text-decoration: none; color: inherit"
+                >
                   <v-chip class="mr-2 mt-2" color="primary">
                     {{ item.selectable.subclass }}
                   </v-chip>
-                  <span class="font-weight-regular">{{ item.selectable.title }}</span>
+                  <span class="font-weight-regular">{{
+                    item.selectable.title
+                  }}</span>
                 </NuxtLink>
               </template>
             </v-data-table>

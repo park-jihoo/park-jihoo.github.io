@@ -9,7 +9,9 @@ import { getPageBlocks } from "~/lib/api";
 
 const route = useRoute();
 
-const { data, pending } = await useLazyAsyncData("notion", () => getPageBlocks(route.params.slug));
+const { data, pending } = await useLazyAsyncData("notion", () =>
+  getPageBlocks(route.params.slug),
+);
 </script>
 <template>
   <div>
@@ -23,12 +25,17 @@ const { data, pending } = await useLazyAsyncData("notion", () => getPageBlocks(r
               :blockMap="data"
               prismjs
               katex
-              :class="$vuetify.theme.global.current.dark ? 'dark-mode ma-3' : 'ma-3'"
+              :class="
+                $vuetify.theme.global.current.dark ? 'dark-mode ma-3' : 'ma-3'
+              "
             />
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="primary">
-                <NuxtLink to="/notes" style="color: inherit;text-decoration: none;">
+                <NuxtLink
+                  to="/notes"
+                  style="color: inherit; text-decoration: none"
+                >
                   Back to List
                 </NuxtLink>
               </v-btn>
@@ -40,5 +47,5 @@ const { data, pending } = await useLazyAsyncData("notion", () => getPageBlocks(r
   </div>
 </template>
 <style>
-@import 'public/style.css';
+@import "public/style.css";
 </style>
