@@ -24,6 +24,8 @@
     "@nuxt/image": "^1.0.0-rc.3",
     "@nuxt/kit": "^3.7.4",
     "@nuxtjs/vuetify": "^1.12.3",
+    "@octokit/core": "^5.0.1",
+    "@octokit/rest": "^20.0.2",
     "@pinia/nuxt": "^0.4.11",
     "@vueuse/core": "^10.4.1",
     "katex": "^0.16.8",

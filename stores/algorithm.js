@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia'
+import { Octokit } from "@octokit/rest";
 
 const fetchGithubFiles = async () => {
   try {
-    const owner = "park-jihoo";
-    const repo = "Algorithm";
-    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`;
-    const response = await fetch(apiUrl);
-    let data = await response.json();
+    const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN});
+    const tree = await octokit.request('GET /repos/park-jihoo/Algorithm/git/trees/main?recursive=1');
+    let data = tree.data;
     data = data.tree
       .filter((item) => item.type === "blob")
       .filter(
