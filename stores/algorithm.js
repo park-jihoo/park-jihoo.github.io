@@ -86,7 +86,7 @@ export const useAlgorithmStore = defineStore("algorithm", {
   },
   actions: {
     async fetchQuestions() {
-      if (this.questions.length > 0) return;
+      if (this.questions.length > 0 || this.loading) return;
       this.loading = true;
       const data = await fetchGithubFiles();
       this.questions = await filterAndFormatPosts(data);
