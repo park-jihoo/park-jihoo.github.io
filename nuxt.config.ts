@@ -11,16 +11,16 @@ const fetchGithubFiles = async () => {
     );
     let data = tree.data;
     if (data.tree) {
-      data = data.tree.filter((item) => item.type === "tree");
+      data = data.tree.filter((item: { type: string; }) => item.type === "tree");
       if (data) {
         data = data
           .filter(
-            (item) =>
+            (item: { path: string | string[]; }) =>
               item.path.includes("leetcode") ||
               item.path.includes("백준") ||
               item.path.includes("프로그래머스"),
           )
-          .map((item) => "/algorithm/" + item.path);
+          .map((item: { path: string; }) => "/algorithm/" + item.path);
         return data;
       } else {
         return [];
@@ -109,9 +109,9 @@ export default defineNuxtConfig({
   },
   hooks: {
     async "nitro:config"(nitroConfig) {
-      if (nitroConfig.prerender.routes.length === 0) return;
       const routes = await getDynamicRoutes();
       const staticEndpoints = routes.map((route) => route.loc);
+      // @ts-ignore
       nitroConfig.prerender.routes.push(...staticEndpoints);
     },
   },
