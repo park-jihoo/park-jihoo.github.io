@@ -17,7 +17,7 @@
     "nuxt-gtag": "^0.6.1",
     "nuxt-og-image": "^2.0.18",
     "nuxt-simple-robots": "^3.1.2",
-    "sitemap": "^7.1.1"
+    "nuxt-simple-sitemap": "^3.4.0"
   },
   "dependencies": {
     "@mdi/font": "^7.2.96",
@@ -30,7 +30,6 @@
     "@vueuse/core": "^10.4.1",
     "katex": "^0.16.8",
     "mermaid": "^10.4.0",
-    "nuxt-simple-sitemap": "^3.3.5",
     "pinia-plugin-persistedstate": "^3.2.0",
     "playwright": "^1.38.0",
     "prettier": "^3.0.3",
