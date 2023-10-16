@@ -89,6 +89,9 @@ export default defineNuxtConfig({
   site: {
     url: "https://park-jihoo.github.io",
   },
+  sitemap: {
+    xsl: false
+  },
   ssr: true,
   app: {
     head: {
@@ -98,7 +101,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ["/algorithm", "/notes", "/200.html"],
+      routes: ["/algorithm", "/notes", "/200.html", 'sitemap.xml'],
       crawlLinks: true,
     },
   },
