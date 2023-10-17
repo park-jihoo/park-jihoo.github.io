@@ -26,7 +26,7 @@ const { data, pending } = await useLazyAsyncData("notion", () =>
               prismjs
               katex
               :class="
-                $vuetify.theme.global.current.dark ? 'dark-mode ma-3' : 'ma-3'
+                $vuetify.theme.global.current.dark ? 'dark-mode pa-2' : 'pa-2'
               "
             />
             <v-card-actions>
