@@ -21,6 +21,7 @@
     "nuxt-simple-sitemap": "^3.4.0"
   },
   "dependencies": {
+    "@giscus/vue": "^2.3.0",
     "@mdi/font": "^7.2.96",
     "@nuxt/image": "^1.0.0-rc.3",
     "@nuxt/kit": "^3.7.4",

@@ -43,6 +43,21 @@ const { data, pending } = await useLazyAsyncData("notion", () =>
           </v-card>
         </v-col>
       </v-row>
+      <v-row>
+        <Giscus
+          repo="park-jihoo/park-jihoo.github.io"
+          repoId="R_kgDOJAfUTw"
+          category="General"
+          categoryId="DIC_kwDOJAfUT84Cas-2"
+          mapping="url"
+          strict="1"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="bottom"
+          theme="preferred_color_scheme"
+          lang="ko"
+        />
+      </v-row>
     </v-container>
   </div>
 </template>
