@@ -10,6 +10,7 @@ import { VSkeletonLoader } from "vuetify/lib/labs/components";
 import { useTheme } from "vuetify";
 import { useAlgorithmStore } from "~/stores/algorithm";
 import { storeToRefs } from "pinia";
+import Giscus from "@giscus/vue";
 
 const difficulty = ref("");
 const route = useRoute();
@@ -107,7 +108,7 @@ useServerSeoMeta({
     <v-container>
       <v-row justify="center">
         <v-col align-self="auto">
-          <v-card outlined class="mb-5 elevation-4">
+          <v-card outlined class="pa-4 elevation-3">
             <v-card-title class="headline">
               <v-chip class="ml-2" :color="getColor(difficulty)">
                 {{ difficulty }}
@@ -154,6 +155,22 @@ useServerSeoMeta({
               </template>
               <v-skeleton-loader v-else type="paragraph" />
             </v-card-text>
+            <Giscus
+              id="comments"
+              repo="park-jihoo/park-jihoo.github.io"
+              repoId="R_kgDOJAfUTw"
+              category="General"
+              categoryId="DIC_kwDOJAfUT84Cas-2"
+              mapping="url"
+              strict="1"
+              reactionsEnabled="1"
+              emitMetadata="0"
+              inputPosition="top"
+              :theme="`${
+                theme.global.current.value.dark ? 'dark' : 'light'
+              }`"
+              lang="ko"
+              />
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="primary">
