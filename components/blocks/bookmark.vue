@@ -30,14 +30,21 @@ export default {
           <NotionTextRenderer :text="description" v-bind="pass" />
         </div>
         <div class="notion-bookmark-link">
-          <img v-if="f.bookmark_icon" :alt="getTextContent(title || properties.link)" :src="f.bookmark_icon" />
+          <img
+            v-if="f.bookmark_icon"
+            :alt="getTextContent(title || properties.link)"
+            :src="f.bookmark_icon"
+          />
           <div>
             <NotionTextRenderer :text="properties.link" v-bind="pass" />
           </div>
         </div>
       </div>
       <div v-if="f.bookmark_cover" class="notion-bookmark-image">
-        <img :alt="getTextContent(title || properties.link)" :src="f.bookmark_cover" />
+        <img
+          :alt="getTextContent(title || properties.link)"
+          :src="f.bookmark_cover"
+        />
       </div>
     </a>
   </div>

@@ -17,7 +17,10 @@ const cell = (columnId: string) => {
   return properties.value[columnId];
 };
 const isHeader = (columnIndex: number) => {
-  return (hasHeaderColumn && props.contentIndex == 0) || (hasHeaderRow && columnIndex == 0);
+  return (
+    (hasHeaderColumn && props.contentIndex == 0) ||
+    (hasHeaderRow && columnIndex == 0)
+  );
 };
 </script>
 
@@ -29,7 +32,11 @@ export default {
 
 <template>
   <tr class="notion-simple-table-row">
-    <td v-for="(columnId, columnIndex) in columns" :key="columnIndex" class="notion-simple-table-data">
+    <td
+      v-for="(columnId, columnIndex) in columns"
+      :key="columnIndex"
+      class="notion-simple-table-data"
+    >
       <div :class="{ 'notion-simple-table-header': isHeader(columnIndex) }">
         <div class="notion-simple-table-cell-text">
           <NotionTextRenderer :text="cell(columnId)" v-bind="pass" />

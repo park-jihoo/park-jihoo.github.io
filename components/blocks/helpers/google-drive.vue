@@ -5,7 +5,8 @@ import { useTimeAgo } from "@vueuse/core";
 
 const props = defineProps({ ...defineNotionProps });
 //@ts-ignore
-const { format, block, hasPageLinkOptions, pageLinkProps } = useNotionBlock(props);
+const { format, block, hasPageLinkOptions, pageLinkProps } =
+  useNotionBlock(props);
 
 const properties = computed(() => format.value.drive_properties);
 
@@ -32,9 +33,17 @@ export default {
 
 <template>
   <div class="notion-google-drive">
-    <a rel="noopener noreferrer" target="_blank" :href="properties.url" class="notion-google-drive-link">
+    <a
+      rel="noopener noreferrer"
+      target="_blank"
+      :href="properties.url"
+      class="notion-google-drive-link"
+    >
       <div class="notion-google-drive-preview">
-        <img :src="constructThumbnail(properties.thumbnail)" :alt="properties.title" />
+        <img
+          :src="constructThumbnail(properties.thumbnail)"
+          :alt="properties.title"
+        />
       </div>
 
       <div className="notion-google-drive-body">
@@ -53,7 +62,9 @@ export default {
             className="notion-google-drive-body-source-icon"
             :style="{ backgroundImage: 'url(' + properties.icon + ')' }"
           />
-          <div className="notion-google-drive-body-source-domain">{{ constructDomain(properties.url) }}</div>
+          <div className="notion-google-drive-body-source-domain">
+            {{ constructDomain(properties.url) }}
+          </div>
         </div>
       </div>
     </a>

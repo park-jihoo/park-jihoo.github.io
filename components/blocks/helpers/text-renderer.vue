@@ -3,7 +3,10 @@ import { useNotionBlock, defineNotionProps } from "~/lib/blockable";
 import NotionDecorator from "../decorator.vue";
 import { PropType } from "vue";
 
-const props = defineProps({ text: Object as PropType<string[]>, ...defineNotionProps });
+const props = defineProps({
+  text: Object as PropType<string[]>,
+  ...defineNotionProps,
+});
 //@ts-ignore
 const { pass, format } = useNotionBlock(props);
 </script>
@@ -16,6 +19,11 @@ export default {
 
 <template>
   <span>
-    <NotionDecorator v-for="(t, i) in text" :key="i" :content="t" v-bind="pass" />
+    <NotionDecorator
+      v-for="(t, i) in text"
+      :key="i"
+      :content="t"
+      v-bind="pass"
+    />
   </span>
 </template>

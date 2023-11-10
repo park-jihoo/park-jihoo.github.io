@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed } from "vue";
 
-const baseWidth = 46 // todo: add magic numbers to a config json
+const baseWidth = 46; // todo: add magic numbers to a config json
 
 const spacerStyle = computed(() => {
-  return { width: `${baseWidth}px` }
-})
+  return { width: `${baseWidth}px` };
+});
 </script>
 
 <template>

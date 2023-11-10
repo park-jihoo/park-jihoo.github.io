@@ -1,7 +1,7 @@
 <script setup>
 defineOgImage({
   component: "template",
-  title: "Park Jihoo"
+  title: "Park Jihoo",
 });
 
 useSeoMeta({
@@ -16,10 +16,13 @@ useSeoMeta({
 </script>
 <template>
   <Head>
-    <Meta name="google-site-verification" content="kQoktB1lk0tqFRLs4-vqhVfEVWlRMX8VRQtLC_L09uw" />
+    <Meta
+      name="google-site-verification"
+      content="kQoktB1lk0tqFRLs4-vqhVfEVWlRMX8VRQtLC_L09uw"
+    />
   </Head>
-  <OgImage/>
+  <OgImage />
   <NuxtLayout>
-    <NuxtPage/>
+    <NuxtPage />
   </NuxtLayout>
 </template>

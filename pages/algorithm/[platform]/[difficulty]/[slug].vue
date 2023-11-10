@@ -22,18 +22,23 @@ difficulty.value = route.params.difficulty;
 const algorithmStore = useAlgorithmStore();
 
 const { data: posts } = await useLazyAsyncData("data", async () => {
-  if (algorithmStore.getQuestions.length !== 0) return algorithmStore.getQuestions;
+  if (algorithmStore.getQuestions.length !== 0)
+    return algorithmStore.getQuestions;
   await algorithmStore.fetchQuestions();
   return algorithmStore.getQuestions;
 });
 
 const { data: langs } = await useLazyAsyncData("langs", () => {
   return posts.value.filter((post) => post.slug === slug)[0].languages;
-});
+}, { watch: [posts] });
 
-const { data: lang } = await useLazyAsyncData("lang", () => {
-  return langs.value[0];
-}, { watch: [langs] });
+const { data: lang } = await useLazyAsyncData(
+  "lang",
+  () => {
+    return langs.value[0];
+  },
+  { watch: [langs] },
+);
 
 const { data: code, pending: pending } = await useLazyAsyncData(
   "code",
@@ -165,11 +170,9 @@ useServerSeoMeta({
               reactionsEnabled="1"
               emitMetadata="0"
               inputPosition="top"
-              :theme="`${
-                theme.global.current.value.dark ? 'dark' : 'light'
-              }`"
+              :theme="`${theme.global.current.value.dark ? 'dark' : 'light'}`"
               lang="ko"
-              />
+            />
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="primary">

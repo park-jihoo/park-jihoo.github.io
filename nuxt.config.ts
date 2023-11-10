@@ -11,16 +11,16 @@ const fetchGithubFiles = async () => {
     );
     let data = tree.data;
     if (data.tree) {
-      data = data.tree.filter((item: { type: string; }) => item.type === "tree");
+      data = data.tree.filter((item: { type: string }) => item.type === "tree");
       if (data) {
         data = data
           .filter(
-            (item: { path: string | string[]; }) =>
+            (item: { path: string | string[] }) =>
               item.path.includes("leetcode") ||
               item.path.includes("백준") ||
               item.path.includes("프로그래머스"),
           )
-          .map((item: { path: string; }) => "/algorithm/" + item.path);
+          .map((item: { path: string }) => "/algorithm/" + item.path);
         return data;
       } else {
         return [];
@@ -90,7 +90,7 @@ export default defineNuxtConfig({
     url: "https://park-jihoo.github.io",
   },
   sitemap: {
-    xsl: false
+    xsl: false,
   },
   ssr: true,
   app: {
@@ -101,7 +101,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ["/algorithm", "/notes", "/200.html", 'sitemap.xml'],
+      routes: ["/algorithm", "/notes", "/200.html", "sitemap.xml"],
       crawlLinks: true,
     },
   },
@@ -120,6 +120,6 @@ export default defineNuxtConfig({
     },
   },
   delayHydration: {
-    mode: 'manual'
-  }
+    mode: "manual",
+  },
 });

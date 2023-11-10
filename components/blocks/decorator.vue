@@ -8,7 +8,13 @@ const props = defineProps({
   ...defineNotionProps,
 });
 //@ts-ignore
-const { props: blockProps, pass, type, hasPageLinkOptions, pageLinkProps } = useNotionBlock(props);
+const {
+  props: blockProps,
+  pass,
+  type,
+  hasPageLinkOptions,
+  pageLinkProps,
+} = useNotionBlock(props);
 
 const text = computed(() => props.content?.[0]);
 const decorators = computed(() => props.content?.[1] || []);
@@ -23,7 +29,9 @@ const nextContent = computed(() => [text.value, unappliedDecorators.value]);
 const isPageLink = computed(() => text.value === "‣");
 const isInlinePageLink = computed(() => decoratorValue.value?.[0] === "/");
 const pageLinkTitle = computed(
-  () => blockProps.blockMap?.[decoratorValue.value]?.value?.properties?.title?.[0]?.[0] || "link"
+  () =>
+    blockProps.blockMap?.[decoratorValue.value]?.value?.properties
+      ?.title?.[0]?.[0] || "link",
 );
 const target = computed(() => {
   if (type.value === "page") {
@@ -71,7 +79,12 @@ export default {
   >
     <NotionDecorator :content="nextContent" v-bind="pass" />
   </a>
-  <a v-else-if="decoratorKey === 'a'" class="notion-link" :target="target" :href="decoratorValue">
+  <a
+    v-else-if="decoratorKey === 'a'"
+    class="notion-link"
+    :target="target"
+    :href="decoratorValue"
+  >
     <NotionDecorator :content="nextContent" v-bind="pass" />
   </a>
   <span v-else-if="decorators.length === 0">{{ text }}</span>
@@ -93,7 +106,10 @@ export default {
   <u v-else-if="decoratorKey === '_'" class="notion-underline">
     <NotionDecorator :content="nextContent" v-bind="pass" />
   </u>
-  <NotionKatek v-else-if="decoratorKey === 'e' && blockProps.katex" :expression="decoratorValue" />
+  <NotionKatek
+    v-else-if="decoratorKey === 'e' && blockProps.katex"
+    :expression="decoratorValue"
+  />
   <code v-else-if="decoratorKey === 'e'" class="notion-inline-code">
     {{ decoratorValue }}
   </code>

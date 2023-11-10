@@ -15,23 +15,23 @@ export default {
 </script>
 
 <template>
-<!--  <details v-if="format?.toggleable" class="notion-toggle">-->
-<!--    <summary><NotionHeaderRenderer class="notion-h" v-bind="pass"></NotionHeaderRenderer></summary>-->
-<!--    <div>-->
-<!--      <NotionRenderer-->
-<!--        v-for="(contentId, contentIndex) in block.value.content"-->
-<!--        v-bind="pass"-->
-<!--        :key="contentId"-->
-<!--        :level="pass.level + 1"-->
-<!--        :content-id="contentId"-->
-<!--        :content-index="contentIndex"-->
-<!--      ></NotionRenderer>-->
-<!--    </div>-->
-<!--  </details>-->
+  <!--  <details v-if="format?.toggleable" class="notion-toggle">-->
+  <!--    <summary><NotionHeaderRenderer class="notion-h" v-bind="pass"></NotionHeaderRenderer></summary>-->
+  <!--    <div>-->
+  <!--      <NotionRenderer-->
+  <!--        v-for="(contentId, contentIndex) in block.value.content"-->
+  <!--        v-bind="pass"-->
+  <!--        :key="contentId"-->
+  <!--        :level="pass.level + 1"-->
+  <!--        :content-id="contentId"-->
+  <!--        :content-index="contentIndex"-->
+  <!--      ></NotionRenderer>-->
+  <!--    </div>-->
+  <!--  </details>-->
   <v-expansion-panels v-if="format?.toggleable">
     <v-expansion-panel elevation="0" :hide-actions="true">
       <v-expansion-panel-title>
-        <NotionHeaderRenderer :text="title" v-bind="pass"/>
+        <NotionHeaderRenderer :text="title" v-bind="pass" />
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <NotionRenderer

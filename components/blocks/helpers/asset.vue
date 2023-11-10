@@ -38,6 +38,10 @@ export default {
 
 <template>
   <div :style="aspectRatioStyle" v-if="src">
-    <iframe class="notion-asset-object-fit" :src="src" :allow="props.embedAllow" />
+    <iframe
+      class="notion-asset-object-fit"
+      :src="src"
+      :allow="props.embedAllow"
+    />
   </div>
 </template>

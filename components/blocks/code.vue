@@ -39,11 +39,17 @@ import "prismjs/components/prism-wasm";
 import "prismjs/components/prism-yaml";
 import mermaid from "mermaid";
 
-const props = defineProps({ overrideLang: String, overrideLangClass: String, ...defineNotionProps });
+const props = defineProps({
+  overrideLang: String,
+  overrideLangClass: String,
+  ...defineNotionProps,
+});
 //@ts-ignore
 const { properties } = useNotionBlock(props);
 const lang = computed(() => {
-  return props.overrideLang || properties.value?.language?.[0]?.[0]?.toLowerCase();
+  return (
+    props.overrideLang || properties.value?.language?.[0]?.[0]?.toLowerCase()
+  );
 });
 
 const langClass = computed(() => {
@@ -54,13 +60,15 @@ const supported = computed(() => {
   return lang.value ? Prism?.languages[lang.value] : false;
 });
 
-const computedSlot = computed(() => properties.value?.title.map((i) => i?.[0]).join(""));
+const computedSlot = computed(
+  () => properties.value?.title.map((i) => i?.[0]).join(""),
+);
 
 const theme = useTheme();
 
 mermaid.initialize({
   startOnLoad: false,
-  theme: `${theme.global.current.value.dark ? 'dark' : 'default'}`
+  theme: `${theme.global.current.value.dark ? "dark" : "default"}`,
 });
 
 watchEffect(async () => {
@@ -74,20 +82,37 @@ watchEffect(async () => {
 
 <script lang="ts">
 export default {
-  name: "NotionCode"
+  name: "NotionCode",
 };
 </script>
 
 <template>
-  <div v-if="lang === 'mermaid'" class="language-mermaid" v-html="computedSlot"/>
+  <div
+    v-if="lang === 'mermaid'"
+    class="language-mermaid"
+    v-html="computedSlot"
+  />
   <div v-else-if="supported" :class="['notion-code']">
     <ClientOnly>
-      <CodeBlock :code="computedSlot" :lang="lang" :class="langClass" prismjs persistent-copy-button :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`" />
+      <CodeBlock
+        :code="computedSlot"
+        :lang="lang"
+        :class="langClass"
+        prismjs
+        persistent-copy-button
+        :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`"
+      />
     </ClientOnly>
   </div>
   <div v-else :class="['notion-code']">
     <ClientOnly>
-      <CodeBlock :code="computedSlot" :class="langClass" prismjs persistent-copy-button :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`" />
+      <CodeBlock
+        :code="computedSlot"
+        :class="langClass"
+        prismjs
+        persistent-copy-button
+        :theme="`${theme.global.current.value.dark ? 'dark' : 'default'}`"
+      />
     </ClientOnly>
   </div>
 </template>

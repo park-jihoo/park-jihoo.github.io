@@ -8,7 +8,8 @@ import NotionPageHeader from "~/components/blocks/helpers/page-header.vue";
 
 const props = defineProps({ ...defineNotionProps });
 //@ts-ignore
-const { format, title, block, pass, hasPageLinkOptions, pageLinkProps } = useNotionBlock(props);
+const { format, title, block, pass, hasPageLinkOptions, pageLinkProps } =
+  useNotionBlock(props);
 
 const coverStyle = computed(() => {
   const coverPosition = (1 - (format.value.page_cover_position || 0.5)) * 100;
@@ -31,7 +32,11 @@ export default {
 </script>
 
 <template>
-  <div v-if="props.level === 0 && props.fullPage" class="notion" :style="computedFont">
+  <div
+    v-if="props.level === 0 && props.fullPage"
+    class="notion"
+    :style="computedFont"
+  >
     <NotionPageHeader v-bind="pass" />
     <!-- todo: hide image if no .format is available -->
     <img
@@ -76,7 +81,12 @@ export default {
       <NotionTextRenderer :text="title" v-bind="pass" />
     </div>
   </component>
-  <a v-else class="notion-page-link" :target="props.pageLinkTarget" :href="props.mapPageUrl(block.value.id)">
+  <a
+    v-else
+    class="notion-page-link"
+    :target="props.pageLinkTarget"
+    :href="props.mapPageUrl(block.value.id)"
+  >
     <div class="notion-page-icon">
       <NotionPageIcon v-bind="pass" />
     </div>

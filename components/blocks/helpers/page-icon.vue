@@ -15,16 +15,29 @@ export default {
 </script>
 
 <template>
-  <div :class="[format?.page_cover && 'notion-page-icon-offset', big ? 'notion-page-icon-cover' : 'notion-page-icon']">
+  <div
+    :class="[
+      format?.page_cover && 'notion-page-icon-offset',
+      big ? 'notion-page-icon-cover' : 'notion-page-icon',
+    ]"
+  >
     <img
       v-if="icon?.includes('http')"
       :src="props.mapImageUrl(icon, block)"
       :alt="title ? getTextContent(title) : 'Icon'"
       class="notion-page-icon"
     />
-    <span v-else-if="icon" role="img" :aria-label="icon" class="notion-page-icon">
+    <span
+      v-else-if="icon"
+      role="img"
+      :aria-label="icon"
+      class="notion-page-icon"
+    >
       {{ icon }}
     </span>
-    <DefaultPageIcon class="notion-page-icon" v-else-if="!big"></DefaultPageIcon>
+    <DefaultPageIcon
+      class="notion-page-icon"
+      v-else-if="!big"
+    ></DefaultPageIcon>
   </div>
 </template>

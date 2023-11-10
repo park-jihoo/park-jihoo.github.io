@@ -11,31 +11,28 @@ const toggleTheme = () => {
 
 const links = [
   { title: "notes", icon: "mdi-note-multiple" },
-  { title: "algorithm", icon: "mdi-code-tags" }
+  { title: "algorithm", icon: "mdi-code-tags" },
 ];
-
 </script>
 
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app temporary>
       <v-list dense>
-        <v-list-item
-          class="py-0"
-          v-for="link in links"
-          :key="link.title"
-        >
-          <NuxtLink :to="'/'+`${link.title.toLowerCase()}`" style="text-decoration: none;color:inherit;">
+        <v-list-item class="py-0" v-for="link in links" :key="link.title">
+          <NuxtLink
+            :to="'/' + `${link.title.toLowerCase()}`"
+            style="text-decoration: none; color: inherit"
+          >
             <v-list-item-title
               :class="
-              $vuetify.theme.global.current.dark
-                ? 'text-button text-deep-purple-lighten-2'
-                : 'text-button text-deep-purple-darken-2'
-            "
+                $vuetify.theme.global.current.dark
+                  ? 'text-button text-deep-purple-lighten-2'
+                  : 'text-button text-deep-purple-darken-2'
+              "
             >
-              <v-icon left small class="mr-2" color="primary">{{
-                  link.icon
-                }}
+              <v-icon left small class="mr-2" color="primary"
+                >{{ link.icon }}
               </v-icon>
               {{ link.title }}
             </v-list-item-title>
@@ -62,7 +59,10 @@ const links = [
         text
         color="primary"
       >
-        <NuxtLink :to="'/'+`${link.title.toLowerCase()}`" style="text-decoration: none;color:inherit;">
+        <NuxtLink
+          :to="'/' + `${link.title.toLowerCase()}`"
+          style="text-decoration: none; color: inherit"
+        >
           <v-icon left small class="mr-2">{{ link.icon }}</v-icon>
           {{ link.title }}
         </NuxtLink>
@@ -87,10 +87,8 @@ const links = [
 </template>
 <script>
 export default {
-  layout: "default"
+  layout: "default",
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

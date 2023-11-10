@@ -16,9 +16,15 @@ export default {
 };
 </script>
 <template>
-  <figure class="notion-asset-wrapper" :style="[isType('image') ? 'width:100%' : '']">
+  <figure
+    class="notion-asset-wrapper"
+    :style="[isType('image') ? 'width:100%' : '']"
+  >
     <NotionImage v-if="isType('image')" v-bind="pass" />
-    <NotionAsset v-else-if="isType(['embed', 'video', 'figma', 'maps'])" v-bind="pass" />
+    <NotionAsset
+      v-else-if="isType(['embed', 'video', 'figma', 'maps'])"
+      v-bind="pass"
+    />
     <NotionGoogleDrive v-else-if="isType('drive')" v-bind="pass" />
     <figcaption v-if="caption" class="notion-image-caption">
       <NotionTextRenderer :text="caption" v-bind="pass" />

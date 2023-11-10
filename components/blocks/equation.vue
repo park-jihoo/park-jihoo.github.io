@@ -21,5 +21,10 @@ export default {
   <div v-if="props.katex">
     <NotionKatek :expression="equation" />
   </div>
-  <NotionCode v-else v-bind="pass" overrideLang="latex" overrideLangClass="language-latex" />
+  <NotionCode
+    v-else
+    v-bind="pass"
+    overrideLang="latex"
+    overrideLangClass="language-latex"
+  />
 </template>

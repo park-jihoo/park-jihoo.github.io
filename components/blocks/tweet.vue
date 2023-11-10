@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { useNotionBlock, defineNotionProps } from "~/lib/blockable";
-import { computed, onBeforeMount, getCurrentInstance, ref, onMounted } from "vue";
+import {
+  computed,
+  onBeforeMount,
+  getCurrentInstance,
+  ref,
+  onMounted,
+} from "vue";
 import { useTwttr } from "./helpers/tweet";
 
 const props = defineProps({ ...defineNotionProps });
 //@ts-ignore
 const { properties } = useNotionBlock(props);
 
-const tweetId = computed(() => properties.value?.source?.[0]?.[0].split("status/")?.[1].split("?")[0]);
+const tweetId = computed(
+  () => properties.value?.source?.[0]?.[0].split("status/")?.[1].split("?")[0],
+);
 const el = ref<HTMLElement>();
 const error = ref();
 
