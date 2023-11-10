@@ -12,6 +12,7 @@ import { useAlgorithmStore } from "~/stores/algorithm";
 import Giscus from "@giscus/vue";
 
 const difficulty = ref("");
+const posts = ref([]);
 const route = useRoute();
 const theme = useTheme();
 
@@ -20,13 +21,18 @@ const platform = route.params.platform;
 difficulty.value = route.params.difficulty;
 
 const algorithmStore = useAlgorithmStore();
-
-const { data: posts } = await useLazyAsyncData("data", async () => {
-  if (algorithmStore.getQuestions.length === 0){
-    await algorithmStore.fetchQuestions();
+// client-side
+if (process.client){
+  if (JSON.parse(sessionStorage.getItem("algorithm")).questions.length === 0) {
+    algorithmStore.fetchQuestions();
   }
-  return algorithmStore.getQuestions;
-});
+  posts.value = JSON.parse(sessionStorage.getItem("algorithm")).questions;
+}
+// server-side
+else {
+  await algorithmStore.fetchQuestions();
+  posts.value = algorithmStore.questions;
+}
 
 const { data: langs } = await useLazyAsyncData("langs", () => {
   return posts.value.filter((post) => post.slug === slug)[0].languages;
