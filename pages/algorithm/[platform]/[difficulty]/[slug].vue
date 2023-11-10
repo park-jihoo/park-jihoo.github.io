@@ -23,7 +23,7 @@ difficulty.value = route.params.difficulty;
 const algorithmStore = useAlgorithmStore();
 
 const { data: posts } = await useAsyncData("data", async () => {
-  if (algorithmStore.getQuestions.length === 0) return;
+  if (algorithmStore.getQuestions.length !== 0) return;
   await algorithmStore.fetchQuestions();
   return algorithmStore.getQuestions;
 });
