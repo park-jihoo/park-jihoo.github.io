@@ -9,7 +9,6 @@ import { CodeBlock } from "vue3-code-block";
 import { VSkeletonLoader } from "vuetify/lib/labs/components";
 import { useTheme } from "vuetify";
 import { useAlgorithmStore } from "~/stores/algorithm";
-import { storeToRefs } from "pinia";
 import Giscus from "@giscus/vue";
 
 const difficulty = ref("");
@@ -22,19 +21,19 @@ difficulty.value = route.params.difficulty;
 
 const algorithmStore = useAlgorithmStore();
 
-const { data: posts } = await useAsyncData("data", async () => {
-  if (algorithmStore.getQuestions.length !== 0) return;
+const { data: posts } = await useLazyAsyncData("data", async () => {
+  if (algorithmStore.getQuestions.length !== 0) return algorithmStore.getQuestions;
   await algorithmStore.fetchQuestions();
   return algorithmStore.getQuestions;
 });
 
-const { data: langs } = await useAsyncData("langs", () => {
+const { data: langs } = await useLazyAsyncData("langs", () => {
   return posts.value.filter((post) => post.slug === slug)[0].languages;
 });
 
-const { data: lang } = await useAsyncData("lang", () => {
+const { data: lang } = await useLazyAsyncData("lang", () => {
   return langs.value[0];
-});
+}, { watch: [langs] });
 
 const { data: code, pending: pending } = await useLazyAsyncData(
   "code",
