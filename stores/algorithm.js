@@ -90,6 +90,9 @@ export const useAlgorithmStore = defineStore("algorithm", {
   getters: {
     getQuestions: (state) => state.questions,
   },
+  setters: {
+    setQuestions: (state, questions) => (state.questions = questions),
+  },
   actions: {
     async fetchQuestions() {
       if (this.questions.length > 0 || this.loading) return;
@@ -103,7 +106,7 @@ export const useAlgorithmStore = defineStore("algorithm", {
     await this.actions.fetchQuestions();
   },
   persist: {
-    storage: persistedState.sessionStorage,
+    storage: persistedState.cookies,
   }
 });
 
