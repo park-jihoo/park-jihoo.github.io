@@ -102,6 +102,9 @@ export const useAlgorithmStore = defineStore("algorithm", {
   async $reset() {
     await this.actions.fetchQuestions();
   },
+  persist: {
+    storage: persistedState.localStorage,
+  }
 });
 
 if (import.meta.hot) {

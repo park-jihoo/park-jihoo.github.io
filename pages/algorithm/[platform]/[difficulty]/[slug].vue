@@ -22,9 +22,9 @@ difficulty.value = route.params.difficulty;
 const algorithmStore = useAlgorithmStore();
 
 const { data: posts } = await useLazyAsyncData("data", async () => {
-  if (algorithmStore.getQuestions.length !== 0)
-    return algorithmStore.getQuestions;
-  await algorithmStore.fetchQuestions();
+  if (algorithmStore.getQuestions.length === 0){
+    await algorithmStore.fetchQuestions();
+  }
   return algorithmStore.getQuestions;
 });
 

@@ -81,7 +81,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "nuxt-simple-sitemap",
     "@nuxt/image",
-    "nuxt-delay-hydration",
+    '@pinia-plugin-persistedstate/nuxt'
   ],
   gtag: {
     id: "G-5H39DYHZK8",
@@ -118,8 +118,5 @@ export default defineNuxtConfig({
       // @ts-ignore
       nitroConfig.prerender.routes.push(...staticEndpoints);
     },
-  },
-  delayHydration: {
-    mode: "manual",
   },
 });
