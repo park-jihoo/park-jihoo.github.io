@@ -103,7 +103,7 @@ export const useAlgorithmStore = defineStore("algorithm", {
     await this.actions.fetchQuestions();
   },
   persist: {
-    storage: persistedState.localStorage,
+    storage: persistedState.sessionStorage,
   }
 });
 
