@@ -1,6 +1,7 @@
 <script setup>
 import { VDataTable } from "vuetify/labs/components";
 import { useAlgorithmStore } from "~/stores/algorithm";
+import { Octokit } from "@octokit/rest";
 
 const router = useRouter();
 const itemsPerPage = ref(10);
@@ -22,6 +23,10 @@ const languageIcons = [
 ];
 
 const search = ref("");
+
+const algorithmStore = useAlgorithmStore();
+
+const {data: algorithm} = await useAsyncData("algorithm", () => algorithmStore.fetchQuestions());
 
 const fetchGithubFiles = async () => {
   try {
@@ -108,8 +113,7 @@ const { data: posts } = await useLazyAsyncData(
     return fetchGithubFiles().then((data) => {
       return filterAndFormatPosts(data);
     });
-  },
-  { watch: [route] }
+  }
 );
 
 const navigateTo = (event, data) => {
