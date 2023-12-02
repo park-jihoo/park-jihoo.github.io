@@ -81,7 +81,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "nuxt-simple-sitemap",
     "@nuxt/image",
-    '@pinia-plugin-persistedstate/nuxt'
+    "@pinia-plugin-persistedstate/nuxt",
   ],
   gtag: {
     id: "G-5H39DYHZK8",

@@ -107,7 +107,7 @@ export const useAlgorithmStore = defineStore("algorithm", {
   },
   persist: {
     storage: persistedState.cookies,
-  }
+  },
 });
 
 if (import.meta.hot) {

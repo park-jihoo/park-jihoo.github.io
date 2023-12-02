@@ -28,7 +28,7 @@ const fetchGithubFiles = async () => {
   try {
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     const tree = await octokit.request(
-      "GET /repos/park-jihoo/Algorithm/git/trees/main?recursive=1"
+      "GET /repos/park-jihoo/Algorithm/git/trees/main?recursive=1",
     );
     let data = tree.data;
     data = data.tree
@@ -37,7 +37,7 @@ const fetchGithubFiles = async () => {
         (item) =>
           item.path.includes("leetcode") ||
           item.path.includes("백준") ||
-          item.path.includes("프로그래머스")
+          item.path.includes("프로그래머스"),
       )
       .filter((item) => !item.path.includes(".md"));
     return data;
@@ -52,7 +52,7 @@ const filterAndFormatPosts = async (data) => {
     const path = item.path.split("/");
     if (questions.map((item) => item.slug).includes(path[2])) {
       const index = questions.findIndex(
-        (question) => question.slug === path[2]
+        (question) => question.slug === path[2],
       );
       questions[index].languages.push(path[3].split(".").pop());
     } else {
@@ -67,7 +67,7 @@ const filterAndFormatPosts = async (data) => {
           languages: [path[3].split(".").pop()],
           difficulty: path[1],
           platform: path[0],
-          url: "/algorithm/" + path[0] + "/" + path[1] + "/" + path[2]
+          url: "/algorithm/" + path[0] + "/" + path[1] + "/" + path[2],
         });
       } else if (path[0] === "백준") {
         questions.push({
@@ -81,7 +81,7 @@ const filterAndFormatPosts = async (data) => {
           languages: [path[3].split(".").pop()],
           difficulty: path[1],
           platform: path[0],
-          url: "/algorithm/" + path[0] + "/" + path[1] + "/" + path[2]
+          url: "/algorithm/" + path[0] + "/" + path[1] + "/" + path[2],
         });
       } else {
         questions.push({
@@ -95,7 +95,7 @@ const filterAndFormatPosts = async (data) => {
           languages: [path[3].split(".").pop()],
           difficulty: path[1],
           platform: path[0],
-          url: "/algorithm/" + path[0] + "/" + path[1] + "/" + path[2]
+          url: "/algorithm/" + path[0] + "/" + path[1] + "/" + path[2],
         });
       }
     }
@@ -106,23 +106,27 @@ const filterAndFormatPosts = async (data) => {
 const { data: posts } = await useLazyAsyncData(
   "posts",
   () => {
-      return fetchGithubFiles().then((data) => {
-        return filterAndFormatPosts(data);
-      });
+    return fetchGithubFiles().then((data) => {
+      return filterAndFormatPosts(data);
+    });
   },
-  { watch: [route] }
+  { watch: [route] },
 );
 
-const { data: langs } = await useLazyAsyncData("langs", () => {
-  return posts.value.filter((post) => post.slug === slug)[0].languages;
-}, { watch: [posts] });
+const { data: langs } = await useLazyAsyncData(
+  "langs",
+  () => {
+    return posts.value.filter((post) => post.slug === slug)[0].languages;
+  },
+  { watch: [posts] },
+);
 
 const { data: lang } = await useLazyAsyncData(
   "lang",
   () => {
     return langs.value[0];
   },
-  { watch: [langs] }
+  { watch: [langs] },
 );
 
 const { data: code, pending: pending } = await useLazyAsyncData(
@@ -137,7 +141,7 @@ const { data: code, pending: pending } = await useLazyAsyncData(
       return res;
     });
   },
-  { watch: [lang] }
+  { watch: [lang] },
 );
 
 const getColor = (difficulty) => {
@@ -188,7 +192,7 @@ useServerSeoMeta({
       .replace(/\d\d\d\d-/g, "")
       .replace(/-/g, " ")}`,
   twitterTitle: () =>
-    `${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")} | Algorithm`
+    `${slug.replace(/\d\d\d\d-/g, "").replace(/-/g, " ")} | Algorithm`,
 });
 </script>
 
