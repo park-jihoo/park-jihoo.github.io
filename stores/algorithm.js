@@ -82,28 +82,28 @@ const filterAndFormatPosts = async (data) => {
 
 export const useAlgorithmStore = defineStore("algorithm", {
   state: () => {
+    // const data = fetchGithubFiles().then(
+    //   (data) => filterAndFormatPosts(data).then((data) => data));
     return {
+      // questions: data.then((data) => {
+      //   return data;
+      // }),
       questions: [],
       loading: false,
     };
   },
   getters: {
-    getQuestions: (state) => state.questions,
-  },
-  setters: {
-    setQuestions: (state, questions) => (state.questions = questions),
-  },
-  actions: {
-    async fetchQuestions() {
-      if (this.questions.length > 0 || this.loading) return;
-      this.loading = true;
-      const data = await fetchGithubFiles();
-      this.questions = await filterAndFormatPosts(data);
-      this.loading = false;
+    getQuestions: async (state) => {
+      if (state.questions.length === 0) {
+        const githubData = await fetchGithubFiles();
+        const data = await filterAndFormatPosts(githubData);
+        state.questions = data;
+      }
+      return state.questions;
     },
   },
-  async $reset() {
-    await this.actions.fetchQuestions();
+  setters: {
+    setQuestions: async (state, questions) => (state.questions = questions),
   },
   persist: {
     storage: persistedState.cookies,
