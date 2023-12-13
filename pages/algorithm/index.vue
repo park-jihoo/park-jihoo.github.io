@@ -84,7 +84,7 @@ const getColor = (query) => {
     <v-container class="my-5">
       <v-row justify="center">
         <v-col align-self="start" class="ma-2">
-          <v-tabs v-model="selectedTab" grow>
+          <v-tabs model-value="selectedTab" grow>
             <v-tab
               v-for="(tab, index) in platformTabs"
               :key="index"
