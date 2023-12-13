@@ -1,5 +1,4 @@
 <script setup>
-import { VDataTable } from "vuetify/labs/components";
 import { useAlgorithmStore } from "~/stores/algorithm";
 import { Octokit } from "@octokit/rest";
 

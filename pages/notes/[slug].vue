@@ -4,7 +4,6 @@ import "prismjs";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
-import { VSkeletonLoader } from "vuetify/lib/labs/components";
 import { getPageBlocks } from "~/lib/api";
 import Giscus from "@giscus/vue";
 

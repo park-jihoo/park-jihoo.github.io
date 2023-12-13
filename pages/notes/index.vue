@@ -1,6 +1,5 @@
 <script setup>
 import { useGetPageTable } from "~/lib/composables";
-import { VDataTable } from "vuetify/labs/components";
 
 const route = useRoute();
 const router = useRouter();

@@ -7,7 +7,6 @@ import "prismjs/components/prism-java.js";
 import "prismjs/components/prism-sql.js";
 import { CodeBlock } from "vue3-code-block";
 import { Octokit } from "@octokit/rest";
-import { VSkeletonLoader } from "vuetify/lib/labs/components";
 import { useTheme } from "vuetify";
 import { useAlgorithmStore } from "~/stores/algorithm";
 import Giscus from "@giscus/vue";
