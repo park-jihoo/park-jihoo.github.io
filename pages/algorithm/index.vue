@@ -83,7 +83,7 @@ const getColor = (query) => {
     <v-container class="my-5">
       <v-row justify="center">
         <v-col align-self="start" class="ma-2">
-          <v-tabs model-value="selectedTab" grow>
+          <v-tabs v-model:model-value="selectedTab" grow>
             <v-tab
               v-for="(tab, index) in platformTabs"
               :key="index"
@@ -130,18 +130,18 @@ const getColor = (query) => {
                 <template v-slot:item.name="{ item }">
                   <nuxt-link
                     prefetch
-                    :to="item.selectable.url"
+                    :to="item.url"
                     style="text-decoration: none; color: inherit"
                   >
-                    {{ item.selectable.name }}
+                    {{ item.name }}
                   </nuxt-link>
                 </template>
                 <template v-slot:item.languages="{ item }">
                   <v-chip
-                    v-for="language in item.selectable.languages"
+                    v-for="language in item.languages"
                     :key="language"
                     class="ma-1"
-                    :color="getColor(item.selectable.difficulty)"
+                    :color="getColor(item.difficulty)"
                     outlined
                   >
                     <v-icon left>{{ getLanguageIcon(language) }}</v-icon>
@@ -151,14 +151,14 @@ const getColor = (query) => {
                 <template v-slot:item.difficulty="{ item }">
                   <v-chip
                     class="ma-1"
-                    :color="getColor(item.selectable.difficulty)"
+                    :color="getColor(item.difficulty)"
                     outlined
                   >
-                    {{ item.selectable.difficulty }}
+                    {{ item.difficulty }}
                   </v-chip>
                 </template>
                 <template v-slot:item.id="{ item }">
-                  {{ item.selectable.id }}
+                  {{ item.id }}
                 </template>
               </v-data-table>
             </v-card-text>
