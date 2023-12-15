@@ -26,7 +26,7 @@ const search = ref("");
 const algorithmStore = useAlgorithmStore();
 
 const navigateTo = (event, data) => {
-  router.replace({ path: data.item.selectable.url });
+  router.replace({ path: data.item.url });
 };
 
 // Define platform tabs

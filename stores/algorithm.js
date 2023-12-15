@@ -82,12 +82,7 @@ const filterAndFormatPosts = async (data) => {
 
 export const useAlgorithmStore = defineStore("algorithm", {
   state: () => {
-    // const data = fetchGithubFiles().then(
-    //   (data) => filterAndFormatPosts(data).then((data) => data));
     return {
-      // questions: data.then((data) => {
-      //   return data;
-      // }),
       questions: [],
       loading: false,
     };
