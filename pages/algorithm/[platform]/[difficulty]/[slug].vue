@@ -28,7 +28,7 @@ const { data: lang } = await useLazyAsyncData(
     const file = platform !== "leetcode" ? slug.split(".")[1].trim() : slug;
     const codes = [];
     for (const l of langs){
-      l === "cc" ? l = "cpp" : l;
+      const la = l === "cc" ? "cpp" : l;
       const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}.${l}`;
       const res = await $fetch(githubUrl);
       codes.push(res);

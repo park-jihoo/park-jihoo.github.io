@@ -26,7 +26,6 @@ const search = ref("");
 const algorithmStore = useAlgorithmStore();
 
 const navigateTo = (event, data) => {
-  console.log(event, data);
   router.replace({ path: data.item.url });
 };
 
