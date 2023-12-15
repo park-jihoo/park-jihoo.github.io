@@ -20,46 +20,22 @@ difficulty.value = route.params.difficulty;
 
 const algorithmStore = useAlgorithmStore();
 
-const { data: posts } = await useLazyAsyncData(
+const { data: lang } = await useLazyAsyncData(
   "posts",
   async () => {
     const post = await algorithmStore.getQuestions;
-    return post;
+    const langs = post.filter((post) => post.slug === slug)[0].languages;
+    const file = platform !== "leetcode" ? slug.split(".")[1].trim() : slug;
+    const codes = [];
+    for (const l of langs){
+      l === "cc" ? l = "cpp" : l;
+      const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}.${l}`;
+      const res = await $fetch(githubUrl);
+      codes.push(res);
+    }
+    return {langs: langs, lang: langs[0], codes: codes};
   },
   { watch: [route] },
-);
-
-const { data: langs } = await useLazyAsyncData(
-  "langs",
-  () => {
-    return posts.value.filter((post) => post.slug === slug)[0].languages;
-  },
-  { watch: [posts], immediate: false },
-);
-
-const { data: lang } = await useLazyAsyncData(
-  "lang",
-  () => {
-    if (langs.value.length === 0) return "";
-    return langs.value[0];
-  },
-  { watch: [langs], immediate: false },
-);
-
-const { data: code} = await useLazyAsyncData(
-  "code",
-  () => {
-    if (langs.value.length === 0) return "";
-    const file =
-      platform !== "leetcode"
-        ? `${slug.split(".")[1].trim()}.${lang.value}`
-        : `${slug}.${lang.value}`;
-    const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}`;
-    return $fetch(githubUrl).then((res) => {
-      return res;
-    });
-  },
-  { watch: [lang] , immediate: false},
 );
 
 const getColor = (difficulty) => {
@@ -141,22 +117,22 @@ useServerSeoMeta({
             </v-card-title>
             <v-card-text>
               <v-select
-                v-if="langs"
-                v-model="lang"
-                :items="langs"
+                v-if="lang.langs"
+                v-model:model-value="lang.lang"
+                :items="lang.langs"
                 label="Select Language"
                 outlined
                 dense
                 color="primary"
-                :disabled="langs.length === 1"
+                :disabled="lang.langs.length === 1"
               >
               </v-select>
-              <template v-if="code">
+              <template v-if="lang.codes">
                 <ClientOnly>
                   <CodeBlock
-                    :code="code"
+                    :code="lang.codes[lang.langs.indexOf(lang.lang)]"
                     :prismjs="true"
-                    :lang="`${lang === 'cc' ? 'cpp' : lang}`"
+                    :lang="`${lang.lang === 'cc' ? 'cpp' : lang.lang}`"
                     :theme="`${
                       theme.global.current.value.dark ? 'dark' : 'default'
                     }`"
