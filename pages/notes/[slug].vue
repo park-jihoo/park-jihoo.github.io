@@ -8,7 +8,6 @@ import { getPageBlocks } from "~/lib/api";
 import Giscus from "@giscus/vue";
 
 const route = useRoute();
-
 const { data, pending } = await useLazyAsyncData("notion", () =>
   getPageBlocks(route.params.slug),
 );

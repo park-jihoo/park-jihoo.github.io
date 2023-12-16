@@ -1,15 +1,16 @@
 <script setup>
-import { useGetPageTable } from "~/lib/composables";
+import { useNotesStore } from "~/stores/notes";
 
 const route = useRoute();
 const router = useRouter();
+const notesStore = useNotesStore();
 
-const { data: pageTable } = useGetPageTable("619787c75b60479886c147cf746bfbb8");
+const { data: pageTable } = useAsyncData("notes", () => notesStore.getNotes);
 
 const headers = [{ title: "Title", key: "title", sortable: true }];
 
 const navigateTo = (event, data) => {
-  const link = data.item.value;
+  const link = data.item.id;
   router.replace({ path: "/notes/" + link });
 };
 
@@ -90,15 +91,14 @@ const filteredPageTable = computed(() => {
               <template v-slot:item.title="{ item }">
                 <NuxtLink
                   :to="`/notes/${item.id}`"
-                  prefetch
                   style="text-decoration: none; color: inherit"
                 >
                   <v-chip class="mr-2 mt-2" color="primary">
                     {{ item.subclass }}
                   </v-chip>
                   <span class="font-weight-regular">{{
-                    item.title
-                  }}</span>
+                      item.title
+                    }}</span>
                 </NuxtLink>
               </template>
             </v-data-table>
