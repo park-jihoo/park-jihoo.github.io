@@ -22,6 +22,7 @@ useSeoMeta({
       name="google-site-verification"
       content="kQoktB1lk0tqFRLs4-vqhVfEVWlRMX8VRQtLC_L09uw"
     />
+    <Meta name="naver-site-verification" content="0581245626108d8ea24cc4d24a30ee84c0394ce6" />
   </Head>
   <OgImage />
   <NuxtLayout>

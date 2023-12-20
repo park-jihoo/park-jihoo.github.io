@@ -1,4 +1,6 @@
 <script setup>
+import { useTheme } from "vuetify";
+
 const name = "Jihoo Park";
 const title = "Data Scientist";
 const email = "wlgn8648@gmail.com";
@@ -41,6 +43,8 @@ const skills = ref({
 const goTo = (url) => {
   window.open(url, "_blank");
 };
+
+const theme = useTheme();
 </script>
 
 <template>
@@ -72,7 +76,14 @@ const goTo = (url) => {
               <div v-for="(skillset, category) in skills" :key="category">
                 <div class="mb-2">{{ category }}</div>
                 <NuxtImg
+                  v-if="!theme.current.value.dark"
                   :src="`https://skillicons.dev/icons?i=${skillset.join()}&theme=light`"
+                  :width="`${70 * skillset.length}px`"
+                  class="my-2"
+                />
+                <NuxtImg
+                  v-else
+                  :src="`https://skillicons.dev/icons?i=${skillset.join()}&theme=dark`"
                   :width="`${70 * skillset.length}px`"
                   class="my-2"
                 />
