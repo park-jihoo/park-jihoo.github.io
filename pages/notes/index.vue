@@ -96,9 +96,7 @@ const filteredPageTable = computed(() => {
                   <v-chip class="mr-2 mt-2" color="primary">
                     {{ item.subclass }}
                   </v-chip>
-                  <span class="font-weight-regular">{{
-                      item.title
-                    }}</span>
+                  <span class="font-weight-regular">{{ item.title }}</span>
                 </NuxtLink>
               </template>
             </v-data-table>

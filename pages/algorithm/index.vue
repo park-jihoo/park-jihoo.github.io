@@ -1,6 +1,6 @@
 <script setup>
 import { useAlgorithmStore } from "~/stores/algorithm";
-import { Octokit } from "@octokit/rest";
+import { Octokit } from "@octokit/core";
 
 const router = useRouter();
 const itemsPerPage = ref(10);

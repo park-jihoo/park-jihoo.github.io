@@ -24,13 +24,7 @@ const links = [
             :to="'/' + `${link.title.toLowerCase()}`"
             style="text-decoration: none; color: inherit"
           >
-            <v-list-item-title
-              :class="
-                $vuetify.theme.global.current.dark
-                  ? 'text-button text-deep-purple-lighten-2'
-                  : 'text-button text-deep-purple-darken-2'
-              "
-            >
+            <v-list-item-title class="text-button text-primary">
               <v-icon left small class="mr-2" color="primary"
                 >{{ link.icon }}
               </v-icon>

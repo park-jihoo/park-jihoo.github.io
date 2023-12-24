@@ -20,8 +20,8 @@ const aspectRatioStyle = computed(() => {
     width: format.value.block_full_width
       ? "calc(100vw - 46px)"
       : format.value.block_page_width
-      ? "100%"
-      : `${f.value.block_width}px`,
+        ? "100%"
+        : `${f.value.block_width}px`,
     height: f.value.block_height == 1 ? `auto` : `${f.value.block_height}px`,
     maxWidth: "100%",
     position: "relative",

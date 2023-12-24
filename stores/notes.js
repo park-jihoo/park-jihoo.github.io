@@ -28,9 +28,9 @@ export const useNotesStore = defineStore("notes", {
         });
       }
       return Array.from(uniqueClass).sort((a, b) => a.localeCompare(b));
-    }
+    },
   },
   persist: {
     storage: persistedState.cookies,
-  }
+  },
 });

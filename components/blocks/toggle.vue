@@ -15,7 +15,7 @@ export default {
 
 <template>
   <v-expansion-panels>
-    <v-expansion-panel elevation="0" :hide-actions="true">
+    <v-expansion-panel elevation="0" :hide-actions="true" :eager="true">
       <v-expansion-panel-title>
         <NotionTextRenderer :text="title" v-bind="pass" />
       </v-expansion-panel-title>

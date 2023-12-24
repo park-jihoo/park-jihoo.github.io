@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 import { getPageTable } from "./lib/api";
-import { Octokit } from "@octokit/rest";
+import { Octokit } from "@octokit/core";
 
 const fetchGithubFiles = async () => {
   try {
@@ -82,6 +82,7 @@ export default defineNuxtConfig({
     "nuxt-simple-sitemap",
     "@nuxt/image",
     "@pinia-plugin-persistedstate/nuxt",
+    "@nuxtjs/tailwindcss",
   ],
   gtag: {
     id: "G-5H39DYHZK8",
@@ -122,8 +123,8 @@ export default defineNuxtConfig({
   ogImage: {
     compatibility: {
       prerender: {
-        satori: "wasm"
-      }
-    }
-  }
+        satori: "wasm",
+      },
+    },
+  },
 });

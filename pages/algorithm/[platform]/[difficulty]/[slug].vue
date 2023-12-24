@@ -1,14 +1,9 @@
 <script setup>
-import Prism from "prismjs";
-import "prismjs/components/prism-c.js";
-import "prismjs/components/prism-cpp.js";
-import "prismjs/components/prism-python.js";
-import "prismjs/components/prism-java.js";
-import "prismjs/components/prism-sql.js";
-import { CodeBlock } from "vue3-code-block";
 import { useTheme } from "vuetify";
 import { useAlgorithmStore } from "~/stores/algorithm";
 import Giscus from "@giscus/vue";
+import { addClassToHast, getHighlighter } from "shikiji";
+import { useClipboard } from "@vueuse/core";
 
 const difficulty = ref("");
 const route = useRoute();
@@ -19,6 +14,10 @@ const platform = route.params.platform;
 difficulty.value = route.params.difficulty;
 
 const algorithmStore = useAlgorithmStore();
+const shiki = await getHighlighter({
+  themes: ["github-light", "github-dark"],
+  langs: ["cpp", "java", "python", "sql", "c", "js"],
+});
 
 const { data: lang } = await useLazyAsyncData(
   "posts",
@@ -27,16 +26,19 @@ const { data: lang } = await useLazyAsyncData(
     const langs = post.filter((post) => post.slug === slug)[0].languages;
     const file = platform !== "leetcode" ? slug.split(".")[1].trim() : slug;
     const codes = [];
-    for (const l of langs){
+
+    for (const l of langs) {
       const la = l === "cc" ? "cpp" : l;
       const githubUrl = `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty.value}/${slug}/${file}.${l}`;
       const res = await $fetch(githubUrl);
       codes.push(res);
     }
-    return {langs: langs, lang: langs[0], codes: codes};
+    return { langs: langs, lang: langs[0], codes: codes };
   },
   { watch: [route] },
 );
+
+const { text, copy, copied, isSupported } = useClipboard();
 
 const getColor = (difficulty) => {
   switch (difficulty) {
@@ -127,18 +129,41 @@ useServerSeoMeta({
                 :disabled="lang.langs.length === 1"
               >
               </v-select>
+
               <template v-if="lang.codes">
-                <ClientOnly>
-                  <CodeBlock
-                    :code="lang.codes[lang.langs.indexOf(lang.lang)]"
-                    :prismjs="true"
-                    :lang="`${lang.lang === 'cc' ? 'cpp' : lang.lang}`"
-                    :theme="`${
-                      theme.global.current.value.dark ? 'dark' : 'default'
-                    }`"
-                    persistent-copy-button
+                <div style="position: relative">
+                  <v-btn
+                    :icon="!copied ? `mdi-content-copy` : `mdi-check`"
+                    class="elevation-0"
+                    rounded="0"
+                    variant="text"
+                    :ripple="false"
+                    @click="copy(lang.codes[lang.langs.indexOf(lang.lang)])"
+                    style="position: absolute; right: 0; top: 0"
                   />
-                </ClientOnly>
+                  <div
+                    v-html="
+                      shiki.codeToHtml(
+                        lang.codes[lang.langs.indexOf(lang.lang)],
+                        {
+                          lang: lang.lang,
+                          theme: theme.global.current.value.dark
+                            ? 'github-dark'
+                            : 'github-light',
+                          mergeWhitespaces: true,
+                          transformers: [
+                            {
+                              code(hast) {
+                                addClassToHast(hast, 'font-mono')
+                                return hast
+                              }
+                            },
+                          ],
+                        },
+                      )
+                    "
+                  />
+                </div>
               </template>
               <v-skeleton-loader v-else type="paragraph" />
             </v-card-text>
@@ -155,6 +180,7 @@ useServerSeoMeta({
               inputPosition="top"
               :theme="`${theme.global.current.value.dark ? 'dark' : 'light'}`"
               lang="ko"
+              class="mt-4"
             />
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -173,8 +199,3 @@ useServerSeoMeta({
     </v-container>
   </div>
 </template>
-
-<style>
-@use "prismjs/themes/prism-dark.css";
-@use "prismjs/themes/prism.css";
-</style>
