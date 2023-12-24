@@ -146,7 +146,7 @@ useServerSeoMeta({
                       shiki.codeToHtml(
                         lang.codes[lang.langs.indexOf(lang.lang)],
                         {
-                          lang: lang.lang,
+                          lang: lang.lang === 'cc' ? 'cpp' : lang.lang,
                           theme: theme.global.current.value.dark
                             ? 'github-dark'
                             : 'github-light',
