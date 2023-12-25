@@ -119,12 +119,5 @@ export default defineNuxtConfig({
       // @ts-ignore
       nitroConfig.prerender.routes.push(...staticEndpoints);
     },
-  },
-  ogImage: {
-    compatibility: {
-      prerender: {
-        satori: "wasm",
-      },
-    },
-  },
+  }
 });

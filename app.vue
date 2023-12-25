@@ -1,10 +1,6 @@
 <script setup>
-defineOgImage({
-  component: "template",
-  props: {
-    title: "Park Jihoo",
-  },
-});
+defineOgImageScreenshot(
+)
 
 useSeoMeta({
   title: "Park Jihoo",
