@@ -1,6 +1,12 @@
 <script setup>
-defineOgImageScreenshot(
-)
+defineOgImageComponent('OgImageTemplate',{
+  width: 1200,
+  height: 630,
+  background: "#fff",
+  foreground: "#000",
+  font: "bold 80px sans-serif",
+  text: "Park Jihoo",
+});
 
 useSeoMeta({
   title: "Park Jihoo",
