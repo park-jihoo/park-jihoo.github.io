@@ -119,7 +119,7 @@ useServerSeoMeta({
             </v-card-title>
             <v-card-text>
               <v-select
-                v-if="lang.langs && lang.lang"
+                v-if="lang"
                 v-model:model-value="lang.lang"
                 :items="lang.langs"
                 label="Select Language"
@@ -130,7 +130,7 @@ useServerSeoMeta({
               >
               </v-select>
 
-              <template v-if="lang.codes">
+              <template v-if="lang">
                 <div style="position: relative">
                   <v-btn
                     :icon="!copied ? `mdi-content-copy` : `mdi-check`"
