@@ -119,7 +119,7 @@ useServerSeoMeta({
             </v-card-title>
             <v-card-text>
               <v-select
-                v-if="lang.langs"
+                v-if="lang.langs && lang.lang"
                 v-model:model-value="lang.lang"
                 :items="lang.langs"
                 label="Select Language"
@@ -155,7 +155,6 @@ useServerSeoMeta({
                             {
                               code(hast) {
                                 addClassToHast(hast, 'font-mono')
-                                return hast
                               }
                             },
                           ],
