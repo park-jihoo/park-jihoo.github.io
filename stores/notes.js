@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
-import { useGetPageTable } from "~/lib/composables";
-import { getPageTable } from "~/lib/api";
+import { useGetPageTable, getPageTable } from "vue3-notion";
 
 export const useNotesStore = defineStore("notes", {
   state: () => {

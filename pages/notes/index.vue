@@ -88,7 +88,7 @@ const filteredPageTable = computed(() => {
               :loading="filteredPageTable.length === 0 && search.length === 0"
               :items-per-page="10"
             >
-              <template v-slot:item.title="{ item }">
+              <template v-slot:[`item.title`]="{ item }">
                 <NuxtLink
                   :to="`/notes/${item.id}`"
                   style="text-decoration: none; color: inherit"

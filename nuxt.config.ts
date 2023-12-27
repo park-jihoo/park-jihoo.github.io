@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import { getPageTable } from "./lib/api";
+import { getPageTable} from "vue3-notion";
 import { Octokit } from "@octokit/core";
 
 const fetchGithubFiles = async () => {
@@ -83,6 +83,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/tailwindcss",
+    ["vue3-notion/nuxt", {css: true}],
   ],
   gtag: {
     id: "G-5H39DYHZK8",
