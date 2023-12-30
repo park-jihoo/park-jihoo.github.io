@@ -6,7 +6,6 @@ import "prismjs/components/prism-cpp";
 import "prismjs/components/prism-sql";
 import Giscus from "@giscus/vue";
 import { NotionRenderer, useGetPageBlocks } from "vue3-notion";
-import { Client } from "@notionhq/client";
 
 const route = useRoute();
 const pageId = route.params.slug.toString();
@@ -19,6 +18,7 @@ const { data, pending } = useGetPageBlocks(route.params.slug.toString());
         <v-col align-self="start">
           <v-skeleton-loader v-if="pending" type="card, paragraph, actions" />
           <v-card class="elevation-3 pa-4" v-else>
+
             <NotionPage :pageId="route.params.slug" />
 <!--            <NotionRenderer-->
 <!--              v-if="data"-->

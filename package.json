@@ -23,8 +23,7 @@
     "nuxt-og-image": "^3.0.0-rc.10",
     "nuxt-simple-robots": "^3.1.10",
     "nuxt-simple-sitemap": "^3.4.1",
-    "shikiji": "^0.9.9",
-    "shikiji-twoslash": "^0.9.12"
+    "shikiji": "^0.9.9"
   },
   "dependencies": {
     "@giscus/vue": "^2.4.0",
@@ -45,9 +44,7 @@
     "prismjs": "1.29.0",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
-    "shikiji-transformers": "^0.9.11",
     "vue-router": "^4.2.5",
-    "vue3-code-block": "^2.2.14",
     "vue3-notion": "^0.1.45",
     "vuetify": "^3.4.8"
   }

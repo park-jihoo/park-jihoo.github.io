@@ -1,8 +1,3 @@
-<script setup>
-import katex from "katex";
-
-const props = defineProps(["richText"]);
-</script>
 <template>
     <span
       v-for="element in richText"
@@ -13,11 +8,11 @@ const props = defineProps(["richText"]);
             underline: element.annotations.underline,
             'font-mono font-normal bg-base-200 rounded-box py-0.5 px-1':
                 element.annotations.code,
-            'text-red-500': element.annotations.color === 'red',
-            'text-pink-500': element.annotations.color === 'pink',
-            'text-purple-500': element.annotations.color === 'purple',
-            'text-blue-500': element.annotations.color === 'blue',
-            'text-green-500': element.annotations.color === 'green',
+            'text-red-500': element.annotations.color == 'red',
+            'text-pink-500': element.annotations.color == 'pink',
+            'text-purple-500': element.annotations.color == 'purple',
+            'text-blue-500': element.annotations.color == 'blue',
+            'text-green-500': element.annotations.color == 'green',
             'text-yellow-500': element.annotations.color == 'yellow',
             'text-orange-500': element.annotations.color == 'orange',
             'text-brown-500': element.annotations.color == 'brown',
@@ -47,18 +42,24 @@ const props = defineProps(["richText"]);
           :href="element.href"
           class="link cursor-pointer"
         >
-            {{ element[element.type].content }}
+            <span v-if="element.type == 'mention'">
+                <NotionMention :mention="element" />
+            </span>
+            {{ element[element.type].content }} &neArr;
         </a>
         <span v-else>
-            <template v-if="element.type == 'mention'">
-            </template>
-            <span
-              v-else-if="element.type === 'equation'"
-              v-html="katex.renderToString(element.equation.expression)"
-            />
-            <template v-else>
-                {{ element[element.type].content }}
-            </template>
+            <span v-if="element.type == 'mention'">
+                <NotionMention :mention="element" />
+            </span>
+            <span v-if="element.type == 'equation'"
+                  v-html="katex.renderToString(element.equation.expression)"/>
+            {{ element[element.type].content }}
         </span>
     </span>
 </template>
+
+<script setup>
+import katex from "katex";
+
+const props = defineProps(['richText'])
+</script>
