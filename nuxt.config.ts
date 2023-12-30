@@ -40,13 +40,13 @@ async function getDynamicRoutes() {
   ]);
 
   let urls = [];
-  // if (notes) {
-  //   for (const note of notes) {
-  //     urls.push({
-  //       loc: `/notes/${note.id}`,
-  //     });
-  //   }
-  // }
+  if (notes) {
+    for (const note of notes) {
+      urls.push({
+        loc: `/notes/${note.id}`,
+      });
+    }
+  }
 
   if (algorithm) {
     for (const a of algorithm) {

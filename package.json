@@ -18,7 +18,7 @@
     "@types/katex": "^0.16.7",
     "@types/node": "^20.10.5",
     "@types/prismjs": "^1.26.3",
-    "nuxt": "^3.8.2",
+    "nuxt": "^3.9.0",
     "nuxt-gtag": "^0.6.3",
     "nuxt-og-image": "^3.0.0-rc.10",
     "nuxt-simple-robots": "^3.1.10",

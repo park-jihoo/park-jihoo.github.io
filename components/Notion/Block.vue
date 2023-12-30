@@ -41,6 +41,23 @@ for(let i=1;i<=props.content.length;i++){
             {{ text.plain_text }}
           </div>
         </div>
+        <div v-else-if="block.code.language ==='plain text'"
+        v-html="shiki.codeToHtml(text.plain_text, {
+          lang: 'cpp',
+          theme: 'github-light',
+          mergeWhitespaces: true,
+          transformers: [
+            {
+              code(hast) {
+                addClassToHast(hast, 'font-mono');
+              },
+              line(hast, line) {
+                addClassToHast(hast, 'text-pre-wrap');
+              },
+            },
+          ],
+        })"
+        />
         <div v-else v-html="
           shiki.codeToHtml(text.plain_text, {
             lang: block.code.language,
