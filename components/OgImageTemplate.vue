@@ -118,7 +118,6 @@ const siteLogo = computed(() => {
 });
 
 const MaybeIconComponent = resolveComponent("Icon");
-
 </script>
 
 <template>

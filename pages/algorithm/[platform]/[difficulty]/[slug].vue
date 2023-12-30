@@ -154,11 +154,11 @@ useServerSeoMeta({
                           transformers: [
                             {
                               code(hast) {
-                                addClassToHast(hast, 'font-mono')
+                                addClassToHast(hast, 'font-mono');
                               },
                               line(hast, line) {
-                                addClassToHast(hast, 'text-pre-wrap')
-                              }
+                                addClassToHast(hast, 'text-pre-wrap');
+                              },
                             },
                           ],
                         },

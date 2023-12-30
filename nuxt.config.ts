@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import { getPageTable} from "vue3-notion";
+import { getPageTable } from "vue3-notion";
 import { Octokit } from "@octokit/core";
 
 const fetchGithubFiles = async () => {
@@ -40,13 +40,13 @@ async function getDynamicRoutes() {
   ]);
 
   let urls = [];
-  if (notes) {
-    for (const note of notes) {
-      urls.push({
-        loc: `/notes/${note.id}`,
-      });
-    }
-  }
+  // if (notes) {
+  //   for (const note of notes) {
+  //     urls.push({
+  //       loc: `/notes/${note.id}`,
+  //     });
+  //   }
+  // }
 
   if (algorithm) {
     for (const a of algorithm) {
@@ -83,7 +83,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/tailwindcss",
-    ["vue3-notion/nuxt", {css: true}],
+    ["vue3-notion/nuxt", { css: true }],
   ],
   gtag: {
     id: "G-5H39DYHZK8",
@@ -120,5 +120,5 @@ export default defineNuxtConfig({
       // @ts-ignore
       nitroConfig.prerender.routes.push(...staticEndpoints);
     },
-  }
+  },
 });

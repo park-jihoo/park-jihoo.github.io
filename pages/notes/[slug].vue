@@ -10,12 +10,6 @@ import { Client } from "@notionhq/client";
 
 const route = useRoute();
 const pageId = route.params.slug.toString();
-const databaseId = "619787c75b60479886c147cf746bfbb8";
-const { data: page } = useAsyncData(async () => {
-  const notion = new Client({ auth: "secret_SLclwcn6eZqxYJWyM7kueTRykHWMpr9lxfnlCqKra25" });
-  return await notion.pages.retrieve({ page_id: pageId });
-});
-console.log(page);
 const { data, pending } = useGetPageBlocks(route.params.slug.toString());
 </script>
 <template>
@@ -23,19 +17,19 @@ const { data, pending } = useGetPageBlocks(route.params.slug.toString());
     <v-container>
       <v-row no-gutters>
         <v-col align-self="start">
-
           <v-skeleton-loader v-if="pending" type="card, paragraph, actions" />
           <v-card class="elevation-3 pa-4" v-else>
-            <NotionRenderer
-              v-if="data"
-              :blockMap="data"
-              prism
-              katex
-              full-page
-              :class="
-                $vuetify.theme.global.current.dark ? 'dark-mode pa-2' : 'pa-2'
-              "
-            />
+            <NotionPage :pageId="route.params.slug" />
+<!--            <NotionRenderer-->
+<!--              v-if="data"-->
+<!--              :blockMap="data"-->
+<!--              prism-->
+<!--              katex-->
+<!--              full-page-->
+<!--              :class="-->
+<!--                $vuetify.theme.global.current.dark ? 'dark-mode pa-2' : 'pa-2'-->
+<!--              "-->
+<!--            />-->
             <Giscus
               id="comments"
               repo="park-jihoo/park-jihoo.github.io"
