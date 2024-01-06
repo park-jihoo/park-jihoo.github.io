@@ -84,6 +84,7 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "@nuxtjs/tailwindcss",
     ["vue3-notion/nuxt", { css: true }],
+    "@nuxt/content",
   ],
   gtag: {
     id: "G-5H39DYHZK8",

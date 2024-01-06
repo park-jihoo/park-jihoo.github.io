@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-const props = defineProps(['block'])
+const props = defineProps(["block"]);
 </script>

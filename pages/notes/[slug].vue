@@ -18,18 +18,7 @@ const { data, pending } = useGetPageBlocks(route.params.slug.toString());
         <v-col align-self="start">
           <v-skeleton-loader v-if="pending" type="card, paragraph, actions" />
           <v-card class="elevation-3 pa-4" v-else>
-
             <NotionPage :pageId="route.params.slug" />
-<!--            <NotionRenderer-->
-<!--              v-if="data"-->
-<!--              :blockMap="data"-->
-<!--              prism-->
-<!--              katex-->
-<!--              full-page-->
-<!--              :class="-->
-<!--                $vuetify.theme.global.current.dark ? 'dark-mode pa-2' : 'pa-2'-->
-<!--              "-->
-<!--            />-->
             <Giscus
               id="comments"
               repo="park-jihoo/park-jihoo.github.io"

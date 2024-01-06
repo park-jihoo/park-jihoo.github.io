@@ -1,12 +1,11 @@
 <script setup lang="ts">
-
 const props = defineProps(["pageId"]);
-
-const {data: content} = await useFetch(
-  `/api/notion/retrieve-block-children/${props.pageId}`
-)
+const pageId = props.pageId;
+const { data: page } = await useAsyncData("page", () =>
+  queryContent(pageId).findOne(),
+);
 </script>
 
 <template>
-  <NotionBlock :content="content.results"/>
+  <NotionBlock v-if="page" :content="page.blocks.results" />
 </template>
