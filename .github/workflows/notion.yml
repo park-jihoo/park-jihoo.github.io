@@ -2,6 +2,9 @@ name: Action Example
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * *
+  
 jobs:
   notion:
     runs-on: ubuntu-latest
