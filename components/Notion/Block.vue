@@ -116,10 +116,7 @@ for (let i = 1; i <= props.content.length; i++) {
       v-else-if="block.type === 'heading_3' && !block.heading_3.is_toggleable"
       :block="block"
     />
-    <div v-else-if="block.type === 'image'">
-      {{ block.type }}
-      {{ block.image }}
-    </div>
+    <NotionImage v-else-if="block.type === 'image'" :block="block"/>
     <div v-else-if="block.type === 'link_preview'">
       {{ block.type }}
       {{ block.link_preview }}

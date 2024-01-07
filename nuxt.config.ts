@@ -48,15 +48,15 @@ async function getDynamicRoutes() {
     }
   }
 
-  if (algorithm) {
-    for (const a of algorithm) {
-      if (a.split("/").length === 5) {
-        urls.push({
-          loc: a,
-        });
-      }
-    }
-  }
+  // if (algorithm) {
+  //   for (const a of algorithm) {
+  //     if (a.split("/").length === 5) {
+  //       urls.push({
+  //         loc: a,
+  //       });
+  //     }
+  //   }
+  // }
 
   urls.push("/algorithm");
 
