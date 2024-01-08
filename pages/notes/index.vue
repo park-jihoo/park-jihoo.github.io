@@ -1,10 +1,12 @@
 <script setup>
-
 const route = useRoute();
 const router = useRouter();
 const { data: contents } = useAsyncData("contents", () => queryContent().only(['id', 'properties']).find())
 
-const headers = [{ title: "Title", key: "properties.title.title[0].plain_text", sortable: true }];
+const headers = [{ title: "Title", key: "properties.title.title",
+  sortable: true,
+  sort: (a, b) => a[0].plain_text.localeCompare(b[0].plain_text),
+}];
 
 const search = ref("");
 
@@ -64,7 +66,7 @@ const {data : filteredContent } = useAsyncData("filteredContent", () =>
                   :search="search"
                   :items-per-page="10"
                 >
-                  <template v-slot:item.properties.title.title[0].plain_text="{ item }">
+                  <template v-slot:item.properties.title.title="{ item }">
                     <v-chip color="primary" dark class="mr-2">
                       {{ item.properties.subclass.select.name }}
                     </v-chip>
