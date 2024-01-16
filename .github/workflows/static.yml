@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Build
-        run: yarn build --preset=github_pages
+        run: yarn build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Pages
@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload dist repository
-          path: "./.output/public"
+          path: "./out"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
