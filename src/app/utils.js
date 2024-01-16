@@ -3,7 +3,7 @@ import { Octokit } from "@octokit/rest";
 
 export const getAlgorithms = cache(async () => {
   const octokit = new Octokit({
-    auth: "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",
+    auth: process.env.GITHUB_TOKEN,
   });
 
   const algorithm = await octokit.git.getTree({
