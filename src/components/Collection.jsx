@@ -7,7 +7,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Tabs,
 } from "@mui/material";
@@ -19,8 +21,12 @@ export const Collection = ({ block, className, ctx }) => {
 
   const collection = ctx.recordMap.collection[block.collection_id].value;
   const pages = Object.values(ctx.recordMap.block)
-      .map((item) => item.value)
-      .filter((item) => item.properties !== undefined);
+    .map((item) => item.value)
+    .filter((item) => item.properties !== undefined)
+    .sort((a, b) => {
+      if (a.properties.title[0][0] === undefined) return -1;
+      return a.properties.title[0][0].localeCompare(b.properties.title[0][0]);
+    });
 
   const schema = Object.keys(collection.schema).reduce((acc, key) => {
     acc[key] = collection.schema[key].name;
@@ -43,52 +49,83 @@ export const Collection = ({ block, className, ctx }) => {
 
   const router = useRouter();
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
-      <div>
-        <Tabs
-            value={value}
-            onChange={(e, newValue) => setValue(newValue)}
-            variant="scrollable"
-            scrollButtons="auto"
-        >
-          {classes.map((c) => (
-              <Tab label={c} value={c} key={c} />
-          ))}
-        </Tabs>
-        <TableContainer component={Paper} sx={{ marginTop: 2 }}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Title</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data
-                  .filter((row) => {
+    <div>
+      <Tabs
+        value={value}
+        onChange={(e, newValue) => setValue(newValue)}
+        variant="scrollable"
+        scrollButtons="auto"
+      >
+        {classes.map((c) => (
+          <Tab label={c} value={c} key={c} />
+        ))}
+      </Tabs>
+      <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Title</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data
+              .filter((row) => {
+                if (value === undefined) return true;
+                return row.class === value;
+              })
+              .map((row) => (
+                <TableRow
+                  key={row.id}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    cursor: "pointer",
+                    "&:hover": { backgroundColor: "#f5f5f5" },
+                  }}
+                  onClick={() => {
+                    router.push(`/notes/${row.id}`);
+                  }}
+                >
+                  <TableCell component="th" scope="row">
+                    <Chip label={row.subclass} sx={{ marginRight: 1 }} />
+                    {row.title}
+                  </TableCell>
+                </TableRow>
+              ))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                count={
+                  data.filter((row) => {
                     if (value === undefined) return true;
                     return row.class === value;
-                  })
-                  .map((row) => (
-                      <TableRow
-                          key={row.id}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                            cursor: "pointer",
-                            "&:hover": { backgroundColor: "#f5f5f5" },
-                          }}
-                          onClick={() => {
-                            router.push(`/notes/${row.id}`);
-                          }}
-                      >
-                        <TableCell component="th" scope="row">
-                          <Chip label={row.subclass} sx={{ marginRight: 1 }} />
-                          {row.title}
-                        </TableCell>
-                      </TableRow>
-                  ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+                  }).length
+                }
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                showFirstButton={true}
+                showLastButton={true}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };

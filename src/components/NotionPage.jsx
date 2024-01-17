@@ -8,6 +8,7 @@ import "react-notion-x/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import "katex/dist/katex.min.css";
 import { getPageTitle } from "notion-utils";
+import { useTheme } from "@mui/material";
 
 const Code = dynamic(() =>
   import("react-notion-x/build/third-party/code").then((m) => m.Code),
@@ -28,6 +29,7 @@ const Modal = dynamic(
 export const NotionPage = ({ recordMap, rootPageId }) => {
   if (!recordMap) return null;
   const title = getPageTitle(recordMap);
+  const theme = useTheme();
   return (
     <>
       <Head>
@@ -38,7 +40,7 @@ export const NotionPage = ({ recordMap, rootPageId }) => {
       <NotionRenderer
         recordMap={recordMap}
         fullPage={true}
-        darkMode={false}
+        darkMode={theme.palette.mode === "dark"}
         components={{
           Code,
           Collection,

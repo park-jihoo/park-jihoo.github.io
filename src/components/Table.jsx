@@ -1,14 +1,16 @@
 "use client";
 
 import { DataGrid } from "@mui/x-data-grid";
-import {Chip, Tabs, Tab, Paper} from "@mui/material";
-import {useState} from "react";
-import {useRouter} from "next/navigation";
+import { Chip, Tabs, Tab, Paper } from "@mui/material";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Table({ algorithmList }) {
   const platforms = Array.from(
-    new Set(Object.keys(algorithmList).map((algorithm) => algorithm.split("/")[0]))
-  )
+    new Set(
+      Object.keys(algorithmList).map((algorithm) => algorithm.split("/")[0]),
+    ),
+  );
 
   const router = useRouter();
 
@@ -59,14 +61,15 @@ export default function Table({ algorithmList }) {
   }
   return (
     <Paper elevation={3}>
-      <Tabs value={value} variant="fullWidth" onChange={(e, v) => setValue(v)} aria-label="tabs">
-            {platforms.map((platform, index) => (
-                <Tab
-                key={index}
-                label={platform}
-                value={platform}
-                />
-            ))}
+      <Tabs
+        value={value}
+        variant="fullWidth"
+        onChange={(e, v) => setValue(v)}
+        aria-label="tabs"
+      >
+        {platforms.map((platform, index) => (
+          <Tab key={index} label={platform} value={platform} />
+        ))}
       </Tabs>
       <DataGrid
         columns={columns}
@@ -77,7 +80,8 @@ export default function Table({ algorithmList }) {
         initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
         pageSizeOptions={[10]}
         onRowClick={(params) => {
-          const path = '/algorithm/' + params.row.path.split('/').slice(0, 3).join('/');
+          const path =
+            "/algorithm/" + params.row.path.split("/").slice(0, 3).join("/");
           router.push(path);
         }}
       />

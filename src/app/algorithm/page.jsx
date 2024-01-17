@@ -31,7 +31,7 @@ export default async function Page() {
             alignItems: "center",
           }}
         >
-          <Paper sx={{ width: "100%", p: 2 }}>
+          <Paper sx={{ width: "100%", p: 2, marginTop: 2 }} elevation={0}>
             <Table algorithmList={algorithmList} />
           </Paper>
         </Box>
