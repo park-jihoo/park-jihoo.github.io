@@ -12,8 +12,8 @@ export default function Skillset({ skills }) {
           {key}
           <Image
             alt={key}
-            width="auto"
-            height="auto"
+            width={80 * skills[key].length}
+            height={80}
             src={`https://skillicons.dev/icons?i=${skills[key].join(",")}&theme=${theme.palette.mode}`}
           />
         </div>
