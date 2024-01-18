@@ -5,6 +5,9 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Email, LinkedIn, GitHub } from "@mui/icons-material";
+import Image from "next/image";
+import { useTheme } from "@mui/material/styles";
+import Skillset from "@/components/Skillset";
 
 const MyResume = () => {
   const name = "Jihoo Park";
@@ -81,15 +84,7 @@ const MyResume = () => {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Skills
               </Typography>
-              {Object.keys(skills).map((key, index) => (
-                <div key={index}>
-                  {key}
-                  <img
-                    alt={key}
-                    src={`https://skillicons.dev/icons?i=${skills[key].join(",")}&theme=light`}
-                  />
-                </div>
-              ))}
+              <Skillset skills={skills} />
             </Grid>
             <Grid item xs={12}>
               <Divider />

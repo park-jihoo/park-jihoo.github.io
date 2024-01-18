@@ -62,19 +62,24 @@ export const Collection = ({ block, className, ctx }) => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        overflow: "auto",
+      }}
+    >
       <Tabs
         value={value}
         onChange={(e, newValue) => setValue(newValue)}
-        variant="scrollable"
-        scrollButtons="auto"
+        variant="fullWidth"
       >
         {classes.map((c) => (
           <Tab label={c} value={c} key={c} />
         ))}
       </Tabs>
       <TableContainer component={Paper} sx={{ marginTop: 2 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Title</TableCell>

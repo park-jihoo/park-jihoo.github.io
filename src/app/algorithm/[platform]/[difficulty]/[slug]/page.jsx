@@ -1,6 +1,8 @@
 import { getAlgorithms } from "@/app/utils";
+import { Card, Chip, Divider, Select, Typography } from "@mui/material";
+import { addClassToHast, getHighlighter } from "shikiji";
 import CodeBlock from "@/components/CodeBlock";
-import { Card, Chip, Divider, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 export async function generateStaticParams() {
   const algorithms = await getAlgorithms();
@@ -48,16 +50,42 @@ export default async function Page({ params }) {
         [algorithm.path.split(".").length - 1].toLowerCase();
     });
 
+  const languageMap = {
+    c: "c",
+    cpp: "cpp",
+    cc: "cpp",
+    py: "python",
+    js: "javascript",
+    java: "java",
+    sql: "sql",
+  };
+
   const paths = language.map((lang) => {
     if (slug.split(".")[1] === undefined)
       return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${slug}/${slug}.${lang.toLowerCase()}`;
     else
       return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${slug}/${slug.split(".")[1].trim()}.${lang.toLowerCase()}`;
   });
+
+  const highlighter = getHighlighter({
+    langs: language.map((lang) => languageMap[lang]),
+    themes: ["material-theme-lighter", "material-theme"],
+  });
+
   const codes = await Promise.all(
     paths.map(async (path) => {
       const response = await fetch(path);
-      return await response.text();
+      const text = await response.text();
+      const lang = path.split(".")[path.split(".").length - 1];
+      const light_html = (await highlighter).codeToHtml(text, {
+        lang: languageMap[lang],
+        theme: "material-theme-lighter",
+      });
+      const dark_html = (await highlighter).codeToHtml(text, {
+        lang: languageMap[lang],
+        theme: "material-theme",
+      });
+      return { light: light_html, dark: dark_html, code: text };
     }),
   );
 

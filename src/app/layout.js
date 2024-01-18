@@ -6,6 +6,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useState } from "react";
+import Head from "next/head";
 
 export function generateMetaData() {
   return {
@@ -16,13 +17,13 @@ export function generateMetaData() {
   };
 }
 
-const lightTheme = createTheme ({
+const lightTheme = createTheme({
   palette: {
     mode: "light",
   },
 });
 
-const darkTheme = createTheme ({
+const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
@@ -32,16 +33,14 @@ export default function RootLayout({ children }) {
   const [themeMode, setThemeMode] = useState("light");
   const toggleTheme = () => {
     setThemeMode(themeMode === "light" ? "dark" : "light");
-  }
+  };
   return (
     <html lang="en">
       <AppRouterCacheProvider>
-        <ThemeProvider theme={
-          themeMode === "light" ? lightTheme : darkTheme
-        }>
+        <ThemeProvider theme={themeMode === "light" ? lightTheme : darkTheme}>
           <CssBaseline />
           <body>
-            <Header toggleTheme={toggleTheme}/>
+            <Header toggleTheme={toggleTheme} />
             {children}
           </body>
         </ThemeProvider>
