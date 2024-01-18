@@ -64,15 +64,13 @@ export default function CodeBlock({ language, codes }) {
           >
             {copy ? <Check /> : <ContentCopy />}
           </IconButton>
-          {codes[selectedIndex] !== undefined ?
-          <div
-            dangerouslySetInnerHTML={{
-              __html:
-                codes[selectedIndex][
-                  theme.palette.mode
-                ],
-            }}
-          /> : null}
+          {codes[selectedIndex] !== undefined ? (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: codes[selectedIndex][theme.palette.mode],
+              }}
+            />
+          ) : null}
         </div>
       }
     </>

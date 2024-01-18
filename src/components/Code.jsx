@@ -13,27 +13,23 @@ export const Code = async ({ block, defaultLanguage, className }) => {
   ).toLowerCase();
   const caption = block.properties.caption;
 
-  if(language === "plain text"){
-    return (
-      <div className="notion-code">
-        {content}
-      </div>
-    )
+  if (language === "plain text") {
+    return <div className="notion-code">{content}</div>;
   }
 
   const highlighter = await getHighlighter({
     langs: [language],
-    themes: ["material-theme", "material-theme-lighter"]
+    themes: ["material-theme", "material-theme-lighter"],
   });
 
   const html_light = highlighter.codeToHtml(content, {
     theme: "material-theme-lighter",
-    lang: language
+    lang: language,
   });
 
   const html_dark = highlighter.codeToHtml(content, {
     theme: "material-theme",
-    lang: language
+    lang: language,
   });
 
   const languages = [language];
@@ -41,17 +37,13 @@ export const Code = async ({ block, defaultLanguage, className }) => {
     {
       code: content,
       light: html_light,
-      dark: html_dark
-    }
+      dark: html_dark,
+    },
   ];
 
   if (language === "mermaid") {
-    return (
-      <Mermaid code={content} />
-    );
+    return <Mermaid code={content} />;
   } else {
-    return (
-      <CodeBlock language={languages} codes={codes} />
-    );
+    return <CodeBlock language={languages} codes={codes} />;
   }
 };

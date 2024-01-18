@@ -11,20 +11,18 @@ import { getPageTitle } from "notion-utils";
 import { useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-const Code = dynamic(() =>
-  import("@/components/Code").then((m) => m.Code)
-);
+const Code = dynamic(() => import("@/components/Code").then((m) => m.Code));
 const Collection = dynamic(() =>
-  import("@/components/Collection").then((m) => m.Collection)
+  import("@/components/Collection").then((m) => m.Collection),
 );
 const Equation = dynamic(() =>
-  import("react-notion-x/build/third-party/equation").then((m) => m.Equation)
+  import("react-notion-x/build/third-party/equation").then((m) => m.Equation),
 );
 const Modal = dynamic(
   () => import("react-notion-x/build/third-party/modal").then((m) => m.Modal),
   {
-    ssr: false
-  }
+    ssr: false,
+  },
 );
 
 export const NotionPage = ({ recordMap, rootPageId }) => {
