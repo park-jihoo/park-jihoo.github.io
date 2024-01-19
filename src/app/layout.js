@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { cyan, lightGreen } from "@mui/material/colors";
@@ -24,14 +24,22 @@ const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: lightGreen[500],
-      dark: lightGreen[700],
-      light: lightGreen[300],
+      main: lightGreen[300],
+      dark: lightGreen[500],
+      light: lightGreen[100],
     },
     secondary: {
-      main: cyan[500],
-      dark: cyan[700],
-      light: cyan[300],
+      main: cyan[300],
+      dark: cyan[500],
+      light: cyan[100],
+    },
+    background: {
+      default: "#fafafa",
+      paper: "#fff",
+    },
+    text: {
+      primary: "#000",
+      secondary: "#555",
     },
   },
 });
@@ -39,16 +47,24 @@ const lightTheme = createTheme({
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
-  },
-  primary: {
-    main: lightGreen[500],
-    dark: lightGreen[700],
-    light: lightGreen[300],
-  },
-  secondary: {
-    main: cyan[500],
-    dark: cyan[700],
-    light: cyan[300],
+    primary: {
+      main: lightGreen[700],
+      dark: lightGreen[900],
+      light: lightGreen[500],
+    },
+    secondary: {
+      main: cyan[700],
+      dark: cyan[900],
+      light: cyan[500],
+    },
+    background: {
+      default: "#303030",
+      paper: "#424242",
+    },
+    text: {
+      primary: "#fff",
+      secondary: "#ddd",
+    },
   },
 });
 

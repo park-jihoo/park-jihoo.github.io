@@ -61,6 +61,11 @@ export const Collection = ({ block, className, ctx }) => {
     setPage(0);
   };
 
+  const changeTab = (e, newValue) => {
+    setValue(newValue);
+    setPage(0);
+  };
+
   return (
     <div
       style={{
@@ -69,11 +74,7 @@ export const Collection = ({ block, className, ctx }) => {
         overflow: "auto",
       }}
     >
-      <Tabs
-        value={value}
-        onChange={(e, newValue) => setValue(newValue)}
-        variant="fullWidth"
-      >
+      <Tabs value={value} onChange={changeTab} variant="fullWidth">
         {classes.map((c) => (
           <Tab label={c} value={c} key={c} />
         ))}
@@ -94,17 +95,18 @@ export const Collection = ({ block, className, ctx }) => {
               .map((row) => (
                 <TableRow
                   key={row.id}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                    cursor: "pointer",
-                    "&:hover": { backgroundColor: "#f5f5f5" },
-                  }}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   onClick={() => {
                     router.push(`/notes/${row.id}`);
                   }}
                 >
-                  <TableCell component="th" scope="row">
-                    <Chip label={row.subclass} sx={{ marginRight: 1 }} />
+                  <TableCell component="td" scope="row">
+                    <Chip
+                      label={row.subclass}
+                      sx={{ marginRight: 1 }}
+                      color="primary"
+                      variant="outlined"
+                    />
                     {row.title}
                   </TableCell>
                 </TableRow>

@@ -4,6 +4,14 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Chip, Tabs, Tab, Paper } from "@mui/material";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  Database,
+  LanguageC,
+  LanguageCpp,
+  LanguageJava,
+  LanguageJavascript,
+  LanguagePython,
+} from "mdi-material-ui";
 
 export default function Table({ algorithmList }) {
   const platforms = Array.from(
@@ -11,6 +19,16 @@ export default function Table({ algorithmList }) {
       Object.keys(algorithmList).map((algorithm) => algorithm.split("/")[0]),
     ),
   );
+
+  const languageIcon = {
+    c: <LanguageC />,
+    cc: <LanguageCpp />,
+    cpp: <LanguageCpp />,
+    py: <LanguagePython />,
+    sql: <Database />,
+    java: <LanguageJava />,
+    js: <LanguageJavascript />,
+  };
 
   const router = useRouter();
 
@@ -25,7 +43,7 @@ export default function Table({ algorithmList }) {
       renderCell: (params) => {
         return (
           <div className="flex flex-row">
-            <Chip label={params.value} />
+            <Chip label={params.value} color="primary" variant="outlined" />
           </div>
         );
       },
@@ -38,7 +56,13 @@ export default function Table({ algorithmList }) {
         return (
           <div className="flex flex-row">
             {params.value.split(", ").map((lang, index) => (
-              <Chip key={index} label={lang} sx={{ marginRight: "5px" }} />
+              <Chip
+                key={index}
+                label={languageIcon[lang]}
+                sx={{ marginRight: "5px" }}
+                color="primary"
+                variant="outlined"
+              />
             ))}
           </div>
         );
@@ -60,12 +84,13 @@ export default function Table({ algorithmList }) {
     });
   }
   return (
-    <Paper elevation={3}>
+    <Paper variant="flat">
       <Tabs
         value={value}
         variant="fullWidth"
         onChange={(e, v) => setValue(v)}
         aria-label="tabs"
+        sx={{ padding: 2 }}
       >
         {platforms.map((platform, index) => (
           <Tab key={index} label={platform} value={platform} />

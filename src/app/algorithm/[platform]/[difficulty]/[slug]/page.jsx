@@ -1,8 +1,10 @@
 import { getAlgorithms } from "@/app/utils";
 import { Card, Chip, Divider, Select, Typography } from "@mui/material";
-import { addClassToHast, getHighlighter } from "shikiji";
+import { getHighlighter } from "shikiji";
 import CodeBlock from "@/components/CodeBlock";
 import { useTheme } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import { OpenInNew } from "@mui/icons-material";
 
 export async function generateStaticParams() {
   const algorithms = await getAlgorithms();
@@ -19,6 +21,11 @@ export async function generateStaticParams() {
       platform: encodeURIComponent(platform),
       difficulty: encodeURIComponent(difficulty),
       slug: encodeURIComponent(slug),
+    });
+    params.push({
+      platform: platform,
+      difficulty: difficulty,
+      slug: slug,
     });
   }
 
@@ -106,6 +113,18 @@ export default async function Page({ params }) {
         />
         <Typography variant="h4" sx={{ marginBottom: 2 }}>
           {slug}
+          <IconButton
+            aria-label="link"
+            href={
+              platform === "leetcode"
+                ? `https://leetcode.com/problems/${slug.split("-").slice(1).join("-")}`
+                : platform === "프로그래머스"
+                  ? `https://programmers.co.kr/learn/courses/30/lessons/${slug.split(".")[0]}`
+                  : `https://www.acmicpc.net/problem/${slug.split(".")[0]}`
+            }
+          >
+            <OpenInNew />
+          </IconButton>
         </Typography>
         <Divider sx={{ marginBottom: 2 }} />
         <CodeBlock language={language} codes={codes} />

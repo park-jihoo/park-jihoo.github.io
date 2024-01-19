@@ -19,7 +19,7 @@ export default function Header(props) {
   const theme = useTheme();
   return (
     <Fragment>
-      <AppBar position="fixed">
+      <AppBar position="fixed" enableColorOnDark>
         <Toolbar>
           <Avatar
             src="https://avatars.githubusercontent.com/u/67787453"
@@ -31,7 +31,11 @@ export default function Header(props) {
             component="div"
             sx={{ flexGrow: 1 }}
           ></Typography>
-          <IconButton onClick={props.toggleTheme} color="inherit" aria-label="mode">
+          <IconButton
+            onClick={props.toggleTheme}
+            color="inherit"
+            aria-label="mode"
+          >
             {theme.palette.mode === "light" ? <LightMode /> : <DarkMode />}
           </IconButton>
           <Button color="inherit" aria-label="notes">
