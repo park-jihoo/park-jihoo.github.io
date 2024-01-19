@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useTheme } from "@mui/material/styles";
+import Image from 'next/image';
+import { useTheme } from '@mui/material/styles';
 
 export default function Skillset({ skills }) {
   const theme = useTheme();
@@ -14,7 +14,7 @@ export default function Skillset({ skills }) {
             alt={key}
             width={80 * skills[key].length}
             height={80}
-            src={`https://skillicons.dev/icons?i=${skills[key].join(",")}&theme=${theme.palette.mode}`}
+            src={`https://skillicons.dev/icons?i=${skills[key].join(',')}&theme=${theme.palette.mode}`}
           />
         </div>
       ))}

@@ -1,10 +1,10 @@
-import * as React from "react";
-import { NotionAPI } from "notion-client";
-import { NotionPage } from "@/components/NotionPage";
+import * as React from 'react';
+import { NotionAPI } from 'notion-client';
+import { NotionPage } from '@/components/NotionPage';
 
 const notion = new NotionAPI();
 export async function generateStaticParams() {
-  const pages = await notion.getPage("619787c75b60479886c147cf746bfbb8");
+  const pages = await notion.getPage('619787c75b60479886c147cf746bfbb8');
   return Object.keys(pages.block).map((pageId) => ({
     slug: pageId,
   }));

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import {
   Chip,
   Paper,
@@ -12,11 +12,10 @@ import {
   TablePagination,
   TableRow,
   Tabs,
-} from "@mui/material";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+} from '@mui/material';
+import { useRouter } from 'next/navigation';
 
-export const Collection = ({ block, className, ctx }) => {
+export function Collection({ block, className, ctx }) {
   if (ctx.recordMap.collection[block.collection_id] === undefined) return null;
 
   const collection = ctx.recordMap.collection[block.collection_id].value;
@@ -69,9 +68,9 @@ export const Collection = ({ block, className, ctx }) => {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        overflow: "auto",
+        width: '100%',
+        height: '100%',
+        overflow: 'auto',
       }}
     >
       <Tabs value={value} onChange={changeTab} variant="fullWidth">
@@ -95,7 +94,7 @@ export const Collection = ({ block, className, ctx }) => {
               .map((row) => (
                 <TableRow
                   key={row.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   onClick={() => {
                     router.push(`/notes/${row.id}`);
                   }}
@@ -126,8 +125,8 @@ export const Collection = ({ block, className, ctx }) => {
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-                showFirstButton={true}
-                showLastButton={true}
+                showFirstButton
+                showLastButton
               />
             </TableRow>
           </TableFooter>
@@ -135,4 +134,4 @@ export const Collection = ({ block, className, ctx }) => {
       </TableContainer>
     </div>
   );
-};
+}
