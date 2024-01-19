@@ -38,11 +38,11 @@ export default function Header(props) {
           >
             {theme.palette.mode === 'light' ? <LightMode /> : <DarkMode />}
           </IconButton>
-          <Button color="inherit" aria-label="notes">
-            <Link href="/notes">Notes</Link>
+          <Button color="inherit" aria-label="notes" href="/notes">
+            Notes
           </Button>
-          <Button color="inherit" aria-label="algorithm">
-            <Link href="/algorithm">Algorithm</Link>
+          <Button color="inherit" aria-label="algorithm" href="/algorithm">
+            Algorithm
           </Button>
         </Toolbar>
       </AppBar>
