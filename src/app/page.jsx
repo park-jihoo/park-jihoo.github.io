@@ -1,52 +1,50 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { Email, LinkedIn, GitHub } from '@mui/icons-material';
-import Image from 'next/image';
-import { useTheme } from '@mui/material/styles';
-import Skillset from '@/components/Skillset';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Divider from "@mui/material-next/Divider";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material-next/IconButton";
+import Typography from "@mui/material/Typography";
+import { Email, LinkedIn, GitHub } from "@mui/icons-material";
+import Skillset from "@/components/Skillset";
 
 function MyResume() {
-  const name = 'Jihoo Park';
-  const title = 'Data Scientist';
-  const email = 'wlgn8648@gmail.com';
+  const name = "Jihoo Park";
+  const title = "Data Scientist";
+  const email = "wlgn8648@gmail.com";
 
   const educationList = [
     {
-      degree: 'B.S. in Mathematics',
-      university: 'POSTECH',
-      start: '2016',
-      end: '2020',
+      degree: "B.S. in Mathematics",
+      university: "POSTECH",
+      start: "2016",
+      end: "2020",
     },
     {
-      degree: 'M.S. in Data Science',
-      university: 'Seoul National University',
-      start: '2022',
-      end: '2024',
+      degree: "M.S. in Data Science",
+      university: "Seoul National University",
+      start: "2022",
+      end: "2024",
     },
   ];
 
   const jobList = [
     {
-      position: 'Web Developer',
-      company: 'LG CNS',
-      start: '2020',
-      end: '2022',
+      position: "Web Developer",
+      company: "LG CNS",
+      start: "2020",
+      end: "2022",
     },
   ];
 
   const skills = {
-    ML: ['tensorflow', 'pytorch'],
-    DB: ['mysql', 'postgres', 'sqlite', 'kafka', 'mongodb'],
-    BE: ['spring', 'django', 'fastapi', 'flask'],
-    FE: ['vue', 'react', 'html', 'css', 'md', 'vite'],
-    cloud: ['gcp', 'aws'],
-    devops: ['jenkins', 'docker', 'githubactions', 'git'],
-    languages: ['py', 'cpp', 'c', 'java', 'r', 'js', 'matlab', 'latex'],
-    ides: ['vscode', 'idea', 'eclipse'],
+    ML: ["tensorflow", "pytorch"],
+    DB: ["mysql", "postgres", "sqlite", "kafka", "mongodb"],
+    BE: ["spring", "django", "fastapi", "flask"],
+    FE: ["vue", "react", "html", "css", "md", "vite"],
+    cloud: ["gcp", "aws"],
+    devops: ["jenkins", "docker", "githubactions", "git"],
+    languages: ["py", "cpp", "c", "java", "r", "js", "matlab", "latex"],
+    ides: ["vscode", "idea", "eclipse"],
   };
 
   return (
@@ -84,7 +82,7 @@ function MyResume() {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Skills
               </Typography>
-              <Skillset skills={skills} />
+              <Skillset skills={skills}/>
             </Grid>
             <Grid item xs={12}>
               <Divider />
@@ -114,10 +112,7 @@ function MyResume() {
                     component="div"
                     sx={{ flexGrow: 1 }}
                   >
-                    {education.start}
-                    {' '}
-                    -
-                    {education.end}
+                    {education.start} -{education.end}
                   </Typography>
                 </div>
               ))}
@@ -150,10 +145,7 @@ function MyResume() {
                     component="div"
                     sx={{ flexGrow: 1 }}
                   >
-                    {job.start}
-                    {' '}
-                    -
-                    {job.end}
+                    {job.start} -{job.end}
                   </Typography>
                 </div>
               ))}

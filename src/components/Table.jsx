@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import { DataGrid } from '@mui/x-data-grid';
-import {
-  Chip, Tabs, Tab, Paper,
-} from '@mui/material';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { DataGrid } from "@mui/x-data-grid";
+import { Chip, Tabs, Tab } from "@mui/material-next";
+import Paper from "@mui/material/Paper";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Database,
   LanguageC,
@@ -13,12 +12,12 @@ import {
   LanguageJava,
   LanguageJavascript,
   LanguagePython,
-} from 'mdi-material-ui';
+} from "mdi-material-ui";
 
 export default function Table({ algorithmList }) {
   const platforms = Array.from(
     new Set(
-      Object.keys(algorithmList).map((algorithm) => algorithm.split('/')[0]),
+      Object.keys(algorithmList).map((algorithm) => algorithm.split("/")[0]),
     ),
   );
 
@@ -37,10 +36,10 @@ export default function Table({ algorithmList }) {
   const [value, setValue] = useState(platforms[0]);
 
   const columns = [
-    { field: 'title', headerName: 'Title', width: 300 },
+    { field: "title", headerName: "Title", width: 300 },
     {
-      field: 'difficulty',
-      headerName: 'Difficulty',
+      field: "difficulty",
+      headerName: "Difficulty",
       width: 150,
       renderCell: (params) => (
         <div className="flex flex-row">
@@ -49,16 +48,16 @@ export default function Table({ algorithmList }) {
       ),
     },
     {
-      field: 'language',
-      headerName: 'Language',
+      field: "language",
+      headerName: "Language",
       sortable: false,
       renderCell: (params) => (
         <div className="flex flex-row">
-          {params.value.split(', ').map((lang, index) => (
+          {params.value.split(", ").map((lang, index) => (
             <Chip
               key={index}
               label={languageIcon[lang]}
-              sx={{ marginRight: '5px' }}
+              sx={{ marginRight: "5px" }}
               color="primary"
               variant="outlined"
             />
@@ -75,9 +74,9 @@ export default function Table({ algorithmList }) {
     id++;
     rows.push({
       id,
-      difficulty: algorithm.split('/')[1],
-      title: algorithm.split('/')[2],
-      language: language.join(', '),
+      difficulty: algorithm.split("/")[1],
+      title: algorithm.split("/")[2],
+      language: language.join(", "),
       path: algorithm,
     });
   }
@@ -103,7 +102,7 @@ export default function Table({ algorithmList }) {
         initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
         pageSizeOptions={[10]}
         onRowClick={(params) => {
-          const path = `/algorithm/${params.row.path.split('/').slice(0, 3).join('/')}`;
+          const path = `/algorithm/${params.row.path.split("/").slice(0, 3).join("/")}`;
           router.push(path);
         }}
       />

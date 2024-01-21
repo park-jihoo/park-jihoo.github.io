@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://park-jihoo.github.io
-
-# Sitemaps
-Sitemap: https://park-jihoo.github.io/sitemap.xml

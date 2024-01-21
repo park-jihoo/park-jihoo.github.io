@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import {
-  Chip,
   Paper,
-  Tab,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableFooter,
   TableHead,
-  TablePagination,
-  TableRow,
+  TableRow
+} from "@mui/material";
+import {
+  Chip,
+  Tab,
   Tabs,
-} from '@mui/material';
-import { useRouter } from 'next/navigation';
+} from "@mui/material-next"
+import TablePagination from "@mui/material-next/TablePagination";
+import { useRouter } from "next/navigation";
 
 export function Collection({ block, className, ctx }) {
   if (ctx.recordMap.collection[block.collection_id] === undefined) return null;
@@ -68,9 +70,9 @@ export function Collection({ block, className, ctx }) {
   return (
     <div
       style={{
-        width: '100%',
-        height: '100%',
-        overflow: 'auto',
+        width: "100%",
+        height: "100%",
+        overflow: "auto",
       }}
     >
       <Tabs value={value} onChange={changeTab} variant="fullWidth">
@@ -94,7 +96,7 @@ export function Collection({ block, className, ctx }) {
               .map((row) => (
                 <TableRow
                   key={row.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   onClick={() => {
                     router.push(`/notes/${row.id}`);
                   }}
