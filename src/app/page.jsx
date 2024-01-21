@@ -82,7 +82,7 @@ function MyResume() {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Skills
               </Typography>
-              <Skillset skills={skills}/>
+              <Skillset skills={skills} />
             </Grid>
             <Grid item xs={12}>
               <Divider />

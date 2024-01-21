@@ -1,20 +1,21 @@
-import {
-  AppBar,
-  Avatar,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Avatar, Toolbar, Typography } from "@mui/material";
 
 import { useRouter } from "next/navigation";
 import IconButton from "@mui/material-next/IconButton";
 import Button from "@mui/material-next/Button";
-import { Article, Computer, DarkMode, DocumentScanner, LightMode } from "@mui/icons-material";
-import  {useColorScheme} from "@mui/material-next/styles";
+import {
+  Article,
+  Computer,
+  DarkMode,
+  DocumentScanner,
+  LightMode,
+} from "@mui/icons-material";
+import { useColorScheme } from "@mui/material-next/styles";
 import { Fragment } from "react";
 
 export default function Header() {
   const router = useRouter();
-  const colorScheme = useColorScheme();
+  const { mode, setMode } = useColorScheme();
   return (
     <Fragment>
       <AppBar position="fixed" enableColorOnDark>
@@ -27,28 +28,28 @@ export default function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
           <IconButton
             onClick={() => {
-              colorScheme.setMode(colorScheme.mode === "light" ? "dark" : "light")
+              setMode(mode === "dark" ? "light" : "dark");
             }}
             color="inherit"
             aria-label="mode"
           >
-            { colorScheme.mode === "dark" ? <DarkMode /> : <LightMode />}
+            {mode === "dark" ? <DarkMode /> : <LightMode />}
           </IconButton>
           <Button
             color="inherit"
             aria-label="notes"
             href="/notes"
-            startIcon={<Article/>}
+            startIcon={<Article />}
           >
-            Notes
+            NOTES
           </Button>
           <Button
             color="inherit"
             aria-label="algorithm"
             href="/algorithm"
-            startIcon={<Computer/>}
+            startIcon={<Computer />}
           >
-            Algorithm
+            ALGORITHM
           </Button>
         </Toolbar>
       </AppBar>

@@ -7,13 +7,9 @@ import {
   TableContainer,
   TableFooter,
   TableHead,
-  TableRow
+  TableRow,
 } from "@mui/material";
-import {
-  Chip,
-  Tab,
-  Tabs,
-} from "@mui/material-next"
+import { Chip, Tab, Tabs } from "@mui/material-next";
 import TablePagination from "@mui/material-next/TablePagination";
 import { useRouter } from "next/navigation";
 

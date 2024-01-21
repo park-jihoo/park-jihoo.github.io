@@ -20,12 +20,12 @@ export async function generateStaticParams() {
     params.push({
       platform: encodeURIComponent(platform),
       difficulty: encodeURIComponent(difficulty),
-      slug: encodeURIComponent(slug)
+      slug: encodeURIComponent(slug),
     });
     params.push({
       platform,
       difficulty,
-      slug
+      slug,
     });
   }
 
@@ -53,7 +53,7 @@ export default async function Page({ params }) {
     .map((algorithm) =>
       algorithm.path
         .split(".")
-        [algorithm.path.split(".").length - 1].toLowerCase()
+        [algorithm.path.split(".").length - 1].toLowerCase(),
     );
 
   const languageMap = {
@@ -63,7 +63,7 @@ export default async function Page({ params }) {
     py: "python",
     js: "javascript",
     java: "java",
-    sql: "sql"
+    sql: "sql",
   };
 
   const paths = language.map((lang) => {
@@ -74,7 +74,7 @@ export default async function Page({ params }) {
 
   const highlighter = getHighlighter({
     langs: language.map((lang) => languageMap[lang]),
-    themes: ["material-theme-lighter", "material-theme-darker"]
+    themes: ["material-theme-lighter", "material-theme-darker"],
   });
 
   const codes = await Promise.all(
@@ -90,9 +90,9 @@ export default async function Page({ params }) {
             line(hast, line) {
               addClassToHast(hast, "whitespace-pre-wrap");
               addClassToHast(hast, "ml-2");
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
       const dark_html = (await highlighter).codeToHtml(text, {
         lang: languageMap[lang],
@@ -102,12 +102,12 @@ export default async function Page({ params }) {
             line(hast, line) {
               addClassToHast(hast, "whitespace-pre-wrap");
               addClassToHast(hast, "ml-2");
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
       return { light: light_html, dark: dark_html, code: text };
-    })
+    }),
   );
 
   return (
