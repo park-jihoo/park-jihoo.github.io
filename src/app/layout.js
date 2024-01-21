@@ -5,12 +5,12 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { CssBaseline, Experimental_CssVarsProvider } from "@mui/material";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { cyan, deepPurple } from "@mui/material/colors";
-import Header from "@/components/Header";
 import {
   CssVarsProvider,
   extendTheme,
   getInitColorSchemeScript,
 } from "@mui/material-next";
+import Header from "@/components/Header";
 
 export function generateMetaData() {
   return {

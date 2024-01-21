@@ -2,9 +2,9 @@ import { Card, Typography } from "@mui/material";
 import { addClassToHast, getHighlighter } from "shikiji";
 import IconButton from "@mui/material-next/IconButton";
 import { OpenInNew } from "@mui/icons-material";
+import { Chip, Divider } from "@mui/material-next";
 import CodeBlock from "@/components/CodeBlock";
 import { getAlgorithms } from "@/app/utils";
-import { Chip, Divider } from "@mui/material-next";
 
 export async function generateStaticParams() {
   const algorithms = await getAlgorithms();

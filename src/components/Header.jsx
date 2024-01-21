@@ -17,7 +17,7 @@ export default function Header() {
   const router = useRouter();
   const { mode, setMode } = useColorScheme();
   return (
-    <Fragment>
+    <>
       <AppBar position="fixed" enableColorOnDark>
         <Toolbar>
           <Avatar
@@ -54,6 +54,6 @@ export default function Header() {
         </Toolbar>
       </AppBar>
       <Toolbar />
-    </Fragment>
+    </>
   );
 }
