@@ -81,7 +81,7 @@ export default function Table({ algorithmList }) {
     });
   }
   return (
-    <Paper variant="flat">
+    <Paper elevation={0}>
       <Tabs
         value={value}
         variant="fullWidth"

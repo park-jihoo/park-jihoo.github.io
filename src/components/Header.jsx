@@ -1,7 +1,6 @@
 import { AppBar, Avatar, Toolbar, Typography } from "@mui/material";
 
 import { useRouter } from "next/navigation";
-import IconButton from "@mui/material-next/IconButton";
 import Button from "@mui/material-next/Button";
 import {
   Article,
@@ -12,10 +11,17 @@ import {
 } from "@mui/icons-material";
 import { useColorScheme } from "@mui/material-next/styles";
 import { Fragment } from "react";
+import { useColorScheme as useColorSchemeMD2 } from "@mui/material/styles";
+import dynamic from "next/dynamic";
+
+const IconButton = dynamic(() => import("@mui/material-next/IconButton"), {
+  ssr: false,
+});
 
 export default function Header() {
   const router = useRouter();
   const { mode, setMode } = useColorScheme();
+  const { mode: modeMD2, setMode: setModeMD2 } = useColorSchemeMD2();
   return (
     <>
       <AppBar position="fixed" enableColorOnDark>
@@ -29,6 +35,7 @@ export default function Header() {
           <IconButton
             onClick={() => {
               setMode(mode === "dark" ? "light" : "dark");
+              setModeMD2(modeMD2 === "dark" ? "light" : "dark");
             }}
             color="inherit"
             aria-label="mode"

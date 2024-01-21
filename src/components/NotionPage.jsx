@@ -4,7 +4,6 @@ import * as React from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { NotionRenderer } from "react-notion-x";
 import "react-notion-x/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import "katex/dist/katex.min.css";
@@ -25,10 +24,15 @@ const Modal = dynamic(
   },
 );
 
+const NotionRenderer = dynamic(
+  () => import("react-notion-x").then((m) => m.NotionRenderer),
+  { ssr: false },
+);
+
 export function NotionPage({ recordMap, rootPageId }) {
   if (!recordMap) return null;
   const title = getPageTitle(recordMap);
-  const colorScheme = useColorScheme();
+  const { mode } = useColorScheme();
   return (
     <>
       <Head>
@@ -38,7 +42,7 @@ export function NotionPage({ recordMap, rootPageId }) {
       </Head>
       <NotionRenderer
         recordMap={recordMap}
-        darkMode={colorScheme.mode === "dark"}
+        darkMode={mode === "dark"}
         components={{
           Code,
           Collection,

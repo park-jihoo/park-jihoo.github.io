@@ -23,18 +23,7 @@ export default async function Page() {
   return (
     <div>
       <Card sx={{ minHeight: "100vh", padding: 4 }}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Paper sx={{ width: "100%", p: 2, marginTop: 2 }} elevation={3}>
-            <Table algorithmList={algorithmList} />
-          </Paper>
-        </Box>
+        <Table algorithmList={algorithmList} />
       </Card>
     </div>
   );

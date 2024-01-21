@@ -64,7 +64,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <AppRouterCacheProvider>
-        <CssVarsProvider theme={md3Theme} defaultColorScheme="light">
+        <CssVarsProvider theme={md3Theme}>
           <Experimental_CssVarsProvider theme={md3Theme}>
             <CssBaseline enableColorScheme />
             <GoogleAnalytics gaId="G-5H39DYHZK8" />
