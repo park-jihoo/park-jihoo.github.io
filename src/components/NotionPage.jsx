@@ -9,6 +9,7 @@ import "prismjs/themes/prism-tomorrow.css";
 import "katex/dist/katex.min.css";
 import { getPageTitle } from "notion-utils";
 import { useColorScheme } from "@mui/material-next/styles";
+import Comments from "@/components/Comments";
 
 const Code = dynamic(() => import("@/components/Code").then((m) => m.Code));
 const Collection = dynamic(() =>
@@ -56,6 +57,7 @@ export function NotionPage({ recordMap, rootPageId }) {
         fullPage
         disableHeader
       />
+      <Comments/>
     </>
   );
 }

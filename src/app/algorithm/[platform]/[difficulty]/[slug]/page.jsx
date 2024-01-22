@@ -5,6 +5,7 @@ import { OpenInNew } from "@mui/icons-material";
 import { Chip, Divider } from "@mui/material-next";
 import CodeBlock from "@/components/CodeBlock";
 import { getAlgorithms } from "@/app/utils";
+import Comments from "@/components/Comments";
 
 export async function generateStaticParams() {
   const algorithms = await getAlgorithms();
@@ -141,6 +142,7 @@ export default async function Page({ params }) {
       </Typography>
       <Divider sx={{ marginBottom: 2 }} />
       <CodeBlock language={language} codes={codes} />
+      <Comments />
     </Card>
   );
 }
