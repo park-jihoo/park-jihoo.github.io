@@ -5,7 +5,7 @@ import { useColorScheme } from "@mui/material-next/styles";
 import { useEffect, useRef } from "react";
 
 export default function Comments() {
-  const {mode} = useColorScheme();
+  const { mode } = useColorScheme();
   const ref = useRef(null);
 
   const theme = mode === "light" ? "light" : "dark";
@@ -29,13 +29,15 @@ export default function Comments() {
     scriptElem.setAttribute("data-lang", "ko");
 
     ref.current.appendChild(scriptElem);
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     const iframe = document.querySelector("iframe.giscus-frame");
-    iframe?.contentWindow?.postMessage({ giscus: { setConfig: {theme} } }, "*");
-
-    }, [theme]);
+    iframe?.contentWindow?.postMessage(
+      { giscus: { setConfig: { theme } } },
+      "*",
+    );
+  }, [theme]);
   return (
     <div className="p-3">
       <div ref={ref} className="comments" />

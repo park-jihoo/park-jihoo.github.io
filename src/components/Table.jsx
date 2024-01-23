@@ -13,6 +13,8 @@ import {
   LanguageJavascript,
   LanguagePython,
 } from "mdi-material-ui";
+import { TextField } from "@mui/material";
+import { Search } from "@mui/icons-material";
 
 export default function Table({ algorithmList }) {
   const platforms = Array.from(
@@ -34,6 +36,11 @@ export default function Table({ algorithmList }) {
   const router = useRouter();
 
   const [value, setValue] = useState(platforms[0]);
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
 
   const columns = [
     { field: "title", headerName: "Title", width: 300 },
@@ -75,30 +82,51 @@ export default function Table({ algorithmList }) {
     rows.push({
       id,
       difficulty: algorithm.split("/")[1],
-      title: algorithm.split("/")[2],
+      title: algorithm.split("/")[2].replace(/-/g, " "),
       language: language.join(", "),
       path: algorithm,
     });
   }
+
+  rows.sort((a, b) => a.title.localeCompare(b.title));
   return (
     <Paper elevation={0}>
       <Tabs
         value={value}
         variant="fullWidth"
-        onChange={(e, v) => setValue(v)}
+        onChange={(e, v) => {
+          setValue(v);
+          setSearch("");
+        }}
         aria-label="tabs"
-        sx={{ padding: 2 }}
+        sx={{ marginBottom: 2 }}
       >
         {platforms.map((platform, index) => (
           <Tab key={index} label={platform} value={platform} />
         ))}
       </Tabs>
+      <TextField
+        label="Search"
+        variant="standard"
+        value={search}
+        onChange={handleSearch}
+        sx={{ marginBottom: 2 }}
+        InputProps={{
+          startAdornment: <Search />,
+        }}
+        fullWidth
+      />
       <DataGrid
         columns={columns}
-        rows={rows.filter((row) => row.path.includes(value))}
+        rows={rows.filter(
+          (row) =>
+            row.path.includes(value) &&
+            row.title.toLowerCase().includes(search.toLowerCase()),
+        )}
         density="comfortable"
         disableColumnSelector
         disableColumnFilter
+        autoHeight
         initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
         pageSizeOptions={[10]}
         onRowClick={(params) => {

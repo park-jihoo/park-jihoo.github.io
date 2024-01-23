@@ -10,6 +10,7 @@ import "katex/dist/katex.min.css";
 import { getPageTitle } from "notion-utils";
 import { useColorScheme } from "@mui/material-next/styles";
 import Comments from "@/components/Comments";
+import { Paper } from "@mui/material";
 
 const Code = dynamic(() => import("@/components/Code").then((m) => m.Code));
 const Collection = dynamic(() =>
@@ -30,17 +31,12 @@ const NotionRenderer = dynamic(
   { ssr: false },
 );
 
-export function NotionPage({ recordMap, rootPageId }) {
+export function NotionPage({ recordMap, rootPageId, comments }) {
   if (!recordMap) return null;
   const title = getPageTitle(recordMap);
   const { mode } = useColorScheme();
   return (
-    <>
-      <Head>
-        <title>{title}</title>
-        <meta property="og:title" content={title} />
-        <meta property="twitter:title" content={title} />
-      </Head>
+    <Paper>
       <NotionRenderer
         recordMap={recordMap}
         darkMode={mode === "dark"}
@@ -57,7 +53,7 @@ export function NotionPage({ recordMap, rootPageId }) {
         fullPage
         disableHeader
       />
-      <Comments/>
-    </>
+      {comments && <Comments />}
+    </Paper>
   );
 }

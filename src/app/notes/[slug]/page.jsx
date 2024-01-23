@@ -18,7 +18,7 @@ export default async function Page({ params }) {
 
   return (
     <div>
-      <NotionPage recordMap={recordMap} />
+      <NotionPage recordMap={recordMap} comments />
     </div>
   );
 }

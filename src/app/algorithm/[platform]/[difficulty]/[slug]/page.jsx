@@ -1,4 +1,4 @@
-import { Card, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { addClassToHast, getHighlighter } from "shikiji";
 import IconButton from "@mui/material-next/IconButton";
 import { OpenInNew } from "@mui/icons-material";
@@ -112,7 +112,7 @@ export default async function Page({ params }) {
   );
 
   return (
-    <Card sx={{ minHeight: "100vh", padding: 2 }}>
+    <Paper sx={{ minHeight: "100vh", padding: 2 }}>
       <Chip
         label={platform}
         variant="outlined"
@@ -143,6 +143,6 @@ export default async function Page({ params }) {
       <Divider sx={{ marginBottom: 2 }} />
       <CodeBlock language={language} codes={codes} />
       <Comments />
-    </Card>
+    </Paper>
   );
 }
