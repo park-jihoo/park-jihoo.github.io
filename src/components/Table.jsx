@@ -1,6 +1,6 @@
 "use client";
 
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { Chip, Tabs, Tab } from "@mui/material-next";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
@@ -132,6 +132,12 @@ export default function Table({ algorithmList }) {
         onRowClick={(params) => {
           const path = `/algorithm/${params.row.path.split("/").slice(0, 3).join("/")}`;
           router.push(path);
+        }}
+        sx={{
+          [`& .${gridClasses.cell}:focus, .${gridClasses.cell}:focus-within,`]:
+            { outline: "none" },
+          [`& .${gridClasses.columnHeader}:focus, .${gridClasses.columnHeader}:focus-within,`]:
+            { outline: "none" },
         }}
       />
     </Paper>

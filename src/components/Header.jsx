@@ -6,7 +6,6 @@ import {
   Article,
   Computer,
   DarkMode,
-  DocumentScanner,
   LightMode,
 } from "@mui/icons-material";
 import { useColorScheme } from "@mui/material-next/styles";
