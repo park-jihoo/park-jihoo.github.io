@@ -4,33 +4,12 @@ import IconButton from "@mui/material-next/IconButton";
 import { OpenInNew } from "@mui/icons-material";
 import { Chip, Divider } from "@mui/material-next";
 import CodeBlock from "@/components/CodeBlock";
-import { getAlgorithms } from "@/app/utils";
+import { getAlgorithmParams, getAlgorithms } from "@/app/utils";
 import Comments from "@/components/Comments";
 
 export async function generateStaticParams() {
   const algorithms = await getAlgorithms();
-  const params = [];
-  for (const algorithm of algorithms) {
-    const path = algorithm.path
-      .split(".")
-      .slice(0, algorithm.path.split(".").length - 1)
-      .join(".");
-    const platform = path.split("/")[0];
-    const difficulty = path.split("/")[1];
-    const slug = path.split("/")[2];
-    params.push({
-      platform: encodeURIComponent(platform),
-      difficulty: encodeURIComponent(difficulty),
-      slug: encodeURIComponent(slug),
-    });
-    params.push({
-      platform,
-      difficulty,
-      slug,
-    });
-  }
-
-  return params;
+  return getAlgorithmParams(algorithms);
 }
 
 export default async function Page({ params }) {
