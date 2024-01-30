@@ -18,7 +18,7 @@ export function generateMetaData() {
     title: "Park Jihoo",
     description: "Park Jihoo's personal website",
     image: "https://avatars.githubusercontent.com/u/24237865?v=4",
-    url: "https://park-jihoo.github.io",
+    url: new URL("https://park-jihoo.github.io/"),
     verification : {
       google: "kQoktB1lk0tqFRLs4-vqhVfEVWlRMX8VRQtLC_L09uw",
       other: {

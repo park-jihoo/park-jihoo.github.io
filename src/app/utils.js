@@ -1,6 +1,5 @@
 import { cache } from "react";
 import { Octokit } from "@octokit/rest";
-import { NotionAPI } from "notion-client";
 
 export const getAlgorithms = cache(async () => {
   const octokit = new Octokit({
