@@ -12,9 +12,8 @@ import {
 } from "@mui/material-next";
 import Header from "@/components/Header";
 
-/**@type {import("next").Metadata}*/
-export function generateMetaData() {
-  return {
+export const metadata =
+  {
     title: "Park Jihoo",
     description: "Park Jihoo's personal website",
     image: "https://avatars.githubusercontent.com/u/24237865?v=4",
@@ -27,7 +26,6 @@ export function generateMetaData() {
     },
     metadataBase: new URL("https://park-jihoo.github.io/"),
   };
-}
 
 const md3Theme = extendTheme({
   colorSchemes: {
