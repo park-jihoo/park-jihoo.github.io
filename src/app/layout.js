@@ -12,15 +12,19 @@ import {
 } from "@mui/material-next";
 import Header from "@/components/Header";
 
+/**@type {import("next").Metadata}*/
 export function generateMetaData() {
   return {
     title: "Park Jihoo",
     description: "Park Jihoo's personal website",
     image: "https://avatars.githubusercontent.com/u/24237865?v=4",
     url: "https://park-jihoo.github.io",
-    "google-site-verification": "kQoktB1lk0tqFRLs4-vqhVfEVWlRMX8VRQtLC_L09uw",
-    "naver-site-verification": "0581245626108d8ea24cc4d24a30ee84c0394ce6",
-    metadataBase: new URL("https://park-jihoo.github.io"),
+    verification : {
+      google: "kQoktB1lk0tqFRLs4-vqhVfEVWlRMX8VRQtLC_L09uw",
+      other: {
+        "naver-site-verification": "0581245626108d8ea24cc4d24a30ee84c0394ce6",
+      }
+    }
   };
 }
 
