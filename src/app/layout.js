@@ -1,20 +1,9 @@
-"use client";
-
 import "./globals.css";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
-import { CssBaseline, Experimental_CssVarsProvider } from "@mui/material";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import { cyan, deepPurple } from "@mui/material/colors";
-import {
-  CssVarsProvider,
-  extendTheme,
-  getInitColorSchemeScript,
-} from "@mui/material-next";
 import Header from "@/components/Header";
+import Providers from "@/components/Providers";
 
 /**@type {import("next").Metadata}*/
-export function generateMetaData() {
-  return {
+export const metadata  = {
     title: "Park Jihoo",
     description: "Park Jihoo's personal website",
     image: "https://avatars.githubusercontent.com/u/24237865?v=4",
@@ -26,61 +15,18 @@ export function generateMetaData() {
       }
     },
     metadataBase: new URL("https://park-jihoo.github.io/"),
-  };
-}
+  }
 
-const md3Theme = extendTheme({
-  colorSchemes: {
-    light: {
-      palette: {
-        mode: "light",
-        primary: {
-          main: deepPurple[300],
-          dark: deepPurple[500],
-          light: deepPurple[100],
-        },
-        secondary: {
-          main: cyan[300],
-          dark: cyan[500],
-          light: cyan[100],
-        },
-      },
-    },
-    dark: {
-      palette: {
-        mode: "dark",
-        primary: {
-          main: deepPurple[700],
-          dark: deepPurple[900],
-          light: deepPurple[500],
-        },
-        secondary: {
-          main: cyan[700],
-          dark: cyan[900],
-          light: cyan[500],
-        },
-      },
-    },
-  },
-  cssVarPrefix: "md3",
-});
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <AppRouterCacheProvider>
-        <CssVarsProvider theme={md3Theme}>
-          <Experimental_CssVarsProvider theme={md3Theme}>
-            <CssBaseline enableColorScheme />
-            <GoogleAnalytics gaId="G-5H39DYHZK8" />
-            <body>
-              <Header />
-              {getInitColorSchemeScript()}
-              {children}
-            </body>
-          </Experimental_CssVarsProvider>
-        </CssVarsProvider>
-      </AppRouterCacheProvider>
+    <Providers>
+      <body>
+      <Header/>
+      {children}
+      </body>
+    </Providers>
     </html>
   );
 }
