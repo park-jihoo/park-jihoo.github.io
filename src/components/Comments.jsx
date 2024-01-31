@@ -1,6 +1,5 @@
 "use client";
 
-import Giscus from "@giscus/react";
 import { useColorScheme } from "@mui/material-next/styles";
 import { useEffect, useRef } from "react";
 

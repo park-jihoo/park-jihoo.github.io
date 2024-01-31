@@ -21,7 +21,7 @@ export const getAlgorithms = cache(async () => {
   );
 });
 
-export const getAlgorithmParams = cache( (algorithms) => {
+export const getAlgorithmParams = cache((algorithms) => {
   const params = [];
   for (const algorithm of algorithms) {
     const path = algorithm.path

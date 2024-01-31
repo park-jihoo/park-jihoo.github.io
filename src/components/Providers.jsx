@@ -1,7 +1,11 @@
 "use client";
 
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { CssBaseline, Experimental_CssVarsProvider, getInitColorSchemeScript } from "@mui/material";
+import {
+  CssBaseline,
+  Experimental_CssVarsProvider,
+  getInitColorSchemeScript,
+} from "@mui/material";
 import { CssVarsProvider, extendTheme } from "@mui/material-next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { cyan, deepPurple } from "@mui/material/colors";

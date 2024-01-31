@@ -3,12 +3,7 @@ import { AppBar, Avatar, Toolbar, Typography } from "@mui/material";
 
 import { useRouter } from "next/navigation";
 import Button from "@mui/material-next/Button";
-import {
-  Article,
-  Computer,
-  DarkMode,
-  LightMode,
-} from "@mui/icons-material";
+import { Article, Computer, DarkMode, LightMode } from "@mui/icons-material";
 import { useColorScheme } from "@mui/material-next/styles";
 import { Fragment } from "react";
 import { useColorScheme as useColorSchemeMD2 } from "@mui/material/styles";
