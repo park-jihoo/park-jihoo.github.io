@@ -1,13 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MenuItem } from "@mui/material";
-import IconButton from "@mui/material-next/IconButton";
-import Select from "@mui/material-next/Select";
-import { Check, ContentCopy } from "@mui/icons-material";
-import { useColorScheme } from "@mui/material-next/styles";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {CheckIcon, CopyIcon} from "@radix-ui/react-icons";
 
 export default function CodeBlock({ language, codes }) {
+  const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [copy, setCopy] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -17,61 +27,75 @@ export default function CodeBlock({ language, codes }) {
   }, []);
 
   const languageMap = {
-    c: "c",
-    cpp: "cpp",
-    cc: "cpp",
-    py: "python",
-    js: "javascript",
-    java: "java",
-    sql: "sql",
+    c: "C",
+    cpp: "C++",
+    cc: "C++",
+    py: "Python",
+    js: "JavaScript",
+    java: "Java",
+    sql: "SQL",
   };
 
-  const handleLanguageChange = (event) => {
-    setSelectedIndex(event.target.value);
-  };
-
-  const colorScheme = useColorScheme();
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => {
       setCopy(true);
       setTimeout(() => {
         setCopy(false);
-      }, 500);
+      }, 1000);
     });
   };
 
   return (
-    <div>
-      {language.length > 1 ? (
-        <Select
-          value={selectedIndex}
-          onChange={handleLanguageChange}
-          sx={{ marginBottom: 2 }}
-          fullWidth
-        >
-          {language.map((lang, idx) => (
-            <MenuItem key={idx} value={idx}>
-              {lang}
-            </MenuItem>
-          ))}
-        </Select>
-      ) : (
-        <Select value={0} disabled sx={{ marginBottom: 2 }} fullWidth>
-          <MenuItem value={0}>{language[0]}</MenuItem>
-        </Select>
-      )}
-      <div style={{ position: "relative" }}>
-        <IconButton
+    <div className="space-y-4">
+      {/* Language Selector Popover */}
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-[200px] justify-between"
+          >
+            {languageMap[language[selectedIndex]]}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[200px] p-0">
+          <Command>
+            <CommandInput placeholder="Search language..." />
+            <CommandList>
+              <CommandEmpty>No results found</CommandEmpty>
+              {language.map((lang, idx) => (
+                <CommandItem
+                  key={idx}
+                  value={idx}
+                  onSelect={() => {
+                    setSelectedIndex(idx);
+                    setOpen(false);
+                  }}
+                >
+                  {languageMap[lang]}
+                </CommandItem>
+              ))}
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+
+      {/* Code Block with Copy Button */}
+      <div className="relative">
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => copyToClipboard(codes[selectedIndex].code)}
-          sx={{ position: "absolute", right: 0, top: 0 }}
+          className="absolute right-2 top-2"
         >
-          {copy ? <Check /> : <ContentCopy />}
-        </IconButton>
+          {copy ? <CheckIcon className="text-green-500" /> : <CopyIcon />}
+        </Button>
+
         {isMounted && codes[selectedIndex] !== undefined ? (
           <div
-            dangerouslySetInnerHTML={{
-              __html: codes[selectedIndex][colorScheme.mode],
-            }}
+            className="overflow-auto p-4 rounded-md bg-gray-800 text-white"
+            dangerouslySetInnerHTML={{ __html: codes[selectedIndex]["dark"] }}
           />
         ) : null}
       </div>

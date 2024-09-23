@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useColorScheme } from "@mui/material-next/styles";
 
 export default function Skillset({ skills }) {
-  const colorScheme = useColorScheme();
+  const colorScheme = { mode: "light" };
   return (
     <div>
       {Object.keys(skills).map((key, index) => (

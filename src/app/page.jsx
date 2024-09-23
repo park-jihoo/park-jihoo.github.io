@@ -1,11 +1,19 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Divider from "@mui/material-next/Divider";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material-next/IconButton";
-import Typography from "@mui/material/Typography";
-import { Email, LinkedIn, GitHub } from "@mui/icons-material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import Skillset from "@/components/Skillset";
+import { Button } from "@/components/ui/button";
+import {
+  GitHubLogoIcon,
+  LinkedInLogoIcon,
+  EnvelopeClosedIcon,
+} from "@radix-ui/react-icons";
+import Link from "next/link";
 
 function MyResume() {
   const name = "Jihoo Park";
@@ -14,13 +22,13 @@ function MyResume() {
 
   const educationList = [
     {
-      degree: "B.S. in Mathematics",
+      degree: "Bachelor's in Mathematics",
       university: "POSTECH",
       start: "2016",
       end: "2020",
     },
     {
-      degree: "M.S. in Data Science",
+      degree: "Master's in Data Science",
       university: "Seoul National University",
       start: "2022",
       end: "2024",
@@ -48,110 +56,72 @@ function MyResume() {
   };
 
   return (
-    <div>
-      <Card sx={{ minWidth: 275 }}>
-        <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                {name}
-              </Typography>
-              <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
-                {title}
-              </Typography>
-              <IconButton
-                aria-label="github"
-                href="https://github.com/park-jihoo"
-              >
-                <GitHub />
-              </IconButton>
-              <IconButton
-                aria-label="linkedin"
-                href="https://www.linkedin.com/in/parkjihoo/"
-              >
-                <LinkedIn />
-              </IconButton>
-              <IconButton aria-label="email" href={`mailto:${email}`}>
-                <Email />
-              </IconButton>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Skills
-              </Typography>
+    <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
+      <Card className="w-full max-w-4xl shadow-lg rounded-lg">
+        <CardHeader className="from-blue-500 p-6 rounded-t-lg">
+          <CardTitle className="text-4xl font-bold">{name}</CardTitle>
+          <p className="text-xl font-light">{title}</p>
+          <div className="flex gap-4 mt-4">
+            <Button variant="outline" size="icon" asChild className="hover:bg-white hover:text-black">
+              <Link href="https://github.com/park-jihoo">
+                <GitHubLogoIcon />
+              </Link>
+            </Button>
+            <Button variant="outline" size="icon" asChild className="hover:bg-white hover:text-black">
+              <Link href="https://www.linkedin.com/in/parkjihoo/">
+                <LinkedInLogoIcon />
+              </Link>
+            </Button>
+            <Button variant="outline" size="icon" asChild className="hover:bg-white hover:text-black">
+              <Link href={`mailto:${email}`}>
+                <EnvelopeClosedIcon />
+              </Link>
+            </Button>
+          </div>
+        </CardHeader>
+
+        <CardContent className="p-6">
+          <div className="space-y-8">
+            {/* Skills Section */}
+            <div>
+              <h2 className="text-2xl font-semibold text-gray-700 mb-4">Skills</h2>
               <Skillset skills={skills} />
-            </Grid>
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                Education
-              </Typography>
+            </div>
+            <Separator />
+
+            {/* Education Section */}
+            <div>
+              <h2 className="text-2xl font-semibold text-gray-700 mb-4">Education</h2>
               {educationList.map((education, index) => (
-                <div key={index}>
-                  <Typography
-                    variant="body1"
-                    component="div"
-                    sx={{ flexGrow: 1 }}
-                  >
-                    {education.degree}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    component="div"
-                    sx={{ flexGrow: 1 }}
-                  >
-                    {education.university}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    component="div"
-                    sx={{ flexGrow: 1 }}
-                  >
-                    {education.start} -{education.end}
-                  </Typography>
+                <div key={index} className="mb-4">
+                  <p className="text-lg font-medium text-gray-800">{education.degree}</p>
+                  <p className="text-gray-600">{education.university}</p>
+                  <p className="text-gray-500">
+                    {education.start} - {education.end}
+                  </p>
                 </div>
               ))}
-            </Grid>
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Work Experience
-              </Typography>
+            </div>
+            <Separator />
+
+            {/* Work Experience Section */}
+            <div>
+              <h2 className="text-2xl font-semibold text-gray-700 mb-4">Work Experience</h2>
               {jobList.map((job, index) => (
-                <div key={index}>
-                  <Typography
-                    variant="body1"
-                    component="div"
-                    sx={{ flexGrow: 1 }}
-                  >
-                    {job.position}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    component="div"
-                    sx={{ flexGrow: 1 }}
-                  >
-                    {job.company}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    component="div"
-                    sx={{ flexGrow: 1 }}
-                  >
-                    {job.start} -{job.end}
-                  </Typography>
+                <div key={index} className="mb-4">
+                  <p className="text-lg font-medium text-gray-800">{job.position}</p>
+                  <p className="text-gray-600">{job.company}</p>
+                  <p className="text-gray-500">
+                    {job.start} - {job.end}
+                  </p>
                 </div>
               ))}
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </CardContent>
+        <CardFooter className="p-6">
+          <p className="text-sm text-gray-500">© 2024 Jihoo Park. All rights reserved.</p>
+        </CardFooter>
       </Card>
     </div>
   );

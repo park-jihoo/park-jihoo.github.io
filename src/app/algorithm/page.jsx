@@ -1,5 +1,5 @@
-import Card from "@mui/material/Card";
-import Table from "@/components/Table";
+import { Card } from "@/components/ui/card";
+import MyTable from "@/components/MyTable";
 import { getAlgorithms } from "@/app/utils";
 
 export default async function Page() {
@@ -20,8 +20,8 @@ export default async function Page() {
 
   return (
     <div>
-      <Card sx={{ minHeight: "100vh", padding: 4 }}>
-        <Table algorithmList={algorithmList} />
+      <Card className="w-full p-6 shadow-lg">
+        <MyTable algorithmList={algorithmList} />
       </Card>
     </div>
   );

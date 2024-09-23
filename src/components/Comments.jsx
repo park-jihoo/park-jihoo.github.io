@@ -1,10 +1,9 @@
 "use client";
 
-import { useColorScheme } from "@mui/material-next/styles";
 import { useEffect, useRef } from "react";
 
 export default function Comments() {
-  const { mode } = useColorScheme();
+  const mode = "light";
   const ref = useRef(null);
 
   const theme = mode === "light" ? "light" : "dark";

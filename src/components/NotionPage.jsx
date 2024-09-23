@@ -7,13 +7,14 @@ import "react-notion-x/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import "katex/dist/katex.min.css";
 import { getPageTitle } from "notion-utils";
-import { useColorScheme } from "@mui/material-next/styles";
 import Comments from "@/components/Comments";
-import { Paper } from "@mui/material";
+import { Card } from "@/components/ui/card";
 
 const Code = dynamic(() => import("@/components/Code").then((m) => m.Code));
 const Collection = dynamic(() =>
-  import("@/components/Collection").then((m) => m.Collection),
+  import("react-notion-x/build/third-party/collection").then(
+    (m) => m.Collection,
+  ),
 );
 const Equation = dynamic(() =>
   import("react-notion-x/build/third-party/equation").then((m) => m.Equation),
@@ -33,9 +34,9 @@ const NotionRenderer = dynamic(
 export function NotionPage({ recordMap, rootPageId, comments }) {
   if (!recordMap) return null;
   const title = getPageTitle(recordMap);
-  const { mode } = useColorScheme();
+  const { mode } = "light";
   return (
-    <Paper>
+    <Card>
       <NotionRenderer
         recordMap={recordMap}
         darkMode={mode === "dark"}
@@ -53,6 +54,6 @@ export function NotionPage({ recordMap, rootPageId, comments }) {
         disableHeader
       />
       {comments && <Comments />}
-    </Paper>
+    </Card>
   );
 }

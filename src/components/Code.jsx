@@ -1,6 +1,6 @@
 import { useNotionContext } from "react-notion-x";
 import { getBlockTitle } from "notion-utils";
-import { addClassToHast, getHighlighter } from "shikiji";
+import { addClassToHast, getSingletonHighlighter } from "shiki";
 import CodeBlock from "@/components/CodeBlock";
 import { Mermaid } from "@/components/Mermaid";
 
@@ -16,7 +16,7 @@ export const Code = async ({ block, defaultLanguage, className }) => {
     return <div className="notion-code">{content}</div>;
   }
 
-  const highlighter = await getHighlighter({
+  const highlighter = await getSingletonHighlighter({
     langs: [language],
     themes: ["material-theme", "material-theme-lighter"],
   });

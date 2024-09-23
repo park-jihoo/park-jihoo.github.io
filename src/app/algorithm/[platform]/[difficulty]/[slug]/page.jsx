@@ -1,11 +1,12 @@
-import { Paper, Typography } from "@mui/material";
-import { addClassToHast, getHighlighter } from "shikiji";
-import IconButton from "@mui/material-next/IconButton";
-import { OpenInNew } from "@mui/icons-material";
-import { Chip, Divider } from "@mui/material-next";
+import { addClassToHast, getSingletonHighlighter } from "shiki";
 import CodeBlock from "@/components/CodeBlock";
 import { getAlgorithmParams, getAlgorithms } from "@/app/utils";
 import Comments from "@/components/Comments";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { OpenInNewWindowIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 export async function generateStaticParams() {
   const algorithms = await getAlgorithms();
@@ -52,9 +53,9 @@ export default async function Page({ params }) {
     return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${slug}/${slug.split(".")[1].trim()}.${lang.toLowerCase()}`;
   });
 
-  const highlighter = getHighlighter({
+  const highlighter = getSingletonHighlighter({
     langs: language.map((lang) => languageMap[lang]),
-    themes: ["material-theme-lighter", "material-theme-darker"],
+    themes: ["catppuccin-latte", "catppuccin-mocha"],
   });
 
   const codes = await Promise.all(
@@ -64,7 +65,7 @@ export default async function Page({ params }) {
       const lang = path.split(".")[path.split(".").length - 1];
       const light_html = (await highlighter).codeToHtml(text, {
         lang: languageMap[lang],
-        theme: "material-theme-lighter",
+        theme: "catppuccin-latte",
         transformers: [
           {
             line(hast, line) {
@@ -76,7 +77,7 @@ export default async function Page({ params }) {
       });
       const dark_html = (await highlighter).codeToHtml(text, {
         lang: languageMap[lang],
-        theme: "material-theme-darker",
+        theme: "catppuccin-mocha",
         transformers: [
           {
             line(hast, line) {
@@ -91,37 +92,32 @@ export default async function Page({ params }) {
   );
 
   return (
-    <Paper sx={{ minHeight: "100vh", padding: 2 }}>
-      <Chip
-        label={platform}
-        variant="outlined"
-        color="primary"
-        sx={{ marginBottom: 1, marginRight: 1 }}
-      />
-      <Chip
-        label={difficulty}
-        variant="outlined"
-        color="secondary"
-        sx={{ marginBottom: 1 }}
-      />
-      <Typography variant="h4" sx={{ marginBottom: 2 }}>
-        {slug}
-        <IconButton
-          aria-label="link"
-          href={
-            platform === "leetcode"
-              ? `https://leetcode.com/problems/${slug.split("-").slice(1).join("-")}`
-              : platform === "프로그래머스"
-                ? `https://programmers.co.kr/learn/courses/30/lessons/${slug.split(".")[0]}`
-                : `https://www.acmicpc.net/problem/${slug.split(".")[0]}`
-          }
-        >
-          <OpenInNew />
-        </IconButton>
-      </Typography>
-      <Divider sx={{ marginBottom: 2 }} />
+    <div className="p-6 max-w-4xl mx-auto space-y-8">
+      <div className="flex items-center gap-4">
+        <Badge>{platform}</Badge>
+        <Badge>{difficulty}</Badge>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">{slug}</h1>
+        <Button variant="icon" size="icon" asChild>
+          <Link
+            href={
+              platform === "leetcode"
+                ? `https://leetcode.com/problems/${slug.split("-").slice(1).join("-")}`
+                : platform === "프로그래머스"
+                  ? `https://programmers.co.kr/learn/courses/30/lessons/${slug.split(".")[0]}`
+                  : `https://www.acmicpc.net/problem/${slug.split(".")[0]}`
+            }
+          >
+            <OpenInNewWindowIcon />
+          </Link>
+        </Button>
+      </div>
+      <Separator />
       <CodeBlock language={language} codes={codes} />
+      <Separator />
       <Comments />
-    </Paper>
+    </div>
   );
 }
