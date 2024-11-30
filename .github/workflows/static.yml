@@ -41,7 +41,7 @@ jobs:
       - name: Check Yarn version
         run: yarn --version
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install
 
       - name: Build static site
         run: yarn build
