@@ -1,31 +1,40 @@
 "use client";
 
-import {
-  Database,
-  LanguageC,
-  LanguageCpp,
-  LanguageJava,
-  LanguageJavascript,
-  LanguagePython,
-} from "mdi-material-ui";
+// import {
+//   Database,
+//   LanguageC,
+//   LanguageCpp,
+//   LanguageJava,
+//   LanguageJavascript,
+//   LanguagePython,
+// } from "mdi-material-ui";
 import { DataTable } from "@/components/ui/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function MyTable({ algorithmList }) {
   const router = useRouter();
+  // const languageIcon = {
+  //   c: <LanguageC className="mr-1" />,
+  //   cc: <LanguageCpp className="mr-1" />,
+  //   cpp: <LanguageCpp className="mr-1" />,
+  //   py: <LanguagePython className="mr-1" />,
+  //   sql: <Database className="mr-1" />,
+  //   java: <LanguageJava className="mr-1" />,
+  //   js: <LanguageJavascript className="mr-1" />,
+  // };
 
   const languageIcon = {
-    c: <LanguageC className="mr-1" />,
-    cc: <LanguageCpp className="mr-1" />,
-    cpp: <LanguageCpp className="mr-1" />,
-    py: <LanguagePython className="mr-1" />,
-    sql: <Database className="mr-1" />,
-    java: <LanguageJava className="mr-1" />,
-    js: <LanguageJavascript className="mr-1" />,
-  };
+    c: "C",
+    cc: "C++",
+    cpp: "C++",
+    py: "Python",
+    sql: "SQL",
+    java: "Java",
+    js: "JavaScript",
+  }
 
   const rows = Object.entries(algorithmList)
     .map(([algorithm, language], id) => {
@@ -47,21 +56,28 @@ export default function MyTable({ algorithmList }) {
       accessorKey: "title",
       header: ({ column }) => {
         return (
-          <Button variant="ghost" onClick={()=>column.toggleSorting(column.getIsSorted()==="asc")}>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
             Title
             <CaretSortIcon className="ml-2 w-4 h-4" />
           </Button>
-        )
+        );
       },
       cell: ({ row }) => (
-        <div className="flex items-center flex-wrap">{row.getValue("title")}</div>
+        <div className="flex items-center flex-wrap">
+          {row.getValue("title")}
+        </div>
       ),
     },
     {
       accessorKey: "platform",
       header: "Platform",
       cell: ({ row }) => (
-        <div className="flex items-center flex-wrap">{row.getValue("platform")}</div>
+        <div className="flex items-center flex-wrap">
+          {row.getValue("platform")}
+        </div>
       ),
     },
     {
@@ -83,8 +99,8 @@ export default function MyTable({ algorithmList }) {
             .split(", ")
             .map((lang) => (
               <Badge key={lang} className="items-center space-x-1">
-                {languageIcon[lang]}
-                <span>{lang}</span>
+                {lang}
+                {/*<span>{lang}</span>*/}
               </Badge>
             ))}
         </div>
@@ -98,9 +114,14 @@ export default function MyTable({ algorithmList }) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 m-4">
       <div className="flex items-center flex-col sm:flex-row gap-4">
-        <DataTable data={rows} columns={columns} className="hover:bg-gray-100 transition-colors duration-200" onRowClick={handleRowClick}/>
+        <DataTable
+          data={rows}
+          columns={columns}
+          className="hover:bg-gray-100 transition-colors duration-200"
+          onRowClick={handleRowClick}
+        />
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {CheckIcon, CopyIcon} from "@radix-ui/react-icons";
+import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
 
 export default function CodeBlock({ language, codes }) {
   const [open, setOpen] = useState(false);
@@ -25,16 +25,6 @@ export default function CodeBlock({ language, codes }) {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  const languageMap = {
-    c: "C",
-    cpp: "C++",
-    cc: "C++",
-    py: "Python",
-    js: "JavaScript",
-    java: "Java",
-    sql: "SQL",
-  };
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -56,7 +46,7 @@ export default function CodeBlock({ language, codes }) {
             aria-expanded={open}
             className="w-[200px] justify-between"
           >
-            {languageMap[language[selectedIndex]]}
+            {language[selectedIndex]}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
@@ -73,7 +63,7 @@ export default function CodeBlock({ language, codes }) {
                     setOpen(false);
                   }}
                 >
-                  {languageMap[lang]}
+                  {lang}
                 </CommandItem>
               ))}
             </CommandList>

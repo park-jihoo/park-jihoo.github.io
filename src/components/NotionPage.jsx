@@ -9,6 +9,7 @@ import "katex/dist/katex.min.css";
 import { getPageTitle } from "notion-utils";
 import Comments from "@/components/Comments";
 import { Card } from "@/components/ui/card";
+import Image from "next/image";
 
 const Code = dynamic(() => import("@/components/Code").then((m) => m.Code));
 const Collection = dynamic(() =>
@@ -19,6 +20,7 @@ const Collection = dynamic(() =>
 const Equation = dynamic(() =>
   import("react-notion-x/build/third-party/equation").then((m) => m.Equation),
 );
+
 const Modal = dynamic(
   () => import("react-notion-x/build/third-party/modal").then((m) => m.Modal),
   {
@@ -45,6 +47,7 @@ export function NotionPage({ recordMap, rootPageId, comments }) {
           Collection,
           Equation,
           Modal,
+          nextImage: Image,
           nextLink: Link,
         }}
         showCollectionViewDropdown={false}

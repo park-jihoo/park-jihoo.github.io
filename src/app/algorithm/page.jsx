@@ -5,11 +5,8 @@ import { getAlgorithms } from "@/app/utils";
 export default async function Page() {
   const algorithm = await getAlgorithms();
   const algorithmList = algorithm.reduce((acc, cur) => {
-    const language = cur.path.split(".")[cur.path.split(".").length - 1];
-    const path = cur.path
-      .split(".")
-      .slice(0, cur.path.split(".").length - 1)
-      .join(".");
+    const language = cur.languages;
+    const path = cur.slug;
     if (acc[path]) {
       acc[path].push(language);
     } else {
@@ -19,9 +16,9 @@ export default async function Page() {
   }, {});
 
   return (
-    <div>
-      <Card className="w-full p-6 shadow-lg">
-        <MyTable algorithmList={algorithmList} />
+    <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-baseline">
+      <Card className="w-full max-w-4xl shadow-xl rounded-xl">
+        <MyTable algorithmList={algorithmList} className="m-4" />
       </Card>
     </div>
   );

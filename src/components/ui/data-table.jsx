@@ -59,15 +59,17 @@ export function DataTable({ columns, data, onRowClick }) {
   });
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md">
       <Input
         placeholder="Search..."
         value={table.getColumn("title")?.getFilterValue() ?? ""}
         onChange={(event) =>
           table.getColumn("title")?.setFilterValue(event.target.value)
         }
-        className="border p-4 pr-10 rounded-lg shadow-sm flex mb-4"
+        className="mb-4 mt-2"
       />
+      <div className="rounded-md border">
+
       <Table className="w-full text-left table-fixed">
         <TableHeader className="bg-gray-100">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -111,14 +113,15 @@ export function DataTable({ columns, data, onRowClick }) {
           )}
         </TableBody>
       </Table>
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table}/>
+      </div>
     </div>
   );
 }
 
 export function DataTablePagination({ table }) {
   return (
-    <div className="flex items-center justify-between px-2">
+    <div className="flex items-center justify-between px-2 mb-2">
       <div className="flex-1 text-sm text-muted-foreground">
         {/*{table.getFilteredSelectedRowModel().rows.length} of{" "}*/}
         {/*{table.getFilteredRowModel().rows.length} row(s) selected.*/}

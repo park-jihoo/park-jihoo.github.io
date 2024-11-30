@@ -13,48 +13,34 @@ export async function generateStaticParams() {
   return getAlgorithmParams(algorithms);
 }
 
-export default async function Page({ params }) {
+export default async function Page(props) {
+  const params = await props.params;
   const algorithms = await getAlgorithms();
   const platform = decodeURIComponent(params.platform);
   const difficulty = decodeURIComponent(params.difficulty);
-  const slug = decodeURIComponent(params.slug);
-  const language = algorithms
-    .filter((algorithm) => {
-      const path = algorithm.path
-        .split(".")
-        .slice(0, algorithm.path.split(".").length - 1)
-        .join(".");
-      if (slug.split(".")[1] === undefined)
-        return path === `${platform}/${difficulty}/${slug}/${slug}`;
-      return (
-        path ===
-        `${platform}/${difficulty}/${slug}/${slug.split(".")[1].trim()}`
-      );
-    })
-    .map((algorithm) =>
-      algorithm.path
-        .split(".")
-        [algorithm.path.split(".").length - 1].toLowerCase(),
-    );
+  const problem_name = decodeURIComponent(params.slug);
+  const language = algorithms.find((algorithm) => algorithm.problem_name === problem_name).languages.split(",");
 
   const languageMap = {
-    c: "c",
-    cpp: "cpp",
-    cc: "cpp",
-    py: "python",
-    js: "javascript",
-    java: "java",
-    sql: "sql",
-  };
+    "C": "c",
+    "C++": "cpp",
+    "Python": "py",
+    "Java": "java",
+    "JavaScript": "js",
+    "SQL": "sql",
+  }
 
-  const paths = language.map((lang) => {
-    if (slug.split(".")[1] === undefined)
-      return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${slug}/${slug}.${lang.toLowerCase()}`;
-    return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${slug}/${slug.split(".")[1].trim()}.${lang.toLowerCase()}`;
+  const paths = language.map((lang) =>  {
+    if (problem_name.split(".")[1] === undefined)
+      return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${problem_name}/${problem_name}.${languageMap[lang]}`;
+    else if (lang === "C++")
+      return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${problem_name}/${problem_name.split(".")[1].trim()}.cc`;
+    else
+      return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${problem_name}/${problem_name.split(".")[1].trim()}.${languageMap[lang]}`;
   });
 
   const highlighter = getSingletonHighlighter({
-    langs: language.map((lang) => languageMap[lang]),
+    langs: language.map((lang) => lang.toLowerCase()) || ["cpp"],
     themes: ["catppuccin-latte", "catppuccin-mocha"],
   });
 
@@ -64,7 +50,7 @@ export default async function Page({ params }) {
       const text = await response.text();
       const lang = path.split(".")[path.split(".").length - 1];
       const light_html = (await highlighter).codeToHtml(text, {
-        lang: languageMap[lang],
+        lang: lang === "cc" ? "cpp" : lang,
         theme: "catppuccin-latte",
         transformers: [
           {
@@ -76,7 +62,7 @@ export default async function Page({ params }) {
         ],
       });
       const dark_html = (await highlighter).codeToHtml(text, {
-        lang: languageMap[lang],
+        lang: lang === "cc" ? "cpp" : lang,
         theme: "catppuccin-mocha",
         transformers: [
           {
@@ -99,15 +85,15 @@ export default async function Page({ params }) {
       </div>
 
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">{slug}</h1>
+        <h1 className="text-2xl font-bold">{problem_name}</h1>
         <Button variant="icon" size="icon" asChild>
           <Link
             href={
               platform === "leetcode"
-                ? `https://leetcode.com/problems/${slug.split("-").slice(1).join("-")}`
+                ? `https://leetcode.com/problems/${problem_name.split("-").slice(1).join("-")}`
                 : platform === "프로그래머스"
-                  ? `https://programmers.co.kr/learn/courses/30/lessons/${slug.split(".")[0]}`
-                  : `https://www.acmicpc.net/problem/${slug.split(".")[0]}`
+                  ? `https://programmers.co.kr/learn/courses/30/lessons/${problem_name.split(".")[0]}`
+                  : `https://www.acmicpc.net/problem/${problem_name.split(".")[0]}`
             }
           >
             <OpenInNewWindowIcon />

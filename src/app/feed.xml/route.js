@@ -3,6 +3,10 @@ import { getAlgorithmParams, getAlgorithms } from "@/app/utils";
 import { NotionAPI } from "notion-client";
 import { NextResponse } from "next/server";
 
+export async function generateStaticParams() {
+  return "feed.xml";
+}
+
 export async function GET() {
   const feed = new RSS({
     title: "Park Jihoo",
