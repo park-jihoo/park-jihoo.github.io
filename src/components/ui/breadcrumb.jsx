@@ -1,8 +1,7 @@
 import * as React from "react";
-import { ChevronRightIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Slot } from "@radix-ui/react-slot";
-
 import { cn } from "@/lib/utils";
+import { ChevronRightIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 
 const Breadcrumb = React.forwardRef(({ ...props }, ref) => (
   <nav ref={ref} aria-label="breadcrumb" {...props} />
@@ -64,7 +63,7 @@ const BreadcrumbSeparator = ({ children, className, ...props }) => (
   <li
     role="presentation"
     aria-hidden="true"
-    className={cn("[&>svg]:size-3.5", className)}
+    className={cn("[&>svg]:w-3.5 [&>svg]:h-3.5", className)}
     {...props}
   >
     {children ?? <ChevronRightIcon />}

@@ -13,24 +13,28 @@ export async function generateStaticParams() {
   return getAlgorithmParams(algorithms);
 }
 
+export const revalidate = 60;
+
 export default async function Page(props) {
   const params = await props.params;
   const algorithms = await getAlgorithms();
   const platform = decodeURIComponent(params.platform);
   const difficulty = decodeURIComponent(params.difficulty);
   const problem_name = decodeURIComponent(params.slug);
-  const language = algorithms.find((algorithm) => algorithm.problem_name === problem_name).languages.split(",");
+  const language = algorithms
+    .find((algorithm) => algorithm.problem_name === problem_name)
+    .languages.split(",");
 
   const languageMap = {
-    "C": "c",
+    C: "c",
     "C++": "cpp",
-    "Python": "py",
-    "Java": "java",
-    "JavaScript": "js",
-    "SQL": "sql",
-  }
+    Python: "py",
+    Java: "java",
+    JavaScript: "js",
+    SQL: "sql",
+  };
 
-  const paths = language.map((lang) =>  {
+  const paths = language.map((lang) => {
     if (problem_name.split(".")[1] === undefined)
       return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${problem_name}/${problem_name}.${languageMap[lang]}`;
     else if (lang === "C++")

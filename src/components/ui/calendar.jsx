@@ -1,10 +1,10 @@
 "use client";
 import * as React from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
   return (
@@ -45,7 +45,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
         day_today:
           "bg-stone-100 text-stone-900 dark:bg-stone-800 dark:text-stone-50",
         day_outside:
-          "day-outside text-stone-500 opacity-50  aria-selected:bg-stone-100/50 aria-selected:text-stone-500 aria-selected:opacity-30 dark:text-stone-400 dark:aria-selected:bg-stone-800/50 dark:aria-selected:text-stone-400",
+          "day-outside text-stone-500 aria-selected:bg-stone-100/50 aria-selected:text-stone-500 dark:text-stone-400 dark:aria-selected:bg-stone-800/50 dark:aria-selected:text-stone-400",
         day_disabled: "text-stone-500 opacity-50 dark:text-stone-400",
         day_range_middle:
           "aria-selected:bg-stone-100 aria-selected:text-stone-900 dark:aria-selected:bg-stone-800 dark:aria-selected:text-stone-50",
@@ -60,6 +60,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
     />
   );
 }
+
 Calendar.displayName = "Calendar";
 
 export { Calendar };

@@ -6,9 +6,11 @@ export const size = {
   height: 32,
 };
 export const contentType = "image/png";
+
 export async function generateStaticParams() {
-  return 'apple-icon';
+  return "apple-icon";
 }
+
 // Image generation
 export default function Icon() {
   return new ImageResponse(

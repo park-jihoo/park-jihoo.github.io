@@ -34,7 +34,7 @@ export default function MyTable({ algorithmList }) {
     sql: "SQL",
     java: "Java",
     js: "JavaScript",
-  }
+  };
 
   const rows = Object.entries(algorithmList)
     .map(([algorithm, language], id) => {
@@ -96,7 +96,7 @@ export default function MyTable({ algorithmList }) {
         <div className="flex items-center flex-wrap gap-1.5">
           {row
             .getValue("language")
-            .split(", ")
+            .split(",")
             .map((lang) => (
               <Badge key={lang} className="items-center space-x-1">
                 {lang}

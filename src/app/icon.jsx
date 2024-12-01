@@ -9,7 +9,7 @@ export const size = {
 export const contentType = "image/png";
 
 export async function generateStaticParams() {
-  return 'icon';
+  return "icon";
 }
 
 // Image generation

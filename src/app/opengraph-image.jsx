@@ -5,7 +5,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export async function generateStaticParams() {
-  return 'twitter-image';
+  return "twitter-image";
 }
 
 export default function Image() {
