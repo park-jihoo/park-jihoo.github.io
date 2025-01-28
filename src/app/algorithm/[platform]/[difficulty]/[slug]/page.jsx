@@ -23,7 +23,7 @@ export default async function Page(props) {
   const problem_name = decodeURIComponent(params.slug);
   const language = algorithms
     .find((algorithm) => algorithm.problem_name === problem_name)
-    .languages.split(",");
+    .languages?.split(",");
 
   const languageMap = {
     C: "c",

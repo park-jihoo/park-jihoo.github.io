@@ -9,13 +9,12 @@ import "katex/dist/katex.min.css";
 import { getPageTitle } from "notion-utils";
 import Comments from "@/components/Comments";
 import { Card } from "@/components/ui/card";
+import { NotionRenderer } from "react-notion-x";
 import Image from "next/image";
 
 const Code = dynamic(() => import("@/components/Code").then((m) => m.Code));
 const Collection = dynamic(() =>
-  import("react-notion-x/build/third-party/collection").then(
-    (m) => m.Collection,
-  ),
+  import("@/components/Collections").then((m) => m.Collection),
 );
 const Equation = dynamic(() =>
   import("react-notion-x/build/third-party/equation").then((m) => m.Equation),
@@ -26,11 +25,6 @@ const Modal = dynamic(
   {
     ssr: false,
   },
-);
-
-const NotionRenderer = dynamic(
-  () => import("react-notion-x").then((m) => m.NotionRenderer),
-  { ssr: false },
 );
 
 export function NotionPage({ recordMap, rootPageId, comments }) {

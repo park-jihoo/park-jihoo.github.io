@@ -84,9 +84,9 @@ export default function MyTable({ algorithmList }) {
       accessorKey: "difficulty",
       header: "Difficulty",
       cell: ({ row }) => (
-        <divs className="flex items-center flex-wrap">
+        <div className="flex items-center flex-wrap">
           {row.getValue("difficulty")}
-        </divs>
+        </div>
       ),
     },
     {

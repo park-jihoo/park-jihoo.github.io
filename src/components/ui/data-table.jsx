@@ -3,6 +3,7 @@
 import * as React from "react";
 
 import {
+  ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   DoubleArrowLeftIcon,
@@ -37,6 +38,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
 
 export function DataTable({ columns, data, onRowClick }) {
   const [sorting, setSorting] = React.useState([]);
@@ -67,7 +75,7 @@ export function DataTable({ columns, data, onRowClick }) {
         className="mb-4 mt-2"
       />
       <div className="rounded-md border">
-        <Table className="w-full text-left table-fixed">
+        <Table className="min-w-full max-w-fit text-left table-fixed">
           <TableHeader className="bg-gray-100">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -194,5 +202,55 @@ export function DataTablePagination({ table }) {
         </div>
       </div>
     </div>
+  );
+}
+
+export function DataTableFilter({ column, title, options }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" onClick={() => setOpen(!open)}>
+          {title}
+          <ChevronDownIcon className="ml-2 h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuCheckboxItem
+          checked={
+            column.getFilterValue() == null ||
+            options.every((option) =>
+              column.getFilterValue()?.includes(option.value),
+            )
+          }
+          onCheckedChange={(checked) =>
+            column.setFilterValue(
+              checked ? options.map((option) => option.value) : [],
+            )
+          }
+        >
+          <Badge variant="gray">All</Badge>
+        </DropdownMenuCheckboxItem>
+        {options.map((option) => (
+          <DropdownMenuCheckboxItem
+            checked={
+              column.getFilterValue() == null ||
+              column.getFilterValue()?.includes(option.value)
+            }
+            onCheckedChange={(checked) => {
+              const newSelected = checked
+                ? [...(column.getFilterValue() ?? []), option.value]
+                : column
+                    .getFilterValue()
+                    .filter((value) => value !== option.value);
+              column.setFilterValue(newSelected);
+            }}
+            key={option.id}
+          >
+            <Badge variant={option.color}>{option.value}</Badge>
+          </DropdownMenuCheckboxItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

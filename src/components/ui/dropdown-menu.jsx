@@ -80,7 +80,7 @@ const DropdownMenuItem = React.forwardRef(
       className={cn(
         "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-stone-100 focus:text-stone-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0 dark:focus:bg-stone-800 dark:focus:text-stone-50",
         inset && "pl-8",
-        classNe,
+        className,
       )}
       {...props}
     />
@@ -94,7 +94,7 @@ const DropdownMenuCheckboxItem = React.forwardRef(
       ref={ref}
       className={cn(
         "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-stone-100 focus:text-stone-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-stone-800 dark:focus:text-stone-50",
-        classNa,
+        className,
       )}
       checked={checked}
       {...props}
