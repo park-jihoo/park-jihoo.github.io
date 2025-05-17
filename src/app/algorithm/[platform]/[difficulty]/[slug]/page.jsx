@@ -13,17 +13,26 @@ export async function generateStaticParams() {
   return getAlgorithmParams(algorithms);
 }
 
-export const revalidate = 60;
-
-export default async function Page(props) {
-  const params = await props.params;
+export default async function Page({ params }) {
   const algorithms = await getAlgorithms();
   const platform = decodeURIComponent(params.platform);
   const difficulty = decodeURIComponent(params.difficulty);
   const problem_name = decodeURIComponent(params.slug);
-  const language = algorithms
-    .find((algorithm) => algorithm.problem_name === problem_name)
-    .languages?.split(",");
+  const problem_name_without_extension = problem_name.split(".")[0];
+  const algorithm = algorithms.find((algorithm) => {
+    if (algorithm.problem_name === problem_name_without_extension) return true;
+    if (algorithm.problem_name === problem_name) return true;
+    return false;
+  });
+  if (!algorithm) {
+    return <div>문제를 찾을 수 없습니다.</div>;
+  }
+
+  const language = algorithm.languages?.split(",") || [];
+
+  if (language.includes("Unknown")) {
+    return <div>언어를 찾을 수 없습니다.</div>;
+  }
 
   const languageMap = {
     C: "c",
@@ -43,8 +52,9 @@ export default async function Page(props) {
       return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${problem_name}/${problem_name.split(".")[1].trim()}.${languageMap[lang]}`;
   });
 
+  
   const highlighter = getSingletonHighlighter({
-    langs: language.map((lang) => lang.toLowerCase()) || ["cpp"],
+    langs: language.map((lang) => lang.toLowerCase()).filter((lang) => lang !== "unknown"),
     themes: ["catppuccin-latte", "catppuccin-mocha"],
   });
 
@@ -53,6 +63,7 @@ export default async function Page(props) {
       const response = await fetch(path);
       const text = await response.text();
       const lang = path.split(".")[path.split(".").length - 1];
+      if (lang === "unknown") return { light: "", dark: "", code: "" };
       const light_html = (await highlighter).codeToHtml(text, {
         lang: lang === "cc" ? "cpp" : lang,
         theme: "catppuccin-latte",

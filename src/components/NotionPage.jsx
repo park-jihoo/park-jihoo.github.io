@@ -12,12 +12,20 @@ import { Card } from "@/components/ui/card";
 import { NotionRenderer } from "react-notion-x";
 import Image from "next/image";
 
-const Code = dynamic(() => import("@/components/Code").then((m) => m.Code));
+const Code = dynamic(() => import("@/components/Code").then((m) => m.Code), {
+  ssr: false,
+});
 const Collection = dynamic(() =>
   import("@/components/Collections").then((m) => m.Collection),
+  {
+    ssr: false,
+  }
 );
 const Equation = dynamic(() =>
   import("react-notion-x/build/third-party/equation").then((m) => m.Equation),
+  {
+    ssr: false,
+  }
 );
 
 const Modal = dynamic(

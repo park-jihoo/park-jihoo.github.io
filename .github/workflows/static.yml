@@ -28,23 +28,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: 22
+          bun-version: latest
 
-      - name: Install and enable Yarn Berry
-        run: |
-          npm install -g yarn@latest
-          yarn set version berry
+      - name: Check bun version
+        run: bun --version
 
-      - name: Check Yarn version
-        run: yarn --version
       - name: Install dependencies
-        run: yarn install
+        run: bun install
 
       - name: Build static site
-        run: yarn build
+        run: bun run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -54,7 +50,7 @@ jobs:
           static_site_generator: next
 
       - name: Upload static content
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: "./out"
 

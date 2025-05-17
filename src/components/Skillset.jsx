@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { memo } from "react";
 
-export default function Skillset({ skills }) {
+const Skillset = memo(function Skillset({ skills }) {
   const colorScheme = { mode: "light" };
   return (
     <div>
@@ -13,10 +14,15 @@ export default function Skillset({ skills }) {
             alt={key}
             width={80 * skills[key].length}
             height={80}
+            priority
+            loading="eager"
+            quality={90}
             src={`https://skillicons.dev/icons?i=${skills[key].join(",")}&theme=${colorScheme.mode === undefined ? "light" : colorScheme.mode}`}
           />
         </div>
       ))}
     </div>
   );
-}
+});
+
+export default Skillset;
