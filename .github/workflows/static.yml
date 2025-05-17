@@ -50,7 +50,7 @@ jobs:
           static_site_generator: next
 
       - name: Upload static content
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: "./out"
 
