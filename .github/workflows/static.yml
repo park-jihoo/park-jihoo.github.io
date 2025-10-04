@@ -43,6 +43,7 @@ jobs:
         run: bun run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
