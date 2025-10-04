@@ -1,8 +1,0 @@
-{
-  "extends": ["next", "prettier"],
-  "plugins": ["eslint-plugin-simple-import-sort", "unused-imports"],
-  "rules": {
-    "react/react-in-jsx-scope": "off",
-    "react-hooks/rules-of-hooks": "off"
-  }
-}

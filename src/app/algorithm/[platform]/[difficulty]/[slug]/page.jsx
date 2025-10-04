@@ -1,12 +1,13 @@
-import { addClassToHast, getSingletonHighlighter } from "shiki";
-import CodeBlock from "@/components/CodeBlock";
-import { getAlgorithmParams, getAlgorithms } from "@/app/utils";
-import Comments from "@/components/Comments";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { OpenInNewWindowIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { addClassToHast, getSingletonHighlighter } from "shiki";
+
+import { getAlgorithmParams, getAlgorithms } from "@/app/utils";
+import CodeBlock from "@/components/CodeBlock";
+import Comments from "@/components/Comments";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 export async function generateStaticParams() {
   const algorithms = await getAlgorithms();

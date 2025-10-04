@@ -1,19 +1,19 @@
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+  EnvelopeClosedIcon,
+  GitHubLogoIcon,
+  LinkedInLogoIcon,
+} from "@radix-ui/react-icons";
+import Link from "next/link";
+
 import Skillset from "@/components/Skillset";
 import { Button } from "@/components/ui/button";
 import {
-  GitHubLogoIcon,
-  LinkedInLogoIcon,
-  EnvelopeClosedIcon,
-} from "@radix-ui/react-icons";
-import Link from "next/link";
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 function MyResume() {
   const name = "Jihoo Park";
@@ -56,8 +56,7 @@ function MyResume() {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-center">
-      <Card className="w-full max-w-4xl shadow-lg rounded-lg">
+    <div>
         <CardHeader className="from-blue-500 p-6 rounded-t-lg">
           <CardTitle className="text-4xl font-bold">{name}</CardTitle>
           <p className="text-xl font-light">{title}</p>
@@ -149,7 +148,6 @@ function MyResume() {
             © 2024 Jihoo Park. All rights reserved.
           </p>
         </CardFooter>
-      </Card>
     </div>
   );
 }

@@ -8,11 +8,12 @@
 //   LanguageJavascript,
 //   LanguagePython,
 // } from "mdi-material-ui";
-import { DataTable } from "@/components/ui/data-table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
 
 export default function MyTable({ algorithmList }) {
   const router = useRouter();
@@ -66,8 +67,8 @@ export default function MyTable({ algorithmList }) {
         );
       },
       cell: ({ row }) => (
-        <div className="flex items-center flex-wrap">
-          {row.getValue("title")}
+        <div className="flex items-center">
+          <p className="line-clamp-2 truncate"> {row.getValue("title")} </p>
         </div>
       ),
     },
@@ -75,8 +76,8 @@ export default function MyTable({ algorithmList }) {
       accessorKey: "platform",
       header: "Platform",
       cell: ({ row }) => (
-        <div className="flex items-center flex-wrap">
-          {row.getValue("platform")}
+        <div className="flex items-center">
+          <p className="line-clamp-2 truncate"> {row.getValue("platform")} </p>
         </div>
       ),
     },
@@ -84,8 +85,8 @@ export default function MyTable({ algorithmList }) {
       accessorKey: "difficulty",
       header: "Difficulty",
       cell: ({ row }) => (
-        <div className="flex items-center flex-wrap">
-          {row.getValue("difficulty")}
+        <div className="flex items-center">
+          <p className="line-clamp-2 truncate"> {row.getValue("difficulty")} </p>
         </div>
       ),
     },

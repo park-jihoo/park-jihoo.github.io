@@ -1,5 +1,8 @@
 import { ImageResponse } from "next/og";
 
+export const dynamic = 'force-static'
+export const revalidate = false
+
 // Image metadata
 export const size = {
   width: 32,

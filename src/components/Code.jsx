@@ -1,11 +1,12 @@
 "use client";
 
-import { useNotionContext } from "react-notion-x";
 import { getBlockTitle } from "notion-utils";
+import { useEffect, useState } from "react";
+import { useNotionContext } from "react-notion-x";
 import { addClassToHast, getSingletonHighlighter } from "shiki";
+
 import CodeBlock from "@/components/CodeBlock";
 import { Mermaid } from "@/components/Mermaid";
-import { useEffect, useState } from "react";
 
 export const Code = ({ block, defaultLanguage, className }) => {
   const { recordMap } = useNotionContext();

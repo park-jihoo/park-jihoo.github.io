@@ -1,7 +1,5 @@
 "use client";
 
-import * as React from "react";
-
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -9,18 +7,6 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import {
   flexRender,
   getCoreRowModel,
@@ -29,7 +15,25 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import PropTypes from "prop-types";
+import * as React from "react";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -38,17 +42,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
 
-export function DataTable({ columns, data, onRowClick }) {
+export function DataTable({ columns, data, onRowClick, searchColumn = "title" }) {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [rowSelection, setRowSelection] = React.useState({});
+
   const table = useReactTable({
     data,
     columns,
@@ -58,30 +58,65 @@ export function DataTable({ columns, data, onRowClick }) {
     onColumnFiltersChange: setColumnFilters,
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
     state: {
       columnFilters,
       sorting,
+      columnVisibility,
+      rowSelection,
     },
   });
 
   return (
-    <div className="rounded-md">
-      <Input
-        placeholder="Search..."
-        value={table.getColumn("title")?.getFilterValue() ?? ""}
-        onChange={(event) =>
-          table.getColumn("title")?.setFilterValue(event.target.value)
-        }
-        className="mb-4 mt-2"
-      />
+    <div className="w-full">
+      {/* 검색 및 컬럼 가시성 컨트롤 */}
+      <div className="flex items-center py-4">
+        <Input
+          placeholder={`Search ${searchColumn}...`}
+          value={table.getColumn(searchColumn)?.getFilterValue() ?? ""}
+          onChange={(event) =>
+            table.getColumn(searchColumn)?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                );
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* 테이블 */}
       <div className="rounded-md border">
         <Table className="min-w-full max-w-fit text-left table-fixed">
           <TableHeader className="bg-gray-100">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="h-12">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="h-12">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -100,10 +135,11 @@ export function DataTable({ columns, data, onRowClick }) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => onRowClick(row.original)}
+                  onClick={() => onRowClick?.(row.original)}
+                  className={`h-12 ${onRowClick ? "cursor-pointer hover:bg-gray-50" : ""}`}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="h-12">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -113,7 +149,7 @@ export function DataTable({ columns, data, onRowClick }) {
                 </TableRow>
               ))
             ) : (
-              <TableRow>
+              <TableRow className="h-12">
                 <TableCell
                   colSpan={columns.length}
                   className="h-24 text-center"
@@ -124,6 +160,8 @@ export function DataTable({ columns, data, onRowClick }) {
             )}
           </TableBody>
         </Table>
+        
+        {/* 페이지네이션 */}
         <DataTablePagination table={table} />
       </div>
     </div>
@@ -205,6 +243,17 @@ export function DataTablePagination({ table }) {
   );
 }
 
+DataTable.propTypes = {
+  columns: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  onRowClick: PropTypes.func,
+  searchColumn: PropTypes.string,
+};
+
+DataTablePagination.propTypes = {
+  table: PropTypes.object.isRequired,
+};
+
 export function DataTableFilter({ column, title, options }) {
   const [open, setOpen] = React.useState(false);
   return (
@@ -254,3 +303,9 @@ export function DataTableFilter({ column, title, options }) {
     </DropdownMenu>
   );
 }
+
+DataTableFilter.propTypes = {
+  column: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
+};

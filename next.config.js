@@ -1,6 +1,7 @@
 /** @type {import("next").NextConfig} */
 const nextConfig = {
-  output: "export",
+  productionBrowserSourceMaps: false,
+  output: "standalone",
   images: {
     unoptimized: true,
   },

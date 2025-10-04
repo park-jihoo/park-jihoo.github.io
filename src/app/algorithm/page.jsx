@@ -1,6 +1,6 @@
-import { Card } from "@/components/ui/card";
-import MyTable from "@/components/MyTable";
 import { getAlgorithms } from "@/app/utils";
+import MyTable from "@/components/MyTable";
+import { Card } from "@/components/ui/card";
 
 export default async function Page() {
   const algorithm = await getAlgorithms();
@@ -16,10 +16,8 @@ export default async function Page() {
   }, {});
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen flex justify-center items-baseline">
-      <Card className="w-full max-w-4xl shadow-xl rounded-xl">
-        <MyTable algorithmList={algorithmList} className="m-4" />
-      </Card>
+    <div className="p-6 min-h-screen flex justify-center items-baseline">
+      <MyTable algorithmList={algorithmList} className="m-4" />
     </div>
   );
 }

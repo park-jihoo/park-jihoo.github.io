@@ -1,12 +1,9 @@
 "use client";
 
+import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -14,7 +11,11 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export default function CodeBlock({ language, codes }) {
   const [open, setOpen] = useState(false);

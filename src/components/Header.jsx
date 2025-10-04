@@ -1,9 +1,10 @@
 "use client";
 
+import { Pencil1Icon,RocketIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { RocketIcon, Pencil1Icon } from "@radix-ui/react-icons";
 
 const NAVIGATION_ITEMS = [
   {
