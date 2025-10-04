@@ -8,7 +8,7 @@
 //   LanguageJavascript,
 //   LanguagePython,
 // } from "mdi-material-ui";
-import { ChevronUpDown } from "lucide-react";
+import { ChevronsDownUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 
@@ -63,7 +63,7 @@ export default function MyTable({ algorithmList }) {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Title
-            <ChevronUpDown className="ml-2 w-4 h-4" />
+            <ChevronsDownUp className="ml-2 w-4 h-4" />
           </Button>
         );
       },
