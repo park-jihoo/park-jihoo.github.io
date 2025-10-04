@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
+import { Check, Copy } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -80,7 +80,7 @@ export default function CodeBlock({ language, codes }) {
           onClick={() => copyToClipboard(codes[selectedIndex].code)}
           className="absolute right-2 top-2"
         >
-          {copy ? <CheckIcon className="text-green-500" /> : <CopyIcon />}
+          {copy ? <Check className="text-green-500" /> : <Copy />}
         </Button>
 
         {isMounted && codes[selectedIndex] !== undefined ? (

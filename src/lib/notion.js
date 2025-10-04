@@ -17,6 +17,12 @@ export const getPage = async (pageId) => {
 export const getBlocks = async (blockId) => {
   try {
     const response = await notion.blocks.children.list({ block_id: blockId });
+    for (const block of response.results) {
+      if (block.has_children) {
+        const childrenResponse = await getBlocks(block.id);
+        block.children = childrenResponse.results || [];
+      }
+    }
     return response;
   } catch (error) {
     console.error("Error fetching blocks:", error);

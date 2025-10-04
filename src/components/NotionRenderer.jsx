@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import PropTypes from "prop-types";
@@ -8,6 +9,7 @@ import React from "react";
 import Equation from "@/components/Equation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
 import {
   TypographyBlockquote,
@@ -21,7 +23,6 @@ import {
 } from "@/components/ui/typography";
 import { getRichTextContent } from "@/lib/notion";
 
-// Rich Text 렌더링 컴포넌트
 const RichText = ({ richText, className = "" }) => {
   if (!richText || !Array.isArray(richText)) return null;
 
@@ -86,24 +87,102 @@ const ParagraphBlock = ({ block }) => (
   </TypographyP>
 );
 
-const Heading1Block = ({ block }) => (
-  <TypographyH1>
-    <RichText richText={block.heading_1?.rich_text} />
-  </TypographyH1>
-);
+ParagraphBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+};
 
-const Heading2Block = ({ block }) => (
-  <TypographyH2>
-    <RichText richText={block.heading_2?.rich_text} />
-  </TypographyH2>
-);
+const Heading1Block = ({ block, children }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const hasToggle = block.heading_1?.is_toggleable;
+  const headingContent = <RichText richText={block.heading_1?.rich_text} />;
 
-const Heading3Block = ({ block }) => {
-  return (
-    <TypographyH3>
-      <RichText richText={block.heading_3?.rich_text} />
-    </TypographyH3>
-  );
+  if (hasToggle) {
+    return (
+      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="my-2">
+        <CollapsibleTrigger className="flex items-center justify-between w-full text-left hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors">
+          <TypographyH1 className="flex items-center space-x-2">
+            <span className="text-gray-500 dark:text-gray-400">
+              {isOpen ? "▼" : "▶"}
+            </span>
+            {headingContent}
+          </TypographyH1>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="pl-6 mt-2 space-y-2">
+          {children && children.length > 0 ? children : null}
+        </CollapsibleContent>
+      </Collapsible>
+    );
+  }
+
+  return <TypographyH1>{headingContent}</TypographyH1>;
+};
+
+Heading1Block.propTypes = {
+  block: PropTypes.object.isRequired,
+  children: PropTypes.array,
+};
+
+const Heading2Block = ({ block, children }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const hasToggle = block.heading_2?.is_toggleable;
+  const headingContent = <RichText richText={block.heading_2?.rich_text} />;
+
+  if (hasToggle) {
+    return (
+      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="my-2">
+        <CollapsibleTrigger className="flex items-center justify-between w-full text-left hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors">
+          <TypographyH2 className="flex items-center space-x-2">
+            <span className="text-gray-500 dark:text-gray-400">
+              {isOpen ? "▼" : "▶"}
+            </span>
+            {headingContent}
+          </TypographyH2>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="pl-6 mt-2 space-y-2">
+          {children && children.length > 0 ? children : null}
+        </CollapsibleContent>
+      </Collapsible>
+    );
+  }
+
+  return <TypographyH2>{headingContent}</TypographyH2>;
+};
+
+Heading2Block.propTypes = {
+  block: PropTypes.object.isRequired,
+  children: PropTypes.array,
+};
+
+const Heading3Block = ({ block, children }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const hasToggle = block.heading_3?.is_toggleable;
+  const headingContent = <RichText richText={block.heading_3?.rich_text} />;
+  if (hasToggle) {
+    return (
+      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="my-2">
+        <CollapsibleTrigger className="flex items-center justify-between w-full text-left hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors">
+          <TypographyH3 className="flex items-center space-x-2">
+            {isOpen ? (
+              <ChevronDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200" />
+            ) : (
+              <ChevronRightIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200" />
+            )}
+            {headingContent}
+          </TypographyH3>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="pl-6 mt-2 space-y-2">
+          {children && children.length > 0 ? children : null}
+        </CollapsibleContent>
+      </Collapsible>
+    );
+  }
+
+  return <TypographyH3>{headingContent}</TypographyH3>;
+};
+
+Heading3Block.propTypes = {
+  block: PropTypes.object.isRequired,
+  children: PropTypes.array,
 };
 
 const BulletedListItemBlock = ({ block }) => (
@@ -112,17 +191,29 @@ const BulletedListItemBlock = ({ block }) => (
   </li>
 );
 
+BulletedListItemBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+};
+
 const NumberedListItemBlock = ({ block }) => (
   <li>
     <RichText richText={block.numbered_list_item?.rich_text} />
   </li>
 );
 
+NumberedListItemBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+};
+
 const QuoteBlock = ({ block }) => (
   <TypographyBlockquote>
     <RichText richText={block.quote?.rich_text} />
   </TypographyBlockquote>
 );
+
+QuoteBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+};
 
 const CodeBlock = ({ block }) => (
   <pre className="bg-muted relative rounded-lg p-4 overflow-x-auto my-6">
@@ -131,6 +222,10 @@ const CodeBlock = ({ block }) => (
     </code>
   </pre>
 );
+
+CodeBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+};
 
 const ImageBlock = ({ block }) => {
   const imageUrl = block.image?.external?.url || block.image?.file?.url;
@@ -154,6 +249,10 @@ const ImageBlock = ({ block }) => {
       )}
     </div>
   );
+};
+
+ImageBlock.propTypes = {
+  block: PropTypes.object.isRequired,
 };
 
 const BookmarkBlock = ({ block }) => {
@@ -188,9 +287,12 @@ const BookmarkBlock = ({ block }) => {
   );
 };
 
+BookmarkBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+};
+
 const CalloutBlock = ({ block }) => {
   const icon = block.callout?.icon?.emoji || "💡";
-  const content = getRichTextContent(block.callout?.rich_text);
 
   return (
     <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4 flex items-start space-x-3">
@@ -202,9 +304,13 @@ const CalloutBlock = ({ block }) => {
   );
 };
 
+CalloutBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+};
+
 const DividerBlock = () => <Separator className="my-6" />;
 
-const TableBlock = ({ block, children }) => (
+const TableBlock = ({ children }) => (
   <div className="overflow-x-auto my-6">
     <table className="min-w-full border border-gray-300 dark:border-gray-600">
       <tbody>{children}</tbody>
@@ -212,19 +318,72 @@ const TableBlock = ({ block, children }) => (
   </div>
 );
 
-const TableRowBlock = ({ block, children }) => (
+TableBlock.propTypes = {
+  children: PropTypes.array,
+};
+
+const TableRowBlock = ({ children }) => (
   <tr className="border-b border-gray-300 dark:border-gray-600">{children}</tr>
 );
 
-const TableCellBlock = ({ block, children }) => (
+TableRowBlock.propTypes = {
+  children: PropTypes.array,
+};
+
+const TableCellBlock = ({ children }) => (
   <td className="px-4 py-2 border-r border-gray-300 dark:border-gray-600">
     {children}
   </td>
 );
 
+TableCellBlock.propTypes = {
+  children: PropTypes.array,
+};
+
 const EquationBlock = ({ block }) => {
   return <Equation equation={`$$${block.equation.expression}$$`} />;
+};
 
+EquationBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+};
+
+const BreadcrumbBlock = ({ block }) => {
+  return <div className="text-gray-500 text-sm my-2">
+    {block.breadcrumb?.rich_text?.map((text, index) => (
+      <span key={index}>{text.plain_text}</span>
+    ))}
+  </div>;
+};
+
+BreadcrumbBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+};
+
+const ToggleableBlock = ({ block, children }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const toggleContent = getRichTextContent(block.toggle?.rich_text);
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="my-2">
+      <CollapsibleTrigger className="flex items-center justify-between w-full p-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors">
+        <div className="flex items-center space-x-2">
+          <span className="text-gray-500 dark:text-gray-400">
+            {isOpen ? "▼" : "▶"}
+          </span>
+          <span className="font-medium">{toggleContent}</span>
+        </div>
+      </CollapsibleTrigger>
+      <CollapsibleContent className="pl-6 mt-2 space-y-2">
+        {children && children.length > 0 ? children : null}
+      </CollapsibleContent>
+    </Collapsible>
+  );
+};
+
+ToggleableBlock.propTypes = {
+  block: PropTypes.object.isRequired,
+  children: PropTypes.array,
 };
 
 // 메인 Notion 렌더러 컴포넌트
@@ -233,16 +392,37 @@ export default function NotionRenderer({ blocks, className = "" }) {
     return <div>콘텐츠를 불러올 수 없습니다.</div>;
   }
 
-  const renderBlock = async (block) => {
+  const renderBlock = (block) => {
     const key = block.id || `block-${Math.random().toString(36).substring(2, 9)}`;
     switch (block.type) {
       case "paragraph":
         return <ParagraphBlock key={key} block={block} />;
       case "heading_1":
+        if (block.has_children && block.children.length > 0) {
+          return (
+            <Heading1Block key={key} block={block}>
+              {block.children?.map(renderBlock)}
+            </Heading1Block>
+          );
+        }
         return <Heading1Block key={key} block={block} />;
       case "heading_2":
+        if (block.has_children && block.children.length > 0) {
+          return (
+            <Heading2Block key={key} block={block}>
+              {block.children?.map(renderBlock)}
+            </Heading2Block>
+          );
+        }
         return <Heading2Block key={key} block={block} />;
       case "heading_3":
+        if (block.has_children && block.children && block.children.length > 0) {
+          return (
+            <Heading3Block key={key} block={block}>
+              {block.children.map(renderBlock)}
+            </Heading3Block>
+          );
+        }
         return <Heading3Block key={key} block={block} />;
       case "bulleted_list_item":
         return <BulletedListItemBlock key={key} block={block} />;
@@ -280,6 +460,14 @@ export default function NotionRenderer({ blocks, className = "" }) {
         );
       case "equation":
         return <EquationBlock key={key} block={block} />;
+      case "breadcrumb":
+        return <BreadcrumbBlock key={key} block={block} />;
+      case "toggle":
+        return (
+          <ToggleableBlock key={key} block={block}>
+            {block.children?.map(renderBlock)}
+          </ToggleableBlock>
+        );
       default:
         return (
           <div key={key} className="text-gray-500 text-sm my-2">
@@ -296,7 +484,7 @@ export default function NotionRenderer({ blocks, className = "" }) {
     let currentListType = null;
     let listCounter = 0; // 고유한 리스트 키를 위한 카운터
 
-    blocks.forEach((block, index) => {
+    blocks.forEach((block) => {
       if (
         block.type === "bulleted_list_item" ||
         block.type === "numbered_list_item"

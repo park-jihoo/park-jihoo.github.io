@@ -1,8 +1,8 @@
 import {
-  EnvelopeClosedIcon,
-  GitHubLogoIcon,
-  LinkedInLogoIcon,
-} from "@radix-ui/react-icons";
+  Mail,
+  Github,
+  Linkedin,
+} from "lucide-react";
 import Link from "next/link";
 
 import Skillset from "@/components/Skillset";
@@ -68,7 +68,7 @@ function MyResume() {
               className="hover:bg-white hover:text-black"
             >
               <Link href="https://github.com/park-jihoo">
-                <GitHubLogoIcon />
+                <Github />
               </Link>
             </Button>
             <Button
@@ -78,7 +78,7 @@ function MyResume() {
               className="hover:bg-white hover:text-black"
             >
               <Link href="https://www.linkedin.com/in/parkjihoo/">
-                <LinkedInLogoIcon />
+                <Linkedin />
               </Link>
             </Button>
             <Button
@@ -88,7 +88,7 @@ function MyResume() {
               className="hover:bg-white hover:text-black"
             >
               <Link href={`mailto:${email}`}>
-                <EnvelopeClosedIcon />
+                <Mail />
               </Link>
             </Button>
           </div>

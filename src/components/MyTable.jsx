@@ -8,8 +8,9 @@
 //   LanguageJavascript,
 //   LanguagePython,
 // } from "mdi-material-ui";
-import { CaretSortIcon } from "@radix-ui/react-icons";
+import { ChevronUpDown } from "lucide-react";
 import { useRouter } from "next/navigation";
+import PropTypes from "prop-types";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,15 +28,15 @@ export default function MyTable({ algorithmList }) {
   //   js: <LanguageJavascript className="mr-1" />,
   // };
 
-  const languageIcon = {
-    c: "C",
-    cc: "C++",
-    cpp: "C++",
-    py: "Python",
-    sql: "SQL",
-    java: "Java",
-    js: "JavaScript",
-  };
+  // const languageIcon = {
+  //   c: "C",
+  //   cc: "C++",
+  //   cpp: "C++",
+  //   py: "Python",
+  //   sql: "SQL",
+  //   java: "Java",
+  //   js: "JavaScript",
+  // };
 
   const rows = Object.entries(algorithmList)
     .map(([algorithm, language], id) => {
@@ -62,7 +63,7 @@ export default function MyTable({ algorithmList }) {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Title
-            <CaretSortIcon className="ml-2 w-4 h-4" />
+            <ChevronUpDown className="ml-2 w-4 h-4" />
           </Button>
         );
       },
@@ -127,3 +128,7 @@ export default function MyTable({ algorithmList }) {
     </div>
   );
 }
+
+MyTable.propTypes = {
+  algorithmList: PropTypes.object.isRequired,
+};

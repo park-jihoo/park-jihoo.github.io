@@ -1,5 +1,5 @@
 import NotionPage from "@/components/NotionPage";
-import { getAllPagesFromDatabase,getBlocks, getPage } from "@/lib/notion";
+import { getAllPagesFromDatabase, getBlocks, getPage } from "@/lib/notion";
 
 export async function generateStaticParams() {
   try {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Pencil1Icon,RocketIcon } from "@radix-ui/react-icons";
+import { PenTool, Rocket } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
@@ -10,12 +10,12 @@ const NAVIGATION_ITEMS = [
   {
     label: "NOTES",
     href: "/notes",
-    icon: Pencil1Icon,
+    icon: PenTool,
   },
   {
     label: "ALGORITHM",
     href: "/algorithm",
-    icon: RocketIcon,
+    icon: Rocket,
   },
 ];
 

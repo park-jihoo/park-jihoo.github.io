@@ -1,13 +1,6 @@
 "use client";
 
 import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from "@radix-ui/react-icons";
-import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -15,6 +8,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 import PropTypes from "prop-types";
 import * as React from "react";
 
@@ -83,7 +83,7 @@ export function DataTable({ columns, data, onRowClick, searchColumn = "title" })
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+              Columns <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -208,7 +208,7 @@ export function DataTablePagination({ table }) {
             disabled={!table.getCanPreviousPage()}
           >
             <span className="sr-only">Go to first page</span>
-            <DoubleArrowLeftIcon className="h-4 w-4" />
+            <ChevronsLeft className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -217,7 +217,7 @@ export function DataTablePagination({ table }) {
             disabled={!table.getCanPreviousPage()}
           >
             <span className="sr-only">Go to previous page</span>
-            <ChevronLeftIcon className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -226,7 +226,7 @@ export function DataTablePagination({ table }) {
             disabled={!table.getCanNextPage()}
           >
             <span className="sr-only">Go to next page</span>
-            <ChevronRightIcon className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -235,7 +235,7 @@ export function DataTablePagination({ table }) {
             disabled={!table.getCanNextPage()}
           >
             <span className="sr-only">Go to last page</span>
-            <DoubleArrowRightIcon className="h-4 w-4" />
+            <ChevronsRight className="h-4 w-4" />
           </Button>
         </div>
       </div>
@@ -261,7 +261,7 @@ export function DataTableFilter({ column, title, options }) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" onClick={() => setOpen(!open)}>
           {title}
-          <ChevronDownIcon className="ml-2 h-4 w-4" />
+          <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

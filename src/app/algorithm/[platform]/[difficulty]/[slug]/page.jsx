@@ -1,4 +1,4 @@
-import { OpenInNewWindowIcon } from "@radix-ui/react-icons";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { addClassToHast, getSingletonHighlighter } from "shiki";
 
@@ -112,7 +112,7 @@ export default async function Page({ params }) {
                   : `https://www.acmicpc.net/problem/${problem_name.split(".")[0]}`
             }
           >
-            <OpenInNewWindowIcon />
+            <ExternalLink />
           </Link>
         </Button>
       </div>
