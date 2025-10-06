@@ -2,7 +2,7 @@
 
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ThemeProvider } from "next-themes";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Providers({ children }) {
   const [mounted, setMounted] = useState(false);

@@ -9,7 +9,11 @@ import React from "react";
 import Equation from "@/components/Equation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
 import {
   TypographyBlockquote,
@@ -37,7 +41,7 @@ const RichText = ({ richText, className = "" }) => {
               <Link
                 key={index}
                 href={text.href}
-                className="text-blue-600 hover:text-blue-800 underline"
+                className="text-primary hover:text-primary/80 underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -60,14 +64,14 @@ const RichText = ({ richText, className = "" }) => {
           }
           if (text.annotations?.code) {
             element = (
-              <TypographyInlineCode key={index}>
-                {element}
-              </TypographyInlineCode>
+              <TypographyInlineCode key={index}>{element}</TypographyInlineCode>
             );
           }
           return element;
         } else if (text.type === "equation") {
-          return <Equation key={index} equation={`$${text.equation.expression}$`} />;
+          return (
+            <Equation key={index} equation={`$${text.equation.expression}$`} />
+          );
         }
         return <span key={index}>{text.plain_text}</span>;
       })}
@@ -101,9 +105,11 @@ const Heading1Block = ({ block, children }) => {
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="my-2">
         <CollapsibleTrigger className="flex items-center justify-between w-full text-left hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors">
           <TypographyH1 className="flex items-center space-x-2">
-            <span className="text-gray-500 dark:text-gray-400">
-              {isOpen ? "▼" : "▶"}
-            </span>
+            {isOpen ? (
+              <ChevronDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200" />
+            ) : (
+              <ChevronRightIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200" />
+            )}
             {headingContent}
           </TypographyH1>
         </CollapsibleTrigger>
@@ -132,9 +138,11 @@ const Heading2Block = ({ block, children }) => {
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="my-2">
         <CollapsibleTrigger className="flex items-center justify-between w-full text-left hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors">
           <TypographyH2 className="flex items-center space-x-2">
-            <span className="text-gray-500 dark:text-gray-400">
-              {isOpen ? "▼" : "▶"}
-            </span>
+            {isOpen ? (
+              <ChevronDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200" />
+            ) : (
+              <ChevronRightIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200" />
+            )}
             {headingContent}
           </TypographyH2>
         </CollapsibleTrigger>
@@ -243,7 +251,7 @@ const ImageBlock = ({ block }) => {
         className="rounded-lg shadow-md max-w-full h-auto"
       />
       {caption && (
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 italic">
+        <p className="text-sm text-muted-foreground mt-2 italic">
           {caption}
         </p>
       )}
@@ -271,10 +279,10 @@ const BookmarkBlock = ({ block }) => {
           className="flex items-center space-x-2 hover:opacity-80"
         >
           <div className="flex-1">
-            <p className="font-medium text-gray-900 dark:text-gray-100">
+            <p className="font-medium text-foreground">
               {title}
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
+            <p className="text-sm text-muted-foreground truncate">
               {url}
             </p>
           </div>
@@ -349,11 +357,13 @@ EquationBlock.propTypes = {
 };
 
 const BreadcrumbBlock = ({ block }) => {
-  return <div className="text-gray-500 text-sm my-2">
-    {block.breadcrumb?.rich_text?.map((text, index) => (
-      <span key={index}>{text.plain_text}</span>
-    ))}
-  </div>;
+  return (
+    <div className="text-gray-500 text-sm my-2">
+      {block.breadcrumb?.rich_text?.map((text, index) => (
+        <span key={index}>{text.plain_text}</span>
+      ))}
+    </div>
+  );
 };
 
 BreadcrumbBlock.propTypes = {
@@ -368,9 +378,11 @@ const ToggleableBlock = ({ block, children }) => {
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="my-2">
       <CollapsibleTrigger className="flex items-center justify-between w-full p-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors">
         <div className="flex items-center space-x-2">
-          <span className="text-gray-500 dark:text-gray-400">
-            {isOpen ? "▼" : "▶"}
-          </span>
+          {isOpen ? (
+            <ChevronDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200" />
+          ) : (
+            <ChevronRightIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200" />
+          )}
           <span className="font-medium">{toggleContent}</span>
         </div>
       </CollapsibleTrigger>
@@ -393,7 +405,8 @@ export default function NotionRenderer({ blocks, className = "" }) {
   }
 
   const renderBlock = (block) => {
-    const key = block.id || `block-${Math.random().toString(36).substring(2, 9)}`;
+    const key =
+      block.id || `block-${Math.random().toString(36).substring(2, 9)}`;
     switch (block.type) {
       case "paragraph":
         return <ParagraphBlock key={key} block={block} />;
@@ -492,14 +505,12 @@ export default function NotionRenderer({ blocks, className = "" }) {
         if (currentListType !== block.type) {
           if (currentList.length > 0) {
             const ListComponent =
-              currentListType === "bulleted_list_item" ? TypographyList : TypographyOrderedList;
+              currentListType === "bulleted_list_item"
+                ? TypographyList
+                : TypographyOrderedList;
             const listKey = `list-${listCounter}-${currentListType}`;
             elements.push(
-              React.createElement(
-                ListComponent,
-                { key: listKey },
-                currentList,
-              ),
+              React.createElement(ListComponent, { key: listKey }, currentList),
             );
             listCounter++;
           }
@@ -510,14 +521,12 @@ export default function NotionRenderer({ blocks, className = "" }) {
       } else {
         if (currentList.length > 0) {
           const ListComponent =
-            currentListType === "bulleted_list_item" ? TypographyList : TypographyOrderedList;
+            currentListType === "bulleted_list_item"
+              ? TypographyList
+              : TypographyOrderedList;
           const listKey = `list-${listCounter}-${currentListType}`;
           elements.push(
-            React.createElement(
-              ListComponent,
-              { key: listKey },
-              currentList,
-            ),
+            React.createElement(ListComponent, { key: listKey }, currentList),
           );
           listCounter++;
           currentList = [];
@@ -530,14 +539,12 @@ export default function NotionRenderer({ blocks, className = "" }) {
     // 마지막 리스트 처리
     if (currentList.length > 0) {
       const ListComponent =
-        currentListType === "bulleted_list_item" ? TypographyList : TypographyOrderedList;
+        currentListType === "bulleted_list_item"
+          ? TypographyList
+          : TypographyOrderedList;
       const listKey = `list-${listCounter}-${currentListType}`;
       elements.push(
-        React.createElement(
-          ListComponent,
-          { key: listKey },
-          currentList,
-        ),
+        React.createElement(ListComponent, { key: listKey }, currentList),
       );
     }
 

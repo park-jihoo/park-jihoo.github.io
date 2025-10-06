@@ -35,7 +35,7 @@ export async function GET() {
   try {
     const databaseId = "619787c75b60479886c147cf746bfbb8";
     const databaseResponse = await getAllPagesFromDatabase(databaseId);
-    
+
     if (databaseResponse && databaseResponse.results) {
       for (const page of databaseResponse.results) {
         const title = getPageTitle(page);

@@ -1,18 +1,23 @@
 import NotionDatabaseTable from "@/components/NotionDatabaseTable";
-import { getAllPagesFromDatabase, getDatabaseProperties, getDatabaseTitle } from "@/lib/notion";
+import {
+  getAllPagesFromDatabase,
+  getDatabaseProperties,
+  getDatabaseTitle,
+} from "@/lib/notion";
 
 export default async function NotesPage() {
   try {
     // Notion 데이터베이스 ID
     const databaseId = "619787c75b60479886c147cf746bfbb8";
-    
+
     // 데이터베이스에서 모든 페이지와 속성 정보를 병렬로 가져오기
-    const [databaseResponse, databaseProperties, databaseTitle] = await Promise.all([
-      getAllPagesFromDatabase(databaseId),
-      getDatabaseProperties(databaseId),
-      getDatabaseTitle(databaseId),
-    ]);
-    
+    const [databaseResponse, databaseProperties, databaseTitle] =
+      await Promise.all([
+        getAllPagesFromDatabase(databaseId),
+        getDatabaseProperties(databaseId),
+        getDatabaseTitle(databaseId),
+      ]);
+
     if (!databaseResponse || !databaseResponse.results) {
       return (
         <div className="max-w-7xl mx-auto px-4 py-8">
@@ -27,7 +32,9 @@ export default async function NotesPage() {
     }
 
     const pages = databaseResponse.results;
-    const properties = databaseProperties.filter(prop => prop.type === "select")
+    const properties = databaseProperties.filter(
+      (prop) => prop.type === "select",
+    );
     return (
       <div className="max-w-7xl mx-auto px-4 py-8">
         <header className="mb-8">
@@ -44,10 +51,7 @@ export default async function NotesPage() {
             </p>
           </div>
         ) : (
-          <NotionDatabaseTable 
-            pages={pages} 
-            databaseProperties={properties}
-          />
+          <NotionDatabaseTable pages={pages} databaseProperties={properties} />
         )}
       </div>
     );

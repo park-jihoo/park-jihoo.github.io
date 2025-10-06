@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import Comments from "@/components/Comments";
 import NotionRenderer from "@/components/NotionRenderer";
-import {getPageIcon, getPageTitle } from "@/lib/notion";
+import { getPageIcon, getPageTitle } from "@/lib/notion";
 
 export default function NotionPage({ page, blocks, comments = false }) {
   if (!page || !blocks) {
@@ -12,7 +12,9 @@ export default function NotionPage({ page, blocks, comments = false }) {
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
           <div className="text-6xl mb-4">📝</div>
-          <p className="text-gray-600 dark:text-gray-400">콘텐츠를 불러오는 중...</p>
+          <p className="text-gray-600 dark:text-gray-400">
+            콘텐츠를 불러오는 중...
+          </p>
         </div>
       </div>
     );
@@ -25,13 +27,11 @@ export default function NotionPage({ page, blocks, comments = false }) {
     <article className="max-w-4xl mx-auto px-4 py-8">
       {/* 페이지 헤더 */}
       <header className="mb-8">
-        {icon && (
-          <div className="text-4xl mb-4">{icon}</div>
-        )}
+        {icon && <div className="text-4xl mb-4">{icon}</div>}
         <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
           {title}
         </h1>
-        
+
         {/* 페이지 메타데이터 */}
         {page.properties && (
           <div className="flex flex-wrap gap-2 text-sm text-gray-600 dark:text-gray-400">
@@ -40,7 +40,8 @@ export default function NotionPage({ page, blocks, comments = false }) {
                 {page.properties.Status.select.name}
               </span>
             )}
-            {page.properties.Tags?.multi_select && page.properties.Tags.multi_select.length > 0 && (
+            {page.properties.Tags?.multi_select &&
+              page.properties.Tags.multi_select.length > 0 &&
               page.properties.Tags.multi_select.map((tag, index) => (
                 <span
                   key={index}
@@ -48,8 +49,7 @@ export default function NotionPage({ page, blocks, comments = false }) {
                 >
                   {tag.name}
                 </span>
-              ))
-            )}
+              ))}
           </div>
         )}
       </header>

@@ -53,9 +53,10 @@ export default async function Page({ params }) {
       return `https://raw.githubusercontent.com/park-jihoo/Algorithm/main/${platform}/${difficulty}/${problem_name}/${problem_name.split(".")[1].trim()}.${languageMap[lang]}`;
   });
 
-  
   const highlighter = getSingletonHighlighter({
-    langs: language.map((lang) => lang.toLowerCase()).filter((lang) => lang !== "unknown"),
+    langs: language
+      .map((lang) => lang.toLowerCase())
+      .filter((lang) => lang !== "unknown"),
     themes: ["catppuccin-latte", "catppuccin-mocha"],
   });
 

@@ -1,42 +1,15 @@
 "use client";
 
-// import {
-//   Database,
-//   LanguageC,
-//   LanguageCpp,
-//   LanguageJava,
-//   LanguageJavascript,
-//   LanguagePython,
-// } from "mdi-material-ui";
-import { ChevronsUpDown } from "lucide-react";
+import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/ui/data-table";
+import { DataTable, DataTableFilter } from "@/components/ui/data-table";
 
 export default function MyTable({ algorithmList }) {
   const router = useRouter();
-  // const languageIcon = {
-  //   c: <LanguageC className="mr-1" />,
-  //   cc: <LanguageCpp className="mr-1" />,
-  //   cpp: <LanguageCpp className="mr-1" />,
-  //   py: <LanguagePython className="mr-1" />,
-  //   sql: <Database className="mr-1" />,
-  //   java: <LanguageJava className="mr-1" />,
-  //   js: <LanguageJavascript className="mr-1" />,
-  // };
-
-  // const languageIcon = {
-  //   c: "C",
-  //   cc: "C++",
-  //   cpp: "C++",
-  //   py: "Python",
-  //   sql: "SQL",
-  //   java: "Java",
-  //   js: "JavaScript",
-  // };
 
   const rows = Object.entries(algorithmList)
     .map(([algorithm, language], id) => {
@@ -52,7 +25,20 @@ export default function MyTable({ algorithmList }) {
     })
     .filter((row) => row.title.toLowerCase())
     .sort((a, b) => a.title.localeCompare(b.title));
-
+  const getUniqueSelectValues = (propertyKey) => {
+    const uniqueValues = new Set();
+    rows.forEach((row) => {
+      const value = row[propertyKey];
+      if (value !== undefined) {
+        uniqueValues.add(value);
+      }
+    });
+    return Array.from(uniqueValues).map((value) => ({
+      id: value,
+      value: value,
+      color: "secondary",
+    }));
+  };
   const columns = [
     {
       accessorKey: "title",
@@ -63,7 +49,13 @@ export default function MyTable({ algorithmList }) {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Title
-            <ChevronsUpDown className="ml-2 w-4 h-4" />
+            {column.getIsSorted() === "asc" ? (
+              <ArrowUpIcon className="w-4 h-4" />
+            ) : column.getIsSorted() === "desc" ? (
+              <ArrowDownIcon className="w-4 h-4" />
+            ) : (
+              <ArrowUpDownIcon className="w-4 h-4" />
+            )}
           </Button>
         );
       },
@@ -75,7 +67,14 @@ export default function MyTable({ algorithmList }) {
     },
     {
       accessorKey: "platform",
-      header: "Platform",
+      filterFn: "or",
+      header: ({ column }) => (
+        <DataTableFilter
+          column={column}
+          title="Platform"
+          options={getUniqueSelectValues("platform")}
+        />
+      ),
       cell: ({ row }) => (
         <div className="flex items-center">
           <p className="line-clamp-2 truncate"> {row.getValue("platform")} </p>
@@ -84,10 +83,20 @@ export default function MyTable({ algorithmList }) {
     },
     {
       accessorKey: "difficulty",
-      header: "Difficulty",
+      filterFn: "or",
+      header: ({ column }) => (
+        <DataTableFilter
+          column={column}
+          title="Difficulty"
+          options={getUniqueSelectValues("difficulty")}
+        />
+      ),
       cell: ({ row }) => (
         <div className="flex items-center">
-          <p className="line-clamp-2 truncate"> {row.getValue("difficulty")} </p>
+          <p className="line-clamp-2 truncate">
+            {" "}
+            {row.getValue("difficulty")}{" "}
+          </p>
         </div>
       ),
     },
@@ -118,12 +127,7 @@ export default function MyTable({ algorithmList }) {
   return (
     <div className="space-y-4 m-4">
       <div className="flex items-center flex-col sm:flex-row gap-4">
-        <DataTable
-          data={rows}
-          columns={columns}
-          className="hover:bg-gray-100 transition-colors duration-200"
-          onRowClick={handleRowClick}
-        />
+        <DataTable data={rows} columns={columns} onRowClick={handleRowClick} />
       </div>
     </div>
   );

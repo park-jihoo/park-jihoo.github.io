@@ -43,7 +43,40 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export function DataTable({ columns, data, onRowClick, searchColumn = "title" }) {
+// OR 조건으로 작동하는 커스텀 필터 함수
+const orFilterFn = (row, columnId, filterValue) => {
+  // null이면 모든 행을 표시 (필터 없음)
+  if (filterValue == null) return true;
+  // 빈 배열이면 아무것도 표시하지 않음
+  if (filterValue.length === 0) return false;
+  const cellValue = row.getValue(columnId);
+  return filterValue.includes(cellValue);
+};
+
+// multi_select를 위한 OR 필터 함수 (쉼표로 구분된 값들을 처리)
+const multiSelectOrFilterFn = (row, columnId, filterValue) => {
+  // null이면 모든 행을 표시 (필터 없음)
+  if (filterValue == null) return true;
+  // 빈 배열이면 아무것도 표시하지 않음
+  if (filterValue.length === 0) return false;
+  const cellValue = row.getValue(columnId);
+  if (!cellValue) return false;
+  
+  // 쉼표로 구분된 값들을 배열로 변환
+  const cellValues = cellValue.split(',').map(v => v.trim());
+  
+  // 선택된 필터 값 중 하나라도 셀 값에 포함되어 있으면 true
+  return filterValue.some(filterVal => 
+    cellValues.includes(filterVal)
+  );
+};
+
+export function DataTable({
+  columns,
+  data,
+  onRowClick,
+  searchColumn = "title",
+}) {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -60,6 +93,10 @@ export function DataTable({ columns, data, onRowClick, searchColumn = "title" })
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    filterFns: {
+      or: orFilterFn,
+      multiSelectOr: multiSelectOrFilterFn,
+    },
     state: {
       columnFilters,
       sorting,
@@ -111,7 +148,7 @@ export function DataTable({ columns, data, onRowClick, searchColumn = "title" })
       {/* 테이블 */}
       <div className="rounded-md border">
         <Table className="min-w-full max-w-fit text-left table-fixed">
-          <TableHeader className="bg-gray-100">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="h-12">
                 {headerGroup.headers.map((header) => {
@@ -136,7 +173,7 @@ export function DataTable({ columns, data, onRowClick, searchColumn = "title" })
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   onClick={() => onRowClick?.(row.original)}
-                  className={`h-12 ${onRowClick ? "cursor-pointer hover:bg-gray-50" : ""}`}
+                  className={`h-12 ${onRowClick ? "cursor-pointer" : ""}`}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="h-12">
@@ -160,7 +197,7 @@ export function DataTable({ columns, data, onRowClick, searchColumn = "title" })
             )}
           </TableBody>
         </Table>
-        
+
         {/* 페이지네이션 */}
         <DataTablePagination table={table} />
       </div>
@@ -278,25 +315,30 @@ export function DataTableFilter({ column, title, options }) {
             )
           }
         >
-          <Badge variant="gray">All</Badge>
+          <Badge variant="secondary">All</Badge>
         </DropdownMenuCheckboxItem>
         {options.map((option) => (
           <DropdownMenuCheckboxItem
             checked={
-              column.getFilterValue() == null ||
+              column.getFilterValue() != null &&
               column.getFilterValue()?.includes(option.value)
             }
             onCheckedChange={(checked) => {
-              const newSelected = checked
-                ? [...(column.getFilterValue() ?? []), option.value]
-                : column
-                    .getFilterValue()
-                    .filter((value) => value !== option.value);
-              column.setFilterValue(newSelected);
+              if (checked) {
+                // 옵션을 선택할 때: null이면 빈 배열로 시작, 아니면 기존 배열에 추가
+                const currentValue = column.getFilterValue() ?? [];
+                const newValue = [...currentValue, option.value];
+                column.setFilterValue(newValue);
+              } else {
+                // 옵션을 해제할 때: 해당 값만 제거
+                const currentValue = column.getFilterValue() ?? [];
+                const newValue = currentValue.filter((value) => value !== option.value);
+                column.setFilterValue(newValue.length > 0 ? newValue : []);
+              }
             }}
             key={option.id}
           >
-            <Badge variant={option.color}>{option.value}</Badge>
+            <Badge variant={option.color || "secondary"}>{option.value}</Badge>
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>

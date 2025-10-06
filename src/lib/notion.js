@@ -32,7 +32,9 @@ export const getBlocks = async (blockId) => {
 
 export const getDatabase = async (databaseId) => {
   try {
-    const response = await notion.databases.retrieve({ database_id: databaseId });
+    const response = await notion.databases.retrieve({
+      database_id: databaseId,
+    });
     return response;
   } catch (error) {
     console.error("Error fetching database:", error);
@@ -40,7 +42,11 @@ export const getDatabase = async (databaseId) => {
   }
 };
 
-export const queryDatabase = async (databaseId, filter = null, sorts = null) => {
+export const queryDatabase = async (
+  databaseId,
+  filter = null,
+  sorts = null,
+) => {
   try {
     const response = await notion.databases.query({
       database_id: databaseId,
@@ -73,12 +79,14 @@ export const getDatabaseProperties = async (databaseId) => {
   try {
     const database = await getDatabase(databaseId);
     if (!database || !database.properties) return [];
-    
+
     // 시스템 속성 제외하고 사용자 정의 속성만 반환
     const userProperties = Object.entries(database.properties)
       .filter(([key, prop]) => {
         // title은 기본 제목 속성이므로 제외
-        return key !== 'title' && prop.type !== 'formula' && prop.type !== 'rollup';
+        return (
+          key !== "title" && prop.type !== "formula" && prop.type !== "rollup"
+        );
       })
       .map(([key, prop]) => ({
         id: key,
@@ -86,7 +94,7 @@ export const getDatabaseProperties = async (databaseId) => {
         type: prop.type,
         options: prop.select?.options || prop.multi_select?.options || null,
       }));
-    
+
     return userProperties;
   } catch (error) {
     console.error("Error fetching database properties:", error);
@@ -97,23 +105,23 @@ export const getDatabaseProperties = async (databaseId) => {
 // Notion 블록 타입별 렌더링을 위한 유틸리티 함수들
 export const getBlockTitle = (block) => {
   if (block.type === "paragraph" && block.paragraph?.rich_text) {
-    return block.paragraph.rich_text.map(text => text.plain_text).join("");
+    return block.paragraph.rich_text.map((text) => text.plain_text).join("");
   }
   if (block.type === "heading_1" && block.heading_1?.rich_text) {
-    return block.heading_1.rich_text.map(text => text.plain_text).join("");
+    return block.heading_1.rich_text.map((text) => text.plain_text).join("");
   }
   if (block.type === "heading_2" && block.heading_2?.rich_text) {
-    return block.heading_2.rich_text.map(text => text.plain_text).join("");
+    return block.heading_2.rich_text.map((text) => text.plain_text).join("");
   }
   if (block.type === "heading_3" && block.heading_3?.rich_text) {
-    return block.heading_3.rich_text.map(text => text.plain_text).join("");
+    return block.heading_3.rich_text.map((text) => text.plain_text).join("");
   }
   return "";
 };
 
 export const getRichTextContent = (richTextArray) => {
   if (!richTextArray || !Array.isArray(richTextArray)) return "";
-  return richTextArray.map(text => text.plain_text).join("");
+  return richTextArray.map((text) => text.plain_text).join("");
 };
 
 export const getPageTitle = (page) => {
