@@ -117,18 +117,22 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
 
       case "date":
         return property.date?.start ? (
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-muted-foreground font-medium">
             {new Date(property.date.start).toLocaleDateString("ko-KR")}
           </span>
         ) : (
-          "-"
+          <span className="text-sm text-muted-foreground">-</span>
         );
 
       case "checkbox":
         return <Checkbox checked={property.checkbox} />;
 
       case "number":
-        return property.number?.toString() || "-";
+        return property.number?.toString() ? (
+          <span className="text-sm font-medium">{property.number.toString()}</span>
+        ) : (
+          <span className="text-sm text-muted-foreground">-</span>
+        );
 
       case "url":
         return property.url ? (
@@ -136,16 +140,22 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
             href={property.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary hover:text-primary/80 text-sm underline"
+            className="text-primary hover:text-primary/80 text-sm underline transition-colors font-medium"
           >
             링크
           </a>
         ) : (
-          "-"
+          <span className="text-sm text-muted-foreground">-</span>
         );
 
-      default:
-        return getPropertyValue(property) || "-";
+      default: {
+        const value = getPropertyValue(property);
+        return value ? (
+          <span className="text-sm font-medium">{value}</span>
+        ) : (
+          <span className="text-sm text-muted-foreground">-</span>
+        );
+      }
     }
   }, []);
 
@@ -161,15 +171,15 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
               onClick={() => {
                 column.toggleSorting(column.getIsSorted() === "asc");
               }}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-medium"
             >
               <span>제목</span>
               {column.getIsSorted() === "asc" ? (
-                <ArrowUpIcon className="w-4 h-4" />
+                <ArrowUpIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
               ) : column.getIsSorted() === "desc" ? (
-                <ArrowDownIcon className="w-4 h-4" />
+                <ArrowDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
               ) : (
-                <ArrowUpDownIcon className="w-4 h-4" />
+                <ArrowUpDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
               )}
             </Button>
           );
@@ -178,7 +188,9 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
           const page = row.original;
           return (
             <div className="flex items-center space-x-2">
-              <p className="line-clamp-2 truncate">{getPageTitle(page)}</p>
+              <p className="line-clamp-2 truncate font-medium text-foreground hover:text-primary transition-colors cursor-pointer">
+                {getPageTitle(page)}
+              </p>
             </div>
           );
         },
@@ -260,15 +272,15 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
             onClick={() => {
               column.toggleSorting(column.getIsSorted() === "asc");
             }}
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-medium"
           >
             <span>생성일</span>
             {column.getIsSorted() === "asc" ? (
-              <ArrowUpIcon className="w-4 h-4" />
+              <ArrowUpIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             ) : column.getIsSorted() === "desc" ? (
-              <ArrowDownIcon className="w-4 h-4" />
+              <ArrowDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             ) : (
-              <ArrowUpDownIcon className="w-4 h-4" />
+              <ArrowUpDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             )}
           </Button>
         );
@@ -285,7 +297,7 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
       cell: ({ row }) => {
         const page = row.original;
         return (
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-muted-foreground">
             {new Date(getPageCreatedTime(page)).toLocaleDateString("ko-KR")}
           </span>
         );
@@ -302,8 +314,10 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
   };
 
   return (
-    <div className="space-y-4">
-      <DataTable columns={columns} data={pages} onRowClick={handleRowClick} />
+    <div className="space-y-6">
+      <div className="bg-muted/30 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+        <DataTable columns={columns} data={pages} onRowClick={handleRowClick} />
+      </div>
     </div>
   );
 }

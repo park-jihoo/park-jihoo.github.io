@@ -1,151 +1,225 @@
-import { Github, Linkedin,Mail } from "lucide-react";
+"use client";
+
+import { motion } from "framer-motion";
+import { LinkIcon } from "lucide-react";
 import Link from "next/link";
 
 import Skillset from "@/components/Skillset";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
+  Card,
   CardContent,
-  CardFooter,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { RESUME_DATA } from "@/constants/resume";
 
-function MyResume() {
-  const name = "Jihoo Park";
-  const title = "Data Scientist";
-  const email = "wlgn8648@gmail.com";
-
-  const educationList = [
-    {
-      degree: "Bachelor's in Mathematics",
-      university: "POSTECH",
-      start: "2016",
-      end: "2020",
-    },
-    {
-      degree: "Master's in Data Science",
-      university: "Seoul National University",
-      start: "2022",
-      end: "2024",
-    },
-  ];
-
-  const jobList = [
-    {
-      position: "Web Developer",
-      company: "LG CNS",
-      start: "2020",
-      end: "2022",
-    },
-  ];
-
-  const skills = {
-    ML: ["tensorflow", "pytorch"],
-    DB: ["mysql", "postgres", "sqlite", "kafka", "mongodb"],
-    BE: ["spring", "django", "fastapi", "flask"],
-    FE: ["vue", "react", "html", "css", "md", "vite"],
-    cloud: ["gcp", "aws"],
-    devops: ["jenkins", "docker", "githubactions", "git"],
-    languages: ["py", "cpp", "c", "java", "r", "js", "matlab", "latex"],
-    ides: ["vscode", "idea", "eclipse"],
-  };
-
+export default function MyResume() {
   return (
-    <div>
-      <CardHeader className="from-blue-500 p-6 rounded-t-lg">
-        <CardTitle className="text-4xl font-bold">{name}</CardTitle>
-        <p className="text-xl font-light">{title}</p>
-        <div className="flex gap-4 mt-4">
-          <Button
-            variant="text"
-            size="icon"
-            asChild
-            className="hover:bg-white hover:text-black"
+    <div className="space-y-12 py-8 max-w-4xl mx-auto">
+      {/* Hero Section */}
+      <section className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 text-center md:text-left">
+        <div className="space-y-4 flex-1">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground"
           >
-            <Link href="https://github.com/park-jihoo">
-              <Github />
-            </Link>
-          </Button>
-          <Button
-            variant="text"
-            size="icon"
-            asChild
-            className="hover:bg-white hover:text-black"
+            {RESUME_DATA.name}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-xl text-muted-foreground max-w-lg mx-auto md:mx-0"
           >
-            <Link href="https://www.linkedin.com/in/parkjihoo/">
-              <Linkedin />
-            </Link>
-          </Button>
-          <Button
-            variant="text"
-            size="icon"
-            asChild
-            className="hover:bg-white hover:text-black"
+            {RESUME_DATA.summary}
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex gap-4 justify-center md:justify-start pt-2"
           >
-            <Link href={`mailto:${email}`}>
-              <Mail />
-            </Link>
-          </Button>
+            {RESUME_DATA.contact.social.map((social) => (
+              <Button
+                key={social.name}
+                variant="outline"
+                size="icon"
+                asChild
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-muted-foreground/20 hover:border-primary hover:bg-primary/10 transition-all duration-300"
+              >
+                <Link href={social.url} target="_blank" rel="noopener noreferrer">
+                  <social.icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                </Link>
+              </Button>
+            ))}
+          </motion.div>
         </div>
-      </CardHeader>
-
-      <CardContent className="p-6">
-        <div className="space-y-8">
-          {/* Skills Section */}
-          <div>
-            <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-              Skills
-            </h2>
-            <Skillset skills={skills} />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="relative"
+        >
+          <div className="rounded-full p-2 border-2 border-dashed border-primary/30">
+            <Avatar className="h-40 w-40 sm:h-48 sm:w-48 border-4 border-background shadow-xl">
+              <AvatarImage
+                src={RESUME_DATA.avatarUrl}
+                alt={RESUME_DATA.name}
+                className="object-cover"
+              />
+              <AvatarFallback>{RESUME_DATA.initials}</AvatarFallback>
+            </Avatar>
           </div>
-          <Separator />
+        </motion.div>
+      </section>
 
-          {/* Education Section */}
-          <div>
-            <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-              Education
-            </h2>
-            {educationList.map((education, index) => (
-              <div key={index} className="mb-4">
-                <p className="text-lg font-medium text-gray-800">
-                  {education.degree}
-                </p>
-                <p className="text-gray-600">{education.university}</p>
-                <p className="text-gray-500">
-                  {education.start} - {education.end}
+      <Separator />
+
+      {/* Skills Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="space-y-6"
+      >
+        <h2 className="text-2xl font-bold tracking-tight">Skills</h2>
+        <Skillset skills={RESUME_DATA.skills} />
+      </motion.section>
+
+      <Separator />
+
+      {/* Projects Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="space-y-6"
+      >
+        <h2 className="text-2xl font-bold tracking-tight">Projects</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {RESUME_DATA.projects.map((project, index) => (
+            <Card
+              key={index}
+              className="flex flex-col h-full hover:shadow-lg transition-shadow duration-300"
+            >
+              <CardHeader className="p-5 pb-2">
+                <CardTitle className="text-lg font-semibold flex items-center justify-between">
+                  <span className="truncate" title={project.title}>
+                    {project.title}
+                  </span>
+                  {project.link?.href && (
+                    <Link
+                      href={project.link.href}
+                      target="_blank"
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <LinkIcon className="h-4 w-4" />
+                    </Link>
+                  )}
+                </CardTitle>
+                <div className="flex flex-wrap gap-1.5 pt-2">
+                  {project.techStack.map((tech) => (
+                    <Badge
+                      key={tech}
+                      variant="secondary"
+                      className="text-[10px] px-2 py-0.5 h-auto font-normal"
+                    >
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+              </CardHeader>
+              <CardContent className="p-5 pt-2 flex-grow">
+                <CardDescription className="text-sm leading-relaxed">
+                  {project.description}
+                </CardDescription>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </motion.section>
+
+      <Separator />
+
+      {/* Work Experience Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="space-y-6"
+      >
+        <h2 className="text-2xl font-bold tracking-tight">Work Experience</h2>
+        <div className="space-y-4">
+          {RESUME_DATA.work.map((work, index) => (
+            <div
+              key={index}
+              className="flex flex-col sm:flex-row gap-4 p-4 rounded-xl border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-200"
+            >
+              <div className="flex-1 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-lg">{work.company}</h3>
+                    <p className="text-sm font-medium text-muted-foreground">
+                      {work.title}
+                    </p>
+                  </div>
+                  <Badge variant="outline" className="shrink-0">
+                    {work.start} - {work.end}
+                  </Badge>
+                </div>
+                <p className="text-sm text-foreground/80 leading-relaxed">
+                  {work.description}
                 </p>
               </div>
-            ))}
-          </div>
-          <Separator />
-
-          {/* Work Experience Section */}
-          <div>
-            <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-              Work Experience
-            </h2>
-            {jobList.map((job, index) => (
-              <div key={index} className="mb-4">
-                <p className="text-lg font-medium text-gray-800">
-                  {job.position}
-                </p>
-                <p className="text-gray-600">{job.company}</p>
-                <p className="text-gray-500">
-                  {job.start} - {job.end}
-                </p>
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </CardContent>
-      <CardFooter className="p-6">
-        <p className="text-sm text-gray-500">
-          © 2024 Jihoo Park. All rights reserved.
+      </motion.section>
+
+      <Separator />
+
+      {/* Education Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="space-y-6"
+      >
+        <h2 className="text-2xl font-bold tracking-tight">Education</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {RESUME_DATA.education.map((edu, index) => (
+            <Card key={index} className="shadow-sm hover:shadow-md transition-all">
+              <CardHeader className="p-4">
+                <div className="flex justify-between items-start mb-1">
+                  <h3 className="font-semibold">{edu.school}</h3>
+                  <Badge variant="secondary" className="text-xs">
+                    {edu.start} - {edu.end}
+                  </Badge>
+                </div>
+                <p className="text-sm text-muted-foreground">{edu.degree}</p>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Footer */}
+      <footer className="pt-8 pb-4 text-center">
+        <p className="text-sm text-muted-foreground">
+          © {new Date().getFullYear()} {RESUME_DATA.name}. All rights reserved.
         </p>
-      </CardFooter>
+      </footer>
     </div>
   );
 }
-
-export default MyResume;
