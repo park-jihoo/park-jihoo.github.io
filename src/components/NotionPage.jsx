@@ -4,15 +4,16 @@ import PropTypes from "prop-types";
 
 import Comments from "@/components/Comments";
 import NotionRenderer from "@/components/NotionRenderer";
+import { Badge } from "@/components/ui/badge";
 import { getPageIcon, getPageTitle } from "@/lib/notion";
 
 export default function NotionPage({ page, blocks, comments = false }) {
   if (!page || !blocks) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex min-h-[400px] items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">📝</div>
-          <p className="text-gray-600 dark:text-gray-400">
+          <div className="mb-4 text-6xl">📝</div>
+          <p className="text-muted-foreground">
             콘텐츠를 불러오는 중...
           </p>
         </div>
@@ -24,42 +25,39 @@ export default function NotionPage({ page, blocks, comments = false }) {
   const icon = getPageIcon(page);
 
   return (
-    <article className="max-w-4xl mx-auto px-4 py-8">
-      {/* 페이지 헤더 */}
+    <article className="mx-auto max-w-4xl px-4 py-8">
       <header className="mb-8">
-        {icon && <div className="text-4xl mb-4">{icon}</div>}
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+        {icon && <div className="mb-4 text-4xl">{icon}</div>}
+        <h1 className="mb-4 text-4xl font-semibold tracking-tight text-foreground">
           {title}
         </h1>
 
-        {/* 페이지 메타데이터 */}
         {page.properties && (
-          <div className="flex flex-wrap gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex flex-wrap gap-2">
             {page.properties.Status?.select?.name && (
-              <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full">
+              <Badge variant="default" className="text-xs font-medium">
                 {page.properties.Status.select.name}
-              </span>
+              </Badge>
             )}
             {page.properties.Tags?.multi_select &&
               page.properties.Tags.multi_select.length > 0 &&
               page.properties.Tags.multi_select.map((tag, index) => (
-                <span
+                <Badge
                   key={index}
-                  className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full"
+                  variant="secondary"
+                  className="text-xs font-normal"
                 >
                   {tag.name}
-                </span>
+                </Badge>
               ))}
           </div>
         )}
       </header>
 
-      {/* 페이지 콘텐츠 */}
       <div className="prose prose-lg dark:prose-invert max-w-none">
         <NotionRenderer blocks={blocks} />
       </div>
 
-      {/* 댓글 섹션 */}
       {comments && <Comments />}
     </article>
   );

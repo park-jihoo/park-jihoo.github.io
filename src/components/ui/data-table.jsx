@@ -61,14 +61,12 @@ const multiSelectOrFilterFn = (row, columnId, filterValue) => {
   if (filterValue.length === 0) return false;
   const cellValue = row.getValue(columnId);
   if (!cellValue) return false;
-  
+
   // 쉼표로 구분된 값들을 배열로 변환
-  const cellValues = cellValue.split(',').map(v => v.trim());
-  
+  const cellValues = cellValue.split(",").map((v) => v.trim());
+
   // 선택된 필터 값 중 하나라도 셀 값에 포함되어 있으면 true
-  return filterValue.some(filterVal => 
-    cellValues.includes(filterVal)
-  );
+  return filterValue.some((filterVal) => cellValues.includes(filterVal));
 };
 
 export function DataTable({
@@ -106,9 +104,9 @@ export function DataTable({
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-4">
       {/* 검색 및 컬럼 가시성 컨트롤 */}
-      <div className="flex items-center py-4">
+      <div className="flex flex-wrap items-center gap-4 py-1">
         <Input
           placeholder={`Search ${searchColumn}...`}
           value={table.getColumn(searchColumn)?.getFilterValue() ?? ""}
@@ -146,7 +144,7 @@ export function DataTable({
       </div>
 
       {/* 테이블 */}
-      <div className="rounded-md border">
+      <div className="rounded-md border overflow-hidden">
         <Table className="min-w-full max-w-fit text-left table-fixed">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -207,14 +205,11 @@ export function DataTable({
 
 export function DataTablePagination({ table }) {
   return (
-    <div className="flex items-center justify-between px-2 mb-2">
-      <div className="flex-1 text-sm text-muted-foreground">
-        {/*{table.getFilteredSelectedRowModel().rows.length} of{" "}*/}
-        {/*{table.getFilteredRowModel().rows.length} row(s) selected.*/}
-      </div>
-      <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
+    <div className="flex flex-wrap items-center justify-between gap-4 px-1 py-3">
+      <div className="flex-1 min-w-0 text-sm text-muted-foreground" />
+      <div className="flex flex-wrap items-center gap-4 sm:gap-6 lg:gap-8">
+        <div className="flex items-center gap-2">
+          <p className="shrink-0 text-sm font-medium">Rows per page</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
@@ -233,11 +228,11 @@ export function DataTablePagination({ table }) {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+        <div className="flex min-w-[100px] items-center justify-center text-sm font-medium">
           Page {table.getState().pagination.pageIndex + 1} of{" "}
           {table.getPageCount()}
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
@@ -332,7 +327,9 @@ export function DataTableFilter({ column, title, options }) {
               } else {
                 // 옵션을 해제할 때: 해당 값만 제거
                 const currentValue = column.getFilterValue() ?? [];
-                const newValue = currentValue.filter((value) => value !== option.value);
+                const newValue = currentValue.filter(
+                  (value) => value !== option.value,
+                );
                 column.setFilterValue(newValue.length > 0 ? newValue : []);
               }
             }}

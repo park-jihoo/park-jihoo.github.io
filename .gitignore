@@ -29,4 +29,6 @@ out
 .env
 .yarn
 .cursorrules
+.agents/*
+.cursor/*
 bun.lock

@@ -23,8 +23,9 @@ export default function MyTable({ algorithmList }) {
         path: algorithm,
       };
     })
-    .filter((row) => row.title.toLowerCase())
-    .sort((a, b) => a.title.localeCompare(b.title));
+    // No need to filter here, DataTable handles filtering via tanstack-table
+    .toSorted((a, b) => a.title.localeCompare(b.title));
+
   const getUniqueSelectValues = (propertyKey) => {
     const uniqueValues = new Set();
     rows.forEach((row) => {
@@ -36,9 +37,10 @@ export default function MyTable({ algorithmList }) {
     return Array.from(uniqueValues).map((value) => ({
       id: value,
       value: value,
-      color: "secondary",
+      label: value,
     }));
   };
+
   const columns = [
     {
       accessorKey: "title",
@@ -47,21 +49,22 @@ export default function MyTable({ algorithmList }) {
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className="pl-0 font-medium transition-colors hover:bg-accent/80"
           >
             Title
             {column.getIsSorted() === "asc" ? (
-              <ArrowUpIcon className="w-4 h-4" />
+              <ArrowUpIcon className="ml-2 size-4 text-muted-foreground" />
             ) : column.getIsSorted() === "desc" ? (
-              <ArrowDownIcon className="w-4 h-4" />
+              <ArrowDownIcon className="ml-2 size-4 text-muted-foreground" />
             ) : (
-              <ArrowUpDownIcon className="w-4 h-4" />
+              <ArrowUpDownIcon className="ml-2 size-4 text-muted-foreground" />
             )}
           </Button>
         );
       },
       cell: ({ row }) => (
         <div className="flex items-center">
-          <p className="line-clamp-2 truncate"> {row.getValue("title")} </p>
+          <span className="font-medium">{row.getValue("title")}</span>
         </div>
       ),
     },
@@ -77,7 +80,12 @@ export default function MyTable({ algorithmList }) {
       ),
       cell: ({ row }) => (
         <div className="flex items-center">
-          <p className="line-clamp-2 truncate"> {row.getValue("platform")} </p>
+          <Badge
+            variant="outline"
+            className="font-normal text-muted-foreground"
+          >
+            {row.getValue("platform")}
+          </Badge>
         </div>
       ),
     },
@@ -91,27 +99,38 @@ export default function MyTable({ algorithmList }) {
           options={getUniqueSelectValues("difficulty")}
         />
       ),
-      cell: ({ row }) => (
-        <div className="flex items-center">
-          <p className="line-clamp-2 truncate">
-            {" "}
-            {row.getValue("difficulty")}{" "}
-          </p>
-        </div>
-      ),
+      cell: ({ row }) => {
+        const diff = row.getValue("difficulty");
+        const variant =
+          diff === "Easy"
+            ? "default"
+            : diff === "Medium"
+              ? "secondary"
+              : "destructive";
+        return (
+          <div className="flex items-center">
+            <Badge variant={variant} className="text-xs font-medium capitalize">
+              {diff}
+            </Badge>
+          </div>
+        );
+      },
     },
     {
       accessorKey: "language",
       header: "Language",
       cell: ({ row }) => (
-        <div className="flex items-center flex-wrap gap-1.5">
+        <div className="flex items-center flex-wrap gap-1">
           {row
             .getValue("language")
             .split(",")
             .map((lang) => (
-              <Badge key={lang} className="items-center space-x-1">
-                {lang}
-                {/*<span>{lang}</span>*/}
+              <Badge
+                key={lang}
+                variant="secondary"
+                className="h-5 px-1.5 py-0 text-xs font-normal"
+              >
+                {lang.trim()}
               </Badge>
             ))}
         </div>
@@ -125,10 +144,14 @@ export default function MyTable({ algorithmList }) {
   };
 
   return (
-    <div className="space-y-4 m-4">
-      <div className="flex items-center flex-col sm:flex-row gap-4">
-        <DataTable data={rows} columns={columns} onRowClick={handleRowClick} />
-      </div>
+    <div className="space-y-4">
+      <DataTable
+        data={rows}
+        columns={columns}
+        onRowClick={handleRowClick}
+        searchColumn="title"
+        className="border-0"
+      />
     </div>
   );
 }

@@ -18,33 +18,47 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { RESUME_DATA } from "@/constants/resume";
 
+const stagger = { staggerChildren: 0.08, delayChildren: 0.05 };
+const itemUp = {
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.4 },
+};
+
+function SectionTitle({ children }) {
+  return (
+    <h2 className="text-2xl font-semibold tracking-tight text-[var(--section-title)]">
+      {children}
+    </h2>
+  );
+}
+
 export default function MyResume() {
   return (
-    <div className="space-y-12 py-8 max-w-4xl mx-auto">
-      {/* Hero Section */}
-      <section className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 text-center md:text-left">
-        <div className="space-y-4 flex-1">
+    <div className="mx-auto max-w-4xl space-y-14 py-8">
+      {/* Hero */}
+      <motion.section
+        className="flex flex-col-reverse items-center justify-between gap-10 text-center md:flex-row md:text-left"
+        initial="initial"
+        animate="animate"
+        variants={stagger}
+      >
+        <div className="flex-1 space-y-5">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground"
+            variants={itemUp}
+            className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl"
           >
             {RESUME_DATA.name}
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-xl text-muted-foreground max-w-lg mx-auto md:mx-0"
+            variants={itemUp}
+            className="mx-auto max-w-lg text-lg leading-relaxed text-muted-foreground md:mx-0"
           >
             {RESUME_DATA.summary}
           </motion.p>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex gap-4 justify-center md:justify-start pt-2"
+            variants={itemUp}
+            className="flex justify-center gap-3 pt-1 md:justify-start"
           >
             {RESUME_DATA.contact.social.map((social) => (
               <Button
@@ -52,67 +66,68 @@ export default function MyResume() {
                 variant="outline"
                 size="icon"
                 asChild
-                className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-muted-foreground/20 hover:border-primary hover:bg-primary/10 transition-all duration-300"
+                className="size-11 rounded-full border-border/80 transition-colors hover:border-primary hover:bg-primary/10 sm:size-12"
               >
-                <Link href={social.url} target="_blank" rel="noopener noreferrer">
-                  <social.icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                <Link
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <social.icon className="size-5 sm:size-6" />
                 </Link>
               </Button>
             ))}
           </motion.div>
         </div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="relative"
-        >
-          <div className="rounded-full p-2 border-2 border-dashed border-primary/30">
-            <Avatar className="h-40 w-40 sm:h-48 sm:w-48 border-4 border-background shadow-xl">
+        <motion.div variants={itemUp} className="relative">
+          <div className="rounded-full p-2 ring-2 ring-primary/20 ring-offset-4 ring-offset-card">
+            <Avatar className="size-40 border-4 border-card sm:size-48">
               <AvatarImage
                 src={RESUME_DATA.avatarUrl}
                 alt={RESUME_DATA.name}
                 className="object-cover"
               />
-              <AvatarFallback>{RESUME_DATA.initials}</AvatarFallback>
+              <AvatarFallback className="text-2xl">
+                {RESUME_DATA.initials}
+              </AvatarFallback>
             </Avatar>
           </div>
         </motion.div>
-      </section>
+      </motion.section>
 
-      <Separator />
+      <Separator className="bg-border/80" />
 
-      {/* Skills Section */}
+      {/* Skills */}
       <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
         className="space-y-6"
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, margin: "-40px" }}
+        variants={stagger}
       >
-        <h2 className="text-2xl font-bold tracking-tight">Skills</h2>
+        <SectionTitle>Skills</SectionTitle>
         <Skillset skills={RESUME_DATA.skills} />
       </motion.section>
 
-      <Separator />
+      <Separator className="bg-border/80" />
 
-      {/* Projects Section */}
+      {/* Projects */}
       <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
         className="space-y-6"
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, margin: "-40px" }}
+        variants={stagger}
       >
-        <h2 className="text-2xl font-bold tracking-tight">Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <SectionTitle>Projects</SectionTitle>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {RESUME_DATA.projects.map((project, index) => (
             <Card
               key={index}
-              className="flex flex-col h-full hover:shadow-lg transition-shadow duration-300"
+              className="flex h-full flex-col border-border/70 transition-all duration-200 hover:-translate-y-0.5"
             >
               <CardHeader className="p-5 pb-2">
-                <CardTitle className="text-lg font-semibold flex items-center justify-between">
+                <CardTitle className="flex items-center justify-between gap-2 text-lg font-semibold">
                   <span className="truncate" title={project.title}>
                     {project.title}
                   </span>
@@ -120,9 +135,9 @@ export default function MyResume() {
                     <Link
                       href={project.link.href}
                       target="_blank"
-                      className="text-muted-foreground hover:text-primary transition-colors"
+                      className="shrink-0 text-muted-foreground transition-colors hover:text-primary"
                     >
-                      <LinkIcon className="h-4 w-4" />
+                      <LinkIcon className="size-4" />
                     </Link>
                   )}
                 </CardTitle>
@@ -131,14 +146,14 @@ export default function MyResume() {
                     <Badge
                       key={tech}
                       variant="secondary"
-                      className="text-[10px] px-2 py-0.5 h-auto font-normal"
+                      className="h-auto px-2 py-0.5 text-[10px] font-normal"
                     >
                       {tech}
                     </Badge>
                   ))}
                 </div>
               </CardHeader>
-              <CardContent className="p-5 pt-2 flex-grow">
+              <CardContent className="flex-grow p-5 pt-2">
                 <CardDescription className="text-sm leading-relaxed">
                   {project.description}
                 </CardDescription>
@@ -148,63 +163,70 @@ export default function MyResume() {
         </div>
       </motion.section>
 
-      <Separator />
+      <Separator className="bg-border/80" />
 
-      {/* Work Experience Section */}
+      {/* Work */}
       <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
         className="space-y-6"
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, margin: "-40px" }}
+        variants={stagger}
       >
-        <h2 className="text-2xl font-bold tracking-tight">Work Experience</h2>
+        <SectionTitle>Work Experience</SectionTitle>
         <div className="space-y-4">
           {RESUME_DATA.work.map((work, index) => (
-            <div
+            <Card
               key={index}
-              className="flex flex-col sm:flex-row gap-4 p-4 rounded-xl border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all duration-200"
+              className="border-border/70 transition-all duration-200"
             >
-              <div className="flex-1 space-y-2">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-semibold text-lg">{work.company}</h3>
-                    <p className="text-sm font-medium text-muted-foreground">
-                      {work.title}
-                    </p>
+              <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-start">
+                <div className="flex-1 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <h3 className="font-semibold text-lg">
+                        {work.company}
+                      </h3>
+                      <p className="text-sm font-medium text-muted-foreground">
+                        {work.title}
+                      </p>
+                    </div>
+                    <Badge variant="outline" className="shrink-0">
+                      {work.start} – {work.end}
+                    </Badge>
                   </div>
-                  <Badge variant="outline" className="shrink-0">
-                    {work.start} - {work.end}
-                  </Badge>
+                  <p className="text-sm leading-relaxed text-foreground/85">
+                    {work.description}
+                  </p>
                 </div>
-                <p className="text-sm text-foreground/80 leading-relaxed">
-                  {work.description}
-                </p>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </motion.section>
 
-      <Separator />
+      <Separator className="bg-border/80" />
 
-      {/* Education Section */}
+      {/* Education */}
       <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
         className="space-y-6"
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, margin: "-40px" }}
+        variants={stagger}
       >
-        <h2 className="text-2xl font-bold tracking-tight">Education</h2>
+        <SectionTitle>Education</SectionTitle>
         <div className="grid gap-4 sm:grid-cols-2">
           {RESUME_DATA.education.map((edu, index) => (
-            <Card key={index} className="shadow-sm hover:shadow-md transition-all">
+            <Card
+              key={index}
+              className="border-border/70 transition-all duration-200"
+            >
               <CardHeader className="p-4">
-                <div className="flex justify-between items-start mb-1">
+                <div className="mb-1 flex items-start justify-between gap-2">
                   <h3 className="font-semibold">{edu.school}</h3>
-                  <Badge variant="secondary" className="text-xs">
-                    {edu.start} - {edu.end}
+                  <Badge variant="secondary" className="shrink-0 text-xs">
+                    {edu.start} – {edu.end}
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground">{edu.degree}</p>
@@ -214,9 +236,9 @@ export default function MyResume() {
         </div>
       </motion.section>
 
-      {/* Footer */}
-      <footer className="pt-8 pb-4 text-center">
-        <p className="text-sm text-muted-foreground">
+      <Separator className="bg-border/80" />
+      <footer className="py-6 text-center">
+        <p className="text-sm text-muted-foreground/90">
           © {new Date().getFullYear()} {RESUME_DATA.name}. All rights reserved.
         </p>
       </footer>

@@ -3,7 +3,7 @@
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
-import { useCallback,useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -129,7 +129,9 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
 
       case "number":
         return property.number?.toString() ? (
-          <span className="text-sm font-medium">{property.number.toString()}</span>
+          <span className="text-sm font-medium">
+            {property.number.toString()}
+          </span>
         ) : (
           <span className="text-sm text-muted-foreground">-</span>
         );
@@ -171,15 +173,15 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
               onClick={() => {
                 column.toggleSorting(column.getIsSorted() === "asc");
               }}
-              className="flex items-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-medium"
+              className="flex items-center gap-2 font-medium transition-colors hover:bg-accent/80"
             >
               <span>제목</span>
               {column.getIsSorted() === "asc" ? (
-                <ArrowUpIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <ArrowUpIcon className="size-4 text-muted-foreground" />
               ) : column.getIsSorted() === "desc" ? (
-                <ArrowDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <ArrowDownIcon className="size-4 text-muted-foreground" />
               ) : (
-                <ArrowUpDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                <ArrowUpDownIcon className="size-4 text-muted-foreground" />
               )}
             </Button>
           );
@@ -187,8 +189,8 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
         cell: ({ row }) => {
           const page = row.original;
           return (
-            <div className="flex items-center space-x-2">
-              <p className="line-clamp-2 truncate font-medium text-foreground hover:text-primary transition-colors cursor-pointer">
+            <div className="flex items-center gap-2">
+              <p className="line-clamp-2 truncate cursor-pointer font-medium text-foreground transition-colors hover:text-primary">
                 {getPageTitle(page)}
               </p>
             </div>
@@ -211,31 +213,34 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
           accessorKey: prop.id,
           accessorFn: (row) => {
             const property = row.properties[prop.id];
-            if (!property) return '';
-            
+            if (!property) return "";
+
             switch (property.type) {
-              case 'select':
-                return property.select?.name || '';
-              case 'multi_select':
-                return property.multi_select?.map(item => item.name).join(', ') || '';
-              case 'title':
-                return property.title?.[0]?.plain_text || '';
-              case 'rich_text':
-                return property.rich_text?.[0]?.plain_text || '';
-              case 'date':
-                return property.date?.start || '';
-              case 'checkbox':
-                return property.checkbox ? 'Yes' : 'No';
-              case 'number':
-                return property.number || '';
-              case 'url':
-                return property.url || '';
-              case 'email':
-                return property.email || '';
-              case 'phone_number':
-                return property.phone_number || '';
+              case "select":
+                return property.select?.name || "";
+              case "multi_select":
+                return (
+                  property.multi_select?.map((item) => item.name).join(", ") ||
+                  ""
+                );
+              case "title":
+                return property.title?.[0]?.plain_text || "";
+              case "rich_text":
+                return property.rich_text?.[0]?.plain_text || "";
+              case "date":
+                return property.date?.start || "";
+              case "checkbox":
+                return property.checkbox ? "Yes" : "No";
+              case "number":
+                return property.number || "";
+              case "url":
+                return property.url || "";
+              case "email":
+                return property.email || "";
+              case "phone_number":
+                return property.phone_number || "";
               default:
-                return '';
+                return "";
             }
           },
           header:
@@ -272,15 +277,15 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
             onClick={() => {
               column.toggleSorting(column.getIsSorted() === "asc");
             }}
-            className="flex items-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-medium"
+            className="flex items-center gap-2 font-medium transition-colors hover:bg-accent/80"
           >
             <span>생성일</span>
             {column.getIsSorted() === "asc" ? (
-              <ArrowUpIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              <ArrowUpIcon className="size-4 text-muted-foreground" />
             ) : column.getIsSorted() === "desc" ? (
-              <ArrowDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              <ArrowDownIcon className="size-4 text-muted-foreground" />
             ) : (
-              <ArrowUpDownIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              <ArrowUpDownIcon className="size-4 text-muted-foreground" />
             )}
           </Button>
         );
@@ -315,9 +320,7 @@ export default function NotionDatabaseTable({ pages, databaseProperties }) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-muted/30 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
-        <DataTable columns={columns} data={pages} onRowClick={handleRowClick} />
-      </div>
+      <DataTable columns={columns} data={pages} onRowClick={handleRowClick} />
     </div>
   );
 }

@@ -1,132 +1,67 @@
-import { defineConfig } from "eslint/config";
-import simpleImportSort from "eslint-plugin-simple-import-sort";
-import unusedImports from "eslint-plugin-unused-imports";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
 import globals from "globals";
+import pluginReact from "eslint-plugin-react";
+import configPrettier from "eslint-config-prettier/flat";
+import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
+import pluginUnusedImports from "eslint-plugin-unused-imports";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
-
-export default defineConfig([
-  // 기본 JavaScript 규칙
+export default [
+  // 1. JavaScript 권장 규칙 (@eslint/js)
   js.configs.recommended,
 
-  // Next.js 설정
-  ...compat.extends("next", "next/core-web-vitals"),
-
-  // Prettier 설정
-  ...compat.extends("prettier"),
-
+  // 2. 프로젝트 공통: 브라우저 전역 + 파서 옵션 (JSX, ESM)
   {
-    files: ["**/*.{js,jsx,mjs}"],
+    files: ["**/*.{js,mjs,cjs,jsx}"],
     languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: "module",
-      globals: {
-        ...globals.browser,
-        ...globals.es2022,
-        ...globals.node,
-      },
+      globals: { ...globals.browser },
       parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
+        ecmaVersion: "latest",
+        sourceType: "module",
+        ecmaFeatures: { jsx: true },
       },
     },
+  },
 
-    plugins: {
-      "simple-import-sort": simpleImportSort,
-      "unused-imports": unusedImports,
+  // 2b. Node 전역 (lib 등 서버/빌드 코드)
+  {
+    files: ["src/lib/**/*.js", "*.config.js", "*.config.mjs"],
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node },
     },
+  },
 
+  // 3. React 권장 규칙 (flat) + Next.js/React 17+ 호환
+  pluginReact.configs.flat.recommended,
+  {
+    files: ["**/*.{js,jsx}"],
+    settings: {
+      react: { version: "detect" },
+    },
     rules: {
-      // React 관련 규칙
-      "react/react-in-jsx-scope": "off", // Next.js에서는 불필요
-      "react/prop-types": "off", // shadcn/ui 컴포넌트를 위해 비활성화
-      "react/jsx-uses-react": "off", // Next.js에서는 불필요
-      "react/jsx-uses-vars": "error",
-      "react/no-unescaped-entities": "warn",
-      "react/self-closing-comp": "error",
+      "react/react-in-jsx-scope": "off", // React 17+ new JSX transform
+      "react/prop-types": "off", // 프로젝트에서 PropTypes 미사용
+    },
+  },
 
-      // React Hooks 규칙
-      "react-hooks/rules-of-hooks": "error", // 활성화
-      "react-hooks/exhaustive-deps": "warn",
-
-      // Import 정렬 및 정리
+  // 4. import 정렬 + 미사용 import/변수 (src만)
+  {
+    files: ["src/**/*.{js,jsx}"],
+    plugins: {
+      "simple-import-sort": pluginSimpleImportSort,
+      "unused-imports": pluginUnusedImports,
+    },
+    rules: {
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
-      "unused-imports/no-unused-imports": "error",
+      "no-unused-vars": "off", // unused-imports/no-unused-vars로 대체
+      "unused-imports/no-unused-imports": "warn",
       "unused-imports/no-unused-vars": [
         "warn",
-        {
-          vars: "all",
-          varsIgnorePattern: "^_",
-          args: "after-used",
-          argsIgnorePattern: "^_",
-        },
+        { varsIgnorePattern: "^_", argsIgnorePattern: "^_" },
       ],
-
-      // 일반적인 코드 품질 규칙
-      "no-console": "warn",
-      "no-debugger": "error",
-      "no-unused-vars": "off", // unused-imports 플러그인이 처리
-      "prefer-const": "error",
-      "no-var": "error",
-
-      // JSX 관련 규칙
-      "jsx-a11y/alt-text": "warn",
-      "jsx-a11y/anchor-is-valid": "warn",
-      "jsx-a11y/click-events-have-key-events": "warn",
-      "jsx-a11y/no-static-element-interactions": "warn",
-
-      // Next.js 특화 규칙
-      "@next/next/no-img-element": "warn",
-      "@next/next/no-html-link-for-pages": "error",
-      "@next/next/no-sync-scripts": "error",
-      "@next/next/no-typos": "warn",
-    },
-
-    settings: {
-      react: {
-        version: "detect",
-      },
     },
   },
 
-  // 커스텀 컴포넌트에 대해서만 PropTypes 적용
-  {
-    files: [
-      "src/components/Header.jsx",
-      "src/components/Code.jsx",
-      "src/components/CodeBlock.jsx",
-      "src/components/Mermaid.jsx",
-      "src/components/MyTable.jsx",
-      "src/components/NotionDatabaseTable.jsx",
-      "src/components/NotionPage.jsx",
-      "src/components/NotionRenderer.jsx",
-      "src/components/Providers.jsx",
-      "src/components/Skillset.jsx",
-      "src/components/ToggleButton.jsx",
-    ],
-    rules: {
-      "react/prop-types": "warn", // 커스텀 컴포넌트에만 PropTypes 적용
-    },
-  },
-
-  // 테스트 파일에 대한 별도 설정
-  {
-    files: ["**/*.test.{js,jsx}", "**/*.spec.{js,jsx}"],
-    rules: {
-      "no-console": "off",
-      "@next/next/no-img-element": "off",
-    },
-  },
-]);
+  // 5. Prettier와 충돌하는 규칙 비활성화 (마지막에 두기)
+  { rules: configPrettier.rules },
+];

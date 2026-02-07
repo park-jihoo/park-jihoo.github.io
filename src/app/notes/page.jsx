@@ -1,16 +1,38 @@
+import { AlertCircle, FileText } from "lucide-react";
+
 import NotionDatabaseTable from "@/components/NotionDatabaseTable";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   getAllPagesFromDatabase,
   getDatabaseProperties,
   getDatabaseTitle,
 } from "@/lib/notion";
 
+function NotesError({ title, children, className = "" }) {
+  return (
+    <div
+      className={`mx-auto max-w-2xl px-4 py-12 animate-in fade-in zoom-in-95 duration-500 ${className}`}
+    >
+      <Card className="border-destructive/50 overflow-hidden">
+        <CardContent className="p-0">
+          <Alert
+            variant="destructive"
+            className="flex flex-col items-center justify-center border-0 bg-transparent py-8 text-center"
+          >
+            <AlertCircle className="mb-4 size-10" />
+            <AlertTitle className="mb-2 text-xl">{title}</AlertTitle>
+            <AlertDescription>{children}</AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export default async function NotesPage() {
   try {
-    // Notion 데이터베이스 ID
     const databaseId = "619787c75b60479886c147cf746bfbb8";
-
-    // 데이터베이스에서 모든 페이지와 속성 정보를 병렬로 가져오기
     const [databaseResponse, databaseProperties, databaseTitle] =
       await Promise.all([
         getAllPagesFromDatabase(databaseId),
@@ -20,14 +42,9 @@ export default async function NotesPage() {
 
     if (!databaseResponse || !databaseResponse.results) {
       return (
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">📝</div>
-            <p className="text-gray-600 dark:text-gray-400">
-              데이터베이스에서 페이지를 가져올 수 없습니다.
-            </p>
-          </div>
-        </div>
+        <NotesError title="Error">
+          Failed to load pages from the database.
+        </NotesError>
       );
     }
 
@@ -35,40 +52,43 @@ export default async function NotesPage() {
     const properties = databaseProperties.filter(
       (prop) => prop.type === "select",
     );
+
     return (
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-            📝 {databaseTitle}
+      <div className="mx-auto max-w-6xl space-y-8 px-4 py-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <header className="border-b border-border/80 pb-6 text-center sm:text-left">
+          <h1 className="text-4xl font-semibold tracking-tight text-[var(--section-title)] lg:text-5xl">
+            <span className="text-primary">📝</span> {databaseTitle}
           </h1>
         </header>
 
         {pages.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">📝</div>
-            <p className="text-gray-600 dark:text-gray-400">
-              아직 노트가 없습니다.
-            </p>
-          </div>
+          <Card className="border-dashed border-border/80 bg-muted/20">
+            <CardContent className="flex flex-col items-center justify-center py-20 text-center">
+              <FileText className="size-16 text-muted-foreground/50" />
+              <h3 className="mt-4 text-lg font-semibold">No notes found</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Check back later for new content.
+              </p>
+            </CardContent>
+          </Card>
         ) : (
-          <NotionDatabaseTable pages={pages} databaseProperties={properties} />
+          <Card className="border-border/70 overflow-hidden">
+            <CardContent className="p-4 sm:p-6">
+              <NotionDatabaseTable
+                pages={pages}
+                databaseProperties={properties}
+              />
+            </CardContent>
+          </Card>
         )}
       </div>
     );
   } catch (error) {
     console.error("Error loading notes:", error);
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="text-6xl mb-4">⚠️</div>
-          <p className="text-gray-600 dark:text-gray-400">
-            노트를 불러오는 중 오류가 발생했습니다.
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
-            {error.message}
-          </p>
-        </div>
-      </div>
+      <NotesError title="Something went wrong">
+        {error.message || "An error occurred while loading the notes."}
+      </NotesError>
     );
   }
 }

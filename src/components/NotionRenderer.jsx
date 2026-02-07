@@ -248,12 +248,10 @@ const ImageBlock = ({ block }) => {
         alt={caption || "Notion image"}
         width={800}
         height={600}
-        className="rounded-lg shadow-md max-w-full h-auto"
+        className="rounded-lg max-w-full h-auto"
       />
       {caption && (
-        <p className="text-sm text-muted-foreground mt-2 italic">
-          {caption}
-        </p>
+        <p className="text-sm text-muted-foreground mt-2 italic">{caption}</p>
       )}
     </div>
   );
@@ -279,12 +277,8 @@ const BookmarkBlock = ({ block }) => {
           className="flex items-center space-x-2 hover:opacity-80"
         >
           <div className="flex-1">
-            <p className="font-medium text-foreground">
-              {title}
-            </p>
-            <p className="text-sm text-muted-foreground truncate">
-              {url}
-            </p>
+            <p className="font-medium text-foreground">{title}</p>
+            <p className="text-sm text-muted-foreground truncate">{url}</p>
           </div>
           <Button variant="outline" size="sm">
             열기

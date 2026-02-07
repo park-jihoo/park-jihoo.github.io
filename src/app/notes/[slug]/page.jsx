@@ -1,4 +1,10 @@
+import { AlertCircle, ChevronLeft } from "lucide-react";
+import Link from "next/link";
+
 import NotionPage from "@/components/NotionPage";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getAllPagesFromDatabase, getBlocks, getPage } from "@/lib/notion";
 
 export async function generateStaticParams() {
@@ -39,12 +45,26 @@ export default async function Page(props) {
 
     if (!page || !blocksResponse) {
       return (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <div className="text-6xl mb-4">❌</div>
-            <p className="text-gray-600 dark:text-gray-400">
-              페이지를 찾을 수 없습니다.
-            </p>
+        <div className="mx-auto max-w-2xl px-4 py-12 animate-in fade-in zoom-in-95 duration-500">
+          <Card className="border-destructive/50 overflow-hidden">
+            <CardContent className="p-0">
+              <Alert
+                variant="destructive"
+                className="flex flex-col items-center justify-center border-0 bg-transparent py-8 text-center"
+              >
+                <AlertCircle className="mb-4 size-10" />
+                <AlertTitle className="mb-2 text-xl">Error</AlertTitle>
+                <AlertDescription>Page not found.</AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
+          <div className="mt-6 flex justify-center">
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/notes">
+                <ChevronLeft className="mr-1 size-4" />
+                Notes 목록
+              </Link>
+            </Button>
           </div>
         </div>
       );
@@ -52,19 +72,44 @@ export default async function Page(props) {
 
     const blocks = blocksResponse.results || [];
 
-    return <NotionPage page={page} blocks={blocks} comments={true} />;
+    return (
+      <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="mb-6">
+          <Button variant="ghost" size="sm" asChild className="text-muted-foreground">
+            <Link href="/notes">
+              <ChevronLeft className="mr-1 size-4" />
+              Notes
+            </Link>
+          </Button>
+        </div>
+        <NotionPage page={page} blocks={blocks} comments={true} />
+      </div>
+    );
   } catch (error) {
     console.error("Error loading page:", error);
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="text-6xl mb-4">⚠️</div>
-          <p className="text-gray-600 dark:text-gray-400">
-            페이지를 불러오는 중 오류가 발생했습니다.
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
-            {error.message}
-          </p>
+      <div className="mx-auto max-w-2xl px-4 py-12 animate-in fade-in zoom-in-95 duration-500">
+        <Card className="border-destructive/50 overflow-hidden">
+          <CardContent className="p-0">
+            <Alert
+              variant="destructive"
+              className="flex flex-col items-center justify-center border-0 bg-transparent py-8 text-center"
+            >
+              <AlertCircle className="mb-4 size-10" />
+              <AlertTitle className="mb-2 text-xl">Something went wrong</AlertTitle>
+              <AlertDescription>
+                {error.message || "An error occurred while loading the page."}
+              </AlertDescription>
+            </Alert>
+          </CardContent>
+        </Card>
+        <div className="mt-6 flex justify-center">
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/notes">
+              <ChevronLeft className="mr-1 size-4" />
+              Notes 목록
+            </Link>
+          </Button>
         </div>
       </div>
     );

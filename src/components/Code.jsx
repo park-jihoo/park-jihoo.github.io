@@ -8,13 +8,13 @@ import { addClassToHast, getSingletonHighlighter } from "shiki";
 import CodeBlock from "@/components/CodeBlock";
 import { Mermaid } from "@/components/Mermaid";
 
-export const Code = ({ block, defaultLanguage, className }) => {
+export const Code = ({ block, _defaultLanguage, _className }) => {
   const { recordMap } = useNotionContext();
   const content = getBlockTitle(block, recordMap);
   const language = (
     block.properties?.language?.[0]?.[0] || "typescript"
   ).toLowerCase();
-  const { caption } = block.properties;
+  const { _caption } = block.properties;
   const [codes, setCodes] = useState([]);
   const [languages, setLanguages] = useState([]);
 
@@ -34,7 +34,7 @@ export const Code = ({ block, defaultLanguage, className }) => {
         lang: language,
         transformers: [
           {
-            line(hast, line) {
+            line(hast, _line) {
               addClassToHast(hast, "whitespace-pre-wrap ml-2");
             },
           },
@@ -46,7 +46,7 @@ export const Code = ({ block, defaultLanguage, className }) => {
         lang: language,
         transformers: [
           {
-            line(hast, line) {
+            line(hast, _line) {
               addClassToHast(hast, "whitespace-pre-wrap ml-2");
             },
           },

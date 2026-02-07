@@ -1,10 +1,11 @@
 import { Client } from "@notionhq/client";
+import { cache } from "react";
 
 const notion = new Client({
   auth: process.env.NOTION_API_KEY,
 });
 
-export const getPage = async (pageId) => {
+export const getPage = cache(async (pageId) => {
   try {
     const response = await notion.pages.retrieve({ page_id: pageId });
     return response;
@@ -12,25 +13,29 @@ export const getPage = async (pageId) => {
     console.error("Error fetching page:", error);
     return null;
   }
-};
+});
 
-export const getBlocks = async (blockId) => {
+export const getBlocks = cache(async (blockId) => {
   try {
     const response = await notion.blocks.children.list({ block_id: blockId });
-    for (const block of response.results) {
-      if (block.has_children) {
-        const childrenResponse = await getBlocks(block.id);
-        block.children = childrenResponse.results || [];
-      }
-    }
-    return response;
+    const results = response.results || [];
+    const withChildren = await Promise.all(
+      results.map(async (block) => {
+        if (block.has_children) {
+          const childrenResponse = await getBlocks(block.id);
+          block.children = childrenResponse?.results || [];
+        }
+        return block;
+      }),
+    );
+    return { ...response, results: withChildren };
   } catch (error) {
     console.error("Error fetching blocks:", error);
     return null;
   }
-};
+});
 
-export const getDatabase = async (databaseId) => {
+export const getDatabase = cache(async (databaseId) => {
   try {
     const response = await notion.databases.retrieve({
       database_id: databaseId,
@@ -40,7 +45,7 @@ export const getDatabase = async (databaseId) => {
     console.error("Error fetching database:", error);
     return null;
   }
-};
+});
 
 export const queryDatabase = async (
   databaseId,
@@ -61,18 +66,17 @@ export const queryDatabase = async (
 };
 
 // 데이터베이스에서 모든 페이지 가져오기
-export const getAllPagesFromDatabase = async (databaseId) => {
+export const getAllPagesFromDatabase = cache(async (databaseId) => {
   try {
     const response = await notion.databases.query({
       database_id: databaseId,
-      // 정렬 속성이 존재하지 않을 수 있으므로 제거
     });
     return response;
   } catch (error) {
     console.error("Error fetching pages from database:", error);
     return null;
   }
-};
+});
 
 // 데이터베이스 속성 정보 가져오기
 export const getDatabaseProperties = async (databaseId) => {
@@ -164,7 +168,7 @@ export const getPageLastEditedTime = (page) => {
   return page.last_edited_time || new Date().toISOString();
 };
 
-export const getDatabaseTitle = async (databaseId) => {
+export const getDatabaseTitle = cache(async (databaseId) => {
   const database = await getDatabase(databaseId);
-  return getRichTextContent(database.title);
-};
+  return database ? getRichTextContent(database.title) : "";
+});

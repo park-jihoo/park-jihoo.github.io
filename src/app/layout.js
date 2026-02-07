@@ -1,12 +1,16 @@
 import "./globals.css";
 
-import { Inter } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 
 import Header from "@/components/Header";
 import Providers from "@/components/Providers";
 import { Card } from "@/components/ui/card";
 
-const inter = Inter({ subsets: ["latin"] });
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 /**@type {import("next").Metadata}*/
 export const metadata = {
@@ -83,19 +87,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ko" className="scroll-smooth">
+    <html lang="ko" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${inter.className} min-h-screen bg-background text-foreground antialiased`}
+        className={`${dmSans.variable} font-sans min-h-screen bg-background text-foreground antialiased`}
       >
         <Providers>
           <div className="relative flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1 bg-muted/30">
-              <div className="container mx-auto p-4 md:p-6 lg:p-8">
-                <Card className="min-h-[calc(100vh-8rem)] shadow-sm border-border/50">
-                  <div className="p-4 md:p-6 lg:p-8">
-                    {children}
-                  </div>
+            <main className="relative flex-1 min-h-[calc(100vh-4rem)] bg-white dark:bg-black">
+              <div className="container relative mx-auto p-4 md:p-6 lg:p-8">
+                <Card className="min-h-[calc(100vh-8rem)] border-border/60 bg-card/95 backdrop-blur-sm mt-1 mb-6">
+                  <div className="relative p-4 md:p-6 lg:p-8">{children}</div>
                 </Card>
               </div>
             </main>
